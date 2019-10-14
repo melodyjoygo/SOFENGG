@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TypeRicer | Login</title>
+
+    <script src="/jquery.js"></script>
+    <link rel="stylesheet" href="/LoginStyle.css">
+    <script src="/bootstrap.js"></script>
+    <script src="login.js"></script>
+    <link rel="stylesheet" href="/scss/bootstrap.css">
+
+    <script>
+        var object = "<%= object %>";
+    </script>
+</head>
+
+<body onload="loadUsers(object)">
+    <div class="modal" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="btn btn-sm btn-danger" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form action="/register" method="post">
+                            <div class="row">
+                                <div class="col">
+                                    <b>Username: </b>
+                                </div>
+                                <div class="col">
+                                    <input type="text" name="user" class="form-control form-control-sm"
+                                        placeholder="Enter Username Here...">
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <b>Password: </b>
+                                </div>
+                                <div class="col">
+                                    <input type="password" name="pass" class="form-control form-control-sm"
+                                        placeholder="Enter Password Here...">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <br>
+                                    <input type="submit" class="form-control form-control-sm" placeholder="Sign Up"
+                                        value="Sign Up">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stage">
+        <div id="type">
+            TYPE
+        </div>
+        <div id="ricer">
+            RICER
+        </div>
+        <div id="center">
+            
+            <div id="errorText">Username/Password is Invalid</div>
+
+            <form action="/login" method="post" id="formCenter">
+                <input type="text" name="un" id="username" placeholder="Username" autocomplete="off">
+                <input type="password" name="pw" id="password" placeholder="Password" autocomplete="off">
+
+                <input type="button" value="Login" id="loginBtn" onclick="validateUser()">
+                <input type="button" value="Sign Up" id="signupBtn" data-toggle="modal" data-target="#modal">
+                <input type="submit" id="submit">
+
+                <a href="/guest" id="aGuest">
+                    <input type="button" value="Login as Guest" id="guestBtn">
+                </a>
+                <div id="Line"></div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
