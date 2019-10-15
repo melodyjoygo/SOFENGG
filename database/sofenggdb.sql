@@ -37,6 +37,37 @@ CREATE TABLE `clients` (
 
 
 --
+-- Table structure for table `edit_requests`
+--
+
+DROP TABLE IF EXISTS `edit_requests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `edit_requests` (
+  `erID` int(11) NOT NULL,
+  `materialID` int(11) DEFAULT NULL,
+  `materialName` varchar(45) DEFAULT NULL,
+  `materialType` int(11) DEFAULT NULL,
+  `supplierID` int(11) DEFAULT NULL,
+  `price` decimal(10,0) DEFAULT NULL,
+  `edited` tinyint(4) DEFAULT NULL,
+  `approved` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`erID`),
+  KEY `materialID_idx` (`materialID`),
+  KEY `supplierID_idx` (`supplierID`),
+  KEY `materialType_idx` (`materialType`),
+  CONSTRAINT `materialID` FOREIGN KEY (`materialID`) REFERENCES `materials` (`materialID`),
+  CONSTRAINT `materialType` FOREIGN KEY (`materialType`) REFERENCES `material_types` (`mtID`),
+  CONSTRAINT `supplierID` FOREIGN KEY (`supplierID`) REFERENCES `suppliers` (`supplierID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `edit_requests`
+--
+
+
+--
 -- Table structure for table `inventory`
 --
 
@@ -48,7 +79,8 @@ CREATE TABLE `inventory` (
   `materialID` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `dateModified` date NOT NULL,
-  PRIMARY KEY (`inventoryID`)
+  PRIMARY KEY (`inventoryID`),
+  KEY `materialID_idx` (`materialID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -89,7 +121,8 @@ CREATE TABLE `materials` (
   `materialType` int(11) NOT NULL,
   `supplierID` int(11) NOT NULL,
   `price` double NOT NULL,
-  PRIMARY KEY (`materialID`)
+  PRIMARY KEY (`materialID`),
+  KEY `supplierID_idx` (`supplierID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -107,11 +140,14 @@ DROP TABLE IF EXISTS `project_materials`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `project_materials` (
   `pmID` int(11) NOT NULL,
-  `projectID` varchar(45) NOT NULL,
+  `projectID` int(11) NOT NULL,
   `materialID` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` decimal(10,0) NOT NULL,
-  PRIMARY KEY (`pmID`)
+  PRIMARY KEY (`pmID`),
+  KEY `projectID_idx` (`projectID`),
+  KEY `materialID_idx` (`materialID`),
+  CONSTRAINT `projectID` FOREIGN KEY (`projectID`) REFERENCES `projects` (`projectID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -137,6 +173,25 @@ CREATE TABLE `projects` (
 
 --
 -- Dumping data for table `projects`
+--
+
+
+--
+-- Table structure for table `request_types`
+--
+
+DROP TABLE IF EXISTS `request_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `request_types` (
+  `rtID` int(11) NOT NULL,
+  `requestType` varchar(45) NOT NULL,
+  PRIMARY KEY (`rtID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `request_types`
 --
 
 
@@ -230,4 +285,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-12 21:21:35
+-- Dump completed on 2019-10-15 17:11:17
