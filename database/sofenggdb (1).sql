@@ -37,37 +37,6 @@ CREATE TABLE `clients` (
 
 
 --
--- Table structure for table `edit_requests`
---
-
-DROP TABLE IF EXISTS `edit_requests`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `edit_requests` (
-  `erID` int(11) NOT NULL,
-  `materialID` int(11) DEFAULT NULL,
-  `materialName` varchar(45) DEFAULT NULL,
-  `materialType` int(11) DEFAULT NULL,
-  `supplierID` int(11) DEFAULT NULL,
-  `price` decimal(10,0) DEFAULT NULL,
-  `edited` tinyint(4) DEFAULT NULL,
-  `approved` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`erID`),
-  KEY `materialID_idx` (`materialID`),
-  KEY `supplierID_idx` (`supplierID`),
-  KEY `materialType_idx` (`materialType`),
-  CONSTRAINT `materialID` FOREIGN KEY (`materialID`) REFERENCES `materials` (`materialID`),
-  CONSTRAINT `materialType` FOREIGN KEY (`materialType`) REFERENCES `material_types` (`mtID`),
-  CONSTRAINT `supplierID` FOREIGN KEY (`supplierID`) REFERENCES `suppliers` (`supplierID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `edit_requests`
---
-
-
---
 -- Table structure for table `inventory`
 --
 
@@ -196,6 +165,33 @@ CREATE TABLE `request_types` (
 
 
 --
+-- Table structure for table `requests`
+--
+
+DROP TABLE IF EXISTS `requests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `requests` (
+  `requestID` int(11) NOT NULL,
+  `materialID` int(11) NOT NULL,
+  `materialName` varchar(45) NOT NULL,
+  `materialType` int(11) NOT NULL,
+  `supplierID` int(11) NOT NULL,
+  `price` decimal(10,0) NOT NULL,
+  `edited` tinyint(4) DEFAULT NULL,
+  `approved` tinyint(4) NOT NULL,
+  `requestTypel` int(11) NOT NULL,
+  `dateRequested` datetime NOT NULL,
+  PRIMARY KEY (`requestID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `requests`
+--
+
+
+--
 -- Table structure for table `suppliers`
 --
 
@@ -225,6 +221,7 @@ CREATE TABLE `transactions` (
   `transactionID` int(11) NOT NULL,
   `supplierID` int(11) NOT NULL,
   `price` decimal(10,0) NOT NULL,
+  `date` date NOT NULL,
   `status` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -285,4 +282,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-15 17:11:17
+-- Dump completed on 2019-10-15 17:21:51

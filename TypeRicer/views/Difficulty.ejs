@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TypeRicer | Difficulty</title>
+    <script src="/jquery-3.4.1.js"></script>
+    <script src="/difficulty_function.js"></script>
+    <link rel="stylesheet" href="/DifficultyStyle.css">
+</head>
+
+<body onload="change(0)">
+    <div id="stage">
+        <div id="back">
+            TYPE
+            RICER
+        </div>
+        <div id="sideBar">
+            <ul class="ButtonList">
+                <a href="/typericer" id="menu">
+                    <li>
+                        <div id="menuText">
+                            <p id="profileText">HOME</p>
+                            <img src="/Media/home.png" id="profilePic">
+                            <div id="menuLine"></div>
+                        </div>
+                    </li>
+                </a>
+                <a href="/typericer/difficulty" id="menu">
+                    <li>
+                        <div id="menuText">
+                            <p id="profileText" class="highlight">PLAY</p>
+                            <img src="/Media/play-button.png" id="profilePic">
+                            <div id="menuLineH"></div>
+                        </div>
+                    </li>
+                </a>
+                <a href="/typericer/ranking" id="menu">
+                    <li>
+                        <div id="menuText">
+                            <p id="profileText">RANKINGS</p>
+                            <img src="/Media/ranking.png" id="profilePic">
+                            <div id="menuLine"></div>
+                        </div>
+                    </li>
+                </a>
+                <a href="/typericer/profile" id="menu">
+                    <li>
+                        <div id="menuText">
+                            <p id="profileText">PROFILE</p>
+                            <img src="/Media/avatar.png" id="profilePic">
+                            <div id="menuLine"></div>
+                        </div>
+                    </li>
+                </a>
+            </ul>
+        </div>
+
+        <div id="center">
+            <div id="centerText">
+                CHOOSE DIFFICULTY
+            </div>
+
+            <ul class="DifficultyList">
+                <li>
+                    <div id="easyLevel">
+                        <button id="button" onclick="change(0)">
+                            EASY
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div id="medLevel">
+                        <button id="button" onclick="change(1)">
+                            MEDIUM
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div id="hardLevel">
+                        <button id="button" onclick="change(2)">
+                            HARD
+                        </button>
+                    </div>
+                </li>
+            </ul>
+            <div id="desc"></div>
+
+            <a href="#" id="startBox" onclick="startGame()">
+                <div id="start">
+                    <p id="startText">START</p>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

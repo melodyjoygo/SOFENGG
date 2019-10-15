@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TypeRicer | Admin Home</title>
+
+    <script src="/jquery.js"></script>
+    <script src="/bootstrap.js"></script>
+    <link rel="stylesheet" href="/scss/bootstrap.css">
+    <link rel="stylesheet" href="/AdminStyle.css">
+</head>
+
+<body>
+
+    <div class="modal" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="btn btn-sm btn-danger" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                Are you sure you want to Logout?
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <a href="/logout" id="logoutButton">
+                                    <input type="button" class="form-control form-control-sm" value="Yes">
+                                </a>
+                            </div>
+                            <div class="col">
+                                <input type="button" class="form-control form-control-sm " value="No"
+                                    data-dismiss="modal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stage">
+        <div id="back">
+            ADMIN
+        </div>
+        <div id="sideBar">
+            <ul class="ButtonList">
+                <a href="/admin" id="menu">
+                    <li>
+                        <div id="menuText">
+                            <p id="profileText" class="highlight">HOME</p>
+                            <img src="/Media/home.png" id="profilePic">
+                            <div id="menuLineH"></div>
+                        </div>
+                    </li>
+                </a>
+                <a href="/admin/database" id="menu">
+                    <li>
+                        <div id="menuText" class="playBtn">
+                            <p id="profileText">DATABASE</p>
+                            <img src="/Media/database.png" id="profilePic">
+                            <div id="menuLine"></div>
+                        </div>
+                    </li>
+                </a>
+                <a href="/admin/ranking" id="menu">
+                    <li>
+                        <div id="menuText">
+                            <p id="profileText">RANKINGS</p>
+                            <img src="/Media/ranking.png" id="profilePic">
+                            <div id="menuLine"></div>
+                        </div>
+                    </li>
+                </a>
+                <a href="/logout" id="menu" class="log" data-toggle="modal" data-target="#modal">
+                    <li>
+                        <div id="menuText">
+                            <p id="profileText">LOGOUT</p>
+                            <img src="/Media/logout.png" id="profilePic">
+                            <div id="menuLine"></div>
+                        </div>
+                    </li>
+                </a>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

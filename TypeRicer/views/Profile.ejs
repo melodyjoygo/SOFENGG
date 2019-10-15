@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TypeRicer | Profile</title>
+    <script src="/jquery.js"></script>
+    <link rel="stylesheet" href="/ProfileStyle.css">
+    <script src="/bootstrap.js"></script>
+    <link rel="stylesheet" href="/scss/bootstrap.css">
+    <script src="/profileFunction.js"></script>
+    <script>
+        var data = "<%= object %>";
+        var game = "<%= game %>";
+    </script>
+</head>
+
+<body onload="setData(data, game)">
+    <div class="modal" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="btn btn-sm btn-danger" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                Are you sure you want to Logout?
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <a href="/logout" id="logoutButton">
+                                    <input type="button" class="form-control form-control-sm" value="Yes">
+                                </a>
+                            </div>
+                            <div class="col">
+                                <input type="button" class="form-control form-control-sm " value="No"
+                                    data-dismiss="modal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stage">
+        <div id="sideBar">
+            <ul class="ButtonList">
+                <a href="/typericer" id="menu">
+                    <li>
+                        <div id="menuText">
+                            <p id="profileText">HOME</p>
+                            <img src="/Media/home.png" id="profilePic">
+                            <div id="menuLine"></div>
+                        </div>
+                    </li>
+                </a>
+                <a href="/typericer/difficulty" id="menu">
+                    <li>
+                        <div id="menuText">
+                            <p id="profileText">PLAY</p>
+                            <img src="/Media/play-button.png" id="profilePic">
+                            <div id="menuLine"></div>
+                        </div>
+                    </li>
+                </a>
+                <a href="/typericer/ranking" id="menu">
+                    <li>
+                        <div id="menuText">
+                            <p id="profileText">RANKINGS</p>
+                            <img src="/Media/ranking.png" id="profilePic">
+                            <div id="menuLine"></div>
+                        </div>
+                    </li>
+                </a>
+                <a href="/typericer/profile" id="menu">
+                    <li>
+                        <div id="menuText">
+                            <p id="profileText" class="highlight">PROFILE</p>
+                            <img src="/Media/avatar.png" id="profilePic">
+                            <div id="menuLineH"></div>
+                        </div>
+                    </li>
+                </a>
+            </ul>
+        </div>
+        <div id="center">
+            <div id="username">
+                <%= name %>
+            </div>
+
+            <ul id="difficultyList">
+                <li id="difButtons">
+                    <button id="easy" onclick="change(0)">
+                        EASY
+                    </button>
+                </li>
+                <li id="difButtons">
+                    <button id="medium" onclick="change(1)">
+                        MEDIUM
+                    </button>
+                </li>
+                <li id="difButtons">
+                    <button id="hard" onclick="change(2)">
+                        HARD
+                    </button>
+                </li>
+            </ul>
+            <div id="statsBox">
+                <ul id="statsList">
+                    <li id="statsItem">
+                        Games Played:
+                        <div id="statsInfo"></div>
+                    </li>
+                    <li id="statsItem">
+                        Average WPM:
+                        <div id="statsWPM"></div>
+                    </li>
+                    <li id="statsItem">
+                        Average Time:
+                        <div id="statsTime"></div>
+                    </li>
+                    <li id="statsItem">
+                        Average Accuracy:
+                        <div id="statsAcc"></div>
+                    </li>
+                </ul>
+            </div>
+            <button href="/" id="menu" class="logout" data-toggle="modal" data-target="#modal">
+                <div id="menuText">
+                    <p id="profileText">Logout</p>
+                    <img src="/Media/logout.png" id="profilePic">
+                    <div id="menuLine"></div>
+                </div>
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>
