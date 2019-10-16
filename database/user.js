@@ -11,3 +11,6 @@ exports.validate = function(name, password) {
     return database.query("SELECT * FROM users WHERE users.userName = ? AND users.password = ?", [name, password]);
 }
 
+exports.getAllUsers = function() {
+    return database.query("SELECT * FROM users");
+}

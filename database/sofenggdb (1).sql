@@ -180,7 +180,7 @@ CREATE TABLE `requests` (
   `price` decimal(10,0) NOT NULL,
   `edited` tinyint(4) DEFAULT NULL,
   `approved` tinyint(4) NOT NULL,
-  `requestTypel` int(11) NOT NULL,
+  `requestType` int(11) NOT NULL,
   `dateRequested` datetime NOT NULL,
   PRIMARY KEY (`requestID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -282,4 +282,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-15 17:21:51
+-- Dump completed on 2019-10-16 21:51:01
