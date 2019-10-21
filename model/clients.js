@@ -7,6 +7,7 @@ exports.create = function(clientName) {
     })
 }
 
+
 exports.getAll = function() {
     return database.query("SELECT * FROM clients");
 }
