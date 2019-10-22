@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const cryptojs = require("crypto-js")
 
 const Users = require("../model/user");
 
@@ -14,10 +15,13 @@ router.post("/add",(req,res)=>{
     let pass = req.body.password
     let conf = req.body.confpassword
     let type = req.body.role
+    let nick = req.body.nickname
     let un = fname
     let fullname = fname
     un += "_"
     un += lname
+    un += "_"
+    un += nick
     fullname += " "
     fullname += lname
     un = un.toLowerCase()
@@ -34,7 +38,7 @@ router.post("/add",(req,res)=>{
             })    
         }
         else{
-           Promise.resolve(Users.create(un,fullname,pass,type)).then(function(value){
+           Promise.resolve(Users.create(un,fullname,cryptojs.AES.encrypt(pass,"password_key"),type)).then(function(value){
                 res.render("employees.hbs",{
                     error:3
                 })

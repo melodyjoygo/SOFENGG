@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const Clients = require("../model/clients")
+
+const Suppliers = require("../model/suppliers");
 
 function titleCase(str) {
    var splitStr = str.toLowerCase().split(' ');
@@ -12,36 +13,32 @@ function titleCase(str) {
 }
 
 router.get("/",(req,res)=>{
-    res.render("clients.hbs")
+    res.render("suppliers.hbs")
 })
 
 router.post("/add",(req,res)=>{
-    let client = req.body.clientname
-    var exist = false;
-    Promise.resolve(Clients.getAll()).then(function(value){
+    let supplier = req.body.supplierName
+    var exist = false
+    Promise.resolve(Suppliers.getAll()).then(function(value){
         for(let i = 0; i < value.length; i++){
-            if(client.toLowerCase() === value[i].clientName.toLowerCase()){
+            if(supplier.toLowerCase() === value[i].supplierName.toLowerCase()){
                 exist = true
             }
         }
         if(exist){
-            res.render("clients.hbs",{
+            res.render("suppliers.hbs",{
                 message:1
             })
         }
         else{
-            client = titleCase(client)
-            Promise.resolve(Clients.create(client)).then(function(value){
-                res.render("clients.hbs",{
+            supplier= titleCase(supplier)
+            Promise.resolve(Suppliers.create(supplier)).then(function(value){
+                res.render("suppliers.hbs",{
                     message:2
                 })
             })
         }
     })
-    
-    
 })
-
-
 
 module.exports = router;
