@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Clients = require("../model/clients")
+const clients = require("../model/clients")
 
 function titleCase(str) {
    var splitStr = str.toLowerCase().split(' ');
@@ -18,7 +18,7 @@ router.get("/",(req,res)=>{
 router.post("/add",(req,res)=>{
     let client = req.body.clientname
     var exist = false;
-    Promise.resolve(Clients.getAll()).then(function(value){
+    Promise.resolve(clients.getAll()).then(function(value){
         for(let i = 0; i < value.length; i++){
             if(client.toLowerCase() === value[i].clientName.toLowerCase()){
                 exist = true
@@ -31,7 +31,7 @@ router.post("/add",(req,res)=>{
         }
         else{
             client = titleCase(client)
-            Promise.resolve(Clients.create(client)).then(function(value){
+            Promise.resolve(clients.create(client)).then(function(value){
                 res.render("clients.hbs",{
                     message:2
                 })
