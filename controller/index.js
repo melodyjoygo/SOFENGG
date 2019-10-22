@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const cryptojs = require("crypto-js")
+const cryptojs = require("crypto-js");
+const bodyparser = require("body-parser");
+const urlencoder = bodyparser.urlencoded({
+    extended: true
+});
 
 const Users = require("../model/user");
 
@@ -13,12 +17,12 @@ router.get("/",(req,res)=>{
     res.render("login.hbs")
 })
 
-router.post("/login" ,(req,res)=>{
+router.post("/login" ,urlencoder, (req,res)=>{
     let un = req.body.un
     let pass = req.body.pw
     let empty = false;
     
-    if(un === "" || pw === "")
+    if(un === "" || pass === "")
         empty = true;
     
     if(empty){
