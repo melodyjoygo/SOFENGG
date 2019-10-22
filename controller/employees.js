@@ -18,34 +18,42 @@ router.post("/add",(req,res)=>{
     let nick = req.body.nickname
     let un = fname
     let fullname = fname
-    un += "_"
-    un += lname
-    un += "_"
-    un += nick
-    fullname += " "
-    fullname += lname
+    let empty = false
+    un += "_" + lname + "_" + nick
+    fullname += " " + lname
     un = un.toLowerCase()
     
-    Promise.resolve(Users.checkuser(un)).then(function(value){
-        if(value != ''){
-            res.render("employees.hbs",{
-                error:1
-            })
-        }
-        else if(!(pass === conf)){
-            res.render("employees.hbs",{
-            error:2
-            })    
-        }
-        else{
-           Promise.resolve(Users.create(un,fullname,cryptojs.AES.encrypt(pass,"password_key"),type)).then(function(value){
+    if(fname === ""  || lname === "" || email === "" || pass === ""  || conf === "")
+        empty = true
+    
+    if(empty){
+        res.render("employees.hbs",{
+                        error:4
+                    })
+    }
+    else{
+        Promise.resolve(Users.checkuser(un)).then(function(value){
+            if(value != ''){
                 res.render("employees.hbs",{
-                    error:3
+                    error:1
                 })
-            }) 
-        }
+            }
+            else if(!(pass === conf)){
+                res.render("employees.hbs",{
+                error:2
+                })    
+            }
+            else{
+               Promise.resolve(Users.create(un,fullname,email,cryptojs.AES.encrypt(pass,"password_key"),type)).then(function(value){
+                    res.render("employees.hbs",{
+                        error:3
+                    })
+                }) 
+            }
+
+        })  
+    }
         
-    })
 })
     
 

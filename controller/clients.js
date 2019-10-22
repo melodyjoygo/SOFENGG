@@ -18,30 +18,38 @@ router.get("/",(req,res)=>{
 router.post("/add",(req,res)=>{
     let client = req.body.clientname
     var exist = false;
-    Promise.resolve(Clients.getAll()).then(function(value){
-        for(let i = 0; i < value.length; i++){
-            if(client.toLowerCase() === value[i].clientName.toLowerCase()){
-                exist = true
+    var empty = false;
+    
+    if(client === "")
+        empty = true
+    
+    if(empty){
+        res.render("clients.hbs",{
+                    message:3
+                }) 
+    }
+    else{
+        Promise.resolve(Clients.getAll()).then(function(value){
+            for(let i = 0; i < value.length; i++){
+                if(client.toLowerCase() === value[i].clientName.toLowerCase()){
+                    exist = true
+                }
             }
-        }
-        if(exist){
-            res.render("clients.hbs",{
-                message:1
-            })
-        }
-        else{
-            client = titleCase(client)
-            Promise.resolve(Clients.create(client)).then(function(value){
+            if(exist){
                 res.render("clients.hbs",{
-                    message:2
+                    message:1
                 })
-            })
-        }
-    })
-    
-    
+            }
+            else{
+                client = titleCase(client)
+                Promise.resolve(Clients.create(client)).then(function(value){
+                    res.render("clients.hbs",{
+                        message:2
+                    })
+                })
+            }
+        })  
+    }
 })
-
-
 
 module.exports = router;

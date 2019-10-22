@@ -25,6 +25,9 @@
                 else if(warning === 2){
                     alert("Username Does not Exist");
                 }
+                else if(warning === 3){
+                    alert("Please Do Not Leave Fields Empty")
+                }
             });
         </script>
     </head>
@@ -32,7 +35,7 @@
         <form method = "post" action = "login">
             <div class = "bg-danger"></div>
             <div>Username<input type = "text" class="form-control inputtext" name = 'un'></div>
-            <div>Password<input type = "text" class="form-control inputtext" name = 'pw'></div>
+            <div>Password<input type = "password" class="form-control inputtext" name = 'pw'></div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </body>

@@ -16,26 +16,37 @@ router.post('/add',(req,res)=>{
     let projectName = req.body.projectName
     let clientID = req.body.clientID
     var exist = false
+    var empty = false
     
-    Promise.resolve(Projects.getAll()).then(function(value){
-        for(let i = 0; i < value.length; i++){
-            if((projectName.toLowerCase() === value[i].projectName.toLowerCase()) && clientID === value[i].clientID){
-                exist = true
+    if(projectName === "" || clientID === "")
+        empty = true
+    
+    if(empty){
+        res.render("projects.hbs",{
+                        message:3
+                    })
+    }
+    else{
+        Promise.resolve(Projects.getAll()).then(function(value){
+            for(let i = 0; i < value.length; i++){
+                if((projectName.toLowerCase() === value[i].projectName.toLowerCase()) && clientID === value[i].clientID){
+                    exist = true
+                }
             }
-        }
-        if(exist){
-            res.render("projects.hbs",{
-                message:1
-            })
-        }
-        else{
-            Promise.resolve(Projects.create(projectName,clientID)).then(function(value){
+            if(exist){
                 res.render("projects.hbs",{
-                    message:2
+                    message:1
                 })
-            })
-        }
-    })
+            }
+            else{
+                Promise.resolve(Projects.create(projectName,clientID)).then(function(value){
+                    res.render("projects.hbs",{
+                        message:2
+                    })
+                })
+            }
+        }) 
+    }     
 })
 
 module.exports = router;
