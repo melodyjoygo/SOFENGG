@@ -7,6 +7,10 @@ exports.create = function(supplierName) {
     })
 }
 
+exports.getSupplier = function(supplierID){
+    return database.query("SELECT * FROM suppliers WHERE suppliers.supplierID = ?",[supplierID])
+}
+
 exports.getAll = function() {
     return database.query("SELECT * FROM suppliers");
 }

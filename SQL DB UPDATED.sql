@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `softengdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
+CREATE DATABASE  IF NOT EXISTS `softengdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
 USE `softengdb`;
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
@@ -28,14 +28,16 @@ CREATE TABLE `clients` (
   `clientID` int(11) NOT NULL,
   `clientName` varchar(45) NOT NULL,
   PRIMARY KEY (`clientID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` VALUES (1,'Riot Games'),(2,'Samsung');
+INSERT INTO `clients` VALUES (1,'Riot Games');
+INSERT INTO `clients` VALUES (2,'Samsung');
+INSERT INTO `clients` VALUES (3,'Adidas');
 
 --
 -- Table structure for table `inventory`
@@ -51,13 +53,14 @@ CREATE TABLE `inventory` (
   `dateModified` date NOT NULL,
   PRIMARY KEY (`inventoryID`),
   KEY `materialID_idx` (`materialID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `inventory`
 --
 
+INSERT INTO `inventory` VALUES (1,1,0,'2019-10-22');
 
 --
 -- Table structure for table `material_types`
@@ -70,13 +73,16 @@ CREATE TABLE `material_types` (
   `mtID` int(11) NOT NULL,
   `type` varchar(45) NOT NULL,
   PRIMARY KEY (`mtID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `material_types`
 --
 
+INSERT INTO `material_types` VALUES (1,'Plastic');
+INSERT INTO `material_types` VALUES (2,'Wood');
+INSERT INTO `material_types` VALUES (3,'Acrylic');
 
 --
 -- Table structure for table `materials`
@@ -93,13 +99,14 @@ CREATE TABLE `materials` (
   `price` double NOT NULL,
   PRIMARY KEY (`materialID`),
   KEY `supplierID_idx` (`supplierID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `materials`
 --
 
+INSERT INTO `materials` VALUES (1,'2x4',2,1,100);
 
 --
 -- Table structure for table `project_materials`
@@ -118,7 +125,7 @@ CREATE TABLE `project_materials` (
   KEY `projectID_idx` (`projectID`),
   KEY `materialID_idx` (`materialID`),
   CONSTRAINT `projectID` FOREIGN KEY (`projectID`) REFERENCES `projects` (`projectid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,14 +145,16 @@ CREATE TABLE `projects` (
   `projectName` varchar(45) DEFAULT NULL,
   `clientID` int(11) DEFAULT NULL,
   PRIMARY KEY (`projectID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` VALUES (1,'lol2',1),(2,'lol2',2);
+INSERT INTO `projects` VALUES (1,'lol2',1);
+INSERT INTO `projects` VALUES (2,'lol2',2);
+INSERT INTO `projects` VALUES (3,'Superstar 10',3);
 
 --
 -- Table structure for table `request_types`
@@ -158,7 +167,7 @@ CREATE TABLE `request_types` (
   `rtID` int(11) NOT NULL,
   `requestType` varchar(45) NOT NULL,
   PRIMARY KEY (`rtID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,7 +194,7 @@ CREATE TABLE `requests` (
   `requestTypel` int(11) NOT NULL,
   `dateRequested` datetime NOT NULL,
   PRIMARY KEY (`requestID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,7 +213,7 @@ CREATE TABLE `suppliers` (
   `supplierID` int(11) NOT NULL,
   `supplierName` varchar(45) NOT NULL,
   PRIMARY KEY (`supplierID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,6 +221,7 @@ CREATE TABLE `suppliers` (
 --
 
 INSERT INTO `suppliers` VALUES (1,'Samsung');
+INSERT INTO `suppliers` VALUES (2,'Addidas');
 
 --
 -- Table structure for table `transactions`
@@ -227,7 +237,7 @@ CREATE TABLE `transactions` (
   `price` decimal(10,0) NOT NULL,
   `date` date NOT NULL,
   `status` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -246,14 +256,18 @@ CREATE TABLE `user_types` (
   `utID` int(11) NOT NULL,
   `type` varchar(45) NOT NULL,
   PRIMARY KEY (`utID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `user_types`
 --
 
-INSERT INTO `user_types` VALUES (0,'Super Admin'),(1,'User Admin'),(2,'Admin'),(3,'Clerk'),(4,'Stockman');
+INSERT INTO `user_types` VALUES (0,'Super Admin');
+INSERT INTO `user_types` VALUES (1,'User Admin');
+INSERT INTO `user_types` VALUES (2,'Admin');
+INSERT INTO `user_types` VALUES (3,'Clerk');
+INSERT INTO `user_types` VALUES (4,'Stockman');
 
 --
 -- Table structure for table `users`
@@ -266,18 +280,19 @@ CREATE TABLE `users` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(45) NOT NULL,
   `fullName` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
   `userType` int(11) NOT NULL,
   PRIMARY KEY (`userID`),
   UNIQUE KEY `userID_UNIQUE` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` VALUES (1,'zard_lao','Zard Lao','U2FsdGVkX1+cDzmiVZ6AzP/qSsqp1dtkRZ91uwu+5mE=',0),(2,'darren_tee_dar','Darren Tee','U2FsdGVkX1/Io0oUbMNETE8reU/qUnJZ+QcmDJDx790=',1);
+INSERT INTO `users` VALUES (1,'zard_lao','Zard Lao','','U2FsdGVkX1+cDzmiVZ6AzP/qSsqp1dtkRZ91uwu+5mE=',0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -288,4 +303,4 @@ INSERT INTO `users` VALUES (1,'zard_lao','Zard Lao','U2FsdGVkX1+cDzmiVZ6AzP/qSsq
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-22 16:47:36
+-- Dump completed on 2019-10-23  2:21:09

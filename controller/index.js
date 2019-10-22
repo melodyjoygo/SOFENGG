@@ -1,10 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const cryptojs = require("crypto-js");
-const bodyparser = require("body-parser");
-const urlencoder = bodyparser.urlencoded({
-    extended: true
-});
+const cryptojs = require("crypto-js")
 
 const Users = require("../model/user");
 
@@ -12,12 +8,13 @@ router.use("/employees", require("./employees"));
 router.use("/clients",require("./clients"))
 router.use("/suppliers",require("./suppliers"))
 router.use("/projects",require("./projects"))
+router.use("/inventory",require("./inventory"))
 
 router.get("/",(req,res)=>{
     res.render("login.hbs")
 })
 
-router.post("/login" ,urlencoder, (req,res)=>{
+router.post("/login" ,(req,res)=>{
     let un = req.body.un
     let pass = req.body.pw
     let empty = false;
@@ -56,10 +53,6 @@ router.post("/login" ,urlencoder, (req,res)=>{
 
 router.get("/dashboard",(req,res)=>{
     res.render("dashboard.hbs")
-})
-
-router.get("/inventory",(req,res)=>{
-    res.render("inventory.hbs")
 })
 
 router.get("/requisitions",(req,res)=>{

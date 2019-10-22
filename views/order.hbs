@@ -5,21 +5,18 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
     <script src = '/jQuery.js'></script>
         <script>
             let warning = {{message}}
             $( document ).ready(function() {
                 if(warning === 1){
-                    alert("Item Already Exists")
-                    window.location = '/inventory';
+                    alert("Supplier Already Exists")
+                    window.location = '/suppliers';
                 }
                 else if(warning === 2){
-                    alert("Item Successfully Added")
-                    window.location = '/inventory'
-                }
-                else if(warning === 3){
-                    alert("Please Do Not Leave Fields Empty")
-                    window.location = '/inventory'
+                    alert("Supplier Successfully Added")
+                    window.location = '/suppliers'
                 }
             });
         </script>
@@ -35,7 +32,7 @@
         }
         .greencircle {
             background-color: #43AA8B;
-            width:4%;
+            width:3.5%;
         }
         .modal {
             display: none; /* Hidden by default */
@@ -78,7 +75,6 @@
             cursor: pointer;
         }
     </style>
-    
     <body>
         <div class = "bg-danger redhead">
             <div class = "searchbar">
@@ -115,6 +111,9 @@
                         <a class="nav-link" href="suppliers">Suppliers</a>
                     </li>
                     <li class="nav-item active">
+                        <a class="nav-link" href="Orders">Orders</a>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="reports">Reports</a>
                     </li>
                 
@@ -122,39 +121,55 @@
                 
             </div>
         </nav>
-        <button class="btn btn-primary" id = "myButton">+ Add Item</button>
 
+        <button class="btn btn-primary" id = "myButton">+ Order Stock</button>
         <div class = "modal" id = "myModal">
             <div class="modal-content">
-                <div>Add project</div>
+                <div>Order Stock</div>
                 <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
-                <form action = "inventory/addItem" method = "post">
-                <div>Material</div>
-                        <select name = "type">
-                            {{#each types}}
-                                <option value="{{this.mtID}}">{{this.type}}</option>
-                            {{/each}}
-                        </select>   
-                    <div>Item Name</div>
-                    <input class="form-control" type = "text" name = "itemName">
-                    <div>Unit of Measure</div>
-                    <input class="form-control" type = "text" name = "unitOfMeasure">
-                    <div>Supplier</div>
-                        <select name = "supplier">
-                            {{#each supplier}}
-                                <option value="{{this.supplierID}}">{{this.supplierName}}</option>
-                            {{/each}}
-                        </select>
-                    <div>Unit Cost</div>
-                    <input class="form-control" type = "number" name = "unitCost">
+                <form action = "suppliers/add" method = "post">
+                    <table>
+                        <tr>
+                            <th>Material
+                            </th>
+                            <th>Item Name
+                            </th>
+                            <th>Qty
+                            </th>
+                            <th>Supplier
+                            </th>
+                            <th>Unit Cost
+                            </th>
+                        </tr>
+                        <tr>
+                            <td><select name = "material">
+                                <option>Option 1</option>
+                                <option>Option 2</option>
+                                <option>Option 3</option>
+                                </select></td>
+                            <td><select name = "itemname">
+                                <option>Option 1</option>
+                                <option>Option 2</option>
+                                <option>Option 3</option>
+                                </select></td>
+                            <td><input name = "qty" type = "number"></td>
+                            <td><select name = "supplier">
+                                <option>Option 1</option>
+                                <option>Option 2</option>
+                                <option>Option 3</option>
+                                </select></td>
+                            <td><input name = "unitcost" type = "text"></td>
+                        </tr>
+                    </table>
                    
                 
-                    <button type = "add" class="btn btn-success">Add</button>
+                    <button type = "submit" class="btn btn-success">Save</button>
                 </form>
+                <span class="d-block rounded-circle close greencircle">&nbsp;+</span>
               </div>   
+               
          </div>
-        
-        <div>Inventory</div>
+        <div>Order</div>
 
         <script>
             // Get the modal
