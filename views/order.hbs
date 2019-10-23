@@ -74,6 +74,19 @@
             text-decoration: none;
             cursor: pointer;
         }
+        #myButton{
+            margin-left: 68%;
+            background-color: #43AA8B;
+            border: none;
+            width: 150px;
+        }
+        #myButton:hover{
+            background-color: rgb(56, 141, 115);
+        }
+        .header_list{
+            display: flex;
+            margin-top: 1%;
+        }
     </style>
     <body>
         <div class = "bg-danger redhead">
@@ -90,39 +103,67 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="dashboard">Dashboard</a>
+                        <a class="nav-link" href="dashboard" >Dashboard</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="inventory">Inventory</a>
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="inventory" >Inventory</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="requisitions">Requisitions</a>
                     </li>
                     <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="employees">Employees</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="clients">Clients</a>
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="clients" >Clients</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="projects">Projects</a>
                     </li>
                     <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="suppliers">Suppliers</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="orders">Orders</a>
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="Orders" style="text-decoration: underline; color:red; font-weight:bold;">Orders</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="reports">Reports</a>
                     </li>
-                
                 </ul>
                 
             </div>
         </nav>
-
-        <button class="btn btn-primary" id = "myButton">+ Order Stock</button>
+        <div>
+            <ul class="header_list">
+                <h3>Orders</h3>
+                 <button class="btn btn-primary" id = "myButton">+ Order Stock</button>
+            </ul>
+        </div>
+        
         <div class = "modal" id = "myModal">
             <div class="modal-content">
                 <div>Order Stock</div>
@@ -155,7 +196,6 @@
               </div>   
                
          </div>
-        <div>Order</div>
 
         <script>
             // Get the modal
