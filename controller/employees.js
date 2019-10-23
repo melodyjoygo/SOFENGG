@@ -5,7 +5,11 @@ const cryptojs = require("crypto-js")
 const Users = require("../model/user");
 
 router.get("/",(req,res)=>{
-    res.render("employees.hbs")
+    Promise.resolve(Users.getAllUsers()).then(function(value){
+        res.render("employees.hbs",{
+            employees:value
+        })  
+    })
 })
 
 router.post("/add",(req,res)=>{
