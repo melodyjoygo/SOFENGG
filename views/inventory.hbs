@@ -56,6 +56,10 @@
         .red-bagger {
             background-color: #ED1B23;
         }
+        .rounded-circle{
+            border-radius: 50%;
+            margin-left: 80%;
+        }
         /* Modal Content/Box */
         .modal-content {
             background-color: #fefefe;
@@ -66,10 +70,13 @@
         }
 
         .close {
-            color: #aaa;
+            color: #fefefe;
+            text-shadow: none;
             float: right;
             font-size: 28px;
             font-weight: bold;
+            opacity: 0.8;
+            line-height: 0.98;
         }
         .close:hover,
         .close:focus {
@@ -89,6 +96,20 @@
         .header_list{
             display: flex;
             margin-top: 1%;
+        }
+        .add_item_list{
+            display: flex;
+        }
+        .pop_label_list{
+            display: flex;;
+        }
+        .indiv_elem{
+            margin-right: 120px;
+        }
+        #addButton{
+            margin-left: 46%;
+            background-color: #43AA8B;
+            border: none;
         }
     </style>
     
@@ -146,30 +167,39 @@
         </div>
         <div class = "modal" id = "myModal">
             <div class="modal-content">
-                <div>Add Item</div>
-                <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
+                <ul class="add_item_list">
+                    <h5>Add Item</h5>
+                    <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
+                </ul>
+                
                 <form action = "inventory/addItem" method = "post">
-                <div>Material</div>
-                        <select name = "type">
-                            {{#each types}}
-                                <option value="{{this.mtID}}">{{this.type}}</option>
-                            {{/each}}
-                        </select>   
-                    <div>Item Name</div>
+                <ul class="pop_label_list">
+                    <div class="indiv_elem"> Material</div>
+                    <div class="indiv_elem">Item Name</div>
+                    <div class="indiv_elem" style="width: 50px; text-align: center;">Unit of Measure</div>
+                    <div class="indiv_elem">Supplier</div>
+                    <div class="indiv_elem">Unit Cost</div>
+                </ul>
+                <ul style="display: flex;">
+                    <select name = "type">
+                        {{#each types}}
+                            <option value="{{this.mtID}}">{{this.type}}</option>
+                        {{/each}}
+                    </select>   
                     <input class="form-control" type = "text" name = "itemName">
-                    <div>Unit of Measure</div>
                     <input class="form-control" type = "text" name = "unitOfMeasure">
-                    <div>Supplier</div>
-                        <select name = "supplier">
-                            {{#each supplier}}
-                                <option value="{{this.supplierID}}">{{this.supplierName}}</option>
-                            {{/each}}
-                        </select>
-                    <div>Unit Cost</div>
+                    <select name = "supplier">
+                        {{#each supplier}}
+                            <option value="{{this.supplierID}}">{{this.supplierName}}</option>
+                        {{/each}}
+                    </select>
+                    
                     <input class="form-control" type = "number" name = "unitCost">
+                </ul>
+                        
                    
                 
-                    <button type = "add" class="btn btn-success">Add</button>
+                <button type = "add" class="btn btn-success" id="addButton">Add</button>
                 </form>
               </div>   
          </div>
