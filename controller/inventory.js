@@ -7,6 +7,14 @@ const Clients = require("../model/clients")
 const Suppliers = require("../model/suppliers");
 const Inventory = require("../model/inventory");
 
+function titleCase(str) {
+   var splitStr = str.toLowerCase().split(' ');
+   for (var i = 0; i < splitStr.length; i++) {
+       splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+   }
+   return splitStr.join(' '); 
+}
+
 router.get("/",(req,res)=>{
     Promise.resolve(materialType.getAll()).then(function(types){
         Promise.resolve(Suppliers.getAll()).then(function(suppliers){
@@ -60,6 +68,28 @@ router.post("/addItem",(req,res)=>{
             })
         
       
+    }
+})
+
+router.post("/addMaterial",(req,res)=>{
+    let material = req.body.materialName
+    var empty = false
+    
+    if(material === "")
+        empty = true;
+    
+    if(empty){
+        res.render("inventory.hbs",{
+            message:3
+        })
+    }
+    else{
+        material = titleCase(material)
+        Promise.resolve(materialType.create(material)).then(function(value){
+            res.render("inventory.hbs",{
+                message:4
+            }) 
+        })
     }
 })
 
