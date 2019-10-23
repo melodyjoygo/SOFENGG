@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src = '/jQuery.js'></script>
         <script>
-            let warning = {{message}}
+           let warning = {{message}}
             $( document ).ready(function() {
                 if(warning === 1){
                     alert("Item Already Exists")
@@ -126,10 +126,10 @@
             </div>
         </nav>
         <button class="btn btn-primary" id = "myButton">+ Add Item</button>
-
+        <button class="btn btn-primary" id = "addMaterialButton">+ Add Material</button>
         <div class = "modal" id = "myModal">
             <div class="modal-content">
-                <div>Add project</div>
+                <div>Add Item</div>
                 <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
                 <form action = "inventory/addItem" method = "post">
                 <div>Material</div>
@@ -157,7 +157,7 @@
               </div>   
          </div>
 
-          <div class = "modal" id = "addMaterialModal">
+         <div class = "modal" id = "addMaterialModal">
             <div class="modal-content">
                 <div>Add New Material</div>
                 <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
