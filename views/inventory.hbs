@@ -58,7 +58,7 @@
         }
         .rounded-circle{
             border-radius: 50%;
-            margin-left: 80%;
+            margin-left: 85%;
         }
         /* Modal Content/Box */
         .modal-content {
@@ -66,7 +66,7 @@
             margin: 15% auto; /* 15% from the top and centered */
             padding: 20px;
             border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
+            width: 70%; /* Could be more or less, depending on screen size */
         }
 
         .close {
@@ -104,16 +104,47 @@
             display: flex;;
         }
         .indiv_elem{
-            margin-right: 120px;
+            margin-right: 10px;
         }
         #addButton{
             margin-left: 46%;
             background-color: #43AA8B;
             border: none;
         }
+        #addButton:hover{
+            background-color: rgb(56, 141, 115);
+        }
 
         #material_dropdown{
-            width: 500px;
+            width: 170px;
+            height: 30px;
+            border: 1px solid #888;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        #itemNameLabel{
+            width: 270px;
+            height: 30px;
+            border: 1px solid #888;
+            margin-right: 10px;
+        }
+        #unitLabel{
+            width: 60px;
+            height: 30px;
+            border: 1px solid #888;
+            margin-right: 10px;
+        }
+        #supplierDrop{
+            height: 30px;
+            width: 200px;
+            border: 1px solid #888;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+        #unitLabel{
+            width: 60px;
+            height: 30px;
+            border: 1px solid #888;
         }
     </style>
     
@@ -135,25 +166,49 @@
                         <a class="nav-link" href="dashboard">Dashboard</a>
                     </li>
                     <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="inventory" style="text-decoration: underline; color:red; font-weight:bold;">Inventory</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="requisitions">Requisitions</a>
                     </li>
                     <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="employees">Employees</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="clients">Clients</a>
                     </li>
                     <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="projects">Projects</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="suppliers">Suppliers</a>
                     </li>
                     <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="Orders">Orders</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="reports">Reports</a>
@@ -178,27 +233,28 @@
                 
                 <form action = "inventory/addItem" method = "post">
                 <ul class="pop_label_list">
-                    <div class="indiv_elem"> Material</div>
-                    <div class="indiv_elem">Item Name</div>
-                    <div class="indiv_elem" style="width: 50px; text-align: center;">Unit of Measure</div>
-                    <div class="indiv_elem">Supplier</div>
-                    <div class="indiv_elem">Unit Cost</div>
+                    <div class="indiv_elem" style="width: 170px; padding-left: 7%;"> Material</div>
+                    <div class="indiv_elem" style="width: 270px; padding-left: 10%">Item Name</div>
+                    <div class="indiv_elem" style="width: 60px; text-align:center; margin-right: 85px;">Unit of Measure</div>
+                    <div class="indiv_elem" style="width: 135px;">Supplier</div>
+                    <div class="indiv_elem" style="width: 60px;">Unit Cost</div>
                 </ul>
+                <hr style="border-top: 1px solid #888;">
                 <ul style="display: flex;">
                     <select name = "type" id="material_dropdown">
                         {{#each types}}
                             <option value="{{this.mtID}}">{{this.type}}</option>
                         {{/each}}
                     </select>   
-                    <input class="form-control" type = "text" name = "itemName">
-                    <input class="form-control" type = "text" name = "unitOfMeasure">
-                    <select name = "supplier">
+                    <input class="form-control" type = "text" name = "itemName" id="itemNameLabel">
+                    <input class="form-control" type = "text" name = "unitOfMeasure" id="unitLabel">
+                    <select name = "supplier" id="supplierDrop">
                         {{#each supplier}}
                             <option value="{{this.supplierID}}">{{this.supplierName}}</option>
                         {{/each}}
                     </select>
                     
-                    <input class="form-control" type = "number" name = "unitCost">
+                    <input class="form-control" type = "number" name = "unitCost" id="unitLabel">
                 </ul>
                         
                    
