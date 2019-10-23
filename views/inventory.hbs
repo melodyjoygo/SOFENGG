@@ -111,6 +111,10 @@
             background-color: #43AA8B;
             border: none;
         }
+
+        #material_dropdown{
+            width: 500px;
+        }
     </style>
     
     <body>
@@ -181,7 +185,7 @@
                     <div class="indiv_elem">Unit Cost</div>
                 </ul>
                 <ul style="display: flex;">
-                    <select name = "type">
+                    <select name = "type" id="material_dropdown">
                         {{#each types}}
                             <option value="{{this.mtID}}">{{this.type}}</option>
                         {{/each}}
