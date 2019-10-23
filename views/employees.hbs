@@ -76,6 +76,20 @@
             text-decoration: none;
             cursor: pointer;
         }
+        #myButton{
+            margin-left: 64%;
+            background-color: #43AA8B;
+            border: none;
+            width: 170px;
+        }
+        #myButton:hover{
+            background-color: rgb(56, 141, 115);
+        }
+        
+        .header_list{
+            display: flex;
+            margin-top: 1%;
+        }
 
     </style>
     
@@ -103,7 +117,7 @@
                         <a class="nav-link" href="requisitions">Requisitions</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="employees">Employees</a>
+                        <a class="nav-link" href="employees" style="text-decoration: underline; color:red; font-weight:bold;">Employees</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="clients">Clients</a>
@@ -126,7 +140,12 @@
             </div>
         </nav>
         
-        <button  id = "myButton" class="btn btn-primary">+ Add Employees</button>
+        <div>
+            <ul class="header_list">
+                <h3> Employees </h3>
+                <button  id = "myButton" class="btn btn-primary">+ Add Employees</button>
+            </ul>
+        </div>
         <div class = "modal" id = "myModal">
           
 
@@ -164,7 +183,6 @@
         </div>
         
         
-        <div>Employees</div>
         
         <script>
         // Get the modal

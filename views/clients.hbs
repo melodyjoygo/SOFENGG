@@ -73,6 +73,20 @@
             text-decoration: none;
             cursor: pointer;
         }
+        #myButton{
+            margin-left: 68%;
+            background-color: #43AA8B;
+            border: none;
+            width: 150px;
+        }
+        #myButton:hover{
+            background-color: rgb(56, 141, 115);
+        }
+        
+        .header_list{
+            display: flex;
+            margin-top: 1%;
+        }
     </style>
     <body>
         <div class = "bg-danger redhead">
@@ -101,7 +115,7 @@
                         <a class="nav-link" href="employees">Employees</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="clients">Clients</a>
+                        <a class="nav-link" href="clients" style="text-decoration: underline; color:red; font-weight:bold;">Clients</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="projects">Projects</a>
@@ -120,7 +134,13 @@
                 
             </div>
         </nav>
-        <button  id = "myButton" class="btn btn-primary">+ Add Clients</button>
+        <div>
+            <ul class="header_list">
+                <h3> Clients </h3>
+                <button  id = "myButton" class="btn btn-primary">+ Add Clients</button>
+            </ul>
+        </div>
+        
         <div class = "modal" id = "myModal">
           
 
@@ -144,7 +164,6 @@
                
             </div>
         </div>
-        <div>Clients</div>
         <script>
         // Get the modal
         var modal = document.getElementById("myModal");

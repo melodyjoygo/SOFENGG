@@ -77,6 +77,19 @@
             text-decoration: none;
             cursor: pointer;
         }
+        #myButton{
+            margin-left: 65%;
+            background-color: #43AA8B;
+            border: none;
+            width: 150px;
+        }
+        #myButton:hover{
+            background-color: rgb(56, 141, 115);
+        }
+        .header_list{
+            display: flex;
+            margin-top: 1%;
+        }
     </style>
     
     <body>
@@ -97,7 +110,7 @@
                         <a class="nav-link" href="dashboard">Dashboard</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="inventory">Inventory</a>
+                        <a class="nav-link" href="inventory" style="text-decoration: underline; color:red; font-weight:bold;">Inventory</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="requisitions">Requisitions</a>
@@ -125,11 +138,15 @@
                 
             </div>
         </nav>
-        <button class="btn btn-primary" id = "myButton">+ Add Item</button>
-
+        <div>
+            <ul class="header_list">
+                <h3> Inventory </h2>
+                <button class="btn btn-primary" id = "myButton">+ Add Item</button>
+            </ul>
+        </div>
         <div class = "modal" id = "myModal">
             <div class="modal-content">
-                <div>Add project</div>
+                <div>Add Item</div>
                 <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
                 <form action = "inventory/addItem" method = "post">
                 <div>Material</div>
@@ -157,7 +174,6 @@
               </div>   
          </div>
         
-        <div>Inventory</div>
 
         <script>
             // Get the modal
