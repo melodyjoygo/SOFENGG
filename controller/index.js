@@ -1,14 +1,15 @@
-const express = require("express");
+const express = require("express")
 const router = express.Router();
 const cryptojs = require("crypto-js")
 
-const Users = require("../model/user");
+const Users = require("../model/user")
 
-router.use("/employees", require("./employees"));
+router.use("/employees", require("./employees"))
 router.use("/clients",require("./clients"))
 router.use("/suppliers",require("./suppliers"))
 router.use("/projects",require("./projects"))
 router.use("/inventory",require("./inventory"))
+router.use("/orders",require("./orders"))
 
 router.get("/",(req,res)=>{
     res.render("login.hbs")

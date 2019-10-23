@@ -11,12 +11,12 @@
             let warning = {{message}}
             $( document ).ready(function() {
                 if(warning === 1){
-                    alert("Supplier Already Exists")
-                    window.location = '/suppliers';
+                    alert("Please Do Not Leave Empty Fields")
+                    window.location = '/orders';
                 }
                 else if(warning === 2){
-                    alert("Supplier Successfully Added")
-                    window.location = '/suppliers'
+                    alert("Order Successfully Placed")
+                    window.location = '/orders'
                 }
             });
         </script>
@@ -111,7 +111,7 @@
                         <a class="nav-link" href="suppliers">Suppliers</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="Orders">Orders</a>
+                        <a class="nav-link" href="orders">Orders</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="reports">Reports</a>
@@ -127,45 +127,31 @@
             <div class="modal-content">
                 <div>Order Stock</div>
                 <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
-                <form action = "suppliers/add" method = "post">
+                <form action = "orders/add" method = "post">
                     <table>
                         <tr>
-                            <th>Material
-                            </th>
                             <th>Item Name
                             </th>
                             <th>Qty
-                            </th>
-                            <th>Supplier
                             </th>
                             <th>Unit Cost
                             </th>
                         </tr>
                         <tr>
-                            <td><select name = "material">
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                </select></td>
-                            <td><select name = "itemname">
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
+                            <td><select name = "item">
+                                {{#each items}}
+                                    <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
+                                {{/each}}
+                                
                                 </select></td>
                             <td><input name = "qty" type = "number"></td>
-                            <td><select name = "supplier">
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                </select></td>
-                            <td><input name = "unitcost" type = "text"></td>
+                            <td><input name = "unitcost" type = "number"></td>
                         </tr>
                     </table>
                    
                 
                     <button type = "submit" class="btn btn-success">Save</button>
                 </form>
-                <span class="d-block rounded-circle close greencircle">&nbsp;+</span>
               </div>   
                
          </div>

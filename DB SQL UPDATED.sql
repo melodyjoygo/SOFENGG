@@ -35,9 +35,7 @@ CREATE TABLE `clients` (
 -- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` VALUES (1,'Riot Games');
-INSERT INTO `clients` VALUES (2,'Samsung');
-INSERT INTO `clients` VALUES (3,'Adidas');
+INSERT INTO `clients` VALUES (1,'Riot Games'),(2,'Samsung'),(3,'Adidas');
 
 --
 -- Table structure for table `inventory`
@@ -80,9 +78,7 @@ CREATE TABLE `material_types` (
 -- Dumping data for table `material_types`
 --
 
-INSERT INTO `material_types` VALUES (1,'Plastic');
-INSERT INTO `material_types` VALUES (2,'Wood');
-INSERT INTO `material_types` VALUES (3,'Acrylic');
+INSERT INTO `material_types` VALUES (1,'Plastic'),(2,'Wood'),(3,'Acrylic');
 
 --
 -- Table structure for table `materials`
@@ -152,9 +148,7 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` VALUES (1,'lol2',1);
-INSERT INTO `projects` VALUES (2,'lol2',2);
-INSERT INTO `projects` VALUES (3,'Superstar 10',3);
+INSERT INTO `projects` VALUES (1,'lol2',1),(2,'lol2',2),(3,'Superstar 10',3);
 
 --
 -- Table structure for table `request_types`
@@ -220,8 +214,7 @@ CREATE TABLE `suppliers` (
 -- Dumping data for table `suppliers`
 --
 
-INSERT INTO `suppliers` VALUES (1,'Samsung');
-INSERT INTO `suppliers` VALUES (2,'Addidas');
+INSERT INTO `suppliers` VALUES (1,'Samsung'),(2,'Addidas');
 
 --
 -- Table structure for table `transactions`
@@ -236,7 +229,8 @@ CREATE TABLE `transactions` (
   `supplierID` int(11) NOT NULL,
   `price` decimal(10,0) NOT NULL,
   `date` date NOT NULL,
-  `status` varchar(45) NOT NULL
+  `status` varchar(45) NOT NULL,
+  `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -244,6 +238,7 @@ CREATE TABLE `transactions` (
 -- Dumping data for table `transactions`
 --
 
+INSERT INTO `transactions` VALUES (1,1,1,100,'2019-10-23','Pending',2);
 
 --
 -- Table structure for table `user_types`
@@ -263,11 +258,7 @@ CREATE TABLE `user_types` (
 -- Dumping data for table `user_types`
 --
 
-INSERT INTO `user_types` VALUES (0,'Super Admin');
-INSERT INTO `user_types` VALUES (1,'User Admin');
-INSERT INTO `user_types` VALUES (2,'Admin');
-INSERT INTO `user_types` VALUES (3,'Clerk');
-INSERT INTO `user_types` VALUES (4,'Stockman');
+INSERT INTO `user_types` VALUES (0,'Super Admin'),(1,'User Admin'),(2,'Admin'),(3,'Clerk'),(4,'Stockman');
 
 --
 -- Table structure for table `users`
@@ -303,4 +294,4 @@ INSERT INTO `users` VALUES (1,'zard_lao','Zard Lao','','U2FsdGVkX1+cDzmiVZ6AzP/q
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-23  2:21:09
+-- Dump completed
