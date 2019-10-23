@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src = '/jQuery.js'></script>
         <script>
-            let warning = {{message}}
+           let warning = {{message}}
             $( document ).ready(function() {
                 if(warning === 1){
                     alert("Item Already Exists")
@@ -19,6 +19,10 @@
                 }
                 else if(warning === 3){
                     alert("Please Do Not Leave Fields Empty")
+                    window.location = '/inventory'
+                }
+                else if(warning === 4){
+                    alert("Material Added Successfully")
                     window.location = '/inventory'
                 }
             });
@@ -126,10 +130,10 @@
             </div>
         </nav>
         <button class="btn btn-primary" id = "myButton">+ Add Item</button>
-
+        <button class="btn btn-primary" id = "addMaterialButton">+ Add Material</button>
         <div class = "modal" id = "myModal">
             <div class="modal-content">
-                <div>Add project</div>
+                <div>Add Item</div>
                 <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
                 <form action = "inventory/addItem" method = "post">
                 <div>Material</div>
@@ -157,12 +161,12 @@
               </div>   
          </div>
 
-          <div class = "modal" id = "addMaterialModal">
+         <div class = "modal" id = "addMaterialModal">
             <div class="modal-content">
                 <div>Add New Material</div>
                 <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
                 <form action = "inventory/addMaterial" method = "post">
-                    <div>Item Name</div>
+                    <div>Material Name</div>
                     <input class="form-control" type = "text" name = "materialName">
                 
                 
@@ -208,7 +212,7 @@
             var btn2 = document.getElementById("addMaterialButton");
     
             // Get the <span> element that closes the modal
-            var span2 = document.getElementsByClassName("close")[0];
+            var span2 = document.getElementsByClassName("close")[1];
     
             // When the user clicks on the button, open the modal
             btn2.onclick = function() {
