@@ -128,6 +128,15 @@
         
         <button  id = "myButton" class="btn btn-primary">+ Add Employees</button>
         <div class = "modal" id = "myModal">
+            <div>Employee list</div>
+            <table class = "list">
+            <tr>
+                <td>Name</td>
+                <td>Position</td>
+                <td>Department</td>
+              
+            </tr>
+            </table>
           
 
             <!-- The Modal -->
@@ -164,7 +173,17 @@
         </div>
         
         
-        <div>Employees</div>
+        <div>Employee list</div>
+        <table class = "list">
+            <tr>
+                <th>Name</th>
+            </tr>
+            {{#each employees}}
+                <tr>
+                    <td>{{this.fullName}}</td>
+                </tr>                    
+            {{/each}}
+        </table>
         
         <script>
         // Get the modal
