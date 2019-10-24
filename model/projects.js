@@ -1,9 +1,9 @@
 const Database = require("./database");
 var database = new Database();
 
-exports.create = function(projectName, clientID,projectNumber,dateAdded) {
+exports.create = function(clientID,projectNumber,dateAdded) {
     Promise.resolve(database.query("SELECT COUNT(projectID) AS 'count' FROM projects")).then(function(value) {
-        database.query("INSERT INTO projects (projectID, projectName, clientID,projectNumber,dateAdded) VALUES ?", [[[(value[0].count + 1), projectName, clientID,projectNumber,dateAdded]]])
+        database.query("INSERT INTO projects (projectID, clientID,projectNumber,dateAdded) VALUES ?", [[[(value[0].count + 1), clientID,projectNumber,dateAdded]]])
     })
 }
 
