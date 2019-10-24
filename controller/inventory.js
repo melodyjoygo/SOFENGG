@@ -74,7 +74,7 @@ router.post("/addItem",(req,res)=>{
 router.post("/addMaterial",(req,res)=>{
     let material = req.body.materialName
     var empty = false
-    
+    var exist = false
     if(material === "")
         empty = true;
     
@@ -84,12 +84,26 @@ router.post("/addMaterial",(req,res)=>{
         })
     }
     else{
-        material = titleCase(material)
-        Promise.resolve(materialType.create(material)).then(function(value){
-            res.render("inventory.hbs",{
-                message:4
-            }) 
+        Promise.resolve(materialType.getAll()).then(function(value){
+            for(let i = 0; i < value.length(); i++){
+                if(material.toLowerCase() === value[i].type.toLowerCase())
+                    exist = true
+            }
         })
+        
+        if(exist){
+            res.render("inventory.hbs",{
+                    message:5
+            })
+        }
+        else{
+            material = titleCase(material)
+            Promise.resolve(materialType.create(material)).then(function(value){
+                res.render("inventory.hbs",{
+                    message:4
+                }) 
+            })  
+        }
     }
 })
 
