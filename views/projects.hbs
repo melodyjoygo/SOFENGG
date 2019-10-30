@@ -77,6 +77,19 @@
             text-decoration: none;
             cursor: pointer;
         }
+        #myButton{
+            margin-left: 67%;
+            background-color: #43AA8B;
+            border: none;
+            width: 150px;
+        }
+        #myButton:hover{
+            background-color: rgb(56, 141, 115);
+        }
+        .header_list{
+            display: flex;
+            margin-top: 1%;
+        }
     </style>
     <body>
         <div class = "bg-danger redhead">
@@ -96,42 +109,69 @@
                         <a class="nav-link" href="dashboard">Dashboard</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="inventory">Inventory</a>
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="inventory" >Inventory</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="requisitions">Requisitions</a>
                     </li>
                     <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="employees">Employees</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="clients">Clients</a>
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="projects">Projects</a>
+                        <a class="nav-link" href="clients" >Clients</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="projects" style="text-decoration: underline; color:red; font-weight:bold;">Projects</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="suppliers">Suppliers</a>
                     </li>
                     <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="Orders">Orders</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="reports">Reports</a>
                     </li>
-                
                 </ul>
                 
             </div>
         </nav>
-        <button class="btn btn-primary" id = "myButton">+ Add Projects</button>
+        <div>
+            <ul class="header_list">
+                <h3> Projects </h3>
+                <button class="btn btn-primary" id = "myButton">+ Add Projects</button>
+            </ul>
+        </div>
+        
         <div class = "modal" id = "myModal">
             <div class="modal-content">
                 <div>Add project</div>
                 <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
                 <form action = "projects/add" method = "post">
-                    <div>Project name</div>
-                    <input class="form-control" type = "text" name = "projectName">
                     <div>Client name:</div>
                         <select name = "clientID">
                             {{#each clientList}}
@@ -143,7 +183,6 @@
             </div>   
                
          </div>
-        <div>Projects</div>
         <script>
         // Get the modal
         var modal = document.getElementById("myModal");

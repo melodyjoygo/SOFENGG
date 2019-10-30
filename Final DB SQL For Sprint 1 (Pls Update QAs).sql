@@ -10,8 +10,6 @@ USE `softengdb`;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
  SET NAMES utf8 ;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
@@ -35,7 +33,9 @@ CREATE TABLE `clients` (
 -- Dumping data for table `clients`
 --
 
+/*!40000 ALTER TABLE `clients` DISABLE KEYS */;
 INSERT INTO `clients` VALUES (1,'Riot Games'),(2,'Samsung'),(3,'Adidas');
+/*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 
 --
 -- Table structure for table `inventory`
@@ -58,7 +58,9 @@ CREATE TABLE `inventory` (
 -- Dumping data for table `inventory`
 --
 
+/*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
 INSERT INTO `inventory` VALUES (1,1,0,'2019-10-22');
+/*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 
 --
 -- Table structure for table `material_types`
@@ -78,7 +80,9 @@ CREATE TABLE `material_types` (
 -- Dumping data for table `material_types`
 --
 
-INSERT INTO `material_types` VALUES (1,'Plastic'),(2,'Wood'),(3,'Acrylic');
+/*!40000 ALTER TABLE `material_types` DISABLE KEYS */;
+INSERT INTO `material_types` VALUES (1,'Plastic'),(2,'Wood'),(3,'Acrylic'),(4,'Metal'),(5,'Bronze'),(6,'Gold');
+/*!40000 ALTER TABLE `material_types` ENABLE KEYS */;
 
 --
 -- Table structure for table `materials`
@@ -102,7 +106,9 @@ CREATE TABLE `materials` (
 -- Dumping data for table `materials`
 --
 
+/*!40000 ALTER TABLE `materials` DISABLE KEYS */;
 INSERT INTO `materials` VALUES (1,'2x4',2,1,100);
+/*!40000 ALTER TABLE `materials` ENABLE KEYS */;
 
 --
 -- Table structure for table `project_materials`
@@ -128,6 +134,8 @@ CREATE TABLE `project_materials` (
 -- Dumping data for table `project_materials`
 --
 
+/*!40000 ALTER TABLE `project_materials` DISABLE KEYS */;
+/*!40000 ALTER TABLE `project_materials` ENABLE KEYS */;
 
 --
 -- Table structure for table `projects`
@@ -138,8 +146,9 @@ DROP TABLE IF EXISTS `projects`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `projects` (
   `projectID` int(11) NOT NULL,
-  `projectName` varchar(45) DEFAULT NULL,
   `clientID` int(11) DEFAULT NULL,
+  `projectNumber` varchar(45) DEFAULT NULL,
+  `dateAdded` date DEFAULT NULL,
   PRIMARY KEY (`projectID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -148,7 +157,9 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` VALUES (1,'lol2',1),(2,'lol2',2),(3,'Superstar 10',3);
+/*!40000 ALTER TABLE `projects` DISABLE KEYS */;
+INSERT INTO `projects` VALUES (1,1,'P19010-00000','2019-10-24'),(2,2,'P19010-00001','2019-10-24'),(3,3,'P19010-00002','2019-10-24');
+/*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 
 --
 -- Table structure for table `request_types`
@@ -168,6 +179,8 @@ CREATE TABLE `request_types` (
 -- Dumping data for table `request_types`
 --
 
+/*!40000 ALTER TABLE `request_types` DISABLE KEYS */;
+/*!40000 ALTER TABLE `request_types` ENABLE KEYS */;
 
 --
 -- Table structure for table `requests`
@@ -195,6 +208,8 @@ CREATE TABLE `requests` (
 -- Dumping data for table `requests`
 --
 
+/*!40000 ALTER TABLE `requests` DISABLE KEYS */;
+/*!40000 ALTER TABLE `requests` ENABLE KEYS */;
 
 --
 -- Table structure for table `suppliers`
@@ -214,7 +229,9 @@ CREATE TABLE `suppliers` (
 -- Dumping data for table `suppliers`
 --
 
+/*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
 INSERT INTO `suppliers` VALUES (1,'Samsung'),(2,'Addidas');
+/*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
 
 --
 -- Table structure for table `transactions`
@@ -238,7 +255,9 @@ CREATE TABLE `transactions` (
 -- Dumping data for table `transactions`
 --
 
+/*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
 INSERT INTO `transactions` VALUES (1,1,1,100,'2019-10-23','Pending',2);
+/*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 
 --
 -- Table structure for table `user_types`
@@ -258,7 +277,9 @@ CREATE TABLE `user_types` (
 -- Dumping data for table `user_types`
 --
 
+/*!40000 ALTER TABLE `user_types` DISABLE KEYS */;
 INSERT INTO `user_types` VALUES (0,'Super Admin'),(1,'User Admin'),(2,'Admin'),(3,'Clerk'),(4,'Stockman');
+/*!40000 ALTER TABLE `user_types` ENABLE KEYS */;
 
 --
 -- Table structure for table `users`
@@ -283,8 +304,31 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` VALUES (1,'zard_lao','Zard Lao','','U2FsdGVkX1+cDzmiVZ6AzP/qSsqp1dtkRZ91uwu+5mE=',0);
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'zard_lao','Zard Lao','','U2FsdGVkX1+cDzmiVZ6AzP/qSsqp1dtkRZ91uwu+5mE=',0),(2,'darren_tee_dar','Darren Tee','dardartee7@gmail.com','U2FsdGVkX185G14xPyaD+tIxLjsyxwvkxrROn8N9XQI=',1);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+--
+-- Table structure for table `year_tracker`
+--
+
+DROP TABLE IF EXISTS `year_tracker`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `year_tracker` (
+  `yearID` int(11) NOT NULL,
+  `currYear` int(11) NOT NULL,
+  PRIMARY KEY (`yearID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `year_tracker`
+--
+
+/*!40000 ALTER TABLE `year_tracker` DISABLE KEYS */;
+INSERT INTO `year_tracker` VALUES (1,2019);
+/*!40000 ALTER TABLE `year_tracker` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

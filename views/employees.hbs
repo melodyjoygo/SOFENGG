@@ -30,7 +30,7 @@
     </head>
     <style>
         .measurecirc {
-            width:3.8%;
+            width:8%;
             
         }
         .redhead {
@@ -54,6 +54,10 @@
             background-color: rgb(0,0,0); /* Fallback color */
             background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         }
+        .rounded-circle{
+            border-radius: 50%;
+            margin-left: 37%;
+        }
 
         /* Modal Content/Box */
         .modal-content {
@@ -61,14 +65,17 @@
             margin: 15% auto; /* 15% from the top and centered */
             padding: 20px;
             border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
+            width: 30%; /* Could be more or less, depending on screen size */
         }
 
         .close {
-            color: #aaa;
+            color: #fefefe;
+            text-shadow: none;
             float: right;
             font-size: 28px;
             font-weight: bold;
+            opacity: 0.8;
+            line-height: 0.98;
         }
         .close:hover,
         .close:focus {
@@ -76,6 +83,96 @@
             text-decoration: none;
             cursor: pointer;
         }
+        #myButton{
+            margin-left: 64%;
+            background-color: #43AA8B;
+            border: none;
+            width: 170px;
+        }
+        #myButton:hover{
+            background-color: rgb(56, 141, 115);
+        }
+        
+        .header_list{
+            display: flex;
+            margin-top: 1%;
+        }
+        .add_item_list{
+            display: flex;
+        }
+        
+        .pop_label_list{
+            display: flex;
+            margin-bottom: 3px;
+        }
+        #firstName{
+            height: 30px;
+            width: 140px;
+            margin-right: 5px;
+        }
+        #lastNameLabel{
+            margin-left: 75px;
+        }
+        #lastName{
+            height: 30px;
+            width: 140px;
+            margin-right: 5px;
+        }
+        #nicknameLabel{
+            margin-left: 40px;
+            margin-top: -5px;
+        }
+        #nickName{
+            height: 30px;
+            width: 280px;
+            margin-top: 5px;
+            margin-left: 40px;
+            margin-right: 5px;
+        }
+        #emailLabel{
+            margin-top: 15px;
+            margin-left: 40px;
+        }
+        #emailID{
+            height: 30px;
+            width: 280px;
+            margin-left: 40px;
+            margin-right: 5px;
+        }
+        #pwLabel{
+            margin-top: 15px;
+        }
+        #pwID{
+            height: 30px;
+            width: 140px;
+            margin-right: 5px;
+            margin-top: -7px;
+        }
+        #pwConfirmLabel{
+            margin-left: 80px;
+            margin-top: 15px;
+        }
+        #pwConfirm{
+            height: 30px;
+            width: 140px;
+            margin-right: 5px;
+            margin-top: -7px;
+        }
+        #typeLabel{
+            margin-left: 40px;
+        }
+        #userChoice{
+            margin-left: 40px;
+        }
+        .btn-success{
+            height: 30px;
+            float: right;
+            margin-right: 40px;
+        }
+        #save_btn{
+            background-color: #43AA8B;
+        }
+
 
     </style>
     
@@ -94,39 +191,67 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="dashboard">Dashboard</a>
+                        <a class="nav-link" href="dashboard" >Dashboard</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="inventory">Inventory</a>
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="inventory" >Inventory</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="requisitions">Requisitions</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="employees">Employees</a>
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="clients">Clients</a>
+                        <a class="nav-link" href="employees" style="text-decoration: underline; color:red; font-weight:bold;">Employees</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="clients" >Clients</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="projects">Projects</a>
                     </li>
                     <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="suppliers">Suppliers</a>
+                    </li>
+                    <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="Orders">Orders</a>
                     </li>
                     <li class="nav-item active">
+                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="reports">Reports</a>
                     </li>
-                
                 </ul>
                 
             </div>
         </nav>
         
-        <button  id = "myButton" class="btn btn-primary">+ Add Employees</button>
+        <div>
+            <ul class="header_list">
+                <h3> Employees </h3>
+                <button  id = "myButton" class="btn btn-primary">+ Add Employees</button>
+            </ul>
+        </div>
         <div class = "modal" id = "myModal">
             <div>Employee list</div>
             <table class = "list">
@@ -144,46 +269,46 @@
 
             <!-- Modal content -->
             <div class="modal-content">
-                <div>Add user</div>
-                <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
+                <ul class="add_item_list">
+                    <h5 style="width: 200px;">Add User</h5>
+                    <span class="d-block bg-danger rounded-circle close measurecirc">&times;</span>
+                </ul>
+                <hr style="border-top: 1px solid #888;">
                 <form action = "employees/add" method = "post">
+                <ul class="pop_label_list">
                     <div>First Name</div>
-                    <input class="form-control" type = "text" name = "fname">
-                    <div>Last Name</div>
-                    <input class="form-control" type = "text" name = "lname">
-                    <div>Nick Name</div>
-                    <input class="form-control" type = "text" name = "nickname">
-                    <div>Email Address</div>
-                    <input class="form-control" type = "text" name = "email">
-                    <div>Password</div>
-                    <input class="form-control" type = "password" name = "password">
-                    <div>Confirm Password</div>
-                    <input class="form-control" type = "password" name = "confpassword">
-                    <div>Type of User</div>
-                        <select name = "role">
-                            <option value="1">User Admin</option>
-                            <option value="2">Admin</option>
-                            <option value="3">Clerk</option>
-                            <option value="4">Stockman</option>
-                        </select>
-                    <button type = "submit" class="btn btn-success">Save</button>
+                    <div id="lastNameLabel">Last Name</div>
+                </ul>
+                <ul style="display: flex;">
+                    <input class="form-control" type = "text" name = "fname" id="firstName">
+                    <input class="form-control" type = "text" name = "lname" id="lastName">
+                </ul>
+                <div id="nicknameLabel"> Nickname </div>
+                <input class="form-control" type = "text" name = "nickname" id="nickName">
+                <div id="emailLabel"> Email Address</div>
+                <input class="form-control" type = "text" name = "email" id="emailID">
+                <ul style="display: flex;">
+                    <div id="pwLabel">Password</div>
+                    <div id="pwConfirmLabel">Confirm Password</div>
+                </ul>
+                <ul style="display:flex;">
+                    <input class="form-control" type = "password" name = "password" id="pwID">
+                    <input class="form-control" type = "password" name = "confpassword" id="pwConfirm">
+                </ul>
+                <div id="typeLabel">Type of User</div>
+                <select name = "role" id=userChoice>
+                    <option value="1">User Admin</option>
+                    <option value="2">Admin</option>
+                    <option value="3">Clerk</option>
+                    <option value="4">Stockman</option>
+                </select>    
+                <button type = "submit" class="btn btn-success" id="save_btn">Save</button>
                 </form>
                 
             </div>
         </div>
         
         
-        <div>Employee list</div>
-        <table class = "list">
-            <tr>
-                <th>Name</th>
-            </tr>
-            {{#each employees}}
-                <tr>
-                    <td>{{this.fullName}}</td>
-                </tr>                    
-            {{/each}}
-        </table>
         
         <script>
         // Get the modal
