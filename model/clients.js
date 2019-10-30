@@ -11,3 +11,7 @@ exports.create = function(clientName) {
 exports.getAll = function() {
     return database.query("SELECT * FROM clients");
 }
+
+exports.edit = function(clientID, clientName) {
+   database.query("UPDATE clients SET clientName = ? WHERE clientID = ?", [clientName, clientID]);
+}

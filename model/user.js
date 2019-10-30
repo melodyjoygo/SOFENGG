@@ -22,3 +22,8 @@ exports.getUser = function(name){
 exports.getAllUsers = function() {
     return database.query("SELECT * FROM users");
 }
+
+exports.edit = function(userID, userName,  fullName, email,password, userType) {
+    database.query("UPDATE users SET username = ?, fullname = ?, email = ?, password = ?, userType = ? WHERE userID = ?", [userName,  fullName, email,password, userType, userID]);
+ }
+ 
