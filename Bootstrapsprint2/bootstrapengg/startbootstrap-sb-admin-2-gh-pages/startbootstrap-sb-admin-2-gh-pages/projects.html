@@ -25,6 +25,74 @@
             position:relative;
             right:-790px;
         }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+/* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 80%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+
+/* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {top:-300px; opacity:0} 
+            to {top:0; opacity:1}
+        }
+
+        @keyframes animatetop {
+            from {top:-300px; opacity:0}
+            to {top:0; opacity:1}
+        }
+
+/* The Close Button */
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            padding: 2px 16px;
+  
+            color: black;
+        }
+
+        .modal-body {padding: 2px 16px;}
+
+        .modal-footer {
+            padding: 2px 16px;
+  
+            color: black;
+        }
     </style>
 
     <!-- Custom styles for this template -->
@@ -110,7 +178,7 @@
       </li>
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="reports.html>
+        <a class="nav-link" href="reports.htm"l>
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Reports</span></a>
       </li>
@@ -323,13 +391,65 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Project List<a href="#" class="btn btn-danger btn-icon-split addemp">
+          <h1 class="h3 mb-4 text-gray-800">Project List<a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
                 <span class="icon text-white-50">
                     <b class = "plusicon">+</b>
                 </span>
                 <span class="text">Add Projects</span>
         </a></h1>
-          
+                    <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Add Supplier</h2>
+                        <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
+                        
+                    </div>
+                    <form action = "projects" method = "post">
+                        <div class="modal-body">
+                        
+                            <div>Client Name</div>
+                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "projclientname">
+                            <div>Materials</div>
+                            <table name = "projmaterials">
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Material</th>
+                                    <th>Item</th>
+                                    <th>Qty.</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+                                        <select name = "matname">
+                                            <option value="volvo">Volvo</option>
+                                            <option value="saab">Saab</option>
+                                            <option value="mercedes">Mercedes</option>
+                                            <option value="audi">Audi</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name = "itemname">
+                                            <option value="volvo">Volvo</option>
+                                            <option value="saab">Saab</option>
+                                            <option value="mercedes">Mercedes</option>
+                                            <option value="audi">Audi</option>
+                                        </select>
+                                    </td>
+                                    <td><input type = "number" name = "quant"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Save</button>
+                        </div>
+                    </form>
+                    <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
+                </div>
+
+            </div>       
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -883,7 +1003,33 @@
 
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
+        <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
 
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>
