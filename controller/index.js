@@ -16,11 +16,11 @@ router.get("/",(req,res)=>{
 })
 
 router.post("/login" ,(req,res)=>{
-    let un = req.body.un
+    let email = req.body.email
     let pass = req.body.pw
     let empty = false;
     
-    if(un === "" || pass === "")
+    if(email === "" || pass === "")
         empty = true;
     
     if(empty){
@@ -29,7 +29,7 @@ router.post("/login" ,(req,res)=>{
                 })  
     }
     else {
-        Promise.resolve(Users.getUser(un)).then(function(value){
+        Promise.resolve(Users.getUser(email)).then(function(value){
             if(value != ''){
                 var phash = cryptojs.AES.decrypt(value[0].password,"password_key")
                 var pnormal = phash.toString(cryptojs.enc.Utf8)
@@ -39,7 +39,7 @@ router.post("/login" ,(req,res)=>{
                     })   
                 }
                 else{
-                    res.render("dashboard.hbs")   
+                    res.redirect("/dashboard")   
                 }   
             }
             else{

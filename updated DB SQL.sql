@@ -34,7 +34,7 @@ CREATE TABLE `clients` (
 --
 
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (1,'Riot Games'),(2,'Samsung'),(3,'Adidas');
+INSERT INTO `clients` VALUES (1,'Riot Games'),(2,'Samsung'),(3,'Adidas'),(4,'Apple');
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 
 --
@@ -59,7 +59,7 @@ CREATE TABLE `inventory` (
 --
 
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (1,1,0,'2019-10-22');
+INSERT INTO `inventory` VALUES (1,1,0,'2019-10-22'),(2,2,0,'2019-11-04');
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 
 --
@@ -107,7 +107,7 @@ CREATE TABLE `materials` (
 --
 
 /*!40000 ALTER TABLE `materials` DISABLE KEYS */;
-INSERT INTO `materials` VALUES (1,'2x4',2,1,100);
+INSERT INTO `materials` VALUES (1,'2x4',2,1,100),(2,'2x4',1,1,100);
 /*!40000 ALTER TABLE `materials` ENABLE KEYS */;
 
 --
@@ -158,7 +158,7 @@ CREATE TABLE `projects` (
 --
 
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (1,1,'P19010-00000','2019-10-24'),(2,2,'P19010-00001','2019-10-24'),(3,3,'P19010-00002','2019-10-24');
+INSERT INTO `projects` VALUES (1,1,'P19010-00000','2019-10-24'),(2,2,'P19010-00001','2019-10-24'),(3,3,'P19010-00002','2019-10-24'),(4,4,'P1911-00003','2019-11-04');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 
 --
@@ -230,7 +230,7 @@ CREATE TABLE `suppliers` (
 --
 
 /*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
-INSERT INTO `suppliers` VALUES (1,'Samsung'),(2,'Addidas');
+INSERT INTO `suppliers` VALUES (1,'Samsung'),(2,'Addidas'),(3,'Sadasdas');
 /*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
 
 --
@@ -256,7 +256,7 @@ CREATE TABLE `transactions` (
 --
 
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `transactions` VALUES (1,1,1,100,'2019-10-23','Pending',2);
+INSERT INTO `transactions` VALUES (1,1,1,100,'2019-10-23','Pending',2),(2,1,1,1222,'2019-11-04','Pending',12);
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 
 --
@@ -290,7 +290,6 @@ DROP TABLE IF EXISTS `users`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `users` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
-  `userName` varchar(45) NOT NULL,
   `fullName` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
@@ -305,7 +304,7 @@ CREATE TABLE `users` (
 --
 
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'zard_lao','Zard Lao','','U2FsdGVkX1+cDzmiVZ6AzP/qSsqp1dtkRZ91uwu+5mE=',0),(2,'darren_tee_dar','Darren Tee','dardartee7@gmail.com','U2FsdGVkX185G14xPyaD+tIxLjsyxwvkxrROn8N9XQI=',1);
+INSERT INTO `users` VALUES (1,'Darren Tee','dardartee7@gmail.com','U2FsdGVkX19Bb2wGzgv+J2R3r0BOMnR94+fH/S0nxDY=',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 --
