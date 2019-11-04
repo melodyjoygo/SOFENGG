@@ -23,6 +23,12 @@ exports.getAllUsers = function() {
     return database.query("SELECT * FROM users");
 }
 
+exports.getAllTableView = function() {
+    return database.query("SELECT users.fullname, user_types.type, users.email FROM softengdb.users INNER JOIN softengdb.user_types ON user_types.utID = users.userType");
+}
+
+
+
 exports.edit = function(userID, userName,  fullName, email,password, userType) {
     database.query("UPDATE users SET username = ?, fullname = ?, email = ?, password = ?, userType = ? WHERE userID = ?", [userName,  fullName, email,password, userType, userID]);
  }

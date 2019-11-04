@@ -12,6 +12,10 @@ exports.getAll = function() {
     return database.query("SELECT * FROM clients");
 }
 
+exports.getAllTableView = function() {
+    return database.query("SELECT clients.clientName, MAX(projects.dateAdded) AS lastRequestDate FROM softengdb.clients INNER JOIN softengdb.projects ON clients.clientID = projects.clientID GROUP BY projects.clientID");
+}
+
 exports.edit = function(clientID, clientName) {
    database.query("UPDATE clients SET clientName = ? WHERE clientID = ?", [clientName, clientID]);
 }

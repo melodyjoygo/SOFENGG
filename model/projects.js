@@ -18,4 +18,8 @@ exports.getLatest = function(){
 exports.edit = function(projectID, clientID, projectNumber, dateAdded) {
     database.query("UPDATE projects SET clientID = ?, projectNumber = ?, dateAdded = ? WHERE projectID = ?", [clientID, projectNumber, dateAdded, projectID]);
  }
+
+ exports.getAllTableView = function() {
+    return database.query("SELECT clients.clientName, projects.projectNumber, projects.dateAdded, projects.status FROM softengdb.clients INNER JOIN softengdb.projects ON clients.clientID = projects.clientID;");
+}
  
