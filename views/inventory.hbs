@@ -548,26 +548,18 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Acrylic</td>
-                      <td>Acrylic Blue 2mm</td>
-                      <td>pc</td>
-                      <td>Broadway Graphic Art Enterprises/ Formosa Focus Acrylic </td>
-                      <td>6</td>
-                      <td>800</td>
-                      <td>4800</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Acrylic</td>
-                      <td>Acrylic Black 5mm</td>
-                      <td>pc</td>
-                      <td>Broadway Graphic Art Enterprises/ Formosa Focus Acrylic </td>
-                      <td>5</td>
-                      <td>800</td>
-                      <td>4000</td>
-                    </tr>
+                    {{#each inventory}}
+                      <tr>
+                        <td>{{materialID}}</td>
+                        <td>{{type}}</td>
+                        <td>{{materialName}}</td>
+                        <td>{{unitOfMeasure}}</td>
+                        <td>{{supplierName}}</td>
+                        <td>{{quantity}}</td>
+                        <td>{{price}}</td>
+                        <td>{{total_price}}</td>
+                      </tr>
+                      {{/each}}
                    
                   </tbody>
                 </table>

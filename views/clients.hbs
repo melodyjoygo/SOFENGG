@@ -459,14 +459,13 @@
                       </tr>
                     </tfoot>
                     <tbody>
+                     {{#each clients}}
                       <tr>
-                        <td>Tiger Nixon</td>
-                        <td>October 10, 2019</td>
+                        <td>{{clientName}}</td>
+                        <td>{{lastRequestDate}}</td>
+                        
                       </tr>
-                      <tr>
-                       <td>Tiger Nixon</td>
-                        <td>October 10, 2019</td>
-                      </tr>
+                      {{/each}}
                      
                     </tbody>
                   </table>

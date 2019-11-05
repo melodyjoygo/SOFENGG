@@ -467,19 +467,15 @@
                       </tr>
                     </tfoot>
                     <tbody>
+                      {{#each projects}}
                       <tr>
-                        <td>Bose</td>
-                        <td>P1910-00000</td>
-                        <td>Oct. 12, 2019</td>
-                        <td>Pending</td>
+                        <td>{{clientName}}</td>
+                        <td>{{projectNumber}}</td>
+                        <td>{{dateAdded}}</td>
+                        <td>{{status}}</td>
+                      
                       </tr>
-                      <tr>
-                         <td>Bose</td>
-                        <td>P1910-00000</td>
-                        <td>Oct. 12, 2019</td>
-                        <td>Pending</td>
-                      </tr>
-                     
+                      {{/each}}
                     </tbody>
                   </table>
                 </div>

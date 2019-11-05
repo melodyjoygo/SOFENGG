@@ -479,17 +479,14 @@
                       </tr>
                     </tfoot>
                     <tbody>
+                      {{#each items}}
                       <tr>
-                        <td>Broadway Graphic Art Enterprises</td>
-                        <td>Oct. 10, 2019</td>
-                        <td>Pending</td>
-                       
+                        <td>{{supplierName}}</td>
+                        <td>{{date}}</td>
+                        <td>{{status}}</td>
+                      
                       </tr>
-                      <tr>
-                       <td>Broadway Graphic Art Enterprises</td>
-                        <td>Oct. 10, 2019</td>
-                        <td>Pending</td>
-                      </tr>
+                      {{/each}}
                      
                     </tbody>
                   </table>

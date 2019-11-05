@@ -24,7 +24,7 @@ exports.getAllUsers = function() {
 }
 
 exports.getAllTableView = function() {
-    return database.query("SELECT users.fullname, user_types.type, users.email FROM softengdb.users INNER JOIN softengdb.user_types ON user_types.utID = users.userType");
+    return database.query("SELECT users.fullname AS 'fullName', user_types.type AS 'type', users.email AS 'email' FROM softengdb.users INNER JOIN softengdb.user_types ON user_types.utID = users.userType");
 }
 
 

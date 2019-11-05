@@ -5,7 +5,8 @@ const cryptojs = require("crypto-js")
 const Users = require("../model/user");
 
 router.get("/",(req,res)=>{
-    Promise.resolve(Users.getAllUsers()).then(function(value){
+    Promise.resolve(Users.getAllTableView()).then(function(value){
+        
         res.render("employees.hbs",{
             employees:value
         })  

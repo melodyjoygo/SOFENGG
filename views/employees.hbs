@@ -479,26 +479,22 @@
                         <th>Email</th>
                       </tr>
                     </thead>
-                    <tfoot>
+                     <tfoot>
                       <tr>
                         <th>Name</th>
                         <th>Position</th>
                         <th>Email</th>
                       
                       </tr>
-                    </tfoot>
+                    </tfoot> 
                     <tbody>
+                      {{#each employees}}
                       <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>email@gamil.com</td>
-                        
+                        <td>{{fullName}}</td>
+                        <td>{{type}}</td>
+                        <td>{{email}}</td>
                       </tr>
-                      <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>email@gamil.com</td>
-                      </tr>
+                      {{/each}}
             
                     </tbody>
                   </table>
