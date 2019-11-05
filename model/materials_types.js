@@ -15,3 +15,8 @@ exports.getType = function(mtID){
 exports.getAll = function() {
     return database.query("SELECT * FROM material_types");
 }
+
+exports.edit = function(mtID, type) {
+    database.query("UPDATE material_types SET type = ? WHERE mtID = ?", [type, mtID]);
+ }
+ 

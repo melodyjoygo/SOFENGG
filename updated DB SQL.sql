@@ -1,15 +1,15 @@
-CREATE DATABASE  IF NOT EXISTS `softengdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-USE `softengdb`;
--- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: softengdb
 -- ------------------------------------------------------
--- Server version	8.0.13
+-- Server version	8.0.17
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
- SET NAMES utf8 ;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
@@ -21,7 +21,7 @@ USE `softengdb`;
 
 DROP TABLE IF EXISTS `clients`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `clients` (
   `clientID` int(11) NOT NULL,
   `clientName` varchar(45) NOT NULL,
@@ -33,9 +33,10 @@ CREATE TABLE `clients` (
 -- Dumping data for table `clients`
 --
 
-/*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (1,'Riot Games'),(2,'Samsung'),(3,'Adidas');
-/*!40000 ALTER TABLE `clients` ENABLE KEYS */;
+INSERT INTO `clients` VALUES (1,'Riot Games');
+INSERT INTO `clients` VALUES (2,'Samsung');
+INSERT INTO `clients` VALUES (3,'Adidas');
+INSERT INTO `clients` VALUES (4,'Apple');
 
 --
 -- Table structure for table `inventory`
@@ -43,7 +44,7 @@ INSERT INTO `clients` VALUES (1,'Riot Games'),(2,'Samsung'),(3,'Adidas');
 
 DROP TABLE IF EXISTS `inventory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `inventory` (
   `inventoryID` int(11) NOT NULL,
   `materialID` int(11) NOT NULL,
@@ -58,9 +59,8 @@ CREATE TABLE `inventory` (
 -- Dumping data for table `inventory`
 --
 
-/*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
 INSERT INTO `inventory` VALUES (1,1,0,'2019-10-22');
-/*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
+INSERT INTO `inventory` VALUES (2,2,0,'2019-11-04');
 
 --
 -- Table structure for table `material_types`
@@ -68,7 +68,7 @@ INSERT INTO `inventory` VALUES (1,1,0,'2019-10-22');
 
 DROP TABLE IF EXISTS `material_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `material_types` (
   `mtID` int(11) NOT NULL,
   `type` varchar(45) NOT NULL,
@@ -80,9 +80,12 @@ CREATE TABLE `material_types` (
 -- Dumping data for table `material_types`
 --
 
-/*!40000 ALTER TABLE `material_types` DISABLE KEYS */;
-INSERT INTO `material_types` VALUES (1,'Plastic'),(2,'Wood'),(3,'Acrylic'),(4,'Metal'),(5,'Bronze'),(6,'Gold');
-/*!40000 ALTER TABLE `material_types` ENABLE KEYS */;
+INSERT INTO `material_types` VALUES (1,'Plastic');
+INSERT INTO `material_types` VALUES (2,'Wood');
+INSERT INTO `material_types` VALUES (3,'Acrylic');
+INSERT INTO `material_types` VALUES (4,'Metal');
+INSERT INTO `material_types` VALUES (5,'Bronze');
+INSERT INTO `material_types` VALUES (6,'Gold');
 
 --
 -- Table structure for table `materials`
@@ -90,13 +93,14 @@ INSERT INTO `material_types` VALUES (1,'Plastic'),(2,'Wood'),(3,'Acrylic'),(4,'M
 
 DROP TABLE IF EXISTS `materials`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `materials` (
   `materialID` int(11) NOT NULL,
   `materialName` varchar(45) NOT NULL,
   `materialType` int(11) NOT NULL,
   `supplierID` int(11) NOT NULL,
   `price` double NOT NULL,
+  `unitOfMeasure` int(11) NOT NULL,
   PRIMARY KEY (`materialID`),
   KEY `supplierID_idx` (`supplierID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -106,9 +110,8 @@ CREATE TABLE `materials` (
 -- Dumping data for table `materials`
 --
 
-/*!40000 ALTER TABLE `materials` DISABLE KEYS */;
-INSERT INTO `materials` VALUES (1,'2x4',2,1,100);
-/*!40000 ALTER TABLE `materials` ENABLE KEYS */;
+INSERT INTO `materials` VALUES (1,'2x4',2,1,100,1);
+INSERT INTO `materials` VALUES (2,'2x4',1,1,100,1);
 
 --
 -- Table structure for table `project_materials`
@@ -116,7 +119,7 @@ INSERT INTO `materials` VALUES (1,'2x4',2,1,100);
 
 DROP TABLE IF EXISTS `project_materials`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `project_materials` (
   `pmID` int(11) NOT NULL,
   `projectID` int(11) NOT NULL,
@@ -126,7 +129,7 @@ CREATE TABLE `project_materials` (
   PRIMARY KEY (`pmID`),
   KEY `projectID_idx` (`projectID`),
   KEY `materialID_idx` (`materialID`),
-  CONSTRAINT `projectID` FOREIGN KEY (`projectID`) REFERENCES `projects` (`projectid`)
+  CONSTRAINT `projectID` FOREIGN KEY (`projectID`) REFERENCES `projects` (`projectID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -134,8 +137,6 @@ CREATE TABLE `project_materials` (
 -- Dumping data for table `project_materials`
 --
 
-/*!40000 ALTER TABLE `project_materials` DISABLE KEYS */;
-/*!40000 ALTER TABLE `project_materials` ENABLE KEYS */;
 
 --
 -- Table structure for table `projects`
@@ -143,7 +144,7 @@ CREATE TABLE `project_materials` (
 
 DROP TABLE IF EXISTS `projects`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `projects` (
   `projectID` int(11) NOT NULL,
   `clientID` int(11) DEFAULT NULL,
@@ -157,9 +158,10 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-/*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (1,1,'P19010-00000','2019-10-24'),(2,2,'P19010-00001','2019-10-24'),(3,3,'P19010-00002','2019-10-24');
-/*!40000 ALTER TABLE `projects` ENABLE KEYS */;
+INSERT INTO `projects` VALUES (1,1,'P19010-00000','2019-10-24');
+INSERT INTO `projects` VALUES (2,2,'P19010-00001','2019-10-24');
+INSERT INTO `projects` VALUES (3,3,'P19010-00002','2019-10-24');
+INSERT INTO `projects` VALUES (4,4,'P1911-00003','2019-11-04');
 
 --
 -- Table structure for table `request_types`
@@ -167,7 +169,7 @@ INSERT INTO `projects` VALUES (1,1,'P19010-00000','2019-10-24'),(2,2,'P19010-000
 
 DROP TABLE IF EXISTS `request_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `request_types` (
   `rtID` int(11) NOT NULL,
   `requestType` varchar(45) NOT NULL,
@@ -179,8 +181,6 @@ CREATE TABLE `request_types` (
 -- Dumping data for table `request_types`
 --
 
-/*!40000 ALTER TABLE `request_types` DISABLE KEYS */;
-/*!40000 ALTER TABLE `request_types` ENABLE KEYS */;
 
 --
 -- Table structure for table `requests`
@@ -188,7 +188,7 @@ CREATE TABLE `request_types` (
 
 DROP TABLE IF EXISTS `requests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `requests` (
   `requestID` int(11) NOT NULL,
   `materialID` int(11) NOT NULL,
@@ -208,8 +208,6 @@ CREATE TABLE `requests` (
 -- Dumping data for table `requests`
 --
 
-/*!40000 ALTER TABLE `requests` DISABLE KEYS */;
-/*!40000 ALTER TABLE `requests` ENABLE KEYS */;
 
 --
 -- Table structure for table `suppliers`
@@ -217,7 +215,7 @@ CREATE TABLE `requests` (
 
 DROP TABLE IF EXISTS `suppliers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `suppliers` (
   `supplierID` int(11) NOT NULL,
   `supplierName` varchar(45) NOT NULL,
@@ -229,9 +227,9 @@ CREATE TABLE `suppliers` (
 -- Dumping data for table `suppliers`
 --
 
-/*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
-INSERT INTO `suppliers` VALUES (1,'Samsung'),(2,'Addidas');
-/*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
+INSERT INTO `suppliers` VALUES (1,'Samsung');
+INSERT INTO `suppliers` VALUES (2,'Addidas');
+INSERT INTO `suppliers` VALUES (3,'Sadasdas');
 
 --
 -- Table structure for table `transactions`
@@ -239,7 +237,7 @@ INSERT INTO `suppliers` VALUES (1,'Samsung'),(2,'Addidas');
 
 DROP TABLE IF EXISTS `transactions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `transactions` (
   `transactionID` int(11) NOT NULL,
   `materialID` int(11) NOT NULL,
@@ -255,9 +253,30 @@ CREATE TABLE `transactions` (
 -- Dumping data for table `transactions`
 --
 
-/*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
 INSERT INTO `transactions` VALUES (1,1,1,100,'2019-10-23','Pending',2);
-/*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
+INSERT INTO `transactions` VALUES (2,1,1,1222,'2019-11-04','Pending',12);
+
+--
+-- Table structure for table `unit_of_measures`
+--
+
+DROP TABLE IF EXISTS `unit_of_measures`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `unit_of_measures` (
+  `uomID` int(11) NOT NULL,
+  `unitOfMeasure` varchar(45) NOT NULL,
+  PRIMARY KEY (`uomID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `unit_of_measures`
+--
+
+INSERT INTO `unit_of_measures` VALUES (1,'pc');
+INSERT INTO `unit_of_measures` VALUES (2,'block');
+INSERT INTO `unit_of_measures` VALUES (3,'pint');
 
 --
 -- Table structure for table `user_types`
@@ -265,7 +284,7 @@ INSERT INTO `transactions` VALUES (1,1,1,100,'2019-10-23','Pending',2);
 
 DROP TABLE IF EXISTS `user_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_types` (
   `utID` int(11) NOT NULL,
   `type` varchar(45) NOT NULL,
@@ -277,9 +296,11 @@ CREATE TABLE `user_types` (
 -- Dumping data for table `user_types`
 --
 
-/*!40000 ALTER TABLE `user_types` DISABLE KEYS */;
-INSERT INTO `user_types` VALUES (0,'Super Admin'),(1,'User Admin'),(2,'Admin'),(3,'Clerk'),(4,'Stockman');
-/*!40000 ALTER TABLE `user_types` ENABLE KEYS */;
+INSERT INTO `user_types` VALUES (0,'Super Admin');
+INSERT INTO `user_types` VALUES (1,'User Admin');
+INSERT INTO `user_types` VALUES (2,'Admin');
+INSERT INTO `user_types` VALUES (3,'Clerk');
+INSERT INTO `user_types` VALUES (4,'Stockman');
 
 --
 -- Table structure for table `users`
@@ -287,10 +308,9 @@ INSERT INTO `user_types` VALUES (0,'Super Admin'),(1,'User Admin'),(2,'Admin'),(
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
-  `userName` varchar(45) NOT NULL,
   `fullName` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
@@ -304,9 +324,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'zard_lao','Zard Lao','','U2FsdGVkX1+cDzmiVZ6AzP/qSsqp1dtkRZ91uwu+5mE=',0),(2,'darren_tee_dar','Darren Tee','dardartee7@gmail.com','U2FsdGVkX185G14xPyaD+tIxLjsyxwvkxrROn8N9XQI=',1);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Darren Tee','dardartee7@gmail.com','U2FsdGVkX19Bb2wGzgv+J2R3r0BOMnR94+fH/S0nxDY=',1);
 
 --
 -- Table structure for table `year_tracker`
@@ -314,7 +332,7 @@ INSERT INTO `users` VALUES (1,'zard_lao','Zard Lao','','U2FsdGVkX1+cDzmiVZ6AzP/q
 
 DROP TABLE IF EXISTS `year_tracker`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `year_tracker` (
   `yearID` int(11) NOT NULL,
   `currYear` int(11) NOT NULL,
@@ -326,9 +344,8 @@ CREATE TABLE `year_tracker` (
 -- Dumping data for table `year_tracker`
 --
 
-/*!40000 ALTER TABLE `year_tracker` DISABLE KEYS */;
 INSERT INTO `year_tracker` VALUES (1,2019);
-/*!40000 ALTER TABLE `year_tracker` ENABLE KEYS */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
@@ -338,4 +355,4 @@ INSERT INTO `year_tracker` VALUES (1,2019);
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed
+-- Dump completed on 2019-11-04 21:43:45

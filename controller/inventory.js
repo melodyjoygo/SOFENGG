@@ -18,9 +18,13 @@ function titleCase(str) {
 router.get("/",(req,res)=>{
     Promise.resolve(materialType.getAll()).then(function(types){
         Promise.resolve(Suppliers.getAll()).then(function(suppliers){
-            res.render("inventory.hbs",{
+            Promise.resolve(Inventory.getAllTableView()).then(function(value){
+        
+                res.render("inventory.hbs",{
                 types:types,
-                supplier:suppliers
+                supplier:suppliers,
+                inventory:value
+                })
             })
         })
     })

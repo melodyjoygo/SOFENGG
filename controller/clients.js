@@ -12,7 +12,11 @@ function titleCase(str) {
 }
 
 router.get("/",(req,res)=>{
-    res.render("clients.hbs")
+    Promise.resolve(Clients.getAllTableView()).then(function(value){
+        res.render("clients.hbs",{
+            clients:value
+        })  
+    })
 })
 
 router.post("/add",(req,res)=>{

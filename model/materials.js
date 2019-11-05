@@ -16,3 +16,8 @@ exports.getAll = function() {
 exports.findItem = function(itemID){
     return database.query("SELECT * FROM materials WHERE materials.materialID =?",[itemID])
 }
+
+exports.edit = function(materialID, materialName, materialType, supplierID, price) {
+    database.query("UPDATE materials SET materialName = ? , materialType = ?, supplierID = ?, price = ? WHERE materialID = ?", [materialName, materialType, supplierID, price, materialID]);
+ }
+ 

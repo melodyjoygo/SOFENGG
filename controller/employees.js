@@ -5,7 +5,8 @@ const cryptojs = require("crypto-js")
 const Users = require("../model/user");
 
 router.get("/",(req,res)=>{
-    Promise.resolve(Users.getAllUsers()).then(function(value){
+    Promise.resolve(Users.getAllTableView()).then(function(value){
+        
         res.render("employees.hbs",{
             employees:value
         })  
@@ -20,23 +21,32 @@ router.post("/add",(req,res)=>{
     let conf = req.body.confpassword
     let type = req.body.role
     let nick = req.body.nickname
-    let un = fname
     let fullname = fname
     let empty = false
-    un += "_" + lname + "_" + nick
+    let notvalid = false
+    var regx = /^([a-z A-Z 0-9\.-]+)@([a-z A-Z 0-9-]+).([a-z A-Z]{2,8})(.[a-z A-Z]{2,8})$/
+    
     fullname += " " + lname
-    un = un.toLowerCase()
     
     if(fname === ""  || lname === "" || email === "" || pass === ""  || conf === "")
         empty = true
+    
+    if(!regx.test(email)){
+        notvalid = true   
+    }
     
     if(empty){
         res.render("employees.hbs",{
                         error:4
                     })
     }
+    else if(notvalid){
+         res.render("employees.hbs",{
+                        error:5
+                    })
+    }
     else{
-        Promise.resolve(Users.checkuser(un)).then(function(value){
+        Promise.resolve(Users.checkuser(email)).then(function(value){
             if(value != ''){
                 res.render("employees.hbs",{
                     error:1
@@ -48,7 +58,7 @@ router.post("/add",(req,res)=>{
                 })    
             }
             else{
-               Promise.resolve(Users.create(un,fullname,email,cryptojs.AES.encrypt(pass,"password_key"),type)).then(function(value){
+               Promise.resolve(Users.create(fullname,email,cryptojs.AES.encrypt(pass,"password_key"),type)).then(function(value){
                     res.render("employees.hbs",{
                         error:3
                     })

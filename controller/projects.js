@@ -6,9 +6,9 @@ const Clients = require("../model/clients")
 const yearTracker = require("../model/year_tracker")
 
 router.get("/",(req,res)=>{
-    Promise.resolve(Clients.getAll()).then(function(value){
+    Promise.resolve(Projects.getAllTableView()).then(function(value){
         res.render("projects.hbs",{
-            clientList:value         
+            projects:value         
         })
     })
 })
