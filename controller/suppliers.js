@@ -12,10 +12,14 @@ function titleCase(str) {
    return splitStr.join(' '); 
 }
 
-router.get("/",(req,res)=>{
-    res.render("suppliers.hbs")
-})
 
+router.get("/",(req,res)=>{
+    Promise.resolve(Suppliers.getAll()).then(function(value){
+        res.render("suppliers.hbs",{
+            suppliers:value         
+        })
+    })
+})
 router.post("/add",(req,res)=>{
     let supplier = req.body.supplierName
     var exist = false
