@@ -10,3 +10,7 @@ exports.create = function(materialID, materialName, materialType, supplierID, pr
 exports.getAll = function() {
     return database.query("SELECT * FROM requests");
 }
+
+exports.getAllTableView = function() {
+    return database.query("SELECT * FROM requests INNER JOIN users ON requests.userID = users.userID");
+}
