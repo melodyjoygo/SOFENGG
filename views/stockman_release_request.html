@@ -438,92 +438,135 @@
 
             </div> 
           
+<div style="display: flex; float: left;">
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4" style="flex-grow:inherit">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                  <th>
+                          Date Requested:
+                          <select name = "date" id="date_dropdown">
+                                  <option value="oct1">October 1</option>
+                                  <option value="oct2">October 2</option>
+                                  <option value="oct3">October 3</option>
+                          </select>
 
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                        <th>
-                                Date Requested:
-                                <select name = "date" id="date_dropdown">
-                                        <option value="oct1">October 1</option>
-                                        <option value="oct2">October 2</option>
-                                        <option value="oct3">October 3</option>
-                                </select>
+                        
+                  </th>   
+              
+              </tr>
+              <tr>
+                      <th>Project Number</th>
+                      <th>Item</th>
+                      <th>Supplier</th>
+                      <th>Qty</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                      <th>Project Number</th>
+                      <th>Item</th>
+                      <th>Supplier</th>
+                      <th>Qty</th>
+                </tr>
+            </tfoot>
+            <tbody>
+            
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-                                <a href="#" class="btn btn-primary btn-icon-split addemp" id = "myBtn2">
-                                        
-                                        <span class="text">Status</span>
-                                     </a>
-                        </th>   
-                    
-                    </tr>
-                    <tr>
-                            <th>Project Number</th>
-                            <th>Item</th>
-                            <th>Supplier</th>
-                            <th>Qty</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                            <th>Project Number</th>
-                            <th>Item</th>
-                            <th>Supplier</th>
-                            <th>Qty</th>
-                      </tr>
-                  </tfoot>
-                  <tbody>
-                  
-                  </tbody>
-                </table>
-              </div>
-            </div>
+  </div>
+  <div style=" display: flex; flex-direction: column; width: fit-content; position:absolute; right: 20px;"> 
+     <!-- Tracking -->
+  <div>
+      <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Tracking</h6>
           </div>
-
-        </div>
-        <div>
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Tracking</h6>
-                </div>
-                <div class="card-body">
-                    <table name = "tracking" class="table table-bordered">
-                        <thead>
-                            <tr>
-                         
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Description</th>
-                                
-                            </tr>
-                        </thead>
-                         
+          <div class="card-body">
+              <table name = "tracking" class="table table-bordered">
+                  <thead>
+                      <tr>
+                   
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Description</th>
                           
-                      </table>
+                      </tr>
+                  </thead>
+                   
+                    
+                </table>
 
-                </div>
-            </div> 
+          </div>
+      </div> 
+  </div>
+  <!-- /.container-fluid -->
+
+  <div>
+
+    <!-- Request Status -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h2>Request Status</h2>
+      
+            
         </div>
-        <!-- /.container-fluid -->
+        <div style="display: flex;">
+                <h3 style= "padding-left: 20px; padding-right: 10px;">Status:</h3>
+                <h3>Approved</h3>
+        </div>
+        
+
+                
+                <table name = "requestStaus" class="table table-bordered">
+                  <thead>
+                      <tr>
+                   
+                          <th>Item</th>
+                          <th>Qty</th>
+                          
+                      </tr>
+                  </thead>
+                   
+                    
+                </table>
+                <div class="modal-footer">
+                    <div >Release Items?</div>
+                    <button type = "submit" class = "btn btn-success">Yes</button>
+                    <button type = "submit" class = "btn btn-danger">No</button>
+                </div>
+            </div>
+            
+        </form>
+        
+    </div>
+
+  </div>
+ 
+
+</div> 
+
+
+</div>
+          
 
       </div>
       <!-- End of Main Content -->
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
+       
+            </footer>
       <!-- End of Footer -->
 
     </div>
@@ -556,47 +599,7 @@
     </div>
   </div>
 
-  <div id="myModal2" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Request Status</h2>
-                <span class="close2 btn btn-danger btn-circle btn-sm">&times;</span>
-                
-            </div>
-            <div style="display: flex;">
-                    <h3 style= "padding-left: 20px; padding-right: 10px;">Status:</h3>
-                    <h3>Approved</h3>
-            </div>
-            
-            <form action = "status" method = "post">
-                <div class="modal-body">
-                    
-                    <table name = "requestStaus" class="table table-bordered">
-                      <thead>
-                          <tr>
-                       
-                              <th>Item</th>
-                              <th>Qty</th>
-                              
-                          </tr>
-                      </thead>
-                       
-                        
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <div >Release Items?</div>
-                    <button type = "submit" class = "btn btn-success">Yes</button>
-                    <button type = "submit" class = "btn btn-danger">No</button>
-                </div>
-            </form>
-            
-        </div>
-
-    </div> 
-
+  
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
