@@ -369,80 +369,24 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Release
+          <h1 class="h3 mb-4 text-gray-800">Price Input</Input>
             <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
             <span class="icon text-white-50">
                 <b class = "plusicon">+</b>
             </span>
-            <span class="text">Request</span>
+            <span class="text">Add Price</span>
          </a>
          
             
         </h1> 
-            <!-- The Modal -->
-       
-          <!-- The Modal -->
-            <div id="myModal" class="modal">
-
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>Request</h2>
-                        <span class="close btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
-                        
-                    </div>
-                    <form action = "stockman_release_request/request" method = "post">
-                        <div class="modal-body">
-                            
-                            <table name = "requestMaterials">
-                                <tr>
-                                    <th>Project Number</th>
-                                    <th>Item Name</th>
-                                    <th>Qty</th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                                <select name = "type" id="material_dropdown">
-                                                        <option value="volvo">Volvo</option>
-                                                        <option value="saab">Saab</option>
-                                                        <option value="mercedes">Mercedes</option>
-                                                        <option value="audi">Audi</option>
-                                                </select>   
-                                    </td>
-                                    <td>
-                                        <select name = "type" id="material_dropdown">
-                                                <option value="volvo">Volvo</option>
-                                                <option value="saab">Saab</option>
-                                                <option value="mercedes">Mercedes</option>
-                                                <option value="audi">Audi</option>
-                                        </select>   
-                                    </td>
-                                
-                                    <td>
-                                        <input class="form-control" type = "number" name = "qty" id="qtyLabel">
-                                    </td>
-                                   
-                                    <td>
-                                            <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Request</button>
-                        </div>
-                    </form>
-                    
-                </div>
-
-
-            </div> 
+         
+             
           
 <div style="display: flex; float: left;">
   <!-- DataTales Example -->
   <div class="card shadow mb-4" style="flex-grow:inherit">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        <h6 class="m-0 font-weight-bold text-primary"></h6>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -450,7 +394,7 @@
             <thead>
               <tr>
                   <th>
-                          Date Requested:
+                          Date Ordered:
                           <select name = "date" id="date_dropdown">
                                   <option value="oct1">October 1</option>
                                   <option value="oct2">October 2</option>
@@ -462,18 +406,18 @@
               
               </tr>
               <tr>
-                      <th>Project Number</th>
                       <th>Item</th>
                       <th>Supplier</th>
                       <th>Qty</th>
+                      <th>Price</th>
               </tr>
             </thead>
             <tfoot>
               <tr>
-                      <th>Project Number</th>
-                      <th>Item</th>
-                      <th>Supplier</th>
-                      <th>Qty</th>
+                <th>Item</th>
+                <th>Supplier</th>
+                <th>Qty</th>
+                <th>Price</th>
                 </tr>
             </tfoot>
             <tbody>
@@ -485,82 +429,40 @@
     </div>
 
   </div>
-  <div style=" display: flex; flex-direction: column; width: fit-content; position:absolute; right: 20px;"> 
+  <div style=" display: flex; float:right;"> 
      <!-- Tracking -->
   <div>
       <div class="card shadow mb-4">
           <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Tracking</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Add price</h6>
           </div>
           <div class="card-body">
-              <table name = "tracking" class="table table-bordered">
-                  <thead>
-                      <tr>
-                   
-                          <th>Date</th>
-                          <th>Status</th>
-                          <th>Description</th>
-                          
-                      </tr>
-                  </thead>
-                   
-                    
-                </table>
+              <div>Item Name</div>
+              <div name = "item"> Acrylic Blue 2mm</div>
+              <div>Invoice Number</div>
+              <select name = "date" id="date_dropdown">
+                <option value="1"> 1</option>
+                <option value="2"> 2</option>
+                <option value="3"> 3</option>
+            </select>
+            <div>Date</div>
+                    <select name = "date" id="date_dropdown">
+                        <option value="oct1">October 1</option>
+                        <option value="oct2">October 2</option>
+                        <option value="oct3">October 3</option>
+                    </select>
+
+            <div>Unit Cost</div>
+            <input class="form-control" type = "number" name = "unitcost" id="unitcostLabel">
 
           </div>
-      </div> 
-  </div>
+    
+  
   <!-- /.container-fluid -->
 
-  <div>
-
-    <!-- Request Status -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h2>Request Status</h2>
-      
-            
-        </div>
-        <div style="display: flex;">
-                <h3 style= "padding-left: 20px; padding-right: 10px;">Status:</h3>
-                <h3>Approved</h3>
-        </div>
-        
-
-                
-                <table name = "requestStaus" class="table table-bordered">
-                  <thead>
-                      <tr>
-                   
-                          <th>Item</th>
-                          <th>Qty</th>
-                          
-                      </tr>
-                  </thead>
-                   
-                    
-                </table>
-                <div class="modal-footer">
-                    <div >Release Items?</div>
-                    <button type = "submit" class = "btn btn-success">Yes</button>
-                    <button type = "submit" class = "btn btn-danger">No</button>
-                </div>
-            </div>
-            
-        </form>
-        
-    </div>
-
-  </div>
  
 
-</div> 
-
-
-</div>
-          
-
-      </div>
+  
       <!-- End of Main Content -->
 
       <!-- Footer -->
