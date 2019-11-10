@@ -21,6 +21,28 @@
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
+        .bottomtxt {
+            position:relative;
+           top:20px;
+        }
+        .fieldheight {
+            height:50px;
+            
+        }
+        .unitcost {
+            width:100px;
+        }
+        .suppliertxt {
+            width:200px;
+        }
+        .itemnametxt {
+            width:150px;
+            
+        }
+        .smallertxt {
+            width:50px;
+           
+        }
         .plusicon {
             color:white;
         }
@@ -395,7 +417,7 @@
 
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Inventory
-            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
+            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn" data-toggle="modal" data-target="#myModal">
             <span class="icon text-white-50">
                 <b class = "plusicon">+</b>
             </span>
@@ -407,30 +429,29 @@
             </span>
             <span class="text">Add Item</span> </a>
         </h1> 
-            <!-- The Modal -->
-        <div id="myModal" class="modal">
-
-            <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Add New Material</h2>
-                    <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
-                        
-                </div>
-                <form action = "inventmat" method = "post">
+ <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop = "false">
+                <div class="modal-dialog " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Add New Material</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+                            </button>
+                        </div>
+                        <form>
                         <div class="modal-body">
-                        
                             <div>Name of Material</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "inventmatname">
-                         
+                            <input type = "text" name = "matname" class = "fullinput">
                         </div>
                         <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Save</button>
+       
+                            <button type="button" class="btn btn-success">Save</button>
                         </div>
-                    </form>
+                            </form>
+                    </div>
+                </div>
             </div>
-
-        </div>
           <!-- The Modal -->
             <div id="myModal2" class="modal">
 
@@ -438,52 +459,43 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2>Add Item</h2>
-                        <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
+                        <span class="close2 btn btn-danger btn-circle btn-sm">&times;</span>
                         
                     </div>
                     <form action = "inventitem" method = "post">
                         <div class="modal-body">
-                            
-                            <table name = "inventmaterials">
-                                <tr>
-                               
-                                    <th>Material</th>
-                                    <th>Item Name</th>
-                                    <th>Qty.</th>
-                                    <th>Supplier</th>
-                                    <th>Unit Cost</th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class = "fieldheight bottomtxt">Material</div> 
                                         <select name = "matname">
-                                            <option value="volvo">Volvo</option>
+                                            <option value="volvo">Volvo</option>    
                                             <option value="saab">Saab</option>
                                             <option value="mercedes">Mercedes</option>
                                             <option value="audi">Audi</option>
                                         </select>
-                                    </td>
-                                    <td>
-                                        <select name = "itemname">
-                                            <option value="volvo">Volvo</option>
-                                            <option value="saab">Saab</option>
-                                            <option value="mercedes">Mercedes</option>
-                                            <option value="audi">Audi</option>
-                                        </select>
-                                    </td>
-                                    <td><input type = "number" name = "quant"></td>
-                                    <td>
-                                        <select name = "supplier">
-                                            <option value="volvo">Volvo</option>
-                                            <option value="saab">Saab</option>
-                                            <option value="mercedes">Mercedes</option>
-                                            <option value="audi">Audi</option>
-                                        </select>
-                                    </td>
-                                    <td><input type = "text" name = "unitcost"></td>
-                                </tr>
-                            </table>
-                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class = "fieldheight bottomtxt">Item Name</div>
+                                        <input type = "text" class = "itemnametxt">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class = "fieldheight bottomtxt">Unit of Measure</div>
+                                        <input type = "text" class = "smallertxt">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class = "fieldheight bottomtxt">Supplier</div>
+                                        <input type = "text" class = "suppliertxt">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class = "fieldheight bottomtxt">Unit Cost</div>
+                                        <input type = "text" class = "unitcost">
+                                    </div>
+                                    
+                                </div>
+   
+  </div>
+</div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
                         </div>
@@ -1058,6 +1070,7 @@
         var span = document.getElementsByClassName("close")[0];
 
         // When the user clicks on the button, open the modal
+        
         btn.onclick = function() {
             modal.style.display = "block";
         }
@@ -1068,11 +1081,7 @@
         }
 
         // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+       
         // Get the modal
         var modal2 = document.getElementById("myModal2");
 
@@ -1094,7 +1103,10 @@
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
-            if (event.target == modal2) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            else if (event.target == modal2) {
                 modal2.style.display = "none";
             }
         }
