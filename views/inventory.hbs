@@ -100,6 +100,11 @@
   
             color: black;
         }
+
+        .table{
+          table-layout: fixed; 
+          word-wrap:break-word; 
+        }
     </style>
     
     <script src = '/jQuery.js'></script>
@@ -470,7 +475,7 @@
                     <form action = "inventory/addItem" method = "post">
                         <div class="modal-body">
                             
-                            <table name = "inventmaterials">
+                            <table name = "inventmaterials" id = "addItemRow">
                                 <tr>
                                     <th>Material</th>
                                     <th>Item Name</th>
@@ -502,6 +507,9 @@
                                     <td> 
                                         <input class="form-control" type = "number" name = "unitCost" id="unitLabel">
                                     </td>
+                                    <td>
+                                       <button id = "plusBtn" class = "btn btn-success btn-circle btn-sm" ><div class = "plusicon">+</div></button>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -509,7 +517,7 @@
                             <button type = "submit" class = "btn btn-success">Save</button>
                         </div>
                     </form>
-                    <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
+                   
                 </div>
 
             </div> 
@@ -525,11 +533,11 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>ID</th>
+                      <th> </th>
                       <th>Material</th>
                       <th>Item Name</th>
                       <th>Unit of Measures</th>
-                      <th>Vendor/Supplier</th>
+                      <th>Supplier</th>
                       <th>Qty</th>
                       <th>Unit Cost</th>
                       <th>Total Cost</th>
@@ -537,11 +545,11 @@
                   </thead>
                   <tfoot>
                     <tr>
-                     <th>ID</th>
+                     <th></th>
                       <th>Material</th>
                       <th>Item Name</th>
                       <th>Unit of Measures</th>
-                      <th>Vendor/Supplier</th>
+                      <th>Supplier</th>
                       <th>Qty</th>
                       <th>Unit Cost</th>
                       <th>Total Cost</th>
@@ -680,6 +688,10 @@
                 modal2.style.display = "none";
             }
         }
+       
+
+ 
+
     </script>
 </body>
 

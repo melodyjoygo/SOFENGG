@@ -9,21 +9,28 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Buttons</title>
+  <title>SB Admin 2 - Tables</title>
 
-  <!-- Custom fonts for this template-->
+  <!-- Custom fonts for this template -->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-  <!-- Custom styles for this template-->
-  <link href="stylesheets/sample.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this page -->
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
         .plusicon {
             color:white;
         }
         .addemp {
             position:relative;
-            right:-790px;
+            right:-590px;
+        }
+        .addemp2 {
+            position:relative;
+            right:-640px;
         }
         .modal {
             display: none; /* Hidden by default */
@@ -80,6 +87,20 @@
             cursor: pointer;
         }
 
+        .close2 {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close2:hover,
+        .close2:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
         .modal-header {
             padding: 2px 16px;
   
@@ -95,122 +116,65 @@
         }
     </style>
 
-    <!-- Custom styles for this template -->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-  <!-- Custom styles for this page -->
-  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <script src = '/jQuery.js'></script>
-    <script>
-        let warning = {{message}}
-        $( document ).ready(function() {
-            if(warning === 1){
-                alert("Please Do Not Leave Empty Fields")
-                window.location = '/orders';
-            }
-            else if(warning === 2){
-                alert("Order Successfully Placed")
-                window.location = '/orders'
-            }
-        });
-    </script>
 </head>
 
 <body id="page-top">
+
   <!-- Page Wrapper -->
   <div id="wrapper">
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">UP RISING</div>
-      </a>
-
-      <!-- Divider -->
-     <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="dashboard">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="inventory">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Inventory</span></a>
-      </li>
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="requisitions">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Requisitions</span></a>
-      </li>
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="employees">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Employees</span></a>
-      </li>
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="clients">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Clients</span></a>
-      </li>
-        <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="projects">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Projects</span></a>
-      </li>
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="suppliers">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Suppliers</span></a>
-      </li>
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="orders">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Orders</span></a>
-      </li>
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="reports">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Reports</span></a>
-      </li>
-
-       
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">UP RISING</div>
+        </a>
+  
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+  
+        <!-- Nav Item - Dashboard -->
     
-
+  
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+  
+        <!-- Heading -->
+        
+  
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+          <li class="nav-item">
+          <a class="nav-link" href="stockman_inventory.html">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Inventory</span></a>
+        </li>
+        <li class="nav-item active">
+          <li class="nav-item">
+          <a class="nav-link" href="stockman_release_request.html">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Release Requests</span></a>
+        </li>
+        
+       
+         
       
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
-    </ul>
-    <!-- End of Sidebar -->
+  
+        
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+  
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+  
+      </ul>
+      <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -231,7 +195,7 @@
             <div class="input-group">
               <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">
-                <button class="btn btn-danger" type="button">
+                <button class="btn btn-primary" type="button">
                   <i class="fas fa-search fa-sm"></i>
                 </button>
               </div>
@@ -405,109 +369,106 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Orders<a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
-                <span class="icon text-white-50">
-                    <b class = "plusicon">+</b>
-                </span>
-                <span class="text">Order Stock</span>
-        </a></h1>
-          <!-- The Modal -->
-            <div id="myModal" class="modal">
+          <h1 class="h3 mb-4 text-gray-800">Price Input</Input>
+            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
+            <span class="icon text-white-50">
+                <b class = "plusicon">+</b>
+            </span>
+            <span class="text">Add Price</span>
+         </a>
+         
+            
+        </h1> 
+         
+             
+          
+<div style="display: flex; float: left;">
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4" style="flex-grow:inherit">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"></h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                  <th>
+                          Date Ordered:
+                          <select name = "date" id="date_dropdown">
+                                  <option value="oct1">October 1</option>
+                                  <option value="oct2">October 2</option>
+                                  <option value="oct3">October 3</option>
+                          </select>
 
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>Order Stock</h2>
-                        <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
                         
-                    </div>
-                    <form action = "orders/add" method = "post">
-                        <div class="modal-body">
-                            
-                            <table name = "ordermaterials">
-                                <tr>
-                                    <th>Item Name</th>
-                                    <th>Qty.</th>
-                                    <th>Unit Cost</th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <select name = "item">
-                                            {{#each items}}
-                                                <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
-                                            {{/each}}
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input name = "qty" type = "number">
-                                    </td>
-                                    <td>
-                                        <input name = "unitcost" type = "number">
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Save</button>
-                        </div>
-                    </form>
-                    <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
-                </div>
-
-            </div>    
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                      <tr>
-                        <th>Supplier</th>
-                        <th>Date Ordered</th>
-                        <th>Status</th>
-                      
-                      </tr>
-                    </thead>
-                    <tfoot>
-                      <tr>
-                        <th>Supplier</th>
-                        <th>Date Requested</th>
-                        <th>Status</th>
-                      </tr>
-                    </tfoot>
-                    <tbody>
-                      {{#each items}}
-                      <tr>
-                        <td>{{supplierName}}</td>
-                        <td>{{date}}</td>
-                        <td>{{status}}</td>
-                      
-                      </tr>
-                      {{/each}}
-                     
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-  
-          </div>
-          <!-- /.container-fluid -->
-  
+                  </th>   
+              
+              </tr>
+              <tr>
+                      <th>Item</th>
+                      <th>Supplier</th>
+                      <th>Qty</th>
+                      <th>Price</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Item</th>
+                <th>Supplier</th>
+                <th>Qty</th>
+                <th>Price</th>
+                </tr>
+            </tfoot>
+            <tbody>
+            
+            </tbody>
+          </table>
         </div>
-        <!-- End of Main Content -->
+      </div>
+    </div>
+
+  </div>
+  <div style=" display: flex; float:right;"> 
+     <!-- Tracking -->
+  <div>
+      <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Add price</h6>
+          </div>
+          <div class="card-body">
+              <div>Item Name</div>
+              <div name = "item"> Acrylic Blue 2mm</div>
+              <div>Invoice Number</div>
+              <select name = "date" id="date_dropdown">
+                <option value="1"> 1</option>
+                <option value="2"> 2</option>
+                <option value="3"> 3</option>
+            </select>
+            <div>Date</div>
+                    <select name = "date" id="date_dropdown">
+                        <option value="oct1">October 1</option>
+                        <option value="oct2">October 2</option>
+                        <option value="oct3">October 3</option>
+                    </select>
+
+            <div>Unit Cost</div>
+            <input class="form-control" type = "number" name = "unitcost" id="unitcostLabel">
+
+          </div>
+    
+  
+  <!-- /.container-fluid -->
+
+ 
+
+  
+      <!-- End of Main Content -->
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
+       
+            </footer>
       <!-- End of Footer -->
 
     </div>
@@ -539,8 +500,9 @@
       </div>
     </div>
   </div>
-    
-      <!-- Bootstrap core JavaScript-->
+
+  
+  <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -563,6 +525,8 @@
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
 
+        var btn3 = document.getElementById("myBtn3");
+
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
 
@@ -580,6 +544,31 @@
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
+            }
+        }
+        // Get the modal
+        var modal2 = document.getElementById("myModal2");
+
+        // Get the button that opens the modal
+        var btn2 = document.getElementById("myBtn2");
+
+        // Get the <span> element that closes the modal
+        var span2 = document.getElementsByClassName("close2")[0];
+
+        // When the user clicks on the button, open the modal
+        btn2.onclick = function() {
+            modal2.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span2.onclick = function() {
+            modal2.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal2) {
+                modal2.style.display = "none";
             }
         }
     </script>

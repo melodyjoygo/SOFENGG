@@ -421,7 +421,7 @@
                 <!-- Modal content -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2>Add Supplier</h2>
+                        <h2>Add Project</h2>
                         <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
                         
                     </div>
@@ -433,6 +433,31 @@
                                         <option value="{{this.clientID}}">{{this.clientName}}</option>
                                     {{/each}}
                                 </select>
+                    
+                        </div>
+                        <div style="display: flex;">
+                          <div>Materials</div>
+                          <div>
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Material</th>
+                        <th>Item</th>
+                        <th>Qty</th>
+                      </tr>
+                    </thead>
+                   <tbody>
+                     <tr>
+                       <td>count</td>
+                       <td><select name = materialType></select></td>
+                       <td><select name = item></select></td>
+                       <td><input name = "qty" type = "number"></td>
+                     </tr>
+
+                   </tbody>
+                            </table>
+                          </div>
                         </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
