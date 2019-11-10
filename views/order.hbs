@@ -471,23 +471,15 @@
                       
                       </tr>
                     </thead>
-                    <tfoot>
-                      <tr>
-                        <th>Supplier</th>
-                        <th>Date Requested</th>
-                        <th>Status</th>
-                      </tr>
-                    </tfoot>
                     <tbody>
                       {{#each items}}
                       <tr>
-                        <td>{{supplierName}}</td>
-                        <td>{{date}}</td>
-                        <td>{{status}}</td>
+                        <td>{{this.supplierName}}</td>
+                        <td>{{this.date}}</td>
+                        <td>{{this.status}}</td>
                       
                       </tr>
                       {{/each}}
-                     
                     </tbody>
                   </table>
                 </div>
