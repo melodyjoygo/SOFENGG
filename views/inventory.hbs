@@ -1,54 +1,42 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src = '/jQuery.js'></script>
-        <script>
-           let warning = {{message}}
-            $( document ).ready(function() {
-                if(warning === 1){
-                    alert("Item Already Exists")
-                    window.location = '/inventory';
-                }
-                else if(warning === 2){
-                    alert("Item Successfully Added")
-                    window.location = '/inventory'
-                }
-                else if(warning === 3){
-                    alert("Please Do Not Leave Fields Empty")
-                    window.location = '/inventory'
-                }
-                else if(warning === 4){
-                    alert("Material Added Successfully")
-                    window.location = '/inventory'
-                }
-                else if(warning === 5){
-                    alert("Material Already Exists")
-                    window.location = '/inventory'
-                }
-            });
-        </script>
-    </head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SB Admin 2 - Tables</title>
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="stylesheets/sb-admin-2.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this page -->
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
-        .redhead {
-            height:50px;
-            width:100%;
+        .plusicon {
+            color:white;
         }
-        .searchbar {
-            position: relative;
-            left :60%;
+        .addemp {
+            position:relative;
+            right:-590px;
         }
-        .greencircle {
-            background-color: #43AA8B;
-            width:4%;
+        .addemp2 {
+            position:relative;
+            right:-640px;
         }
         .modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
             z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
             left: 0;
             top: 0;
             width: 100%; /* Full width */
@@ -57,290 +45,654 @@
             background-color: rgb(0,0,0); /* Fallback color */
             background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         }
-        .measurecirc {
-            width:3.8%;
-            background-color: #ED1B23;
-        }
-        .red-bagger {
-            background-color: #ED1B23;
-        }
-        .rounded-circle{
-            border-radius: 50%;
-            margin-left: 85%;
-        }
-        /* Modal Content/Box */
+
+/* Modal Content */
         .modal-content {
+            position: relative;
             background-color: #fefefe;
-            margin: 15% auto; /* 15% from the top and centered */
-            padding: 20px;
+            margin: auto;
+            padding: 0;
             border: 1px solid #888;
-            width: 70%; /* Could be more or less, depending on screen size */
+            width: 80%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
         }
 
+/* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {top:-300px; opacity:0} 
+            to {top:0; opacity:1}
+        }
+
+        @keyframes animatetop {
+            from {top:-300px; opacity:0}
+            to {top:0; opacity:1}
+        }
+
+/* The Close Button */
         .close {
-            color: #fefefe;
-            text-shadow: none;
+            color: white;
             float: right;
             font-size: 28px;
             font-weight: bold;
-            opacity: 0.8;
-            line-height: 0.98;
         }
+
         .close:hover,
         .close:focus {
-            color: black;
+            color: #000;
             text-decoration: none;
             cursor: pointer;
         }
-        #myButton{
-            margin-left: 65%;
-            background-color: #43AA8B;
-            border: none;
-            width: 150px;
-        }
-        #myButton:hover{
-            background-color: rgb(56, 141, 115);
-        }
-        .header_list{
-            display: flex;
-            margin-top: 1%;
-        }
-        .add_item_list{
-            display: flex;
-        }
-        .pop_label_list{
-            display: flex;;
-        }
-        .indiv_elem{
-            margin-right: 10px;
-        }
-        #addButton{
-            margin-left: 46%;
-            background-color: #43AA8B;
-            border: none;
-        }
-        #addButton:hover{
-            background-color: rgb(56, 141, 115);
+
+        .modal-header {
+            padding: 2px 16px;
+  
+            color: black;
         }
 
-        #material_dropdown{
-            width: 170px;
-            height: 30px;
-            border: 1px solid #888;
-            border-radius: 5px;
-            margin-right: 10px;
+        .modal-body {padding: 2px 16px;}
+
+        .modal-footer {
+            padding: 2px 16px;
+  
+            color: black;
         }
-        #itemNameLabel{
-            width: 270px;
-            height: 30px;
-            border: 1px solid #888;
-            margin-right: 10px;
-        }
-        #unitLabel{
-            width: 60px;
-            height: 30px;
-            border: 1px solid #888;
-            margin-right: 10px;
-        }
-        #supplierDrop{
-            height: 30px;
-            width: 200px;
-            border: 1px solid #888;
-            margin-right: 10px;
-            border-radius: 5px;
-        }
-        #unitLabel{
-            width: 60px;
-            height: 30px;
-            border: 1px solid #888;
+
+        .table{
+          table-layout: fixed; 
+          word-wrap:break-word; 
         }
     </style>
     
-    <body>
-        <div class = "bg-danger redhead">
-            <div class = "searchbar">
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-            </div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="dashboard">Dashboard</a>
-                    </li>
-                    <li class="nav-item active">
-                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="inventory" style="text-decoration: underline; color:red; font-weight:bold;">Inventory</a>
-                    </li>
-                    <li class="nav-item active">
-                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="requisitions">Requisitions</a>
-                    </li>
-                    <li class="nav-item active">
-                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="employees">Employees</a>
-                    </li>
-                    <li class="nav-item active">
-                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="clients">Clients</a>
-                    </li>
-                    <li class="nav-item active">
-                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="projects">Projects</a>
-                    </li>
-                    <li class="nav-item active">
-                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="suppliers">Suppliers</a>
-                    </li>
-                    <li class="nav-item active">
-                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="Orders">Orders</a>
-                    </li>
-                    <li class="nav-item active">
-                        <h4 style="color: #888; font-weight:100; margin-top:2px;">|</h2>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="reports">Reports</a>
-                    </li>
-                
-                </ul>
-                
-            </div>
-        </nav>
-        <div>
-            <ul class="header_list">
-                <h3> Inventory </h2>
-                <button class="btn btn-primary" id = "myButton">+ Add Item</button>
-                <button class="btn btn-primary" id = "addMaterialButton">+ Add Material</button>
-            </ul>
-        </div>
-        <div class = "modal" id = "myModal">
-            <div class="modal-content">
-                <ul class="add_item_list">
-                    <h5>Add Item</h5>
-                    <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
-                </ul>
-                
-                <form action = "inventory/addItem" method = "post">
-                <ul class="pop_label_list">
-                    <div class="indiv_elem" style="width: 170px; padding-left: 7%;"> Material</div>
-                    <div class="indiv_elem" style="width: 270px; padding-left: 10%">Item Name</div>
-                    <div class="indiv_elem" style="width: 60px; text-align:center; margin-right: 85px;">Unit of Measure</div>
-                    <div class="indiv_elem" style="width: 135px;">Supplier</div>
-                    <div class="indiv_elem" style="width: 60px;">Unit Cost</div>
-                </ul>
-                <hr style="border-top: 1px solid #888;">
-                <ul style="display: flex;">
-                    <select name = "type" id="material_dropdown">
-                        {{#each types}}
-                            <option value="{{this.mtID}}">{{this.type}}</option>
-                        {{/each}}
-                    </select>   
-                    <input class="form-control" type = "text" name = "itemName" id="itemNameLabel">
-                    <input class="form-control" type = "text" name = "unitOfMeasure" id="unitLabel">
-                    <select name = "supplier" id="supplierDrop">
-                        {{#each supplier}}
-                            <option value="{{this.supplierID}}">{{this.supplierName}}</option>
-                        {{/each}}
-                    </select>
-                    
-                    <input class="form-control" type = "number" name = "unitCost" id="unitLabel">
-                </ul>
-                        
-                   
-                
-                <button type = "add" class="btn btn-success" id="addButton">Add</button>
-                </form>
-              </div>   
-         </div>
-
-         <div class = "modal" id = "addMaterialModal">
-            <div class="modal-content">
-                <div>Add New Material</div>
-                <span class="d-block bg-danger rounded-circle close measurecirc">&nbsp;&times;</span>
-                <form action = "inventory/addMaterial" method = "post">
-                    <div>Material Name</div>
-                    <input class="form-control" type = "text" name = "materialName">
-                
-                
-                    <button type = "add" class="btn btn-success">Add</button>
-                </form>
-              </div>   
-         </div>
-        
-        
-
-        <script>
-            // Get the modal
-            var modal = document.getElementById("myModal");
-    
-            // Get the button that opens the modal
-            var btn = document.getElementById("myButton");
-    
-            // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
-    
-            // When the user clicks on the button, open the modal
-            btn.onclick = function() {
-                modal.style.display = "block";
+    <script src = '/jQuery.js'></script>
+    <script>
+       let warning = {{message}}
+        $( document ).ready(function() {
+            if(warning === 1){
+                alert("Item Already Exists")
+                window.location = '/inventory';
             }
-    
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function() {
+            else if(warning === 2){
+                alert("Item Successfully Added")
+                window.location = '/inventory'
+            }
+            else if(warning === 3){
+                alert("Please Do Not Leave Fields Empty")
+                window.location = '/inventory'
+            }
+            else if(warning === 4){
+                alert("Material Added Successfully")
+                window.location = '/inventory'
+            }
+            else if(warning === 5){
+                alert("Material Already Exists")
+                window.location = '/inventory'
+            }
+        });
+    </script>
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">UP RISING</div>
+        </a>
+  
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" href="dashboard">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="inventory">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Inventory</span></a>
+      </li>
+      <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="requisitions">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Requisitions</span></a>
+      </li>
+      <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="employees">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Employees</span></a>
+      </li>
+      <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="clients">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Clients</span></a>
+      </li>
+        <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="projects">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Projects</span></a>
+      </li>
+      <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="suppliers">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Suppliers</span></a>
+      </li>
+      <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="orders">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Orders</span></a>
+      </li>
+      <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="reports">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Reports</span></a>
+      </li>
+  
+         
+      
+  
+        
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+  
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+  
+      </ul>
+      <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+            <!-- Nav Item - Alerts -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <!-- Counter - Alerts -->
+                <span class="badge badge-danger badge-counter">3+</span>
+              </a>
+              <!-- Dropdown - Alerts -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                  Alerts Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 12, 2019</div>
+                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-success">
+                      <i class="fas fa-donate text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 7, 2019</div>
+                    $290.29 has been deposited into your account!
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-warning">
+                      <i class="fas fa-exclamation-triangle text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 2, 2019</div>
+                    Spending Alert: We've noticed unusually high spending for your account.
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+              </div>
+            </li>
+
+            <!-- Nav Item - Messages -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
+                <!-- Counter - Messages -->
+                <span class="badge badge-danger badge-counter">7</span>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">
+                  Message Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div class="font-weight-bold">
+                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+                    <div class="small text-gray-500">Emily Fowler · 58m</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
+                    <div class="status-indicator"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
+                    <div class="small text-gray-500">Jae Chun · 1d</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
+                    <div class="status-indicator bg-warning"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
+                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
+                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+              </div>
+            </li>
+
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-4 text-gray-800">Inventory
+            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
+            <span class="icon text-white-50">
+                <b class = "plusicon">+</b>
+            </span>
+            <span class="text">Add Material</span>
+         </a>
+         <a href="#" class="btn btn-danger btn-icon-split addemp2" id = "myBtn2">
+            <span class="icon text-white-50">
+                <b class = "plusicon">+</b>
+            </span>
+            <span class="text">Add Item</span> </a>
+        </h1> 
+            <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add New Material</h2>
+                    <span class="close btn btn-danger btn-circle btn-sm" id = 'close1'>&times;</span>
+                        
+                </div>
+                <form action = "inventory/addMaterial" method = "post">
+                        <div class="modal-body">
+                        
+                            <div>Name of Material</div>
+                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "materialName">
+                         
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Save</button>
+                        </div>
+                    </form>
+            </div>
+
+        </div>
+          <!-- The Modal -->
+            <div id="myModal2" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Add Item</h2>
+                        <span class="close btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
+                        
+                    </div>
+                    <form action = "inventory/addItem" method = "post">
+                        <div class="modal-body">
+                            
+                            <table name = "inventmaterials" id = "addItemRow">
+                                <tr>
+                                    <th>Material</th>
+                                    <th>Item Name</th>
+                                    <th>Unit Of Measure</th>
+                                    <th>Supplier</th>
+                                    <th>Unit Cost</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select name = "type" id="material_dropdown">
+                                            {{#each types}}
+                                                <option value="{{this.mtID}}">{{this.type}}</option>
+                                            {{/each}}
+                                        </select>   
+                                    </td>
+                                    <td>
+                                       <input class="form-control" type = "text" name = "itemName" id="itemNameLabel">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type = "text" name = "unitOfMeasure" id="unitLabel">
+                                    </td>
+                                    <td>
+                                        <select name = "supplier" id="supplierDrop">
+                                            {{#each supplier}}
+                                                <option value="{{this.supplierID}}">{{this.supplierName}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </td>
+                                    <td> 
+                                        <input class="form-control" type = "number" name = "unitCost" id="unitLabel">
+                                    </td>
+                                    <td>
+                                       <button id = "plusBtn" class = "btn btn-success btn-circle btn-sm" ><div class = "plusicon">+</div></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Save</button>
+                        </div>
+                    </form>
+                   
+                </div>
+
+            </div> 
+          
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th> </th>
+                      <th>Material</th>
+                      <th>Item Name</th>
+                      <th>Unit of Measures</th>
+                      <th>Supplier</th>
+                      <th>Qty</th>
+                      <th>Unit Cost</th>
+                      <th>Total Cost</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                     <th></th>
+                      <th>Material</th>
+                      <th>Item Name</th>
+                      <th>Unit of Measures</th>
+                      <th>Supplier</th>
+                      <th>Qty</th>
+                      <th>Unit Cost</th>
+                      <th>Total Cost</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    {{#each inventory}}
+                      <tr>
+                        <td>{{materialID}}</td>
+                        <td>{{type}}</td>
+                        <td>{{materialName}}</td>
+                        <td>{{unitOfMeasure}}</td>
+                        <td>{{supplierName}}</td>
+                        <td>{{quantity}}</td>
+                        <td>{{price}}</td>
+                        <td>{{total_price}}</td>
+                      </tr>
+                      {{/each}}
+                   
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2019</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="js/demo/datatables-demo.js"></script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementById("close1");
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
                 modal.style.display = "none";
             }
-    
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
+        }
+        // Get the modal
+        var modal2 = document.getElementById("myModal2");
 
-            // Get the modal
-            var modal2 = document.getElementById("addMaterialModal");
-    
-            // Get the button that opens the modal
-            var btn2 = document.getElementById("addMaterialButton");
-    
-            // Get the <span> element that closes the modal
-            var span2 = document.getElementsByClassName("close")[1];
-    
-            // When the user clicks on the button, open the modal
-            btn2.onclick = function() {
-                modal2.style.display = "block";
-            }
-    
-            // When the user clicks on <span> (x), close the modal
-            span2.onclick = function() {
+        // Get the button that opens the modal
+        var btn2 = document.getElementById("myBtn2");
+
+        // Get the <span> element that closes the modal
+        var span2 = document.getElementById("close2");
+
+        // When the user clicks on the button, open the modal
+        btn2.onclick = function() {
+            modal2.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span2.onclick = function() {
+            modal2.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal2) {
                 modal2.style.display = "none";
             }
-    
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-        </script>
-    </body>
+        }
+       
+
+ 
+
+    </script>
+</body>
+
 </html>
