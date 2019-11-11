@@ -11,6 +11,7 @@ router.use("/projects",require("./projects"))
 router.use("/inventory",require("./inventory"))
 router.use("/orders",require("./orders"))
 router.use("/stockman",require("./stockman"))
+router.use("/clerk",require("./clerk"))
 
 router.get("/",(req,res)=>{
     console.log('kekeke')
@@ -49,9 +50,9 @@ router.post("/login" ,(req,res)=>{
                         break
                         case 1 : res.redirect("/dashboard")
                         break
-                        case 2 : res.redirect("/dashboard")
+                        case 2 : res.redirect("/clerk")
                         break
-                        case 3 : res.redirect("/dashboard")
+                        case 3 : res.redirect("/clerk")
                         break
                         case 4 : res.redirect("/stockman")
                         break

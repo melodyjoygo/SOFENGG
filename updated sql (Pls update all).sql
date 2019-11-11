@@ -49,6 +49,7 @@ CREATE TABLE `inventory` (
   `materialID` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `dateModified` date NOT NULL,
+  `unitPrice` double DEFAULT NULL,
   PRIMARY KEY (`inventoryID`),
   KEY `materialID_idx` (`materialID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -59,7 +60,7 @@ CREATE TABLE `inventory` (
 --
 
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (1,1,15,'2019-11-10'),(2,2,0,'2019-11-04');
+INSERT INTO `inventory` VALUES (1,1,15,'2019-11-10',12),(2,2,0,'2019-11-04',NULL);
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 
 --
@@ -261,7 +262,7 @@ CREATE TABLE `transactions` (
 --
 
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `transactions` VALUES (1,1,1,100,'2019-10-23','Pending',2),(2,1,1,1222,'2019-11-04','Pending',12);
+INSERT INTO `transactions` VALUES (1,1,1,100,'2019-10-23','Pending',2),(2,1,1,1222,'2019-11-04','Pending',12),(3,1,1,12,'2019-11-10','Pending',21);
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 
 --
@@ -331,7 +332,7 @@ CREATE TABLE `users` (
 --
 
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Darren Tee','dardartee7@gmail.com','U2FsdGVkX19Bb2wGzgv+J2R3r0BOMnR94+fH/S0nxDY=',1),(2,'melody go','melody@gmail.com','U2FsdGVkX1/EwCB8Ryml4lUxcOmWvwFH6lGa2bpOavA=',1),(3,'Hector Gomez','hectorgomez@dlsu.edu.ph','U2FsdGVkX1+V3t0xbSmuWHAr2283P5qXOghqAGAIZpA=',4);
+INSERT INTO `users` VALUES (1,'Darren Tee','dardartee7@gmail.com','U2FsdGVkX19Bb2wGzgv+J2R3r0BOMnR94+fH/S0nxDY=',1),(2,'melody go','melody@gmail.com','U2FsdGVkX1/EwCB8Ryml4lUxcOmWvwFH6lGa2bpOavA=',1),(3,'Hector Gomez','hectorgomez@dlsu.edu.ph','U2FsdGVkX1+V3t0xbSmuWHAr2283P5qXOghqAGAIZpA=',4),(4,'Phoebe Chen','phoebechen@gmail.com','U2FsdGVkX19KgfI9SvwC+dx98mz/PqzfXQyJSwuaPJE=',3);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 --

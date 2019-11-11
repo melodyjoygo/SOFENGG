@@ -22,3 +22,7 @@ exports.restock = function(invID,qty){
 exports.updateDate = function(invID,date){
     database.query("UPDATE inventory SET dateModified = ?  WHERE inventoryID = ?",[date,invID])
 }
+
+exports.updateUnitPrice = function(invID,unitPrice){
+    database.query("UPDATE inventory SET unitPrice = ?  WHERE inventoryID = ?",[unitPrice,invID])
+}
