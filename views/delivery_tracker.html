@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="css/sample.css" rel="stylesheet">
+  <link href="stylesheets/sample.css" rel="stylesheet">
     <style>
         .plusicon {
             color:white;
@@ -96,7 +96,7 @@
     </style>
 
     <!-- Custom styles for this template -->
-  <link href="stylesheets/sb-admin-2.min.css" rel="stylesheet">
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -105,16 +105,12 @@
         let warning = {{message}}
         $( document ).ready(function() {
             if(warning === 1){
-                alert("Project With Client Already Exist")
-                window.location = '/projects';
+                alert("Please Do Not Leave Empty Fields")
+                window.location = '/orders';
             }
             else if(warning === 2){
-                alert("Project Added Successfully")
-                window.location = '/projects'
-            }
-            else if(warning === 3){
-                alert("Please Do Not Leave Fields Empty")
-                window.location = '/projects'
+                alert("Order Successfully Placed")
+                window.location = '/orders'
             }
         });
     </script>
@@ -136,7 +132,7 @@
       </a>
 
       <!-- Divider -->
-      <hr class="sidebar-divider my-0">
+     <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
@@ -415,55 +411,47 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Project List<a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
+          <h1 class="h3 mb-4 text-gray-800">Delivery Trackinh<a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
                 <span class="icon text-white-50">
                     <b class = "plusicon">+</b>
                 </span>
-                <span class="text">Add Projects</span>
+                <span class="text">Order Stock</span>
         </a></h1>
-                    <!-- The Modal -->
+          <!-- The Modal -->
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2>Add Project</h2>
+                        <h2>Order Stock</h2>
                         <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
                         
                     </div>
-                    <form action = "projects/add" method = "post">
+                    <form action = "orders/add" method = "post">
                         <div class="modal-body">
-                        <div>Client name:</div>
-                                <select name = "clientID">
-                                    {{#each clientList}}
-                                        <option value="{{this.clientID}}">{{this.clientName}}</option>
-                                    {{/each}}
-                                </select>
-                    
-                        </div>
-                        <div style="display: flex;">
-                          <div>Materials</div>
-                          <div>
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                      <tr>
-                        <th>No.</th>
-                        <th>Material</th>
-                        <th>Item</th>
-                        <th>Qty</th>
-                      </tr>
-                    </thead>
-                   <tbody>
-                     <tr>
-                       <td>count</td>
-                       <td><select name = materialType></select></td>
-                       <td><select name = item></select></td>
-                       <td><input name = "qty" type = "number"></td>
-                     </tr>
-
-                   </tbody>
+                            
+                            <table name = "ordermaterials">
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Qty.</th>
+                                    <th>Unit Cost</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select name = "item">
+                                            {{#each items}}
+                                                <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
+                                            {{/each}}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input name = "qty" type = "number">
+                                    </td>
+                                    <td>
+                                        <input name = "unitcost" type = "number">
+                                    </td>
+                                </tr>
                             </table>
-                          </div>
                         </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
@@ -474,77 +462,130 @@
 
             </div>   
 
-            
-        <div id="editModal" class="modal">
+             <div id="editModal" class="modal">
 
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Edit Project</h2>
+                    <h2>Edit </h2>
                     <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
                         
                 </div>
-                <form action = "employees/edit" method = "post">
+                <form action = "orders/edit" method = "post">
                         <div class="modal-body">
                         
-                            <div>Select the project to be edited</div>
-                             <select name = "name" id="nameChoice">
-                                 {{#each projects}}
-                                    <option>{{projectNumber}}</option>
-                                 {{/each}}
-                            </select> 
-
-                             
+                             <table name = "ordermaterials">
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Qty.</th>
+                                    <th>Unit Cost</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select name = "item">
+                                            {{#each items}}
+                                                <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
+                                            {{/each}}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input name = "qty" type = "number">
+                                    </td>
+                                    <td>
+                                        <input name = "unitcost" type = "number">
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
                         </div>
                     </form>
-            </div>
-
-        </div>    
+                    <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
+                </div>
+            </div> 
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
+          <div id = "bodydiv" style="display: flex flex-direction: column">
+
+            <div style="display: flex;flex-direction: column float:left;">
+                  <div class="card shadow mb-4" style="display: flex;flex-direction: column">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Delivery Receipt Number</h6>
+                <select>
+                  {{#each items}}
+                    <option>{{date}}</option>
+                  {{/each}}
+
+                </select>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
-                        <th>Company Name</th>
-                        <th>Project Number</th>
-                        <th>Date Requested</th>
-                        <th>Status</th>
+                        <th>Item</th>
+                        <th>Supplier</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                      
                       </tr>
                     </thead>
                     <tfoot>
                       <tr>
-                        <th>Company Name</th>
-                        <th>Project Number</th>
-                        <th>Date Requested</th>
-                        <th>Status</th>
+                        <th>Item</th>
+                        <th>Supplier</th>
+                        <th>Qty</th>
+                        <th>Price</th>
                       </tr>
+                     
                     </tfoot>
                     <tbody>
-                      {{#each projects}}
-                      <tr>
-                        <td>{{clientName}}</td>
-                        <td>{{projectNumber}}</td>
-                        <td>{{dateAdded}}</td>
-                        <td>{{status}}</td>
-                      
-                      </tr>
-                      {{/each}}
+                     
                     </tbody>
                   </table>
-                  <span id ="edit" class = "btn btn-primary"><U>Edit</U></span>
+                   <div>Total</div>
                 </div>
               </div>
+             
+      </div> 
+       <div style="display: flex; flex-direction:column; float:right">
+             <div id= "addPriceDiv" style="display: flex; flex-direction:position:absolute; right: 20px;"></div>
+            <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Add Price</h6>
+          </div>
+          <div class="card-body">
+              <div>Date of Arrival</div>
+              <div>11/11/2019</div>
+              <div>Invoice Number</div>
+              <input name = "invoiceNumber" type = "number">
+              <div>Item Name</div>
+              <select>
+                  <option>name1</option>
+                  <option>name2</option>
+                  <option>name3</option>
+
+              </select>
+              <div>Unit Cost</div>
+              <input name = "unitcost" type = "number">
+              <div style="align-content: center; margin: 5px;">
+                <button type = "submit" class = "btn btn-success">Save</button>
+
+              </div>
+
+
+
+          </div>
+          </div>
+         
+          </div>
+            </div>
+          
             </div>
   
           </div>
+             
+       
           <!-- /.container-fluid -->
   
         </div>
@@ -606,7 +647,7 @@
 
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
-        <script>
+    <script>
         // Get the modal
         var modal = document.getElementById("myModal");
 
@@ -615,32 +656,16 @@
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
-        var span2 = document.getElementsByClassName("close")[1];
-
 
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
             modal.style.display = "block";
         }
 
-        var editbtn = document.getElementById("edit");
-        var modal2 = document.getElementById("editModal");
-
-        editbtn.onclick= function(){
-              modal2.style.display = "block"       
-              
-              }
-
-
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
             modal.style.display = "none";
         }
-
-        span2.onclick = function() {
-            modal2.style.display = "none";
-        }
-        
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
