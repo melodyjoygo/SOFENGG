@@ -452,10 +452,9 @@
                         
                             <div>Select the client to be edited</div>
                              <select name = "name" id="nameChoice">
-                                <option value="1">name 1</option>
-                                <option value="2">name 2</option>
-                                <option value="3">name 3</option>
-                                <option value="4">name 4</option>
+                                {{#each clients}}
+                                  <option>{{clientName}}</option>
+                                {{/each}}
                             </select> 
 
                             <div>Client Name</div>
@@ -472,7 +471,7 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Clients</h6>
               </div>
               <div class="card-body">
                 <div class="table-responsive">

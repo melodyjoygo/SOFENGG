@@ -506,8 +506,9 @@
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Date Ordered</h6>
                 <select>
-                  <option>date1</option>
-                  <option>date1</option>
+                  {{#each items}}
+                    <option>{{date}}</option>
+                  {{/each}}
 
                 </select>
               </div>

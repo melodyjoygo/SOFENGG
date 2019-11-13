@@ -444,7 +444,7 @@
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Edit Client</h2>
+                    <h2>Edit Supplier</h2>
                     <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
                         
                 </div>
@@ -453,10 +453,9 @@
                         
                             <div>Select the supplier to be edited</div>
                              <select name = "name" id="nameChoice">
-                                <option value="1">name 1</option>
-                                <option value="2">name 2</option>
-                                <option value="3">name 3</option>
-                                <option value="4">name 4</option>
+                                {{#each suppliers}}
+                                  <option>{{supplierName}}</option>
+                                {{/each}}
                             </select> 
 
                             <div>Supplier Name</div>

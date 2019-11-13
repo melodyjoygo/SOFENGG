@@ -477,10 +477,9 @@
                         
                             <div>Select the user to be edited</div>
                              <select name = "name" id="nameChoice">
-                                <option value="1">name 1</option>
-                                <option value="2">name 2</option>
-                                <option value="3">name 3</option>
-                                <option value="4">name 4</option>
+                                 {{#each employees}}
+                                    <option>{{fullName}}</option>
+                                 {{/each}}
                             </select> 
 
                             <div>First Name</div>
