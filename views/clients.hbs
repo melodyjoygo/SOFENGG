@@ -437,10 +437,41 @@
                 </div>
 
             </div>
+
+             <div id="editModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit Client</h2>
+                    <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
+                        
+                </div>
+                <form action = "clients/edit" method = "post">
+                        <div class="modal-body">
+                        
+                            <div>Select the client to be edited</div>
+                             <select name = "name" id="nameChoice">
+                                {{#each clients}}
+                                  <option>{{clientName}}</option>
+                                {{/each}}
+                            </select> 
+
+                            <div>Client Name</div>
+                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Save</button>
+                        </div>
+                    </form>
+            </div>
+
+        </div>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Clients</h6>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -469,6 +500,7 @@
                      
                     </tbody>
                   </table>
+                  <span id ="edit" class = "btn btn-primary"><U>Edit</U></span>
                 </div>
               </div>
             </div>
@@ -545,6 +577,7 @@
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
+        var span2 = document.getElementsByClassName("close")[1];
 
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
@@ -556,12 +589,24 @@
             modal.style.display = "none";
         }
 
+        span2.onclick = function() {
+            modal2.style.display = "none";
+        }
+
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
+
+         var editbtn = document.getElementById("edit");
+        var modal2 = document.getElementById("editModal");
+
+        editbtn.onclick= function(){
+              modal2.style.display = "block"       
+              
+              }
     </script>
 </body>
 

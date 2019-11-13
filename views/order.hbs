@@ -454,23 +454,84 @@
                     <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
                 </div>
 
-            </div>    
+            </div>   
+
+             <div id="editModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit </h2>
+                    <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
+                        
+                </div>
+                <form action = "orders/edit" method = "post">
+                        <div class="modal-body">
+                        
+                             <table name = "ordermaterials">
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Qty.</th>
+                                    <th>Unit Cost</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select name = "item">
+                                            {{#each items}}
+                                                <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
+                                            {{/each}}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input name = "qty" type = "number">
+                                    </td>
+                                    <td>
+                                        <input name = "unitcost" type = "number">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Save</button>
+                        </div>
+                    </form>
+                    <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
+                </div>
+            </div> 
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
+          <div id = "bodydiv" style="display: flex flex-direction: column">
+
+            <div style="display: flex;flex-direction: column float:left;">
+                  <div class="card shadow mb-4" style="display: flex;flex-direction: column">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Date Ordered</h6>
+                <select>
+                  {{#each items}}
+                    <option>{{date}}</option>
+                  {{/each}}
+
+                </select>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
+                        <th>Item</th>
                         <th>Supplier</th>
-                        <th>Date Ordered</th>
-                        <th>Status</th>
+                        <th>Qty</th>
+                        <th>Cost</th>
                       
                       </tr>
                     </thead>
+                    <tfoot>
+                      <tr>
+                        <th>Item</th>
+                        <th>Supplier</th>
+                        <th>Qty</th>
+                        <th>Cost</th>
+                      </tr>
+                    </tfoot>
                     <tbody>
                       {{#each items}}
                       <tr>
@@ -482,11 +543,43 @@
                       {{/each}}
                     </tbody>
                   </table>
+                   <span id ="edit" class = "btn btn-primary"><U>Edit</U></span>
                 </div>
               </div>
+             
+      </div> 
+       <div style="display: flex; flex-direction:column; float:right">
+             <div id= "trackingDiv" style="display: flex; flex-direction:position:absolute; right: 20px;"></div>
+            <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Tracking</h6>
+          </div>
+          <div class="card-body">
+              <table name = "tracking" class="table table-bordered">
+                  <thead>
+                      <tr>
+                   
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Description</th>
+                          
+                      </tr>
+                  </thead>
+                   
+                    
+                </table>
+
+          </div>
+          </div>
+         
+          </div>
+            </div>
+          
             </div>
   
           </div>
+             
+       
           <!-- /.container-fluid -->
   
         </div>

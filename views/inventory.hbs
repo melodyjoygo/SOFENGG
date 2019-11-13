@@ -521,12 +521,108 @@
                 </div>
 
             </div> 
-          
 
+            <div id="editModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit Material</h2>
+                    <span class="close btn btn-danger btn-circle btn-sm" id ="close3">&times;</span>
+                        
+                </div>
+                <form action = "materials/edit" method = "post">
+                        <div class="modal-body">
+                        
+                            <div>Select the Material to be edited</div>
+                             <select name = "name" id="nameChoice">
+                                {{#each types}}
+                                  <option>{{type}}</option>
+                                {{/each}}
+                            </select> 
+
+                            <div>Material Type</div>
+                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Save</button>
+                        </div>
+                    </form>
+            </div>
+
+        </div>
+          
+          <div id="editItemModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit Item</h2>
+                    <span class="close btn btn-danger btn-circle btn-sm" id ="close4">&times;</span>
+                        
+                </div>
+                <form action = "items/edit" method = "post">
+                        <div class="modal-body">
+                        
+                            <div>Select the Item to be edited</div>
+                             <select name = "name" id="edit_nameChoice">
+                                {{#each inventory}}
+                                  <option>{{materialName}}</option>
+                                {{/each}}
+                            </select> 
+                          
+
+                            <table>
+                                <tr>
+                                    <th>Material</th>
+                                    <th>Item Name</th>
+                                    <th>Unit Of Measure</th>
+                                    <th>Supplier</th>
+                                    <th>Unit Cost</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select name = "type" id="edit_material_dropdown">
+                                            {{#each types}}
+                                                <option value="{{this.mtID}}">{{this.type}}</option>
+                                            {{/each}}
+                                        </select>   
+                                    </td>
+                                    <td>
+                                       <input class="form-control" type = "text" name = "itemName" id="edit_itemNameLabel">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type = "text" name = "unitOfMeasure" id="edit_unitLabel">
+                                    </td>
+                                    <td>
+                                        <select name = "supplier" id="edit_supplierDrop">
+                                            {{#each supplier}}
+                                                <option value="{{this.supplierID}}">{{this.supplierName}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </td>
+                                    <td> 
+                                        <input class="form-control" type = "number" name = "unitCost" id="edit_unitLabel">
+                                    </td>
+                                   
+                                </tr>
+                            </table>
+
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Save</button>
+                        </div>
+                    </form>
+            </div>
+
+        </div>
+          
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Inventory</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -571,6 +667,8 @@
                    
                   </tbody>
                 </table>
+               <div><span id ="edit" class = "btn btn-primary"><U>Edit Material</U></span></div> 
+                <div style="margin-top:5px;"><span id ="editItem" class = "btn btn-primary"><U>Edit Item</U></span></div>
               </div>
             </div>
           </div>
@@ -644,8 +742,25 @@
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
 
+        var editbtn = document.getElementById("edit");
+        var edititm = document.getElementById("editItem");
+        var modal3 = document.getElementById("editModal");
+        var modal4 = document.getElementById("editItemModal");
+
+        editbtn.onclick= function(){
+              modal3.style.display = "block"       
+              
+              }
+        edititm.onclick= function(){
+              modal4.style.display = "block"       
+              
+              }
+
+
         // Get the <span> element that closes the modal
         var span = document.getElementById("close1");
+        var span3 = document.getElementById("close3");
+        var span4 = document.getElementById("close4");
 
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
@@ -680,6 +795,13 @@
         // When the user clicks on <span> (x), close the modal
         span2.onclick = function() {
             modal2.style.display = "none";
+        }
+
+        span3.onclick = function() {
+            modal3.style.display = "none";
+        }
+        span4.onclick = function() {
+            modal4.style.display = "none";
         }
 
         // When the user clicks anywhere outside of the modal, close it
