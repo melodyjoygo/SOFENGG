@@ -21,6 +21,24 @@
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
+        .bottomtxt {
+            position:relative;
+           top:20px;
+        }
+        .fieldheight {
+            height:50px;
+            
+        }
+        .unitcost {
+            width:100px;
+        }
+        .suppliertxt {
+            width:200px;
+        }
+        .itemnametxt {
+            width:150px;
+            
+        }
         .plusicon {
             color:white;
         }
@@ -438,30 +456,29 @@
             </span>
             <span class="text">Add Item</span> </a>
         </h1> 
-            <!-- The Modal -->
-        <div id="myModal" class="modal">
-
-            <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Add New Material</h2>
-                    <span class="close btn btn-danger btn-circle btn-sm" id = 'close1'>&times;</span>
-                        
-                </div>
-                <form action = "inventory/addMaterial" method = "post">
+ <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop = "false">
+                <div class="modal-dialog " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Add New Material</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+                            </button>
+                        </div>
+                        <form action = "inventory/material" method = "post">
                         <div class="modal-body">
-                        
                             <div>Name of Material</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "materialName">
-                         
+                            <input type = "text" name = "materialName" class = "fullinput">
                         </div>
                         <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Save</button>
+       
+                            <button type="button" class="btn btn-success">Save</button>
                         </div>
-                    </form>
+                            </form>
+                    </div>
+                </div>
             </div>
-
-        </div>
           <!-- The Modal -->
             <div id="myModal2" class="modal">
 
@@ -469,55 +486,51 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2>Add Item</h2>
-                        <span class="close btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
+                        <span class="close2 btn btn-danger btn-circle btn-sm">&times;</span>
                         
                     </div>
                     <form action = "inventory/addItem" method = "post">
                         <div class="modal-body">
-                            
-                            <table name = "inventmaterials" id = "addItemRow">
-                                <tr>
-                                    <th>Material</th>
-                                    <th>Item Name</th>
-                                    <th>Unit Of Measure</th>
-                                    <th>Supplier</th>
-                                    <th>Unit Cost</th>
-                                </tr>
-                                <tr>
-                                    <td>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class = "fieldheight bottomtxt">Material</div> 
                                         <select name = "type" id="material_dropdown">
                                             {{#each types}}
                                                 <option value="{{this.mtID}}">{{this.type}}</option>
                                             {{/each}}
                                         </select>   
-                                    </td>
-                                    <td>
-                                       <input class="form-control" type = "text" name = "itemName" id="itemNameLabel">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type = "text" name = "unitOfMeasure" id="unitLabel">
-                                    </td>
-                                    <td>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class = "fieldheight bottomtxt">Item Name</div>
+                                        <input type = "text" class = "itemnametxt" name = "itemName">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class = "fieldheight bottomtxt">Unit of Measure</div>
+                                        <input type = "text" class = "smallertxt" name = "unitOfMeasure">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class = "fieldheight bottomtxt">Supplier</div>
                                         <select name = "supplier" id="supplierDrop">
                                             {{#each supplier}}
                                                 <option value="{{this.supplierID}}">{{this.supplierName}}</option>
                                             {{/each}}
                                         </select>
-                                    </td>
-                                    <td> 
-                                        <input class="form-control" type = "number" name = "unitCost" id="unitLabel">
-                                    </td>
-                                    <td>
-                                       <button id = "plusBtn" class = "btn btn-success btn-circle btn-sm" ><div class = "plusicon">+</div></button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class = "fieldheight bottomtxt">Unit Cost</div>
+                                        <input type = "text" class = "unitCost" name = "units">
+                                    </div>
+                                    
+                                </div>
+   
+  </div>
+</div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
                         </div>
                     </form>
-                   
+                    <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
                 </div>
 
             </div> 
@@ -734,7 +747,7 @@
   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
+    <script src="js/demo/datatables-demo.js"></script>
     <script>
         // Get the modal
         var modal = document.getElementById("myModal");
@@ -742,27 +755,11 @@
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
 
-        var editbtn = document.getElementById("edit");
-        var edititm = document.getElementById("editItem");
-        var modal3 = document.getElementById("editModal");
-        var modal4 = document.getElementById("editItemModal");
-
-        editbtn.onclick= function(){
-              modal3.style.display = "block"       
-              
-              }
-        edititm.onclick= function(){
-              modal4.style.display = "block"       
-              
-              }
-
-
         // Get the <span> element that closes the modal
-        var span = document.getElementById("close1");
-        var span3 = document.getElementById("close3");
-        var span4 = document.getElementById("close4");
+        var span = document.getElementsByClassName("close")[0];
 
         // When the user clicks on the button, open the modal
+        
         btn.onclick = function() {
             modal.style.display = "block";
         }
@@ -773,11 +770,7 @@
         }
 
         // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+       
         // Get the modal
         var modal2 = document.getElementById("myModal2");
 
@@ -785,7 +778,7 @@
         var btn2 = document.getElementById("myBtn2");
 
         // Get the <span> element that closes the modal
-        var span2 = document.getElementById("close2");
+        var span2 = document.getElementsByClassName("close2")[0];
 
         // When the user clicks on the button, open the modal
         btn2.onclick = function() {
@@ -797,23 +790,15 @@
             modal2.style.display = "none";
         }
 
-        span3.onclick = function() {
-            modal3.style.display = "none";
-        }
-        span4.onclick = function() {
-            modal4.style.display = "none";
-        }
-
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
-            if (event.target == modal2) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            else if (event.target == modal2) {
                 modal2.style.display = "none";
             }
         }
-       
-
- 
-
     </script>
 </body>
 
