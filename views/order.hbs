@@ -421,31 +421,33 @@
                         <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
                         
                     </div>
-                    <form action = "orders/add" method = "post">
+                    <form action = "order/add" method = "post">
                         <div class="modal-body">
                             
-                            <table name = "ordermaterials">
-                                <tr>
-                                    <th>Item Name</th>
-                                    <th>Qty.</th>
-                                    <th>Unit Cost</th>
-                                </tr>
-                                <tr>
-                                    <td>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    
+                                    <div class="col-md-3">
+                                        <div class = "fieldheight bottomtxt">Item Name</div>
                                         <select name = "item">
                                             {{#each items}}
                                                 <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
                                             {{/each}}
                                         </select>
-                                    </td>
-                                    <td>
-                                        <input name = "qty" type = "number">
-                                    </td>
-                                    <td>
-                                        <input name = "unitcost" type = "number">
-                                    </td>
-                                </tr>
-                            </table>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class = "fieldheight bottomtxt">Qty</div>
+                                        <input type = "number" class = "smallertxt" name = "qty">
+                                    </div>
+                                    
+                                    <div class="col-md-2">
+                                        <div class = "fieldheight bottomtxt">Unit Cost</div>
+                                        <input type = "text" class = "unitcost" name = "unitcost">
+                                    </div>
+                                    
+                                </div>
+   
+  </div>
                         </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
@@ -454,8 +456,7 @@
                     <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
                 </div>
 
-            </div>   
-
+            </div> 
              <div id="editModal" class="modal">
 
             <!-- Modal content -->
