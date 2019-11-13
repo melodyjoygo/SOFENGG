@@ -61,12 +61,10 @@ router.post("/addItem",(req,res)=>{
                     })  
                 }
                 else{
-                    Promise.resolve(materials.create(itemName,type,supplierID,cost)).then(function(value){
-                        Promise.resolve(Inventory.create(count + 1,'0',new Date().toISOString().slice(0, 19).replace('T', ' '))).then(function(val){
-                            res.render("inventory.hbs",{
-                                message:2
-                            }) 
-                        })   
+                    Promise.resolve(materials.create(itemName,type,supplierID,cost)).then(function(value){        
+                        res.render("inventory.hbs",{
+                            message:2
+                        }) 
                     }) 
                 }  
             })
