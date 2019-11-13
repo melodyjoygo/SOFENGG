@@ -4,6 +4,14 @@ const cryptojs = require("crypto-js")
 
 const Users = require("../model/user");
 
+function titleCase(str) {
+   var splitStr = str.toLowerCase().split(' ');
+   for (var i = 0; i < splitStr.length; i++) {
+       splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+   }
+   return splitStr.join(' '); 
+}
+
 router.get("/",(req,res)=>{
     Promise.resolve(Users.getAllTableView()).then(function(value){
         
@@ -21,12 +29,12 @@ router.post("/add",(req,res)=>{
     let conf = req.body.confpassword
     let type = req.body.role
     let nick = req.body.nickname
-    let fullname = fname
+    let fullname = fname + " " + lname
     let empty = false
     let notvalid = false
     var regx = /^([a-z A-Z 0-9\.-]+)@([a-z A-Z 0-9-]+).([a-z A-Z]{2,8})(.[a-z A-Z]{2,8})$/
     
-    fullname += " " + lname
+    fullname = titleCase(fullname)
     
     if(fname === ""  || lname === "" || email === "" || pass === ""  || conf === "")
         empty = true

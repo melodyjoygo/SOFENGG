@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 app.use(session({
     resave : true,
-    name :"typericer",
+    name :"uprising",
     saveUninitialized : true,
     secret : "secretpass",
     cookie : {

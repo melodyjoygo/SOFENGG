@@ -13,5 +13,5 @@ exports.getAll = function() {
 
 
 exports.loadItems = function(){
-    return database.query("SELECT * FROM softengdb.materials LEFT JOIN softengdb.material_types ON softengdb.materials.materialType = softengdb.material_types.mtID LEFT JOIN softengdb.suppliers ON softengdb.materials.supplierID = softengdb.suppliers.supplierID")
+    return database.query("SELECT * FROM softengdb.transactions NATURAL JOIN softengdb.suppliers")
 }

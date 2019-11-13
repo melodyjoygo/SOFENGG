@@ -18,6 +18,28 @@
   <!-- Custom styles for this template-->
   <link href="css/sample.css" rel="stylesheet">
     <style>
+        .bottomtxt {
+            position:relative;
+           top:20px;
+        }
+        .fieldheight {
+            height:50px;
+            
+        }
+        .unitcost {
+            width:100px;
+        }
+        .suppliertxt {
+            width:200px;
+        }
+        .itemnametxt {
+            width:150px;
+            
+        }
+        .smallertxt {
+            width:50px;
+           
+        }
         .plusicon {
             color:white;
         }
@@ -410,45 +432,37 @@
                     <form action = "order" method = "post">
                         <div class="modal-body">
                             
-                            <table name = "ordermaterials">
-                                <tr>
-                               
-                                    <th>Material</th>
-                                    <th>Item Name</th>
-                                    <th>Qty.</th>
-                                    <th>Supplier</th>
-                                    <th>Unit Cost</th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class = "fieldheight bottomtxt">Material</div> 
                                         <select name = "matname">
-                                            <option value="volvo">Volvo</option>
+                                            <option value="volvo">Volvo</option>    
                                             <option value="saab">Saab</option>
                                             <option value="mercedes">Mercedes</option>
                                             <option value="audi">Audi</option>
                                         </select>
-                                    </td>
-                                    <td>
-                                        <select name = "itemname">
-                                            <option value="volvo">Volvo</option>
-                                            <option value="saab">Saab</option>
-                                            <option value="mercedes">Mercedes</option>
-                                            <option value="audi">Audi</option>
-                                        </select>
-                                    </td>
-                                    <td><input type = "number" name = "quant"></td>
-                                    <td>
-                                        <select name = "supplier">
-                                            <option value="volvo">Volvo</option>
-                                            <option value="saab">Saab</option>
-                                            <option value="mercedes">Mercedes</option>
-                                            <option value="audi">Audi</option>
-                                        </select>
-                                    </td>
-                                    <td><input type = "text" name = "unitcost"></td>
-                                </tr>
-                            </table>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class = "fieldheight bottomtxt">Item Name</div>
+                                        <input type = "text" class = "itemnametxt" name = "itemn">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class = "fieldheight bottomtxt">Qty</div>
+                                        <input type = "number" class = "smallertxt" name = "qty">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class = "fieldheight bottomtxt">Supplier</div>
+                                        <input type = "text" class = "suppliertxt">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class = "fieldheight bottomtxt">Unit Cost</div>
+                                        <input type = "text" class = "unitcost" name = "unitc">
+                                    </div>
+                                    
+                                </div>
+   
+  </div>
                         </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>

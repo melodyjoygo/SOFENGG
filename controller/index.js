@@ -10,8 +10,11 @@ router.use("/suppliers",require("./suppliers"))
 router.use("/projects",require("./projects"))
 router.use("/inventory",require("./inventory"))
 router.use("/orders",require("./orders"))
+router.use("/stockman",require("./stockman"))
+router.use("/clerk",require("./clerk"))
 
 router.get("/",(req,res)=>{
+    console.log('kekeke')
     res.render("login.hbs")
 })
 
@@ -39,7 +42,22 @@ router.post("/login" ,(req,res)=>{
                     })   
                 }
                 else{
-                    res.redirect("/dashboard")   
+                    
+                    req.session.userID = value[0].userID
+                    console.log(req.session.userID)
+                    switch(value[0].userType){
+                        case 0 : res.redirect("/dashboard")
+                        break
+                        case 1 : res.redirect("/dashboard")
+                        break
+                        case 2 : res.redirect("/clerk")
+                        break
+                        case 3 : res.redirect("/clerk")
+                        break
+                        case 4 : res.redirect("/stockman")
+                        break
+                            
+                    } 
                 }   
             }
             else{
