@@ -438,13 +438,28 @@
                     </div>
                     <form action = "projects/add" method = "post">
                         <div class="modal-body">
-                        <div>Client name:</div>
-                                <select name = "clientID">
-                                    {{#each clientList}}
-                                        <option value="{{this.clientID}}">{{this.clientName}}</option>
-                                    {{/each}}
-                                </select>
+                            <div class = "row">
+                                <div class = "col-md-2">Client name:</div>
+                                <div class = "col-md-4"><input type = "text" name = "clientID"></div>
+                            </div>
+                        
                     
+                        </div>
+                        <div class = "row">
+                            <div class = "col-md-2"><div>Material</div></div>
+                            <div class = "col-md-9">
+                                <div class = "col-md-1">
+                                    <div>No</div>
+                                    <div>1</div>
+                                </div>
+                                <div class = "col-md-2">
+                                    <div>Material</div>
+                                    <select name = "materialType">
+                                        <option value = "volvo">Volvo</option>
+                                        <option value = "Benz">Benz</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div style="display: flex;">
                           <div>Materials</div>
