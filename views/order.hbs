@@ -415,6 +415,8 @@
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
+                <div class = "modal-dialog">
+                <div class = "modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2>Order Stock</h2>
@@ -423,29 +425,25 @@
                     </div>
                     <form action = "orders/add" method = "post">
                         <div class="modal-body">
-                            
-                            <table name = "ordermaterials">
-                                <tr>
-                                    <th>Item Name</th>
-                                    <th>Qty. </th>
-                                    <th>Unit Cost</th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <select name = "item">
+                            <div class = "row">
+                                <div class = "col-md-3">
+                                    <div>Item Name</div>
+                                    <select name = "item">
                                             {{#each items}}
                                                 <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
                                             {{/each}}
                                         </select>
-                                    </td>
-                                    <td>
-                                        <input name = "qty" type = "number">
-                                    </td>
-                                    <td>
-                                        <input name = "unitcost" type = "number">
-                                    </td>
-                                </tr>
-                            </table>
+                                </div>
+                                <div class = "col-md-4">
+                                    <div>Qty</div>
+                                    <input name = "qty" type = "number">
+                                </div>
+                                <div class = "col-md-4">
+                                    <div>Unit Cost</div>
+                                    <input name = "unitcost" type = "number">
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
@@ -453,7 +451,8 @@
                     </form>
                     <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
                 </div>
-
+                    </div>
+                </div>
             </div>   
 
              <div id="editModal" class="modal">
