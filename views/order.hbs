@@ -429,7 +429,13 @@
                     <form action = "orders/add" method = "post">
                         <div class="modal-body">
                             <div class = "row">
-                                <div class = "col-md-3">
+                                <div class = "col-md-2">
+                                    <select name = "material">
+                                        <option value = "volvo">Volvo</option>
+                                        <option value = "benz">Benz</option>
+                                    </select>
+                                </div>
+                                <div class = "col-md-2">
                                     <div>Item Name</div>
                                     <select name = "item">
                                             {{#each items}}
@@ -440,6 +446,13 @@
                                 <div class = "col-md-3">
                                     <div>Qty</div>
                                     <input name = "qty" type = "number" class = "smallnumbox">
+                                </div>
+                                <div class = "col-md-2">
+                                    <div>Supplier</div>
+                                    <select name = "supplier">
+                                        <option value = "volvo">Volvo</option>
+                                        <option value = "benz">Benz</option>
+                                    </select>
                                 </div>
                                 <div class = "col-md-3">
                                     <div>Unit Cost</div>
