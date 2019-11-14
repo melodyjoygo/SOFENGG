@@ -418,6 +418,7 @@
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
+                <div class = "modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2>Add Client</h2>
@@ -427,20 +428,26 @@
                     <form action = "/clients/add" method = "post">
                         <div class="modal-body">
                         
-                            <div>Name of client</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "clientname">
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div>Name of client</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "clientname">
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
                         </div>
                     </form>
                 </div>
-
+                </div>
             </div>
 
              <div id="editModal" class="modal">
 
             <!-- Modal content -->
+                 <div class = "modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Edit Client</h2>
@@ -450,15 +457,25 @@
                 <form action = "clients/edit" method = "post">
                         <div class="modal-body">
                         
-                            <div>Select the client to be edited</div>
-                             <select name = "name" id="nameChoice">
-                                {{#each clients}}
-                                  <option>{{clientName}}</option>
-                                {{/each}}
-                            </select> 
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div>Select the client to be edited</div>
+                                    <select name = "name" id="nameChoice">
+                                        {{#each clients}}
+                                        <option>{{clientName}}</option>
+                                        {{/each}}
+                                    </select> 
+                                </div>
+                                
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div>Client Name</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
+                                </div>
+                            </div>
 
-                            <div>Client Name</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
+                            
                             
                         </div>
                         <div class="modal-footer">
@@ -466,7 +483,7 @@
                         </div>
                     </form>
             </div>
-
+                 </div>
         </div>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
