@@ -447,32 +447,42 @@
               <div id="editModal" class="modal">
 
             <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Edit Supplier</h2>
-                    <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
+            <div class = "modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Edit Supplier</h2>
+                        <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
                         
-                </div>
-                <form action = "suppliers/edit" method = "post">
+                    </div>
+                    <form action = "suppliers/edit" method = "post">
+                        
                         <div class="modal-body">
-                        
-                            <div>Select the supplier to be edited</div>
-                             <select name = "name" id="nameChoice">
-                                {{#each suppliers}}
-                                  <option>{{supplierName}}</option>
-                                {{/each}}
-                            </select> 
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div>Select the supplier to be edited</div>
+                                        <select name = "name" id="nameChoice">
+                                            {{#each suppliers}}
+                                            <option>{{supplierName}}</option>
+                                            {{/each}}
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div>Supplier Name</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
+                                </div>
+                            </div>
 
-                            <div>Supplier Name</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
+                            
                             
                         </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
                         </div>
-                    </form>
+                </form>
+                </div>
             </div>
-
         </div>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
