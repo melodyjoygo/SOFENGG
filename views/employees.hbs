@@ -429,7 +429,6 @@
                 </span>
                 <span class="text">Add User</span>
         </a></h1>
-            <!-- The Modal -->
         <div id="myModal" class="modal">
 
             <!-- Modal content -->
@@ -439,24 +438,24 @@
                     <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
                         
                 </div>
-                <form action = "employee" method = "post">
+                <form action = "employees/add" method = "post">
                         <div class="modal-body">
                         <div class  "container-fluid">
                             <div class = "row">
                                 <div class = "col-md-2">
                                     <div>First Name</div>
-                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "empfirstname">
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
                                 </div>
                                 <div class = "col-md-2">
                                     <div>Last Name</div>
-                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "emplastname">
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "lname">
                                 </div>
                                 
                             </div>
                             <div class = "row">
                                 <div class = "col-md-4">
                                     <div>Email Address</div>
-                                <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "empnickname">
+                                <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "email">
                                 </div>
                                 
                             </div>
@@ -464,22 +463,22 @@
                             <div class = "row">
                                 <div class = "col-md-2">
                                     <div>Password</div>
-                                    <input type="password" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "emppass">
+                                    <input type="password" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "password">
                                 </div>
                                 <div class = "col-md-2">
                                     <div>Confirm Password</div>
-                                    <input type="password" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "empconfpass">
+                                    <input type="password" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "confpassword">
                                 </div>
                             
                             </div>
                             
                             <div>Type of User</div>
-                            <select name = "emptype">
-                                <option value="volvo">Volvo</option>
-                                <option value="saab">Saab</option>
-                                <option value="mercedes">Mercedes</option>
-                                <option value="audi">Audi</option>
-                            </select>
+                            <select name = "role" id=userChoice>
+                                <option value="1">User Admin</option>
+                                <option value="2">Admin</option>
+                                <option value="3">Clerk</option>
+                                <option value="4">Stockman</option>
+                            </select> 
                         </div>
                     </div>
                         <div class="modal-footer">
