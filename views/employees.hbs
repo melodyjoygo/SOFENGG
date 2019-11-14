@@ -502,33 +502,61 @@
                         <div class="modal-body">
                         
                             <div>Select the user to be edited</div>
-                             <select name = "name" id="nameChoice">
+                            <div class = "row">
+                                <div class = "col-md-2">
+                                    <select name = "name" id="nameChoice">
                                  {{#each employees}}
                                     <option>{{fullName}}</option>
                                  {{/each}}
                             </select> 
-
-                            <div>First Name</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
-                            <div>Last Name</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "lname">
-              
-                            <div>Email address</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "email">
-                            <div>Password</div>
-                            <input type="password" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "password">
-                            <div>Confirm Password</div>
-                            <input type="password" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "confpassword">
-                            <div>Type of User</div>
-                           <select name = "role" id="userChoice2">
+                                </div>
+                            </div>
+                             <div class = "row">
+                                 <div class = "col-md-2">
+                                     <div>First Name</div>
+                                     <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
+                                 </div>
+                                 <div class = "col-md-2">
+                                     <div>Last Name</div>
+                                     <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "lname">
+                                 </div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-4">
+                                    <div>Email address</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "email">
+                                </div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-2">
+                                    <div>Password</div>
+                                    <input type="password" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "password">
+                                </div>
+                                <div class = "col-md-2">
+                                    <div>Confirm Password</div>
+                                    <input type="password" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "confpassword">
+                                </div>
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-2">
+                                    <div>Type of User</div>
+                                    <select name = "role" id="userChoice2">
                             
-                                <option value="1">User Admin</option>
-                                <option value="2">Admin</option>
-                                <option value="3">Clerk</option>
-                                <option value="4">Stockman</option>
+                                        <option value="1">User Admin</option>
+                                        <option value="2">Admin</option>
+                                        <option value="3">Clerk</option>
+                                        <option value="4">Stockman</option>
 
                           
-                            </select> 
+                                    </select> 
+                                </div>
+                            </div>
+                            
+              
+                            
+
+                            
+                            
                         </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
