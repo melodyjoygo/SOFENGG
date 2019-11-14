@@ -419,6 +419,7 @@
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
+                <div class = "modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2>Add Supplier</h2>
@@ -427,16 +428,20 @@
                     </div>
                     <form action = "suppliers/add" method = "post">
                         <div class="modal-body">
-                        
-                            <div>Supplier Name</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "supplierName">
+                            <div class = "row">
+                                <div class = "col-md-8">
+                                    <div>Supplier Name</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "supplierName">
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
                         </div>
                     </form>
                 </div>
-
+                </div>
             </div>
 
               <div id="editModal" class="modal">
