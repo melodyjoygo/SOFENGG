@@ -409,19 +409,38 @@
                 </div>
                 <form action = "employee" method = "post">
                         <div class="modal-body">
-                        
-                            <div>First Name</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "empfirstname">
-                            <div>Last Name</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "emplastname">
-                            <div>Nickname</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "empnickname">
-                            <div>Email address</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "empemail">
-                            <div>Password</div>
-                            <input type="password" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "emppass">
-                            <div>Confirm Password</div>
-                            <input type="password" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "empconfpass">
+                        <div class  "container-fluid">
+                            <div class = "row">
+                                <div class = "col-md-2">
+                                    <div>First Name</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "empfirstname">
+                                </div>
+                                <div class = "col-md-2">
+                                    <div>Last Name</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "emplastname">
+                                </div>
+                                
+                            </div>
+                            <div class = "row">
+                                <div class = "col-md-4">
+                                    <div>Email Address</div>
+                                <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "empnickname">
+                                </div>
+                                
+                            </div>
+                            
+                            <div class = "row">
+                                <div class = "col-md-2">
+                                    <div>Password</div>
+                                    <input type="password" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "emppass">
+                                </div>
+                                <div class = "col-md-2">
+                                    <div>Confirm Password</div>
+                                    <input type="password" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "empconfpass">
+                                </div>
+                            
+                            </div>
+                            
                             <div>Type of User</div>
                             <select name = "emptype">
                                 <option value="volvo">Volvo</option>
@@ -430,6 +449,7 @@
                                 <option value="audi">Audi</option>
                             </select>
                         </div>
+                    </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
                         </div>
