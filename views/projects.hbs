@@ -18,6 +18,13 @@
   <!-- Custom styles for this template-->
   <link href="css/sample.css" rel="stylesheet">
     <style>
+        .smallertxt {
+            width:30px;
+        }
+        .modal-ku {
+            width:900px;
+            margin:auto;
+        }
         .plusicon {
             color:white;
         }
@@ -425,6 +432,7 @@
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
+                <div class = "modal-dialog modal-lg modal-ku">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2>Add Project</h2>
@@ -433,44 +441,55 @@
                     </div>
                     <form action = "projects/add" method = "post">
                         <div class="modal-body">
-                        <div>Client name:</div>
-                                <select name = "clientID">
-                                    {{#each clientList}}
-                                        <option value="{{this.clientID}}">{{this.clientName}}</option>
-                                    {{/each}}
-                                </select>
+                            <div class = "row">
+                                <div class = "col-md-2">Client name:</div>
+                                <div class = "col-md-4"><input type = "text" name = "clientID"></div>
+                            </div>
+                        
                     
                         </div>
-                        <div style="display: flex;">
-                          <div>Materials</div>
-                          <div>
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                      <tr>
-                        <th>No.</th>
-                        <th>Material</th>
-                        <th>Item</th>
-                        <th>Qty</th>
-                      </tr>
-                    </thead>
-                   <tbody>
-                     <tr>
-                       <td>count</td>
-                       <td><select name = materialType></select></td>
-                       <td><select name = item></select></td>
-                       <td><input name = "qty" type = "number"></td>
-                     </tr>
-
-                   </tbody>
-                            </table>
-                          </div>
+                        <div class = "row">
+                            <div class = "col-md-2">Materials</div>
+                            <div class = "col-md-9">
+                                <div class = "row">
+                                    <div class = "col-md-1">
+                                    <div>No</div>
+                                    <div>1</div>
+                                </div>
+                                <div class = "col-md-2">
+                                    <div>Material</div>
+                                    <select name = "materialType">
+                                        <option value = "volvo">Volvo</option>
+                                        <option value = "Benz">Benz</option>
+                                    </select>
+                                </div>
+                                    <div class = "col-md-2">
+                                        <div>Item name</div>
+                                        <select name = "item">
+                                            <option value = "volvo">Volvo</option>
+                                            <option value = "Benz">Benz</option>
+                                    </select>
+                                    </div>
+                                    <div class = "col-md-1">
+                                        <div>Qty</div>
+                                        <input type = "number" name = "qty" class = "smallertxt">
+                                    </div>
+                                    <div class = "col-md-1">
+                                        <div>&nbsp;</div>
+                                        <span class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></span>
+                                    </div>
+                                </div>
+                                
+                            </div>
                         </div>
+                        
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
                         </div>
                     </form>
-                    <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
+                    
                 </div>
+                    </div>
 
             </div>   
 

@@ -41,7 +41,11 @@
             background-color: rgb(0,0,0); /* Fallback color */
             background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         }
-
+        .modal-ku {
+            width:900px;
+            margin:auto;
+        }
+        
 /* Modal Content */
         .modal-content {
             position: relative;
@@ -96,6 +100,7 @@
   
             color: black;
         }
+        
     </style>
 
     <!-- Custom styles for this template -->
@@ -418,7 +423,7 @@
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
-                
+                <div class = "modal-dialog modal-ku modal-lg">
                 <div class = "modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -429,6 +434,13 @@
                     <form action = "orders/add" method = "post">
                         <div class="modal-body">
                             <div class = "row">
+                                <div class = "col-md-2">
+                                    <div>Material</div>
+                                    <select name = "material">
+                                        <option value = "volvo">Volvo</option>
+                                        <option value = "benz">Benz</option>
+                                    </select>
+                                </div>
                                 <div class = "col-md-3">
                                     <div>Item Name</div>
                                     <select name = "item">
@@ -437,13 +449,24 @@
                                             {{/each}}
                                         </select>
                                 </div>
-                                <div class = "col-md-3">
+                                <div class = "col-md-1">
                                     <div>Qty</div>
                                     <input name = "qty" type = "number" class = "smallnumbox">
+                                </div>
+                                <div class = "col-md-2">
+                                    <div>Supplier</div>
+                                    <select name = "supplier">
+                                        <option value = "volvo">Volvo</option>
+                                        <option value = "benz">Benz</option>
+                                    </select>
                                 </div>
                                 <div class = "col-md-3">
                                     <div>Unit Cost</div>
                                     <input name = "unitcost" type = "number">
+                                </div>
+                                <div class = "col-md-1">
+                                    <div>&nbsp;</div>
+                                    <span class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></span>
                                 </div>
                             </div>
                             
@@ -452,11 +475,13 @@
                             <button type = "submit" class = "btn btn-success">Save</button>
                         </div>
                     </form>
-                    <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
+                    
                 </div>
                     </div>
+                    </div>
+                    </div>
                 
-            </div>   
+            
 
              <div id="editModal" class="modal">
 
