@@ -22,6 +22,7 @@ router.get("/",(req,res)=>{
 })
 router.post("/add",(req,res)=>{
     let supplier = req.body.supplierName
+    let contactNum = req.body.contactNum
     var exist = false
     var empty = false
     
@@ -47,7 +48,7 @@ router.post("/add",(req,res)=>{
             }
             else{
                 supplier= titleCase(supplier)
-                Promise.resolve(Suppliers.create(supplier)).then(function(value){
+                Promise.resolve(Suppliers.create(supplier,contactNum)).then(function(value){
                     res.render("suppliers.hbs",{
                         message:2
                     })

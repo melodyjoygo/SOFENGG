@@ -517,7 +517,11 @@
                                     </div>
                                     <div class="col-md-2">
                                         <div class = "fieldheight bottomtxt">Unit of Measure</div>
-                                        <input type = "text" class = "smallertxt" name = "unitOfMeasure">
+                                        <select name = "unit" id="supplierDrop">
+                                            {{#each unit}}
+                                                <option value="{{this.uomID}}">{{this.unitOfMeasure}}</option>
+                                            {{/each}}
+                                        </select>
                                     </div>
                                     <div class="col-md-3">
                                         <div class = "fieldheight bottomtxt">Supplier</div>
@@ -527,11 +531,6 @@
                                             {{/each}}
                                         </select>
                                     </div>
-                                    <div class="col-md-2">
-                                        <div class = "fieldheight bottomtxt">Unit Cost</div>
-                                        <input type = "text" class = "unitcost" name = "units">
-                                    </div>
-                                    
                                 </div>
    
   </div>

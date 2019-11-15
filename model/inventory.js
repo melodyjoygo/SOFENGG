@@ -26,3 +26,7 @@ exports.updateDate = function(invID,date){
 exports.updateUnitPrice = function(invID,unitPrice){
     database.query("UPDATE inventory SET unitPrice = ?  WHERE inventoryID = ?",[unitPrice,invID])
 }
+
+exports.getAllMeasurements = function(){
+    return database.query("SELECT * FROM unit_of_measures");
+}
