@@ -488,6 +488,7 @@
                         </div>
                     </form>
                     
+                   
                 </div>
                     </div>
 
@@ -503,20 +504,93 @@
                     <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
                         
                 </div>
-                <form action = "employees/edit" method = "post">
+                           <form action = "projects/view" method = "post">
                         <div class="modal-body">
-                        
-                            <div>Select the project to be edited</div>
-                             <select name = "name" id="nameChoice">
-                                 {{#each projects}}
-                                    <option>{{projectNumber}}</option>
-                                 {{/each}}
-                            </select> 
+                        <div>Project Number: (Project Number)</div>
+                        <div>Company Name: <select>
+                          <option>company 1</option>
+                          <option>company 2</option>
+                          <option>company 3</option>
+                        </select></div>
+                        <div>Date Requested: <input type="date"></div>
+                        <div>Status: <select>
+                          <option>Approved</option>
+                          <option>Pending</option>
 
-                             
+                        </select></div>
+                          <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Materials</h6>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                           <thead>
+                             <tr>
+                               <th>Material</th>
+                               <th>Quantity</th>
+                               <th>Unit Cost</th>
+                               <th>Total Cost</th>
+                             </tr>
+                           </thead>
+                           <tbody>
+
+                           </tbody>
+                           
+                  </table>
+                  </div>
+              </div>
+              </div>                             
                         </div>
                         <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Save</button>
+                            <span class = "btn btn-primary"><U>Save</U></span>
+                        </div>
+                    </form>
+            </div>
+
+        </div>    
+
+         <div id="viewModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Details</h2>
+                    <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
+                        
+                </div>
+                <form action = "projects/view" method = "post">
+                        <div class="modal-body">
+                        <div>Project Number: (Project Number)</div>
+                        <div>Company Name: (Company Name)</div>
+                        <div>Date Requested: (Date)</div>
+                        <div>Status: (Status)</div>
+                          <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Materials</h6>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                           <thead>
+                             <tr>
+                               <th>Material</th>
+                               <th>Quantity</th>
+                               <th>Unit Cost</th>
+                               <th>Total Cost</th>
+                             </tr>
+                           </thead>
+                           <tbody>
+
+                           </tbody>
+                           
+                  </table>
+                  </div>
+              </div>
+              </div>                             
+                        </div>
+                        <div class="modal-footer">
+                            <span id ="edit" class = "btn btn-primary"><U>Edit</U></span>
                         </div>
                     </form>
             </div>
@@ -553,12 +627,13 @@
                         <td>{{projectNumber}}</td>
                         <td>{{dateAdded}}</td>
                         <td>{{status}}</td>
+                        <td><span  class = "viewdetails btn btn-primary">View Details</span></td>
                       
                       </tr>
                       {{/each}}
                     </tbody>
                   </table>
-                  <span id ="edit" class = "btn btn-primary"><U>Edit</U></span>
+                  
                 </div>
               </div>
             </div>
@@ -631,23 +706,33 @@
 
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
+        var viewbtn = document.getElementsByClassName("viewdetails")[0];
+     
+
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
         var span2 = document.getElementsByClassName("close")[1];
+        var span3 = document.getElementsByClassName("close")[2];
+
 
 
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
             modal.style.display = "block";
         }
+        viewbtn.onclick = function() {
+            modal3.style.display = "block";
+        }
 
         var editbtn = document.getElementById("edit");
         var modal2 = document.getElementById("editModal");
+        var modal3 = document.getElementById("viewModal");
+        
 
         editbtn.onclick= function(){
-              modal2.style.display = "block"       
-              
+              modal2.style.display = "block";      
+             modal3.style.display = "none";
               }
 
 
@@ -658,6 +743,11 @@
 
         span2.onclick = function() {
             modal2.style.display = "none";
+            modal3.style.display = "block";
+        }
+
+        span3.onclick = function() {
+            modal3.style.display = "none";
         }
         
 
