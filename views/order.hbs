@@ -18,6 +18,9 @@
   <!-- Custom styles for this template-->
   <link href="stylesheets/sample.css" rel="stylesheet">
     <style>
+        .smallnumbox {
+            width:30px;
+        }
         .plusicon {
             color:white;
         }
@@ -38,7 +41,11 @@
             background-color: rgb(0,0,0); /* Fallback color */
             background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         }
-
+        .modal-ku {
+            width:900px;
+            margin:auto;
+        }
+        
 /* Modal Content */
         .modal-content {
             position: relative;
@@ -93,6 +100,7 @@
   
             color: black;
         }
+        
     </style>
 
     <!-- Custom styles for this template -->
@@ -415,6 +423,8 @@
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
+                <div class = "modal-dialog modal-ku modal-lg">
+                <div class = "modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2>Order Stock</h2>
@@ -423,8 +433,69 @@
                     </div>
                     <form action = "orders/add" method = "post">
                         <div class="modal-body">
+                            <div class = "row">
+                                <div class = "col-md-2">
+                                    <div>Material</div>
+                                    <select name = "material">
+                                        <option value = "volvo">Volvo</option>
+                                        <option value = "benz">Benz</option>
+                                    </select>
+                                </div>
+                                <div class = "col-md-3">
+                                    <div>Item Name</div>
+                                    <select name = "item">
+                                            {{#each items}}
+                                                <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
+                                            {{/each}}
+                                        </select>
+                                </div>
+                                <div class = "col-md-1">
+                                    <div>Qty</div>
+                                    <input name = "qty" type = "number" class = "smallnumbox">
+                                </div>
+                                <div class = "col-md-2">
+                                    <div>Supplier</div>
+                                    <select name = "supplier">
+                                        <option value = "volvo">Volvo</option>
+                                        <option value = "benz">Benz</option>
+                                    </select>
+                                </div>
+                                <div class = "col-md-3">
+                                    <div>Unit Cost</div>
+                                    <input name = "unitcost" type = "number">
+                                </div>
+                                <div class = "col-md-1">
+                                    <div>&nbsp;</div>
+                                    <span class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></span>
+                                </div>
+                            </div>
                             
-                            <table name = "ordermaterials">
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Save</button>
+                        </div>
+                    </form>
+                    
+                </div>
+                    </div>
+                    </div>
+                    </div>
+                
+            
+
+             <div id="editModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit </h2>
+                    <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
+                        
+                </div>
+                <form action = "orders/edit" method = "post">
+                        <div class="modal-body">
+                        
+                             <table name = "ordermaterials">
                                 <tr>
                                     <th>Item Name</th>
                                     <th>Qty.</th>
@@ -453,24 +524,41 @@
                     </form>
                     <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
                 </div>
-
-            </div>    
+            </div> 
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
+          <div id = "bodydiv" style="display: flex flex-direction: column">
+
+            <div style="display: flex;flex-direction: column float:left;">
+                  <div class="card shadow mb-4" style="display: flex;flex-direction: column">
               <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Date Ordered</h6>
+                <select>
+                  {{#each items}}
+                    <option>{{date}}</option>
+                  {{/each}}
+
+                </select>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
+                        <th>Item</th>
                         <th>Supplier</th>
-                        <th>Date Ordered</th>
-                        <th>Status</th>
+                        <th>Qty</th>
+                        <th>Cost</th>
                       
                       </tr>
                     </thead>
+                    <tfoot>
+                      <tr>
+                        <th>Item</th>
+                        <th>Supplier</th>
+                        <th>Qty</th>
+                        <th>Cost</th>
+                      </tr>
+                    </tfoot>
                     <tbody>
                       {{#each items}}
                       <tr>
@@ -482,11 +570,43 @@
                       {{/each}}
                     </tbody>
                   </table>
+                   <span id ="edit" class = "btn btn-primary"><U>Edit</U></span>
                 </div>
               </div>
+             
+      </div> 
+       <div style="display: flex; flex-direction:column; float:right">
+             <div id= "trackingDiv" style="display: flex; flex-direction:position:absolute; right: 20px;"></div>
+            <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Tracking</h6>
+          </div>
+          <div class="card-body">
+              <table name = "tracking" class="table table-bordered">
+                  <thead>
+                      <tr>
+                   
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Description</th>
+                          
+                      </tr>
+                  </thead>
+                   
+                    
+                </table>
+
+          </div>
+          </div>
+         
+          </div>
+            </div>
+          
             </div>
   
           </div>
+             
+       
           <!-- /.container-fluid -->
   
         </div>

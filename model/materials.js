@@ -2,9 +2,9 @@ const Database = require("./database");
 var database = new Database();
 
 
-exports.create = function(materialName,  materialType, supplierID, price) {
-    Promise.resolve(database.query("SELECT COUNT(materialID) AS 'count' FROM materials")).then(function(value) {
-        database.query("INSERT INTO materials (materialID, materialName, materialType, supplierID, price) VALUES ?", [[[(value[0].count + 1), materialName,materialType, supplierID, price]]])
+exports.create = function(materialName,  materialType, supplierID, unit) {
+    Promise.resolve(database.query("SELECT COUNT(materialID) AS 'num' FROM materials")).then(function(value) {
+        database.query("INSERT INTO materials (materialID, materialName, materialType, supplierID, unitOfMeasure) VALUES ?", [[[(value[0].num + 1), materialName,materialType, supplierID, unit]]])
       
     })
 }

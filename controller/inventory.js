@@ -19,11 +19,13 @@ router.get("/",(req,res)=>{
     Promise.resolve(materialType.getAll()).then(function(types){
         Promise.resolve(Suppliers.getAll()).then(function(suppliers){
             Promise.resolve(Inventory.getAllTableView()).then(function(value){
-        
-                res.render("inventory.hbs",{
-                types:types,
-                supplier:suppliers,
-                inventory:value
+                Promise.resolve(Inventory.getAllMeasurements()).then(function(units){
+                    res.render("inventory.hbs",{
+                        types:types,
+                        supplier:suppliers,
+                        inventory:value,
+                        unit:units
+                    })
                 })
             })
         })
@@ -33,14 +35,13 @@ router.get("/",(req,res)=>{
 router.post("/addItem",(req,res)=>{
     let type = req.body.type
     let itemName = req.body.itemName
-    let unit = req.body.unitOfMeasure
     let supplierID = req.body.supplier
-    let cost = req.body.unitCost
+    let unit = req.body.unit
+    
     var empty = false
     var exist = false
-    var count
     
-    if(type === "" || itemName === "" || unit === "" || supplierID === "" || cost === "")
+    if(type === "" || itemName === "" || unit === "" || supplierID === "")
         empty = true;
     
     if(empty){
@@ -61,12 +62,10 @@ router.post("/addItem",(req,res)=>{
                     })  
                 }
                 else{
-                    Promise.resolve(materials.create(itemName,type,supplierID,cost)).then(function(value){
-                        Promise.resolve(Inventory.create(count + 1,'0',new Date().toISOString().slice(0, 19).replace('T', ' '))).then(function(val){
-                            res.render("inventory.hbs",{
-                                message:2
-                            }) 
-                        })   
+                    Promise.resolve(materials.create(itemName,type,supplierID,unit)).then(function(value){        
+                        res.render("inventory.hbs",{
+                            message:2
+                        }) 
                     }) 
                 }  
             })
