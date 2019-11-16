@@ -10,7 +10,7 @@ exports.create = function(materialName,  materialType, supplierID, unit) {
 }
 
 exports.getAll = function() {
-    return database.query("SELECT * FROM materials");
+    return database.query("SELECT * FROM materials left join material_types ON materials.materialType = material_types.mtID");
 }
 
 exports.findItem = function(itemID){

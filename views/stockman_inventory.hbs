@@ -399,7 +399,6 @@
                             <table name = "inventmaterials">
                                 <tr>
                                     <th>Delivery Receipt Number</th>
-                                    <th>Material</th>
                                     <th>Item Name</th>
                                     <th>Qty</th>
                                     <th>Supplier</th>
@@ -410,16 +409,9 @@
                                     <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="deliveryReceiptNumberLabel">
                                 </td>
                                 <td>
-                                    <select name = "invID" id="materialtype_dropdown">
-                                            {{#each item}}
-                                                <option value = '{{this.inventoryID}}'>{{this.type}}</option>
-                                            {{/each}}
-                                    </select>   
-                                </td>
-                                <td>
-                                    <select name = "invID" id="material_dropdown">
-                                            {{#each item}}
-                                                <option value = '{{this.materialName}}'>{{this.materialName}}</option>
+                                    <select name = "itemID" id="material_dropdown">
+                                            {{#each items}}
+                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}"</option>
                                             {{/each}}
                                     </select>   
                                 </td>
@@ -429,9 +421,9 @@
                                     <input class="form-control" type = "number" name = "qty" id="qtyLabel">
                                 </td>
                                  <td>
-                                    <select name = "invID" id="material_dropdown">
-                                            {{#each item}}
-                                                <option value = '{{this.supplierName}}'>{{this.supplierName}}</option>
+                                    <select name = "suppID" id="material_dropdown">
+                                            {{#each suppliers}}
+                                                <option value = '{{this.supplierID}}'>{{this.supplierName}}</option>
                                             {{/each}}
                                     </select>   
                                 </td>
