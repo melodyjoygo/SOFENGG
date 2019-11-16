@@ -449,52 +449,47 @@
                     <span class="close btn btn-danger btn-circle btn-sm" id ="close3">&times;</span>
                         
                 </div>
-                <form action = "items/edit" method = "post">
+                <form action = "stockman/restock" method = "post">
                         <div class="modal-body">
-                        
-                            <div>Select the Item to be edited</div>
-                             <select name = "name" id="edit_nameChoice">
-                                {{#each inventory}}
-                                  <option>{{materialName}}</option>
+                          <div>Select the Item Number to be edited</div>
+                             <select name = "name" id="nameChoice">
+                                {{#each items}}
+                                  <option>{{materialID}}</option>
                                 {{/each}}
                             </select> 
-                          
-
-                            <table>
+                            <table name = "inventmaterials">
                                 <tr>
-                                    <th>Material</th>
+                                    <th>Delivery Receipt Number</th>
                                     <th>Item Name</th>
-                                    <th>Unit Of Measure</th>
+                                    <th>Qty</th>
                                     <th>Supplier</th>
-                         
+
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <select name = "type" id="edit_material_dropdown">
-                                            {{#each types}}
-                                                <option value="{{this.mtID}}">{{this.type}}</option>
+                                <td>
+                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="deliveryReceiptNumberLabel">
+                                </td>
+                                <td>
+                                    <select name = "itemID" id="material_dropdown">
+                                            {{#each items}}
+                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}"</option>
                                             {{/each}}
-                                        </select>   
-                                    </td>
-                                    <td>
-                                       <input class="form-control" type = "text" name = "itemName" id="edit_itemNameLabel">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type = "text" name = "unitOfMeasure" id="edit_unitLabel">
-                                    </td>
-                                    <td>
-                                        <select name = "supplier" id="edit_supplierDrop">
-                                            {{#each supplier}}
-                                                <option value="{{this.supplierID}}">{{this.supplierName}}</option>
-                                            {{/each}}
-                                        </select>
-                                    </td>
+                                    </select>   
+                                </td>
                               
-                                   
+                    
+                                <td>
+                                    <input class="form-control" type = "number" name = "qty" id="qtyLabel">
+                                </td>
+                                 <td>
+                                    <select name = "suppID" id="material_dropdown">
+                                            {{#each suppliers}}
+                                                <option value = '{{this.supplierID}}'>{{this.supplierName}}</option>
+                                            {{/each}}
+                                    </select>   
+                                </td>
                                 </tr>
                             </table>
-
-                            
                         </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
