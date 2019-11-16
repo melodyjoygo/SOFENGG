@@ -153,7 +153,7 @@
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
           <li class="nav-item">
-          <a class="nav-link" href="stockman_inventory.html">
+          <a class="nav-link" href="stockman_inventory">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Inventory</span></a>
         </li>
@@ -391,7 +391,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2>Restock Item</h2>
-                        <span class="close btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
+                        <span class="btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
                         
                     </div>
                     <form action = "stockman/restock" method = "post">
@@ -439,6 +439,70 @@
 
 
             </div> 
+
+            <div id="editModal" class="modal">
+
+            <!-- Modal content -->
+           <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit Item</h2>
+                    <span class="close btn btn-danger btn-circle btn-sm" id ="close3">&times;</span>
+                        
+                </div>
+                <form action = "items/edit" method = "post">
+                        <div class="modal-body">
+                        
+                            <div>Select the Item to be edited</div>
+                             <select name = "name" id="edit_nameChoice">
+                                {{#each inventory}}
+                                  <option>{{materialName}}</option>
+                                {{/each}}
+                            </select> 
+                          
+
+                            <table>
+                                <tr>
+                                    <th>Material</th>
+                                    <th>Item Name</th>
+                                    <th>Unit Of Measure</th>
+                                    <th>Supplier</th>
+                         
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select name = "type" id="edit_material_dropdown">
+                                            {{#each types}}
+                                                <option value="{{this.mtID}}">{{this.type}}</option>
+                                            {{/each}}
+                                        </select>   
+                                    </td>
+                                    <td>
+                                       <input class="form-control" type = "text" name = "itemName" id="edit_itemNameLabel">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type = "text" name = "unitOfMeasure" id="edit_unitLabel">
+                                    </td>
+                                    <td>
+                                        <select name = "supplier" id="edit_supplierDrop">
+                                            {{#each supplier}}
+                                                <option value="{{this.supplierID}}">{{this.supplierName}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </td>
+                              
+                                   
+                                </tr>
+                            </table>
+
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Save</button>
+                        </div>
+                    </form>
+            </div>
+
+        </div>
           
 
           <!-- DataTales Example -->
@@ -473,6 +537,7 @@
                   
                   </tbody>
                 </table>
+                <div><span id ="edit" class = "btn btn-primary"><U>Edit</U></span></div> 
               </div>
             </div>
           </div>
@@ -545,13 +610,18 @@
 
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
+        var editbtn = document.getElementById("edit");
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
+         var span3 = document.getElementById("close3");
 
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
             modal.style.display = "block";
+        }
+        editbtn.onclick = function() {
+            modal3.style.display = "block";
         }
 
         // When the user clicks on <span> (x), close the modal
@@ -566,22 +636,24 @@
             }
         }
         // Get the modal
-        var modal2 = document.getElementById("myModal2");
-
+        
+        var modal3 = document.getElementById("editModal");
         // Get the button that opens the modal
-        var btn2 = document.getElementById("myBtn2");
+     
+         
 
         // Get the <span> element that closes the modal
-        var span2 = document.getElementsByClassName("close2")[0];
+        var span2 = document.getElementById("close2");
 
-        // When the user clicks on the button, open the modal
-        btn2.onclick = function() {
-            modal2.style.display = "block";
-        }
+        
 
         // When the user clicks on <span> (x), close the modal
         span2.onclick = function() {
-            modal2.style.display = "none";
+            modal.style.display = "none";
+        }
+
+        span3.onclick = function() {
+            modal3.style.display = "none";
         }
 
         // When the user clicks anywhere outside of the modal, close it
