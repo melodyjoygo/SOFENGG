@@ -10,14 +10,21 @@ exports.create = function(materialName,  materialType, supplierID, unit) {
 }
 
 exports.getAll = function() {
-    return database.query("SELECT * FROM materials");
+    return database.query("SELECT * FROM materials left join material_types ON materials.materialType = material_types.mtID");
 }
 
 exports.findItem = function(itemID){
     return database.query("SELECT * FROM materials WHERE materials.materialID =?",[itemID])
 }
 
-exports.edit = function(materialID, materialName, materialType, supplierID, price) {
-    database.query("UPDATE materials SET materialName = ? , materialType = ?, supplierID = ?, price = ? WHERE materialID = ?", [materialName, materialType, supplierID, price, materialID]);
+exports.edit = function(materialID, materialName, materialType, supplierID) {
+    database.query("UPDATE materials SET materialName = ? , materialType = ?, supplierID = ? WHERE materialID = ?", [materialName, materialType, supplierID, materialID]);
  }
  
+exports.getAllWithSupplier = function(){
+    return database.query("SELECT * FROM materials NATURAL JOIN suppliers LEFT JOIN material_types ON materials.materialType = material_types.mtID")
+}
+
+exports.getSupplier = function(materialID){
+    return database.query("SELECT supplierID FROM materials WHERE materialID = ?",[materialID])
+}

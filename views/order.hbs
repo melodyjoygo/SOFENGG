@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="stylesheets/sample.css" rel="stylesheet">
+  <link href="/stylesheets/sample.css" rel="stylesheet">
     <style>
         .smallnumbox {
             width:30px;
@@ -100,7 +100,18 @@
   
             color: black;
         }
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
         
+        #transactionid{
+            display : none;
+        }
     </style>
 
     <!-- Custom styles for this template -->
@@ -120,6 +131,24 @@
                 alert("Order Successfully Placed")
                 window.location = '/orders'
             }
+            else if(warning === 3){
+                alert("Edit Successfully Saved")
+                window.location = '/orders'
+            }
+            
+            $('button.edit').click(function(){
+                let transactionID = $(this).attr("data-id")
+                let itemID= $(this).attr("data-itemid")
+                let qty = $(this).attr("data-qty")
+                let price = $(this).attr("data-price")
+                
+                $("#transactionid").val(transactionID)
+                $("#itemdropdown").val(itemID)
+                $("#quantity").val(qty)
+                $("#cost").val(price)
+                
+                editmodal.style.display = "block";
+            })
         });
     </script>
 </head>
@@ -434,13 +463,6 @@
                     <form action = "orders/add" method = "post">
                         <div class="modal-body">
                             <div class = "row">
-                                <div class = "col-md-2">
-                                    <div>Material</div>
-                                    <select name = "material">
-                                        <option value = "volvo">Volvo</option>
-                                        <option value = "benz">Benz</option>
-                                    </select>
-                                </div>
                                 <div class = "col-md-3">
                                     <div>Item Name</div>
                                     <select name = "item">
@@ -453,20 +475,12 @@
                                     <div>Qty</div>
                                     <input name = "qty" type = "number" class = "smallnumbox">
                                 </div>
-                                <div class = "col-md-2">
-                                    <div>Supplier</div>
-                                    <select name = "supplier">
-                                        <option value = "volvo">Volvo</option>
-                                        <option value = "benz">Benz</option>
-                                    </select>
-                                </div>
                                 <div class = "col-md-3">
                                     <div>Unit Cost</div>
                                     <input name = "unitcost" type = "number">
                                 </div>
                                 <div class = "col-md-1">
                                     <div>&nbsp;</div>
-                                    <span class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></span>
                                 </div>
                             </div>
                             
@@ -489,12 +503,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Edit </h2>
-                    <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
+                    <span class="close btn btn-danger btn-circle btn-sm" id = 'closeEdit'>&times;</span>
                         
                 </div>
                 <form action = "orders/edit" method = "post">
                         <div class="modal-body">
-                        
+                            <input type = 'text' id = 'transactionid' name = 'transactionID'>
                              <table name = "ordermaterials">
                                 <tr>
                                     <th>Item Name</th>
@@ -503,17 +517,17 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select name = "item">
+                                        <select name = "itemID" id='itemdropdown'>
                                             {{#each items}}
                                                 <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
                                             {{/each}}
                                         </select>
                                     </td>
                                     <td>
-                                        <input name = "qty" type = "number">
+                                        <input name = "qty" type = "number" id = 'quantity'>
                                     </td>
                                     <td>
-                                        <input name = "unitcost" type = "number">
+                                        <input name = "unitcost" type = "number" id = 'cost'>
                                     </td>
                                 </tr>
                             </table>
@@ -522,7 +536,6 @@
                             <button type = "submit" class = "btn btn-success">Save</button>
                         </div>
                     </form>
-                    <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
                 </div>
             </div> 
           <!-- DataTales Example -->
@@ -533,8 +546,8 @@
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Date Ordered</h6>
                 <select>
-                  {{#each items}}
-                    <option>{{date}}</option>
+                  {{#each orders}}
+                    <option>{{this.date}}</option>
                   {{/each}}
 
                 </select>
@@ -548,58 +561,30 @@
                         <th>Supplier</th>
                         <th>Qty</th>
                         <th>Cost</th>
-                      
+                        <th>Date Ordered</th>
+                        <th>Status</th>
+                        <th>Edit</th>
                       </tr>
                     </thead>
-                    <tfoot>
-                      <tr>
-                        <th>Item</th>
-                        <th>Supplier</th>
-                        <th>Qty</th>
-                        <th>Cost</th>
-                      </tr>
-                    </tfoot>
                     <tbody>
-                      {{#each items}}
+                      {{#each orders}}
                       <tr>
+                        <td>{{this.type}} - "{{this.materialName}}"</td>
                         <td>{{this.supplierName}}</td>
-                        <td>{{this.date}}</td>
+                        <td>{{this.quantity}}</td>
+                        <td>{{this.price}}</td>
+                        <td>{{this.date}}</td> 
                         <td>{{this.status}}</td>
-                      
+                          <td><button class = "btn btn-primary edit" data-id = '{{this.transactionID}}' data-itemid = '{{this.materialID}}' data-qty = '{{this.quantity}}' data-price = '{{this.price}}'><U>Edit</U></button></td>
                       </tr>
                       {{/each}}
                     </tbody>
                   </table>
-                   <span id ="edit" class = "btn btn-primary"><U>Edit</U></span>
                 </div>
               </div>
              
       </div> 
-       <div style="display: flex; flex-direction:column; float:right">
-             <div id= "trackingDiv" style="display: flex; flex-direction:position:absolute; right: 20px;"></div>
-            <div class="card shadow mb-4">
-          <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Tracking</h6>
-          </div>
-          <div class="card-body">
-              <table name = "tracking" class="table table-bordered">
-                  <thead>
-                      <tr>
-                   
-                          <th>Date</th>
-                          <th>Status</th>
-                          <th>Description</th>
-                          
-                      </tr>
-                  </thead>
-                   
-                    
-                </table>
-
-          </div>
-          </div>
-         
-          </div>
+       
             </div>
           
             </div>
@@ -671,12 +656,14 @@
     <script>
         // Get the modal
         var modal = document.getElementById("myModal");
+        var editmodal = document.getElementById("editModal");
 
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
+        var span1 = document.getElementById('closeEdit')
 
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
@@ -688,6 +675,10 @@
             modal.style.display = "none";
         }
 
+        
+        span1.onclick = function() {
+            editmodal.style.display = "none";
+        }
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
             if (event.target == modal) {

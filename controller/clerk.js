@@ -34,4 +34,12 @@ router.post("/add",(req,res)=>{
     }
 })
 
+router.get("/inventory",(req,res)=>{
+    res.redirect("/clerk")  
+})
+
+router.get("/priceInput",(res,req)=>{
+    res.render("clerk_price.hbs")
+})
+
 module.exports = router;

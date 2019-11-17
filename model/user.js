@@ -1,9 +1,9 @@
 const Database = require("./database");
 var database = new Database();
 
-exports.create = function(fullName, email,password, userType) {
+exports.create = function(fname,lname, email,password, userType) {
     Promise.resolve(database.query("SELECT COUNT(userID) AS 'count' FROM users")).then(function(value) {
-        database.query("INSERT INTO users (userID,fullName, email, password, userType) VALUES ?", [[[(value[0].count + 1),fullName,email, password, userType]]])
+        database.query("INSERT INTO users (userID,firstName, lastName ,email, password, userType) VALUES ?", [[[(value[0].count + 1),fname,lname,email, password, userType]]])
     })
 }
 
@@ -24,12 +24,10 @@ exports.getAllUsers = function() {
 }
 
 exports.getAllTableView = function() {
-    return database.query("SELECT users.fullname AS 'fullName', user_types.type AS 'type', users.email AS 'email' FROM softengdb.users INNER JOIN softengdb.user_types ON user_types.utID = users.userType");
+    return database.query("SELECT * FROM users LEFT JOIN user_types ON users.userType = user_types.utID");
 }
 
-
-
-exports.edit = function(userID, userName,  fullName, email,password, userType) {
-    database.query("UPDATE users SET username = ?, fullname = ?, email = ?, password = ?, userType = ? WHERE userID = ?", [userName,  fullName, email,password, userType, userID]);
+exports.edit = function(userID, fname,lname, email,userType) {
+    database.query("UPDATE users SET firstName = ?, lastName = ?, email = ? , userType = ? WHERE userID = ?", [fname, lname, email, userType, userID]);
  }
  

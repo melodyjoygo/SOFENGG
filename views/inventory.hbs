@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="stylesheets/sb-admin-2.min.css" rel="stylesheet">
+  <link href="/stylesheets/sb-admin-2.min.css" rel="stylesheet">
 
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -126,6 +126,15 @@
           table-layout: fixed; 
           word-wrap:break-word; 
         }
+        
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        #curritem{
+            display : none;
+        }
     </style>
     
     <script src = '/jQuery.js'></script>
@@ -152,6 +161,30 @@
                 alert("Material Already Exists")
                 window.location = '/inventory'
             }
+            else if(warning === 6){
+                alert("Material Edit Saved")
+                window.location = '/inventory'
+            }
+            else if(warning === 7){
+                alert("Item Edit Saved")
+                window.location = '/inventory'
+            }
+            
+            $("button.edit").click(function(){
+                let id = $(this).attr("data-id")
+                let name = $(this).attr("data-name")
+                let type = $(this).attr("data-type")
+                let supplier = $(this).attr("data-supplier")
+                let unit = $(this).attr("data-unit")
+                
+                $("#curritem").val(id)
+                $("#newtypedropdown").val(type)
+                $("#newnameinput").val(name)
+                $("#newunitdropdown").val(unit)
+                $("#newsupplierdropdown").val(supplier)
+                modal4.style.display = "block"
+            })
+        
         });
     </script>
 </head>
@@ -553,18 +586,18 @@
                     <span class="close btn btn-danger btn-circle btn-sm" id ="close3">&times;</span>
                         
                 </div>
-                <form action = "materials/edit" method = "post">
+                <form action = "inventory/editMaterialType" method = "post">
                         <div class="modal-body">
                         
                             <div>Select the Material to be edited</div>
-                             <select name = "name" id="nameChoice">
+                             <select name = "currType" id="currType">
                                 {{#each types}}
-                                  <option>{{type}}</option>
+                                  <option value = "{{this.mtID}}">{{this.type}}</option>
                                 {{/each}}
                             </select> 
 
                             <div>Material Type</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
+                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "newType">
                             
                         </div>
                         <div class="modal-footer">
@@ -584,15 +617,11 @@
                     <span class="close btn btn-danger btn-circle btn-sm" id ="close4">&times;</span>
                         
                 </div>
-                <form action = "items/edit" method = "post">
+                <form action = "inventory/editMaterial" method = "post">
                         <div class="modal-body">
                         
-                            <div>Select the Item to be edited</div>
-                             <select name = "name" id="edit_nameChoice">
-                                {{#each inventory}}
-                                  <option>{{materialName}}</option>
-                                {{/each}}
-                            </select> 
+                            <div>Update Details</div>
+                             <input type = 'text' id = 'curritem' name = currItem>
                           
 
                             <table>
@@ -601,33 +630,32 @@
                                     <th>Item Name</th>
                                     <th>Unit Of Measure</th>
                                     <th>Supplier</th>
-                                    <th>Unit Cost</th>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select name = "type" id="edit_material_dropdown">
+                                        <select name = "newType" id="newtypedropdown">
                                             {{#each types}}
-                                                <option value="{{this.mtID}}">{{this.type}}</option>
+                                                <option value = "{{this.mtID}}">{{this.type}}</option>
                                             {{/each}}
                                         </select>   
                                     </td>
                                     <td>
-                                       <input class="form-control" type = "text" name = "itemName" id="edit_itemNameLabel">
+                                       <input class="form-control" type = "text" name = "newName" id="newnameinput">
                                     </td>
                                     <td>
-                                        <input class="form-control" type = "text" name = "unitOfMeasure" id="edit_unitLabel">
-                                    </td>
-                                    <td>
-                                        <select name = "supplier" id="edit_supplierDrop">
-                                            {{#each supplier}}
-                                                <option value="{{this.supplierID}}">{{this.supplierName}}</option>
+                                        <select name = "newUnit" id="newunitdropdown">
+                                            {{#each unit}}
+                                                <option value="{{this.uomID}}">{{this.unitOfMeasure}}</option>
                                             {{/each}}
                                         </select>
                                     </td>
                                     <td>
-                                      <input type ="number">
-                                    </td>
-                                   
+                                        <select name = "newSupplier" id="newsupplierdropdown">
+                                            {{#each supplier}}
+                                                <option value="{{this.supplierID}}">{{this.supplierName}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </td>                                   
                                 </tr>
                             </table>
 
@@ -657,20 +685,8 @@
                       <th>Unit of Measures</th>
                       <th>Supplier</th>
                       <th>Qty</th>
-                      
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                     <th></th>
-                      <th>Material</th>
-                      <th>Item Name</th>
-                      <th>Unit of Measures</th>
-                      <th>Supplier</th>
-                      <th>Qty</th>
-                     
-                    </tr>
-                  </tfoot>
                   <tbody>
                     {{#each inventory}}
                       <tr>
@@ -686,12 +702,40 @@
                    
                   </tbody>
                 </table>
-               <div><span id ="edit" class = "btn btn-primary"><U>Edit Material</U></span></div> 
-                <div style="margin-top:5px;"><span id ="editItem" class = "btn btn-primary"><U>Edit Item</U></span></div>
               </div>
             </div>
           </div>
 
+            <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Item List</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Item Name</th>
+                      <th>Supplier</th>
+                      <th>Edit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each items}}
+                      <tr>
+                          <td>{{this.type}} - "{{this.materialName}}"</td>
+                          <td>{{this.supplierName}}</td>
+                          <td><button class = 'edit btn btn-primary' data-id = '{{this.materialID}}' data-name = '{{this.materialName}}' data-type = '{{this.mtID}}' data-supplier = '{{this.supplierID}}' data-unit = '{{this.unitOfMeasure}}'><u>Edit</u></button></td>
+                      </tr>
+                      {{/each}}
+                   
+                  </tbody>
+                </table>
+               <div><span id ="edit" class = "btn btn-primary"><U>Edit Material</U></span></div> 
+              </div>
+            </div>
+          </div>
+            
         </div>
         <!-- /.container-fluid -->
 
@@ -761,7 +805,7 @@
         var modal4 = document.getElementById("editItemModal");
 
 
-
+            
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
         var editbtn = document.getElementById("edit");
@@ -771,7 +815,7 @@
         var span = document.getElementsByClassName("close")[0];
         var span3 = document.getElementsByClassName("close")[1];
         var span4 = document.getElementsByClassName("close")[2];
-
+        
 
         // When the user clicks on the button, open the modal
         

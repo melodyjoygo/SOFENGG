@@ -56,4 +56,30 @@ router.post("/add",(req,res)=>{
     }
 })
 
+router.post("/edit",(req,res)=>{
+    clientID = req.body.clientID
+    clientName = req.body.clientName
+    
+    console.log(clientID)
+    console.log(clientName)
+    
+    var empty = false;
+    
+    if(clientID === "" || clientName === "")
+        empty = true
+    
+    if(empty){
+        res.render("clients.hbs",{
+                    message:3
+                }) 
+    }
+    else{
+        Promise.resolve(Clients.edit(clientID,clientName)).then(function(data){
+            res.render("clients.hbs",{
+                message:4
+            })
+        })
+    }
+})
+
 module.exports = router;
