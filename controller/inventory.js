@@ -20,11 +20,14 @@ router.get("/",(req,res)=>{
         Promise.resolve(Suppliers.getAll()).then(function(suppliers){
             Promise.resolve(Inventory.getAllTableView()).then(function(value){
                 Promise.resolve(Inventory.getAllMeasurements()).then(function(units){
-                    res.render("inventory.hbs",{
-                        types:types,
-                        supplier:suppliers,
-                        inventory:value,
-                        unit:units
+                    Promise.resolve(materials.getAllWithSupplier()).then(function(items){
+                        res.render("inventory.hbs",{
+                            types:types,
+                            supplier:suppliers,
+                            inventory:value,
+                            unit:units,
+                            items:items
+                        }) 
                     })
                 })
             })
@@ -108,6 +111,56 @@ router.post("/addMaterial",(req,res)=>{
             })  
         }
     }
+})
+
+
+router.post("/editMaterial",(req,res)=>{
+    let currItem = req.body.currItem
+    let newType = req.body.newType
+    let newName = req.body.newName
+    let newUnit = req.body.newUnit
+    let newSupplier = req.body.newSupplier
+    var empty = false
+    if(newName === "")
+        empty = true
+    
+    if(empty){
+        res.render("inventory.hbs",{
+            message:3
+        })
+    }
+    else{
+        Promise.resolve(materials.edit(currItem,newName,newType,newSupplier)).then(function(data){
+            res.render("inventory.hbs",{
+                message:7
+            })
+        })
+    }
+    
+})
+
+
+router.post("/editMaterialType",(req,res)=>{
+    let currType = req.body.currType
+    let newType = req.body.newType
+    var empty = false
+    
+    if(newType === "")
+        empty = true
+    
+    if(empty){
+        res.render("inventory.hbs",{
+            message:3
+        })
+    }
+    else{
+        Promise.resolve(materialType.edit(currType,newType)).then(function(data){
+            res.render("inventory.hbs",{
+                message:6
+            })
+        })
+    }
+        
 })
 
 module.exports = router;

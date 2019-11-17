@@ -3,7 +3,7 @@ var database = new Database();
 
 exports.create = function(clientID,projectNumber,dateAdded) {
     Promise.resolve(database.query("SELECT COUNT(projectID) AS 'count' FROM projects")).then(function(value) {
-        database.query("INSERT INTO projects (projectID, clientID,projectNumber,dateAdded) VALUES ?", [[[(value[0].count + 1), clientID,projectNumber,dateAdded]]])
+        database.query("INSERT INTO projects (projectID, clientID,projectNumber,dateAdded,status) VALUES ?", [[[(value[0].count + 1), clientID,projectNumber,dateAdded,'Pending']]])
     })
 }
 

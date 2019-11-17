@@ -8,7 +8,7 @@ const Materials = require("../model/materials")
 const Suppliers = require("../model/suppliers")
 const Tracker = require("../model/delivery_tracker")
 
-router.get("/",(req,res)=>{
+router.get(["/","/stockman"],(req,res)=>{
     
     Promise.resolve(Suppliers.getAll()).then(function(suppliers){
         Promise.resolve(Materials.getAll()).then(function(items){
@@ -20,7 +20,7 @@ router.get("/",(req,res)=>{
     })
 })
 
-router.get("/requests",(req,res)=>{
+router.get(["/requests","/stockman/requests"],(req,res)=>{
     Promise.resolve(Projects.getAll()).then(function(projects){
         Promise.resolve(Items.getAllTableView()).then(function(items){
             res.render("stockman_release_request.hbs",{
@@ -49,7 +49,9 @@ router.post("/restock",(req,res)=>{
     }
     else{
         Promise.resolve(Tracker.create(receiptNumber,itemID,qty,suppID)).then(function(value){
-            
+            res.render("stockman_inventory.hbs",{
+                message:2
+            })
         })
     }
 })
@@ -75,6 +77,31 @@ router.post("/request",(req,res)=>{
                     message:2
                 })
             })
+        })
+    }
+})
+
+router.post("/edit",(req,res)=>{
+    let deliveryID = req.body.deliveryID
+    let deliveryReceiptNumber = req.body.deliveryReceiptNumber
+    let itemID = req.body.itemID
+    let qty = req.body.qty
+    let suppID = req.body.suppID
+    
+    var empty = false
+    
+     if(deliveryID === "" || deliveryReceiptNumber === "" || itemID === "" || qty === "" || suppID === "")
+        empty = true
+    
+    if(empty){
+        res.render("stockman_release_request.hbs",{
+                message:1
+        })
+    }
+    else{
+        Promise.resolve()
+        res.render("stockman_release_request.hbs",{
+            message:3
         })
     }
 })

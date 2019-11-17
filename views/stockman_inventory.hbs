@@ -105,6 +105,10 @@
           table-layout: fixed; 
           word-wrap:break-word; 
         }
+        
+        #deliveryid{
+            display : none;
+        }
     </style>
     <script src = '/jQuery.js'></script>
     <script>
@@ -118,6 +122,27 @@
                 alert("Item has been Added")
                 window.location = '/stockman';
             }
+            else if(warning === 2){
+                alert("Edit Saved")
+                window.location = '/stockman';
+            }
+            
+            $('button.edit').click(function(){
+                let deliveryID = $(this).attr("data-id")
+                let itemID = $(this).attr("data-item")
+                let qty = $(this).attr("data-quantity")
+                let suppID = $(this).attr("data-supplier")
+                let receipt = $(this).attr("data-receipt")
+                
+                
+                $('#deliveryID').val(deliveryID)
+                $('#deliveryReceiptNumberLabel').val(receipt)
+                $('#supplier_dropdown').val(suppID)
+                $('#item_dropdown').val(itemID)
+                $('#qtyLabel').val(qty)
+                
+                modal3.style.display = "block";
+            })
         });
     </script>
 </head>
@@ -153,13 +178,13 @@
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
           <li class="nav-item">
-          <a class="nav-link" href="stockman_inventory">
+          <a class="nav-link" href="/stockman">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Inventory</span></a>
         </li>
         <li class="nav-item active">
           <li class="nav-item">
-          <a class="nav-link" href="stockman/requests">
+          <a class="nav-link" href="/stockman/requests">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Release Requests</span></a>
         </li>
@@ -372,7 +397,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Inventory
+          <h1 class="h3 mb-4 text-gray-800">Deliveries
             <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
             <span class="icon text-white-50">
                 <b class = "plusicon">+</b>
@@ -449,14 +474,9 @@
                     <span class="close btn btn-danger btn-circle btn-sm" id ="close3">&times;</span>
                         
                 </div>
-                <form action = "stockman/restock" method = "post">
+                <form action = "stockman/edit" method = "post">
                         <div class="modal-body">
-                          <div>Select the Item Number to be edited</div>
-                             <select name = "name" id="nameChoice">
-                                {{#each items}}
-                                  <option>{{materialID}}</option>
-                                {{/each}}
-                            </select> 
+                          <input type = 'text' id = 'deliveryid' name = 'deliveryID'>
                             <table name = "inventmaterials">
                                 <tr>
                                     <th>Delivery Receipt Number</th>
@@ -470,7 +490,7 @@
                                     <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="deliveryReceiptNumberLabel">
                                 </td>
                                 <td>
-                                    <select name = "itemID" id="material_dropdown">
+                                    <select name = "itemID" id="item_dropdown">
                                             {{#each items}}
                                                 <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}"</option>
                                             {{/each}}
@@ -482,7 +502,7 @@
                                     <input class="form-control" type = "number" name = "qty" id="qtyLabel">
                                 </td>
                                  <td>
-                                    <select name = "suppID" id="material_dropdown">
+                                    <select name = "suppID" id="supplier_dropdown">
                                             {{#each suppliers}}
                                                 <option value = '{{this.supplierID}}'>{{this.supplierName}}</option>
                                             {{/each}}
@@ -503,36 +523,33 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Deliveries</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th></th>
-                      <th>Material</th>
+                      <th>Receipt Number</th>
                       <th>Item Name</th>
-                      <th>Unit of Measure</th>
                       <th>Supplier</th>
                       <th>Qty</th>
+                      <th></th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                        <th></th>
-                        <th>Material</th>
-                        <th>Item Name</th>
-                        <th>Unit of Measure</th>
-                        <th>Supplier</th>
-                        <th>Qty</th>
-                      </tr>
-                  </tfoot>
+                        
                   <tbody>
-                  
+                      {{#each delivery}}
+                        <tr>
+                            <td>{{this.deliveryReceiptNumber}}</td>
+                            <td>{{this.type}} - "{{this.materialName}}"</td>
+                            <td>{{this.supplierName}}</td>
+                            <td>{{this.quantity}}</td>
+                            <td><button class = 'edit' data-id = '{{this.deliveryID}}' data-item = '{{this.materialID}}' data-quantity = '{{this.quantity}}' data-supplier = '{{this.supplierID}}' data-receipt = '{{this.deliveryReceiptNumber}}'>EDIT</button></td>
+                        </tr>
+                      {{/each}}
                   </tbody>
                 </table>
-                <div><span id ="edit" class = "btn btn-primary"><U>Edit</U></span></div> 
               </div>
             </div>
           </div>
@@ -608,7 +625,7 @@
         var editbtn = document.getElementById("edit");
 
         // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+        var span = document.getElementById("close2");
          var span3 = document.getElementById("close3");
 
         // When the user clicks on the button, open the modal

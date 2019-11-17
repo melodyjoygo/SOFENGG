@@ -5,9 +5,12 @@ const Items = require("../model/transaction")
 const Materials = require("../model/materials")
 
 router.get("/",(req,res)=>{
-    Promise.resolve(Items.loadItems()).then(function(items){
-        res.render("order.hbs",{
-            items:items
+    Promise.resolve(Materials.getAllWithSupplier()).then(function(items){
+        Promise.resolve(Items.loadItems()).then(function(orders){
+            res.render("order.hbs",{
+                items:items,
+                orders:orders
+            })
         })
     })
 })
@@ -37,5 +40,32 @@ router.post("/add",(req,res)=>{
     }
 })
 
-
+router.post("/edit",(req,res)=>{
+    let transactionID = req.body.transactionID
+    let itemID = req.body.itemID
+    let qty = req.body.qty
+    let unitcost = req.body.unitcost
+    
+    var empty = false
+    
+    if(transactionID === "" || itemID === "" || qty === "" || unitcost === "")
+        empty = true
+    
+    if(empty){
+        res.render("order.hbs",{
+            message:1
+        })
+    }
+    else{
+        Promise.resolve(Materials.getSupplier(itemID)).then(function(value){
+            Promise.resolve(Items.edit(itemID,value[0].supplierID,unitcost,qty,transactionID)).then(function(data){
+                res.render("order.hbs",{
+                    message:3
+                })
+            })
+        })
+        
+    }
+    
+})
 module.exports = router

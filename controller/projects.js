@@ -6,15 +6,18 @@ const Clients = require("../model/clients")
 const yearTracker = require("../model/year_tracker")
 
 router.get("/",(req,res)=>{
-    Promise.resolve(Projects.getAllTableView()).then(function(value){
-        res.render("projects.hbs",{
-            projects:value         
+    Promise.resolve(Projects.getAll()).then(function(projects){
+        Promise.resolve(Clients.getAll()).then(function(clients){
+            res.render("projects.hbs",{
+                projects:projects,
+                clients:clients
+            })
         })
+            
     })
 })
 
 router.post('/add',(req,res)=>{
-    let projectName = req.body.projectName
     let clientID = req.body.clientID
     var exist = false
     var empty = false

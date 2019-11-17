@@ -13,5 +13,9 @@ exports.getAll = function() {
 
 
 exports.loadItems = function(){
-    return database.query("SELECT * FROM softengdb.transactions NATURAL JOIN softengdb.suppliers")
+    return database.query("SELECT * FROM transactions NATURAL JOIN suppliers NATURAL JOIN materials LEFT JOIN material_types ON materials.materialType = material_types.mtID")
+}
+
+exports.edit = function(materialID,supplierID,price,quantity,transactionID){
+    database.query("UPDATE transactions SET materialID = ?, supplierID = ?, price = ? ,quantity = ? WHERE transactionID = ?",[materialID,supplierID,price,quantity,transactionID])
 }
