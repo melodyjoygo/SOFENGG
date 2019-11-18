@@ -577,9 +577,7 @@
                             </div>
                             
               
-                            
-
-                            
+          
                             
                         </div>
                         <div class="modal-footer">
@@ -609,7 +607,7 @@
                     <tbody>
                       {{#each employees}}
                       <tr>
-                        <td>{{this.firstName}} {{this.lastName}}</td>
+                        <td>{{this.fullName}}</td>
                         <td>{{this.type}}</td>
                         <td>{{this.email}}</td>
                         <td><button class = 'edit btn btn-primary' data-id = '{{this.userID}}' data-email = "{{this.email}}" data-fname = '{{this.firstName}}' data-lname = '{{this.lastName}}'><u>EDIT</u></button></td>
