@@ -38,7 +38,7 @@ router.get("/inventory",(req,res)=>{
     res.redirect("/clerk")  
 })
 
-router.get("/priceInput",(res,req)=>{
+router.get("/priceInput",(req,res)=>{
     res.render("clerk_price.hbs")
 })
 
