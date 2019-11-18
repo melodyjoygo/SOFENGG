@@ -59,4 +59,28 @@ router.post("/add",(req,res)=>{
         
 })
 
+
+router.post("/edit",(req,res)=>{
+    let suppID = req.body.suppID
+    let supplierName = req.body.supplierName
+    let contactNum = req.body.contactNum
+    
+    var empty = false
+    
+    if(suppID === "" || supplierName === "" || contactNum === "")
+        empty = true
+    
+    if(empty){
+        res.render("suppliers.hbs",{
+            message:3
+        })
+    }
+    else{
+        Promise.resolve(Suppliers.edit(suppID,supplierName,contactNum)).then(function(value){
+            res.render("suppliers.hbs",{
+                message:4
+            })
+        })
+    }
+})
 module.exports = router;

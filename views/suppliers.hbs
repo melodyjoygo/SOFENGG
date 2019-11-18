@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="css/sample.css" rel="stylesheet">
+  <link href="/stylesheets/sample.css" rel="stylesheet">
     <style>
         .plusicon {
             color:white;
@@ -93,6 +93,19 @@
   
             color: black;
         }
+        
+        #suppid{
+            display : none
+        }
+        
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
     </style>
 
     <!-- Custom styles for this template -->
@@ -116,6 +129,22 @@
                 alert("Please Do Not Leave Fields Empty")
                 window.location = '/suppliers'
             }
+            else if(warning === 4){
+                alert("Edit Successfully Saved")
+                window.location = '/suppliers'
+            }
+            
+            $('button.edit').click(function(){
+                let suppID = $(this).attr("data-id")
+                let suppName = $(this).attr("data-name")
+                let suppNum = $(this).attr("data-num")
+                
+                $("#suppid").val(suppID)
+                $("#suppName").val(suppName)
+                $("#suppNum").val(suppNum)
+                
+                editmodal.style.display = "block"
+            })
         });
     </script>
 </head>
@@ -449,29 +478,24 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2>Edit Supplier</h2>
-                        <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
+                        <span class="close btn btn-danger btn-circle btn-sm" id = 'editClose'>&times;</span>
                         
                     </div>
                     <form action = "suppliers/edit" method = "post">
-                        
+                        <input type = 'text' id = 'suppid' name = 'suppID'>
                         <div class="modal-body">
                             <div class = "row">
                                 <div class = "col-md-12">
-                                    <div>Select the supplier to be edited</div>
-                                        <select name = "name" id="nameChoice">
-                                            {{#each suppliers}}
-                                            <option>{{supplierName}}</option>
-                                            {{/each}}
-                                    </select> 
+                                    <div>Supplier Name</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "supplierName" id = 'suppName'>
                                 </div>
                             </div>
                             <div class = "row">
                                 <div class = "col-md-12">
-                                    <div>Supplier Name</div>
-                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
+                                    <div>Contact Number</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "contactNum" id = 'suppNum'>
                                 </div>
                             </div>
-
                             
                             
                         </div>
@@ -494,24 +518,19 @@
                       <tr>
                         <th>Supplier</th>
                         <th>Contact Number</th>
+                        <th>Edit</th>
                       </tr>
                     </thead>
-                    <tfoot>
-                     <tr>
-                        <th>Supplier</th>
-                        <th>Contact Number</th>
-                      </tr>
-                    </tfoot>
                     <tbody>
                       {{#each suppliers}}
                       <tr>
                         <td>{{this.supplierName}}</td>
                         <td>{{this.contactNumber}}</td>
+                        <td><button class = 'edit btn btn-primary' data-id = '{{this.supplierID}}' data-name = '{{this.supplierName}}' data-num = '{{this.contactNumber}}'><u>Edit</u></button></td>
                       </tr>
                       {{/each}}
                     </tbody>
                   </table>
-                   <span id ="edit" class = "btn btn-primary"><U>Edit</U></span>
                 </div>
               </div>
             </div>
@@ -581,13 +600,14 @@
     <script>
         // Get the modal
         var modal = document.getElementById("myModal");
+        var editmodal = document.getElementById("editModal")
 
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
-         var span2 = document.getElementsByClassName("close")[1];
+        var span2 = document.getElementById("editClose");
 
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
@@ -600,7 +620,7 @@
         }
 
          span2.onclick = function() {
-            modal2.style.display = "none";
+            editmodal.style.display = "none";
         }
 
 
@@ -611,13 +631,6 @@
             }
         }
 
-          var editbtn = document.getElementById("edit");
-        var modal2 = document.getElementById("editModal");
-
-        editbtn.onclick= function(){
-              modal2.style.display = "block"       
-              
-              }
     </script>
 
 </body>

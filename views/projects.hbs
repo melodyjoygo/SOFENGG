@@ -100,10 +100,13 @@
   
             color: black;
         }
+        #projectmaterialid{
+            display : none
+        }
     </style>
 
     <!-- Custom styles for this template -->
-  <link href="stylesheets/sb-admin-2.min.css" rel="stylesheet">
+  <link href="/stylesheets/sb-admin-2.min.css" rel="stylesheet">
 
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -123,6 +126,49 @@
                 alert("Please Do Not Leave Fields Empty")
                 window.location = '/projects'
             }
+            
+            $('button.viewdetails').click(function(){
+                $('table.projectmaterials tbody').empty();
+                var projID = $(this).attr("data-id")
+                $('#addprojectmaterialbtn').attr("data-id",projID);
+                $.post( "/projects/loadProjectMaterials",{
+                    projID:projID
+                },function(data){
+                    for(let i = 0; i < data.length; i++){
+                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\" - " + data[i].supplierName +"</td><td>"+ data[i].quantity +"</td><td>0</td><td>0</td><td><button class = 'btn-primary editProjectMaterials' data-id = '"+ data[i].pmID + "'><u>Edit</u></button><td></tr>"
+                        $('table.projectmaterials tbody').append(newRow);
+                    }
+                    $('#viewModal').css("display", "block");
+                });
+            });
+            
+            $('#addprojectmaterialbtn').click(function(){
+                let projID = $(this).attr("data-id")
+                $('#addProjectMaterialModal').css("display", "block");
+                $('#addProjectMaterialModal').css('z-index', 3000);
+                $('#projectmaterialid').val(projID)
+            });
+            
+            $('#addtoprojectmaterialbtn').click(function(){
+                
+                let projectID = $('#projectmaterialid').val()
+                let materialID = $('#projmaterialID').val()
+                let qty = $('#projmaterialQty').val()
+                
+                if (qty === undefined || qty === null)
+                    alert("Quantity Field is Empty")
+                else{
+                    $.post("/projects/addProjectMaterials",{
+                        projectID:projectID,
+                        materialID:materialID,
+                        qty:qty
+                    },function(data){
+                        if(data === "Success")
+                            alert("Material Added Successfully")
+                            $('#addProjectMaterialModal').css("display", "none");
+                    })
+                }
+            })
         });
     </script>
 </head>
@@ -522,39 +568,72 @@
             </div>
 
         </div>    
+            <div id="addProjectMaterialModal" class="modal">
 
+                <!-- Modal content -->
+                <div class = "modal-dialog modal-lg modal-ku">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Add Material</h2>
+                        <span class="close btn btn-danger btn-circle btn-sm" id = 'closeaddProjectMaterialModal'>&times;</span>
+                        
+                    </div>
+                        <div class="modal-body">
+                            <div class = "row">
+                                <input type = text id = 'projectmaterialid'>
+                                <div class = "col-md-2">Material:</div>
+                                <select id = "projmaterialID">
+                                    {{#each materials}}
+                                        <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                             <div class = "row">
+                                 <div class = "col-md-2">Quantity:</div>
+                                <input type = 'number' id = 'projmaterialQty'>
+                             </div>
+                        </div>
+                       
+                        <div class="modal-footer">
+                            <button class = "btn btn-success" id = 'addtoprojectmaterialbtn'>Add</button>
+                        </div>
+                    
+                    
+                   
+                </div>
+                    </div>
+
+            </div> 
+            
          <div id="viewModal" class="modal">
 
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Details</h2>
-                    <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
+                    <h2>Materials</h2>
+                    <span class="close btn btn-danger btn-circle btn-sm" id = "closeviewModal">&times;</span>
                         
                 </div>
-                <form action = "projects/view" method = "post">
-                        <div class="modal-body">
-                        <div>Project Number: (Project Number)</div>
-                        <div>Company Name: (Company Name)</div>
-                        <div>Date Requested: (Date)</div>
-                        <div>Status: (Status)</div>
-                          <div class="card shadow mb-4">
+                
+              <div class="modal-body">
+              <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Materials</h6>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <table class="table table-bordered projectmaterials" id="dataTable" width="100%" cellspacing="0">
                            <thead>
-                             <tr>
-                               <th>Material</th>
-                               <th>Quantity</th>
-                               <th>Unit Cost</th>
-                               <th>Total Cost</th>
-                             </tr>
+                               <tr>
+                                   <th>Material</th>
+                                   <th>Quantity</th>
+                                   <th>Unit Cost</th>
+                                   <th>Total Cost</th>
+                                   <th>Edit</th>
+                               </tr>
                            </thead>
                            <tbody>
-
+                              
                            </tbody>
                            
                   </table>
@@ -563,9 +642,9 @@
               </div>                             
                         </div>
                         <div class="modal-footer">
-                            <span id ="edit" class = "btn btn-primary"><U>Edit</U></span>
+                            <button id ="addprojectmaterialbtn" class = "btn btn-primary"><U>Add Material</U></button>
                         </div>
-                    </form>
+                    
             </div>
 
         </div>    
@@ -583,25 +662,17 @@
                         <th>Project Number</th>
                         <th>Date Requested</th>
                         <th>Status</th>
+                        <th>Details</th>
                       </tr>
                     </thead>
-                    <tfoot>
-                      <tr>
-                        <th>Company Name</th>
-                        <th>Project Number</th>
-                        <th>Date Requested</th>
-                        <th>Status</th>
-                      </tr>
-                    </tfoot>
                     <tbody>
                       {{#each projects}}
                       <tr>
-                        <td>{{clientName}}</td>
-                        <td>{{projectNumber}}</td>
-                        <td>{{dateAdded}}</td>
-                        <td>{{status}}</td>
-                        <td><span  class = "viewdetails btn btn-primary">View Details</span></td>
-                      
+                        <td>{{this.clientName}}</td>
+                        <td>{{this.projectNumber}}</td>
+                        <td>{{this.dateAdded}}</td>
+                        <td>{{this.status}}</td>
+                        <td><button class = "viewdetails btn btn-primary" data-id = '{{this.projectID}}'>View Materials</button></td>
                       </tr>
                       {{/each}}
                     </tbody>
@@ -679,51 +750,34 @@
 
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
-        var viewbtn = document.getElementsByClassName("viewdetails")[0];
+        
      
 
 
         // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-        var span2 = document.getElementsByClassName("close")[1];
-        var span3 = document.getElementsByClassName("close")[2];
+        var span1 = document.getElementById("closeaddProjectMaterialModal");
+        var span2 = document.getElementById("closeviewModal");
 
+            
 
 
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
             modal.style.display = "block";
         }
-        viewbtn.onclick = function() {
-            modal3.style.display = "block";
-        }
+       
 
-        var editbtn = document.getElementById("edit");
-        var modal2 = document.getElementById("editModal");
         var modal3 = document.getElementById("viewModal");
         
-
-        editbtn.onclick= function(){
-              modal2.style.display = "block";      
-             modal3.style.display = "none";
-              }
-
-
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
+        span1.onclick = function() {
+            $('#addProjectMaterialModal').css("display", "none");
         }
 
         span2.onclick = function() {
-            modal2.style.display = "none";
-            modal3.style.display = "block";
-        }
-
-        span3.onclick = function() {
-            modal3.style.display = "none";
+            $('#viewModal').css("display", "none");
         }
         
-
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
             if (event.target == modal) {

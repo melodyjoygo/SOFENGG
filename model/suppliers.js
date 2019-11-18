@@ -14,3 +14,7 @@ exports.getSupplier = function(supplierID){
 exports.getAll = function() {
     return database.query("SELECT * FROM suppliers");
 }
+
+exports.edit = function(suppID,suppName,contactNum){
+    database.query("UPDATE suppliers SET supplierName = ?, contactNumber = ? WHERE supplierID = ?",[suppName,contactNum,suppID])
+}
