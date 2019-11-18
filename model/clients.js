@@ -13,7 +13,7 @@ exports.getAll = function() {
 }
 
 exports.getAllTableView = function() {
-    return database.query("SELECT clients.clientID,clients.clientName, MAX(projects.dateAdded) AS lastRequestDate FROM softengdb.clients LEFT JOIN softengdb.projects ON clients.clientID = projects.clientID GROUP BY projects.clientID");
+    return database.query("SELECT clients.clientID,clients.clientName,proj.lastRequestDate FROM clients Left JOIN (SELECT clientID,MAX(projects.dateAdded) AS lastRequestDate FROM projects GROUP BY projects.clientID) proj ON proj.clientID = clients.clientID");
 }
 
 exports.edit = function(clientID, clientName) {
