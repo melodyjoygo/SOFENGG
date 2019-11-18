@@ -523,13 +523,13 @@
                 </div>
             </div>
           <!-- The Modal -->
-            <div id="myModal2" class="modal">
+            <div id="addItemModal" class="modal">
 
                 <!-- Modal content -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2>Add Item</h2>
-                        <span class="close2 btn btn-danger btn-circle btn-sm">&times;</span>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add Item</h5>
+                        <span id = "closeAddItem" class="btn btn-danger btn-circle btn-sm">&times;</span>
                         
                     </div>
                     <form action = "inventory/addItem" method = "post">
@@ -582,9 +582,10 @@
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Edit Material</h2>
-                    <span class="close btn btn-danger btn-circle btn-sm" id ="close3">&times;</span>
-                        
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Material</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="btn btn-danger btn-circle btn-sm" id ="close3">&times;</span>
+                        </button>
                 </div>
                 <form action = "inventory/editMaterialType" method = "post">
                         <div class="modal-body">
@@ -613,9 +614,10 @@
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Edit Item</h2>
-                    <span class="close btn btn-danger btn-circle btn-sm" id ="close4">&times;</span>
-                        
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class=" btn btn-danger btn-circle btn-sm" id ="close4">&times;</span>
+                       </button> 
                 </div>
                 <form action = "inventory/editMaterial" method = "post">
                         <div class="modal-body">
@@ -809,7 +811,7 @@
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
         var editbtn = document.getElementById("edit");
-        var edititm = document.getElementById("editItem");
+       
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
@@ -838,7 +840,7 @@
         // When the user clicks anywhere outside of the modal, close it
        
         // Get the modal
-        var modal2 = document.getElementById("myModal2");
+        var add_item_modal = document.getElementById("addItemModal");
       
 
 
@@ -846,23 +848,22 @@
         var btn2 = document.getElementById("myBtn2");
 
         // Get the <span> element that closes the modal
-        var span2 = document.getElementsByClassName("close2")[0];
+        var close_add_item = document.getElementById("closeAddItem");
 
         // When the user clicks on the button, open the modal
         btn2.onclick = function() {
-            modal2.style.display = "block";
+            add_item_modal.style.display = "block";
         }
         editbtn.onclick = function() {
             modal3.style.display = "block";
         }
-        edititm.onclick = function() {
-            modal4.style.display = "block";
-        }
+        
 
 
         // When the user clicks on <span> (x), close the modal
-        span2.onclick = function() {
-            modal2.style.display = "none";
+        
+        close_add_item.onclick = function() {
+            add_item_modal.style.display = "none";
         }
         span3.onclick = function() {
             modal3.style.display = "none";
@@ -876,8 +877,8 @@
             if (event.target == modal) {
                 modal.style.display = "none";
             }
-            else if (event.target == modal2) {
-                modal2.style.display = "none";
+            else if (event.target == add_item_modal) {
+                add_item_modal.style.display = "none";
             }
         }
     </script>

@@ -370,19 +370,14 @@
 
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Price Input</Input>
-            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
-            <span class="icon text-white-50">
-                <b class = "plusicon">+</b>
-            </span>
-            <span class="text">Add Price</span>
-         </a>
+      
          
             
         </h1> 
          
              
           
-<div style="display: flex; float: left;">
+<div>
   <!-- DataTales Example -->
   <div class="card shadow mb-4" style="flex-grow:inherit">
       <div class="card-header py-3">
@@ -410,8 +405,16 @@
                       <th>Supplier</th>
                       <th>Qty</th>
                       <th>Price</th>
+                      <th>Edit</th>
               </tr>
             </thead>
+            <tbody>
+                <td>Item</td>
+                <td>Supplier</td>
+                <td>Qty</td>
+                <td>Price</td>
+                <td><button class = 'edit btn btn-primary'>Edit</u></button></td>
+            </tbody>
             <tfoot>
               <tr>
                 <th>Item</th>
@@ -429,21 +432,25 @@
     </div>
 
   </div>
-  <div style=" display: flex; float:right;"> 
+  <div id="addPriceModal" class="modal"> 
      <!-- Tracking -->
-  <div>
-      <div class="card shadow mb-4">
-          <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Add price</h6>
+
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2>Add Price</h2>
+
+               <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                          <span id = "close3" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+                      </button>
+             
+                  
           </div>
+      
           <div class="card-body">
               <div>Item Name</div>
               <div name = "item"> Acrylic Blue 2mm</div>
-              <div>Invoice Number</div>
-              <select name = "date" id="date_dropdown">
-                <option value="1"> 1</option>
-                <option value="2"> 2</option>
-                <option value="3"> 3</option>
+              <div>Invoice Number</div> <input type="text">
+            
             </select>
             <div>Date</div>
                     <select name = "date" id="date_dropdown">
@@ -454,7 +461,7 @@
 
             <div>Unit Cost</div>
             <input class="form-control" type = "number" name = "unitcost" id="unitcostLabel">
-
+        </div>
           </div>
     
   
@@ -465,13 +472,7 @@
   
       <!-- End of Main Content -->
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-       
-            </footer>
-      <!-- End of Footer -->
-
-    </div>
+     
     <!-- End of Content Wrapper -->
 
   </div>
@@ -520,12 +521,12 @@
   <script src="js/demo/datatables-demo.js"></script>
     <script>
         // Get the modal
-        var modal = document.getElementById("myModal");
+        var modal = document.getElementById("addPriceModal");
 
         // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
+       
 
-        var btn3 = document.getElementById("myBtn3");
+        
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
@@ -546,31 +547,7 @@
                 modal.style.display = "none";
             }
         }
-        // Get the modal
-        var modal2 = document.getElementById("myModal2");
-
-        // Get the button that opens the modal
-        var btn2 = document.getElementById("myBtn2");
-
-        // Get the <span> element that closes the modal
-        var span2 = document.getElementsByClassName("close2")[0];
-
-        // When the user clicks on the button, open the modal
-        btn2.onclick = function() {
-            modal2.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span2.onclick = function() {
-            modal2.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal2) {
-                modal2.style.display = "none";
-            }
-        }
+   
     </script>
 </body>
 
