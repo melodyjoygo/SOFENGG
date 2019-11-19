@@ -294,8 +294,11 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2>Edit Price</h2>
-                        <span class="close btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
-                        
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" id = "close2" class = "btn btn-danger btn-circle btn-sm">&times;</span>
+                            </button>
+                       
                     </div>
                     <form action = "clerk/add" method = "post">
                         <div class="modal-body">
@@ -466,16 +469,13 @@
         // Get the modal
         var modal2 = document.getElementById("myModal2");
 
-        // Get the button that opens the modal
-        var btn2 = document.getElementById("myBtn2");
+       
 
         // Get the <span> element that closes the modal
         var span2 = document.getElementsByClassName("close2")[0];
 
         // When the user clicks on the button, open the modal
-        btn2.onclick = function() {
-            modal2.style.display = "block";
-        }
+       
 
         // When the user clicks on <span> (x), close the modal
         span2.onclick = function() {
