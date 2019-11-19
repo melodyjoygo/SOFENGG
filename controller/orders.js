@@ -19,9 +19,10 @@ router.post("/add",(req,res)=>{
     let qty = req.body.qty
     let cost = req.body.unitcost
     let itemID = req.body.item
+    let poNumber = req.body.poNumber
     var empty = false
     
-    if(qty === "" || cost === "" || itemID === "")
+    if(qty === "" || cost === "" || itemID === "" || poNumber === "")
         empty = true
     
     if(empty){
@@ -31,7 +32,7 @@ router.post("/add",(req,res)=>{
     }
     else{
         Promise.resolve(Materials.findItem(itemID)).then(function(value){
-            Promise.resolve(Items.create(value[0].supplierID,value[0].materialID,cost,new Date().toISOString().slice(0, 19).replace('T', ' '),'Pending',qty)).then(function(value){
+            Promise.resolve(Items.create(value[0].supplierID,value[0].materialID,cost,new Date().toISOString().slice(0, 19).replace('T', ' '),'Pending',qty,poNumber)).then(function(value){
                 res.render("order.hbs",{
                     message:2
                 })  
@@ -45,10 +46,11 @@ router.post("/edit",(req,res)=>{
     let itemID = req.body.itemID
     let qty = req.body.qty
     let unitcost = req.body.unitcost
+    let poNumber = req.body.poNumber
     
     var empty = false
     
-    if(transactionID === "" || itemID === "" || qty === "" || unitcost === "")
+    if(transactionID === "" || itemID === "" || qty === "" || unitcost === "" || poNumber === "")
         empty = true
     
     if(empty){
@@ -58,7 +60,7 @@ router.post("/edit",(req,res)=>{
     }
     else{
         Promise.resolve(Materials.getSupplier(itemID)).then(function(value){
-            Promise.resolve(Items.edit(itemID,value[0].supplierID,unitcost,qty,transactionID)).then(function(data){
+            Promise.resolve(Items.edit(itemID,value[0].supplierID,unitcost,qty,transactionID,poNumber)).then(function(data){
                 res.render("order.hbs",{
                     message:3
                 })
