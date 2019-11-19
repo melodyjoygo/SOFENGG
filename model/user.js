@@ -24,7 +24,7 @@ exports.getAllUsers = function() {
 }
 
 exports.getAllTableView = function() {
-    return database.query("SELECT userID,userType,utID,type, concat(" + "firstName, ' ', lastname" + ") as fullName FROM users LEFT JOIN user_types ON users.userType = user_types.utID");
+    return database.query("SELECT userID,userType,utID,type,email, concat(" + "firstName, ' ', lastname" + ") as fullName FROM users LEFT JOIN user_types ON users.userType = user_types.utID");
 }
 
 exports.edit = function(userID, fname,lname, email,userType) {
