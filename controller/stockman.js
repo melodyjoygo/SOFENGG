@@ -6,12 +6,12 @@ const Projects = require("../model/projects")
 const Materials = require("../model/materials")
 const Suppliers = require("../model/suppliers")
 const Tracker = require("../model/delivery_tracker")
-const Edits = require("../model/stockman_requests")
+const Requests = require("../model/stockman_requests")
 
 router.get("/",(req,res)=>{
     
     Promise.resolve(Suppliers.getAll()).then(function(suppliers){
-        Promise.resolve(Materials.getAll()).then(function(items){
+        Promise.resolve(Materials.getAllWithSupplier()).then(function(items){
             Promise.resolve(Tracker.getAll()).then(function(deliveries){
                 res.render("stockman_inventory.hbs",{
                     suppliers:suppliers,
@@ -25,10 +25,10 @@ router.get("/",(req,res)=>{
 
 router.get("/requests",(req,res)=>{
     Promise.resolve(Projects.getAll()).then(function(projects){
-        Promise.resolve(Items.getAllTableView()).then(function(items){
+        Promise.resolve(Materials.getAllWithSupplier()).then(function(items){
             res.render("stockman_release_request.hbs",{
                 projects:projects,
-                items
+                items:items
             })
         })
     })
@@ -63,18 +63,23 @@ router.post("/releaseRequest",(req,res)=>{
     let projectID = req.body.projectID
     let itemID = req.body.itemID
     let qty = req.body.qty
+    
     var empty = false
     
-    if(qty === "")
+    if(qty === "" || projectID === "" || itemID === "")
         empty = true
     
     if(empty){
         res.render("stockman_release_request.hbs",{
-                message:1
+            message:1
         })
     }
     else{
-        
+        Promise.resolve(Requests.createReleaseRequest(projectID,itemID,qty,"Pending")).then(function(data){
+            res.render("stockman_release_request.hbs",{
+                message:2
+            }) 
+        })
     }
 })
 
@@ -101,7 +106,7 @@ router.post("/editRequest",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(Edits.createEdit(deliveryID,newdeliveryReceiptNumber,newitemID,newqty,newsuppID,currdeliveryReceiptNumber,curritemID,currqty,currsuppID))
+        Promise.resolve(Requests.createEditRequest(deliveryID,newdeliveryReceiptNumber,newitemID,newqty,newsuppID,currdeliveryReceiptNumber,curritemID,currqty,currsuppID))
         res.render("stockman_inventory.hbs",{
             message:3
         })
