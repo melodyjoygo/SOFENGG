@@ -458,7 +458,7 @@
             <div class = "modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Add User</h2>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add User</h5>
                     <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
                         
                 </div>
@@ -523,7 +523,7 @@
             <div class = "modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Edit User</h2>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit User</h5>
                     <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
                         
                 </div>
@@ -577,9 +577,7 @@
                             </div>
                             
               
-                            
-
-                            
+          
                             
                         </div>
                         <div class="modal-footer">
@@ -609,7 +607,7 @@
                     <tbody>
                       {{#each employees}}
                       <tr>
-                        <td>{{this.firstName}} {{this.lastName}}</td>
+                        <td>{{this.fullName}}</td>
                         <td>{{this.type}}</td>
                         <td>{{this.email}}</td>
                         <td><button class = 'edit btn btn-primary' data-id = '{{this.userID}}' data-email = "{{this.email}}" data-fname = '{{this.firstName}}' data-lname = '{{this.lastName}}'><u>EDIT</u></button></td>
@@ -700,13 +698,10 @@
             modal.style.display = "block";
         }
 
-        var editbtn = document.getElementById("edit");
+       
         var modal2 = document.getElementById("editModal");
 
-        editbtn.onclick= function(){
-              modal2.style.display = "block"       
-              
-              }
+       
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {

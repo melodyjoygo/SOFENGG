@@ -4,16 +4,39 @@ const router = express.Router();
 const Projects = require("../model/projects")
 const Clients = require("../model/clients")
 const yearTracker = require("../model/year_tracker")
+const projectMaterials = require("../model/project_material")
+const materials = require("../model/materials")
 
 router.get("/",(req,res)=>{
     Promise.resolve(Projects.getAll()).then(function(projects){
         Promise.resolve(Clients.getAll()).then(function(clients){
-            res.render("projects.hbs",{
-                projects:projects,
-                clients:clients
-            })
+            Promise.resolve(materials.getAllWithSupplier()).then(function(materials){
+               res.render("projects.hbs",{
+                    projects:projects,
+                    clients:clients,
+                    materials:materials
+                }) 
+            }) 
         })
             
+    })
+})
+
+router.post("/loadProjectMaterials",(req,res)=>{
+    let projID = req.body.projID
+    
+    Promise.resolve(projectMaterials.getAllProjectMaterials(projID)).then(function(value){
+        res.send(value)
+    })
+})
+
+router.post("/addProjectMaterials",(req,res)=>{
+    let projectID = req.body.projectID
+    let materialID = req.body.materialID
+    let qty = req.body.qty
+    
+    Promise.resolve(projectMaterials.create(projectID,materialID,qty,0)).then(function(data){
+        res.send("Success")
     })
 })
 
@@ -29,7 +52,7 @@ router.post('/add',(req,res)=>{
     if(month < 10)
         month = "0" +month
     
-    if(projectName === "" || clientID === "")
+    if(clientID === "")
         empty = true
     
     if(empty){
