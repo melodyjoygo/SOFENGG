@@ -114,6 +114,15 @@
   
             color: black;
         }
+        
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
     </style>
     <script src = '/jQuery.js'></script>
     <script>
@@ -297,7 +306,7 @@
                         <span class="close btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
                         
                     </div>
-                    <form action = "request" method = "post">
+                    <form action = "releaseRequest" method = "post">
                         <div class="modal-body">
                             
                             <table name = "requestMaterials">
@@ -321,13 +330,8 @@
                                             {{/each}}
                                         </select>
                                     </td>
-                                
                                     <td>
                                         <input class="form-control" type = "number" name = "qty" id="qtyLabel">
-                                    </td>
-                                   
-                                    <td>
-                                            <button class = "btn btn-success btn-circle btn-sm"><div class = "plusicon">+</div></button>
                                     </td>
                                 </tr>
                             </table>
@@ -342,11 +346,55 @@
 
             </div> 
           
-<div style="display: flex; float: left;">
+<div>
   <!-- DataTales Example -->
-  <div class="card shadow mb-4" style="flex-grow:inherit">
+  <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Pending</h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                  <th>
+                          Date Requested:
+                          <select name = "date" id="date_dropdown">
+                                  <option value="oct1">October 1</option>
+                                  <option value="oct2">October 2</option>
+                                  <option value="oct3">October 3</option>
+                          </select>
+
+                        
+                  </th>   
+              
+              </tr>
+              <tr>
+                      <th>Project Number</th>
+                      <th>Item</th>
+                      <th>Supplier</th>
+                      <th>Qty</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                      <th>Project Number</th>
+                      <th>Item</th>
+                      <th>Supplier</th>
+                      <th>Qty</th>
+                </tr>
+            </tfoot>
+            <tbody>
+            
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Approved</h6>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -389,8 +437,9 @@
     </div>
 
   </div>
+  <!--
   <div style=" display: flex; flex-direction: column; width: fit-content; position:absolute; right: 20px;"> 
-     <!-- Tracking -->
+  
   <div>
       <div class="card shadow mb-4">
           <div class="card-header py-3">
@@ -414,11 +463,11 @@
           </div>
       </div> 
   </div>
-  <!-- /.container-fluid -->
+ 
 
   <div>
 
-    <!-- Request Status -->
+  
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h2>Request Status</h2>
@@ -456,7 +505,7 @@
     </div>
 
   </div>
- 
+ -->
 
 </div> 
 
