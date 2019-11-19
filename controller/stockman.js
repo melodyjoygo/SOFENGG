@@ -91,10 +91,10 @@ router.post("/edit",(req,res)=>{
     let newqty = req.body.qty
     let newsuppID = req.body.suppID
     
-    let newdeliveryReceiptNumber = req.body.currdeliveryReceiptNumber
-    let newitemID = req.body.curritemID
-    let newqty = req.body.currqty
-    let newsuppID = req.body.currsuppID
+    let currdeliveryReceiptNumber = req.body.currdeliveryReceiptNumber
+    let curritemID = req.body.curritemID
+    let currqty = req.body.currqty
+    let currsuppID = req.body.currsuppID
     
     console.log("deliveryID"+deliveryID)
     console.log("deliveryReceiptNumber"+deliveryReceiptNumber)
