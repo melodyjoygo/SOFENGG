@@ -34,7 +34,7 @@ CREATE TABLE `clients` (
 --
 
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-INSERT INTO `clients` VALUES (1,'Riot Games'),(2,'Samsung'),(3,'Kek'),(4,'Apple'),(5,'Abcd');
+INSERT INTO `clients` VALUES (1,'Riot Games'),(2,'Samsung'),(3,'Kfc'),(4,'Miki');
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 
 --
@@ -51,6 +51,7 @@ CREATE TABLE `delivery_tracker` (
   `quantity` int(11) NOT NULL,
   `supplierID` int(11) DEFAULT NULL,
   `invoiceNumber` varchar(45) NOT NULL,
+  `poNumber` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`deliveryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -60,7 +61,7 @@ CREATE TABLE `delivery_tracker` (
 --
 
 /*!40000 ALTER TABLE `delivery_tracker` DISABLE KEYS */;
-INSERT INTO `delivery_tracker` VALUES (1,'VN555',1,12,1,'0'),(2,'VN556',3,12,1,'0'),(3,'VN556',3,12,1,'0');
+INSERT INTO `delivery_tracker` VALUES (1,'VN555',1,12,1,'0',NULL),(2,'VN556',3,12,1,'0',NULL);
 /*!40000 ALTER TABLE `delivery_tracker` ENABLE KEYS */;
 
 --
@@ -161,6 +162,7 @@ CREATE TABLE `project_materials` (
 --
 
 /*!40000 ALTER TABLE `project_materials` DISABLE KEYS */;
+INSERT INTO `project_materials` VALUES (1,1,1,123,0),(2,2,2,1,0);
 /*!40000 ALTER TABLE `project_materials` ENABLE KEYS */;
 
 --
@@ -185,7 +187,28 @@ CREATE TABLE `projects` (
 --
 
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
+INSERT INTO `projects` VALUES (1,2,'P1911-00000','2019-11-17','Pending'),(2,1,'P1911-00001','2019-11-17','Pending'),(3,2,'P1911-00002','2019-11-18','Pending'),(4,1,'P1911-00003','2019-11-19','Pending');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
+
+--
+-- Table structure for table `release_requests`
+--
+
+DROP TABLE IF EXISTS `release_requests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `release_requests` (
+  `releaseID` int(11) NOT NULL,
+  PRIMARY KEY (`releaseID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `release_requests`
+--
+
+/*!40000 ALTER TABLE `release_requests` DISABLE KEYS */;
+/*!40000 ALTER TABLE `release_requests` ENABLE KEYS */;
 
 --
 -- Table structure for table `suppliers`
@@ -207,7 +230,7 @@ CREATE TABLE `suppliers` (
 --
 
 /*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
-INSERT INTO `suppliers` VALUES (1,'Jollibee','87000');
+INSERT INTO `suppliers` VALUES (1,'Ace Hardware','8878888'),(2,'Mcdonalds','88886236');
 /*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
 
 --
@@ -225,6 +248,7 @@ CREATE TABLE `transactions` (
   `date` date NOT NULL,
   `status` varchar(45) NOT NULL,
   `quantity` int(11) NOT NULL,
+  `poNumber` varchar(45) NOT NULL,
   PRIMARY KEY (`transactionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -234,7 +258,7 @@ CREATE TABLE `transactions` (
 --
 
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `transactions` VALUES (1,2,1,300.0000,'2019-11-17','Pending',1);
+INSERT INTO `transactions` VALUES (1,1,1,100.0000,'2019-11-19','Pending',12,'P002');
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 
 --
@@ -305,7 +329,7 @@ CREATE TABLE `users` (
 --
 
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Albright','Tee','darren_tee@dlsu.edu.ph','U2FsdGVkX18wVnFhXtfN+sUUm7pdRHEQKaA00MO+6Hc=',1);
+INSERT INTO `users` VALUES (1,'Albright','Tee','darren_tee@dlsu.edu.ph','U2FsdGVkX18wVnFhXtfN+sUUm7pdRHEQKaA00MO+6Hc=',1),(2,'Rebecalyn','Lao','rebecalynlao@gmail.com','U2FsdGVkX18vxYnO0gTSSteGiN0H79sFN11UkNZapSk=',3);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 --
@@ -338,4 +362,4 @@ INSERT INTO `year_tracker` VALUES (1,2019);
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed
+-- Dump completed on 2019-11-19 10:46:25
