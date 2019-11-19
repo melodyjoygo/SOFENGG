@@ -8,19 +8,22 @@ const Materials = require("../model/materials")
 const Suppliers = require("../model/suppliers")
 const Tracker = require("../model/delivery_tracker")
 
-router.get(["/","/stockman"],(req,res)=>{
+router.get("/",(req,res)=>{
     
     Promise.resolve(Suppliers.getAll()).then(function(suppliers){
         Promise.resolve(Materials.getAll()).then(function(items){
-            res.render("stockman_inventory.hbs",{
-                suppliers:suppliers,
-                items:items
-            })    
+            Promise.resolve(Tracker.getAll()).then(function(deliveries){
+                res.render("stockman_inventory.hbs",{
+                    suppliers:suppliers,
+                    items:items,
+                    deliveries:deliveries
+                }) 
+            })     
         })                                     
     })
 })
 
-router.get(["/requests","/stockman/requests"],(req,res)=>{
+router.get("/stockman/requests",(req,res)=>{
     Promise.resolve(Projects.getAll()).then(function(projects){
         Promise.resolve(Items.getAllTableView()).then(function(items){
             res.render("stockman_release_request.hbs",{
@@ -83,10 +86,21 @@ router.post("/request",(req,res)=>{
 
 router.post("/edit",(req,res)=>{
     let deliveryID = req.body.deliveryID
-    let deliveryReceiptNumber = req.body.deliveryReceiptNumber
-    let itemID = req.body.itemID
-    let qty = req.body.qty
-    let suppID = req.body.suppID
+    let newdeliveryReceiptNumber = req.body.deliveryReceiptNumber
+    let newitemID = req.body.itemID
+    let newqty = req.body.qty
+    let newsuppID = req.body.suppID
+    
+    let newdeliveryReceiptNumber = req.body.currdeliveryReceiptNumber
+    let newitemID = req.body.curritemID
+    let newqty = req.body.currqty
+    let newsuppID = req.body.currsuppID
+    
+    console.log("deliveryID"+deliveryID)
+    console.log("deliveryReceiptNumber"+deliveryReceiptNumber)
+    console.log("itemID"+itemID)
+    console.log("qty"+qty)
+    console.log("suppID"+suppID)
     
     var empty = false
     
@@ -94,13 +108,13 @@ router.post("/edit",(req,res)=>{
         empty = true
     
     if(empty){
-        res.render("stockman_release_request.hbs",{
+        res.render("stockman_inventory.hbs",{
                 message:1
         })
     }
     else{
         Promise.resolve()
-        res.render("stockman_release_request.hbs",{
+        res.render("stockman_inventory.hbs",{
             message:3
         })
     }

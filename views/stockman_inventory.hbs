@@ -106,8 +106,17 @@
           word-wrap:break-word; 
         }
         
-        #deliveryid{
+        #editdeliveryid{
             display : none;
+        }
+        
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
         }
     </style>
     <script src = '/jQuery.js'></script>
@@ -134,14 +143,15 @@
                 let suppID = $(this).attr("data-supplier")
                 let receipt = $(this).attr("data-receipt")
                 
+                console.log(deliveryID)
                 
-                $('#deliveryID').val(deliveryID)
-                $('#deliveryReceiptNumberLabel').val(receipt)
+                $('#editdeliveryid').val(deliveryID)
+                $('#editdeliveryReceiptNumberLabel').val(receipt)
                 $('#supplier_dropdown').val(suppID)
                 $('#item_dropdown').val(itemID)
-                $('#qtyLabel').val(qty)
+                $('#editqtyLabel').val(qty)
                 
-                modal3.style.display = "block";
+                modal2.style.display = "block";
             })
         });
     </script>
@@ -358,7 +368,6 @@
                     
                 </div>
 
-
             </div> 
 
             <div id="editModal" class="modal">
@@ -372,7 +381,7 @@
                 </div>
                 <form action = "stockman/edit" method = "post">
                         <div class="modal-body">
-                          <input type = 'text' id = 'deliveryid' name = 'deliveryID'>
+                          <input type = 'text' id = 'editdeliveryid' name = 'deliveryID'>
                             <table name = "inventmaterials">
                                 <tr>
                                     <th>Delivery Receipt Number</th>
@@ -383,7 +392,7 @@
                                 </tr>
                                 <tr>
                                 <td>
-                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="deliveryReceiptNumberLabel">
+                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="editdeliveryReceiptNumberLabel">
                                 </td>
                                 <td>
                                     <select name = "itemID" id="item_dropdown">
@@ -395,7 +404,7 @@
                               
                     
                                 <td>
-                                    <input class="form-control" type = "number" name = "qty" id="qtyLabel">
+                                    <input class="form-control" type = "number" name = "qty" id="editqtyLabel">
                                 </td>
                                  <td>
                                     <select name = "suppID" id="supplier_dropdown">
@@ -435,13 +444,13 @@
                   </thead>
                         
                   <tbody>
-                      {{#each delivery}}
+                      {{#each deliveries}}
                         <tr>
                             <td>{{this.deliveryReceiptNumber}}</td>
                             <td>{{this.type}} - "{{this.materialName}}"</td>
                             <td>{{this.supplierName}}</td>
                             <td>{{this.quantity}}</td>
-                            <td><button class = 'edit' data-id = '{{this.deliveryID}}' data-item = '{{this.materialID}}' data-quantity = '{{this.quantity}}' data-supplier = '{{this.supplierID}}' data-receipt = '{{this.deliveryReceiptNumber}}'>EDIT</button></td>
+                            <td><button class = 'edit btn-primary' data-id = '{{this.deliveryID}}' data-item = '{{this.materialID}}' data-quantity = '{{this.quantity}}' data-supplier = '{{this.supplierID}}' data-receipt = '{{this.deliveryReceiptNumber}}'><u>Edit</u></button></td>
                         </tr>
                       {{/each}}
                   </tbody>
@@ -507,27 +516,22 @@
     <script>
         // Get the modal
         var modal = document.getElementById("myModal");
+        var modal2 = document.getElementById("editModal");
 
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
         var editbtn = document.getElementById("edit");
 
         // Get the <span> element that closes the modal
-        var span = document.getElementById("close2");
-         var span3 = document.getElementById("close3");
+        var span2 = document.getElementById("close2");
+        var span3 = document.getElementById("close3");
 
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
             modal.style.display = "block";
         }
-        editbtn.onclick = function() {
-            modal3.style.display = "block";
-        }
-
+       
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
@@ -535,17 +539,6 @@
                 modal.style.display = "none";
             }
         }
-        // Get the modal
-        
-        var modal3 = document.getElementById("editModal");
-        // Get the button that opens the modal
-     
-         
-
-        // Get the <span> element that closes the modal
-        var span2 = document.getElementById("close2");
-
-        
 
         // When the user clicks on <span> (x), close the modal
         span2.onclick = function() {
@@ -553,7 +546,7 @@
         }
 
         span3.onclick = function() {
-            modal3.style.display = "none";
+            modal2.style.display = "none";
         }
 
         // When the user clicks anywhere outside of the modal, close it

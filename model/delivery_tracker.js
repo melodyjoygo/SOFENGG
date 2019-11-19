@@ -9,6 +9,6 @@ exports.create = function(deliveryReceptNum,  materialID, quantity, supplierID) 
 }
 
 exports.getAll = function(){
-    return database.query("SELECT * from delivery_tracker")
+    return database.query("SELECT * FROM softengdb.delivery_tracker NATURAL JOIN materials NATURAL JOIN suppliers LEFT JOIN material_types ON materials.materialType = material_types.mtID")
 }
 
