@@ -141,11 +141,13 @@
                 let itemID= $(this).attr("data-itemid")
                 let qty = $(this).attr("data-qty")
                 let price = $(this).attr("data-price")
+                let poNumber = $(this).attr("data-po")
                 
                 $("#transactionid").val(transactionID)
                 $("#itemdropdown").val(itemID)
                 $("#quantity").val(qty)
                 $("#cost").val(price)
+                $("#po").val(poNumber)
                 
                 editmodal.style.display = "block";
             })
@@ -382,9 +384,9 @@
                                     <div>Unit Cost</div>
                                     <input name = "unitcost" type = "number">
                                 </div>
-                                <div class = "col-md-1">
-                                    <div>&nbsp;</div>
-                                    
+                                <div class = "col-md-3">
+                                    <div>P.O. Number</div>
+                                    <input name = "poNumber" type = "text">
                                 </div>
                             </div>
                             
@@ -418,6 +420,7 @@
                                     <th>Item Name</th>
                                     <th>Qty.</th>
                                     <th>Unit Cost</th>
+                                    <th>P.O. Number</th>
                                 </tr>
                                 <tr>
                                     <td>
@@ -432,6 +435,9 @@
                                     </td>
                                     <td>
                                         <input name = "unitcost" type = "number" id = 'cost'>
+                                    </td>
+                                    <td>
+                                        <input name = "poNumber" type = "text" id = 'po'>
                                     </td>
                                 </tr>
                             </table>
@@ -462,6 +468,7 @@
                     <thead>
                       <tr>
                         <th>Item</th>
+                        <th>P.O. Number</th>
                         <th>Supplier</th>
                         <th>Qty</th>
                         <th>Cost</th>
@@ -474,12 +481,13 @@
                       {{#each orders}}
                       <tr>
                         <td>{{this.type}} - "{{this.materialName}}"</td>
+                        <td>{{this.poNumber}}</td>
                         <td>{{this.supplierName}}</td>
                         <td>{{this.quantity}}</td>
                         <td>{{this.price}}</td>
                         <td>{{this.date}}</td> 
                         <td>{{this.status}}</td>
-                          <td><button class = "btn btn-danger edit" data-id = '{{this.transactionID}}' data-itemid = '{{this.materialID}}' data-qty = '{{this.quantity}}' data-price = '{{this.price}}'><U>Edit</U></button></td>
+                          <td><button class = "btn btn-danger edit" data-id = '{{this.transactionID}}' data-itemid = '{{this.materialID}}' data-qty = '{{this.quantity}}' data-price = '{{this.price}}' data-po = '{{this.poNumber}}'><U>Edit</U></button></td>
                       </tr>
                       {{/each}}
                     </tbody>
