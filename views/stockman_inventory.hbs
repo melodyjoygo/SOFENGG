@@ -118,6 +118,10 @@
         input[type="number"] {
             -moz-appearance: textfield;
         }
+        
+        .currValues{
+            display : none
+        }
     </style>
     <script src = '/jQuery.js'></script>
     <script>
@@ -131,10 +135,11 @@
                 alert("Item has been Added")
                 window.location = '/stockman';
             }
-            else if(warning === 2){
-                alert("Edit Saved")
+            else if(warning === 3){
+                alert("Edit Request Sent")
                 window.location = '/stockman';
             }
+            
             
             $('button.edit').click(function(){
                 let deliveryID = $(this).attr("data-id")
@@ -150,6 +155,11 @@
                 $('#supplier_dropdown').val(suppID)
                 $('#item_dropdown').val(itemID)
                 $('#editqtyLabel').val(qty)
+                
+                $('#currdeliveryReceiptNumberLabel').val(receipt)
+                $('#currsuppIDLabel').val(suppID)
+                $('#curritemIDLabel').val(itemID)
+                $('#currqtyLabel').val(qty)
                 
                 modal2.style.display = "block";
             })
@@ -325,7 +335,7 @@
                         <span class="btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
                         
                     </div>
-                    <form action = "stockman/restock" method = "post">
+                    <form action = "/stockman/restock" method = "post">
                         <div class="modal-body">
                             <table name = "inventmaterials">
                                 <tr>
@@ -379,9 +389,14 @@
                     <span class="close btn btn-danger btn-circle btn-sm" id ="close3">&times;</span>
                         
                 </div>
-                <form action = "stockman/edit" method = "post">
+                <form action = "/stockman/editRequest" method = "post">
                         <div class="modal-body">
                           <input type = 'text' id = 'editdeliveryid' name = 'deliveryID'>
+                            <input type = 'text' class = 'currValues' id = 'currdeliveryReceiptNumberLabel' name = 'currdeliveryReceiptNumber'>
+                            <input type = 'text' class = 'currValues' id = 'curritemIDLabel' name = 'curritemID'>
+                            <input type = 'text' class = 'currValues' id = 'currqtyLabel' name = 'currqty'>
+                            <input type = 'text' class = 'currValues' id = 'currsuppIDLabel' name = 'currsuppID'>
+                            
                             <table name = "inventmaterials">
                                 <tr>
                                     <th>Delivery Receipt Number</th>
