@@ -520,43 +520,40 @@
                         
                             <div>Update Details</div>
                              <input type = 'text' id = 'curritem' name = currItem>
-                          
-
-                            <table>
-                                <tr>
-                                    <th>Material</th>
-                                    <th>Item Name</th>
-                                    <th>Unit Of Measure</th>
-                                    <th>Supplier</th>
-                                </tr>
-                                <tr>
-                                    <td>
+                        <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class = "fieldheight bottomtxt">Material</div> 
                                         <select name = "newType" id="newtypedropdown">
                                             {{#each types}}
                                                 <option value = "{{this.mtID}}">{{this.type}}</option>
                                             {{/each}}
                                         </select>   
-                                    </td>
-                                    <td>
-                                       <input class="form-control" type = "text" name = "newName" id="newnameinput">
-                                    </td>
-                                    <td>
+                                    </div> 
+                                <div class="col-md-3">
+                                        <div class = "fieldheight bottomtxt">Item Name</div>
+                                        <input class="itemnametxt" type = "text" name = "newName" id="newnameinput">
+                                </div> 
+                                <div class="col-md-3">
+                                        <div class = "fieldheight bottomtxt">Unit of Measure</div>
                                         <select name = "newUnit" id="newunitdropdown">
                                             {{#each unit}}
                                                 <option value="{{this.uomID}}">{{this.unitOfMeasure}}</option>
                                             {{/each}}
                                         </select>
-                                    </td>
-                                    <td>
-                                        <select name = "newSupplier" id="newsupplierdropdown">
+                                    
+                                </div>   
+                                <div class="col-md-3">
+                                        <div class = "fieldheight bottomtxt">Supplier</div>
+                                         <select name = "newSupplier" id="newsupplierdropdown">
                                             {{#each supplier}}
                                                 <option value="{{this.supplierID}}">{{this.supplierName}}</option>
                                             {{/each}}
                                         </select>
-                                    </td>                                   
-                                </tr>
-                            </table>
-
+                                    
+                                </div>              
+                          </div>
+                          </div>
                             
                         </div>
                         <div class="modal-footer">
@@ -623,7 +620,7 @@
                       <tr>
                           <td>{{this.type}} - "{{this.materialName}}"</td>
                           <td>{{this.supplierName}}</td>
-                          <td><button class = 'edit btn btn-danger' data-id = '{{this.materialID}}' data-name = '{{this.materialName}}' data-type = '{{this.mtID}}' data-supplier = '{{this.supplierID}}' data-unit = '{{this.unitOfMeasure}}'><u>Edit</u></button></td>
+                          <td><button class = 'edit btn btn-success' data-id = '{{this.materialID}}' data-name = '{{this.materialName}}' data-type = '{{this.mtID}}' data-supplier = '{{this.supplierID}}' data-unit = '{{this.unitOfMeasure}}'><u>Edit</u></button></td>
                       </tr>
                       {{/each}}
                    
