@@ -16,6 +16,31 @@ USE `softengdb`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `clerk_add_request`
+--
+
+DROP TABLE IF EXISTS `clerk_add_request`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `clerk_add_request` (
+  `requestID` int(11) NOT NULL,
+  `materialID` varchar(45) NOT NULL,
+  `quantity` varchar(45) NOT NULL,
+  `unitPrice` varchar(45) NOT NULL,
+  `userID` int(11) NOT NULL,
+  PRIMARY KEY (`requestID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clerk_add_request`
+--
+
+/*!40000 ALTER TABLE `clerk_add_request` DISABLE KEYS */;
+INSERT INTO `clerk_add_request` VALUES (1,'1','123','100',2);
+/*!40000 ALTER TABLE `clerk_add_request` ENABLE KEYS */;
+
+--
 -- Table structure for table `clients`
 --
 
@@ -49,9 +74,11 @@ CREATE TABLE `delivery_tracker` (
   `deliveryReceiptNumber` varchar(45) NOT NULL,
   `materialID` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `supplierID` int(11) DEFAULT NULL,
   `invoiceNumber` varchar(45) NOT NULL,
-  `poNumber` varchar(45) DEFAULT NULL,
+  `poNumber` varchar(45) NOT NULL,
+  `inInventory` int(11) NOT NULL,
+  `unitPrice` decimal(10,0) NOT NULL,
+  `requestID` int(11) NOT NULL,
   PRIMARY KEY (`deliveryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -61,7 +88,7 @@ CREATE TABLE `delivery_tracker` (
 --
 
 /*!40000 ALTER TABLE `delivery_tracker` DISABLE KEYS */;
-INSERT INTO `delivery_tracker` VALUES (1,'VN555',1,12,1,'0',NULL),(2,'VN556',3,12,1,'0',NULL);
+INSERT INTO `delivery_tracker` VALUES (1,'VN555',1,123,'IN123','P001',0,100,1);
 /*!40000 ALTER TABLE `delivery_tracker` ENABLE KEYS */;
 
 --
@@ -162,7 +189,7 @@ CREATE TABLE `project_materials` (
 --
 
 /*!40000 ALTER TABLE `project_materials` DISABLE KEYS */;
-INSERT INTO `project_materials` VALUES (1,1,1,123,0),(2,2,2,1,0);
+INSERT INTO `project_materials` VALUES (1,1,1,22222,0),(2,2,1,10,0),(3,1,1,12,0),(4,1,1,123,0),(5,1,3,10,0),(6,3,2,10,0),(7,1,1,123,0),(8,1,3,1,0);
 /*!40000 ALTER TABLE `project_materials` ENABLE KEYS */;
 
 --
@@ -187,28 +214,66 @@ CREATE TABLE `projects` (
 --
 
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (1,2,'P1911-00000','2019-11-17','Pending'),(2,1,'P1911-00001','2019-11-17','Pending'),(3,2,'P1911-00002','2019-11-18','Pending'),(4,1,'P1911-00003','2019-11-19','Pending');
+INSERT INTO `projects` VALUES (1,3,'P1911-00000','2019-11-17','Approved'),(2,1,'P1911-00001','2019-11-17','Pending'),(3,2,'P1911-00002','2019-11-18','Pending'),(4,1,'P1911-00003','2019-11-19','Pending');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 
 --
--- Table structure for table `release_requests`
+-- Table structure for table `stockman_edit_requests`
 --
 
-DROP TABLE IF EXISTS `release_requests`;
+DROP TABLE IF EXISTS `stockman_edit_requests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `release_requests` (
-  `releaseID` int(11) NOT NULL,
-  PRIMARY KEY (`releaseID`)
+CREATE TABLE `stockman_edit_requests` (
+  `requestID` int(11) NOT NULL,
+  `deliveryID` varchar(45) NOT NULL,
+  `newDeliveryReceipt` varchar(45) NOT NULL,
+  `newItemID` varchar(45) NOT NULL,
+  `newQuantity` varchar(45) NOT NULL,
+  `newSupplierID` varchar(45) NOT NULL,
+  `currDeliveryReceipt` varchar(45) NOT NULL,
+  `currItemID` varchar(45) NOT NULL,
+  `currQuantity` varchar(45) NOT NULL,
+  `currSupplierID` varchar(45) NOT NULL,
+  `userID` int(11) NOT NULL,
+  PRIMARY KEY (`requestID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `release_requests`
+-- Dumping data for table `stockman_edit_requests`
 --
 
-/*!40000 ALTER TABLE `release_requests` DISABLE KEYS */;
-/*!40000 ALTER TABLE `release_requests` ENABLE KEYS */;
+/*!40000 ALTER TABLE `stockman_edit_requests` DISABLE KEYS */;
+INSERT INTO `stockman_edit_requests` VALUES (1,'1','VN555','1','100','1','VN555','1','123','1',3);
+/*!40000 ALTER TABLE `stockman_edit_requests` ENABLE KEYS */;
+
+--
+-- Table structure for table `stockman_release_requests`
+--
+
+DROP TABLE IF EXISTS `stockman_release_requests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `stockman_release_requests` (
+  `requestID` int(11) NOT NULL,
+  `projectID` varchar(45) NOT NULL,
+  `itemID` varchar(45) NOT NULL,
+  `qty` varchar(45) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  `dateRequested` date NOT NULL,
+  `userID` int(11) NOT NULL,
+  PRIMARY KEY (`requestID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stockman_release_requests`
+--
+
+/*!40000 ALTER TABLE `stockman_release_requests` DISABLE KEYS */;
+INSERT INTO `stockman_release_requests` VALUES (1,'1','1','100','Pending','2019-11-19',3);
+/*!40000 ALTER TABLE `stockman_release_requests` ENABLE KEYS */;
 
 --
 -- Table structure for table `suppliers`
@@ -329,7 +394,7 @@ CREATE TABLE `users` (
 --
 
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Albright','Tee','darren_tee@dlsu.edu.ph','U2FsdGVkX18wVnFhXtfN+sUUm7pdRHEQKaA00MO+6Hc=',1),(2,'Rebecalyn','Lao','rebecalynlao@gmail.com','U2FsdGVkX18vxYnO0gTSSteGiN0H79sFN11UkNZapSk=',3);
+INSERT INTO `users` VALUES (1,'Melody','Go','melody_go@dlsu.edu.ph','U2FsdGVkX19T8gjGy2tGPtfrn/rnuWE0HuxziIUopGo=',0),(2,'Rebecalyn','Lao','rebecalyn_lao@dlsu.edu.ph','U2FsdGVkX19Y7gb2XVpkBnheS2NLLZsfhXG4J7DIZUQ=',3),(3,'Darren','Tee','darren_tee@dlsu.edu.ph','U2FsdGVkX19YYa+sOn7aF33GDofFaCQQTuucgvK6S9I=',4);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 --
@@ -362,4 +427,4 @@ INSERT INTO `year_tracker` VALUES (1,2019);
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-19 10:46:25
+-- Dump completed
