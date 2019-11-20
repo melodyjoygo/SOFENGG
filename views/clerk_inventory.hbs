@@ -153,7 +153,7 @@
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
           <li class="nav-item">
-          <a class="nav-link" href="clerk/inventory.html">
+          <a class="nav-link" href="/clerk">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Inventory</span></a>
         </li>
@@ -165,9 +165,9 @@
         </li>
         <li class="nav-item active">
             <li class="nav-item">
-            <a class="nav-link" href="clerk_reports.html">
+            <a class="nav-link" href="/clerk/deliveryTracker">
               <i class="fas fa-fw fa-tachometer-alt"></i>
-              <span>Reports</span></a>
+              <span>Delivery Tracker</span></a>
             </li>
        
          
@@ -278,9 +278,7 @@
           <h1 class="h3 mb-4 text-gray-800">Inventory
             <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
             <span class="icon text-white-50">
-                <b class = "plusicon">+</b>
             </span>
-            <span class="text">Edit Price</span>
          </a>
          
             
@@ -288,51 +286,6 @@
             <!-- The Modal -->
        
           <!-- The Modal -->
-            <div id="myModal" class="modal">
-
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>Edit Price</h2>
-                        <span class="close btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
-                        
-                    </div>
-                    <form action = "clerk/add" method = "post">
-                        <div class="modal-body">
-                            
-                            <table name = "inventmaterials" class="table table-bordered">
-                                <tr>
-                                    <th>Item Name</th>
-                                    <th>Unit Cost</th>
-    
-                                </tr>
-                                <tr>
-                            
-                                    <td>
-                                        <select name = 'itemID'>
-                                            {{#each items}}
-                                                <option value = '{{this.inventoryID}}'>{{this.type}} - "{{this.materialName}}" - {{this.supplierName}}</option>
-                                            {{/each}}
-                                        </select>
-                                    </td>
-                                    
-                                    
-                                    <td>
-                                        <input class="form-control" type = "number" name = "unitCost" id="qtyLabel">
-                                    </td>
-                                   
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Save</button>
-                        </div>
-                    </form>
-                    
-                </div>
-
-
-            </div> 
           
 
           <!-- DataTales Example -->
@@ -355,20 +308,18 @@
                       <th>Total Cost</th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                        <th></th>
-                        <th>Material</th>
-                        <th>Item Name</th>
-                        <th>Unit of Measure</th>
-                        <th>Supplier</th>
-                        <th>Qty</th>
-                        <th>Unit Cost</th>
-                        <th>Total Cost</th>
-                      </tr>
-                  </tfoot>
                   <tbody>
-                  
+                    {{#each items}}
+                      <tr>
+                        <td>{{this.type}}</td>
+                        <td>{{this.materialName}}</td>
+                        <td>{{this.unitOfMeasure}}</td>
+                        <td>{{this.supplierName}}</td>
+                        <td>{{this.totalQuantity}}</td>
+                        <td>{{this.avePrice}}</td>
+                        <td>{{this.totalPrice}}</td>
+                      </tr>
+                    {{/each}}
                   </tbody>
                 </table>
               </div>

@@ -114,8 +114,78 @@
   
             color: black;
         }
-    </style>
+        
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        
+        #deliveryIDLabel{
+            display : none;
+        }
+        
+        #itemIDLabel{
+            display : none;
+        }
+        
+        #quantityLabel{
+            display : none;
+        }
+        
+        #requestIDLabel{
+            display : none;
+        }
+        
+    </style>
+    <script src = '/jQuery.js'></script>
+    <script>
+        let warning = {{message}}
+        $( document ).ready(function(){
+            if(warning === 1){
+                alert("Please Do Not Leave Fields Empty")
+                window.location = '/clerk/deliveryTracker';
+            }
+            else if(warning === 2){
+                alert("Changes Have Been Saved")
+                window.location = '/clerk/deliveryTracker';
+            }
+            
+            $('button.editPrice').click(function(){
+                let receiptNum = $(this).attr("data-receiptNum")
+                let materialID = $(this).attr("data-materialID")
+                let quantity = $(this).attr("data-quantity")
+                let deliveryID = $(this).attr("data-id")
+                let invoiceNum = $(this).attr("data-invoice")
+                let poNum = $(this).attr("data-po")
+                let unitPrice = $(this).attr("data-price")
+                let requestID = $(this).attr("data-requestID")
+                modal.style.display = "block";
+                
+                $('#deliveryReceiptNumberLabel').html('')
+                $('#itemNameLabel').html('')
+                $('#qtyLabel').html('')
+                
+                $('#deliveryReceiptNumberLabel').append(" " + receiptNum)
+                $('#itemNameLabel').append(" " + materialID)
+                $('#qtyLabel').append(" " + quantity)
+                
+                $('#deliveryIDLabel').val(deliveryID)
+                $('#itemIDLabel').val(materialID)
+                $('#quantityLabel').val(quantity)
+                $('#invoiceNumberLabel').val(invoiceNum)
+                $('#poNumberLabel').val(poNum)
+                $('#unitCostLabel').val(unitPrice)
+                $('#requestIDLabel').val(requestID)
+                
+                
+                
+            })
+        });
+    </script>
 </head>
 
 <body id="page-top">
@@ -149,16 +219,23 @@
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
           <li class="nav-item">
-          <a class="nav-link" href="stockman_inventory.html">
+          <a class="nav-link" href="/clerk">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Inventory</span></a>
         </li>
         <li class="nav-item active">
           <li class="nav-item">
-          <a class="nav-link" href="stockman_release_request.html">
+          <a class="nav-link" href="/clerk/priceInput">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Release Requests</span></a>
+            <span>Price Input</span></a>
         </li>
+        <li class="nav-item active">
+            <li class="nav-item">
+            <a class="nav-link" href="/clerk/deliveryTracker">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Delivery Tracker</span></a>
+            </li>
+       
         
        
          
@@ -369,11 +446,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Price Input</Input>
-      
-         
-            
-        </h1> 
+          <h1 class="h3 mb-4 text-gray-800">Delivery Tracker</h1> 
          
              
           
@@ -388,41 +461,30 @@
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr>
-                  <th>
-                          Date Ordered:
-                          <select name = "date" id="date_dropdown">
-                                  <option value="oct1">October 1</option>
-                                  <option value="oct2">October 2</option>
-                                  <option value="oct3">October 3</option>
-                          </select>
-
-                        
-                  </th>   
-              
-              </tr>
-              <tr>
-                      <th>Item</th>
-                      <th>Supplier</th>
-                      <th>Qty</th>
-                      <th>Price</th>
-                      <th>Edit</th>
+                  <th>Delivery Receipt Number</th>
+                  <th>Item</th>
+                  <th>Supplier</th>
+                  <th>Qty</th>
+                  <th>Invoice Number</th>
+                  <th>P.O. Number</th>
+                  <th>Unit Price</th>
+                  <th>Edit</th>
               </tr>
             </thead>
             <tbody>
-                <td>Item</td>
-                <td>Supplier</td>
-                <td>Qty</td>
-                <td>Price</td>
-                <td><button class = 'edit btn btn-danger'>Edit</u></button></td>
+                {{#each deliveries}}
+                    <tr>
+                        <td>{{this.deliveryReceiptNumber}}</td>
+                        <td>{{this.type}} - "{{this.materialName}}"</td>
+                        <td>{{this.supplierName}}</td>
+                        <td>{{this.quantity}}</td>
+                        <td>{{this.invoiceNumber}}</td>
+                        <td>{{this.poNumber}}</td>
+                        <td>{{this.unitPrice}}</td>
+                        <td><button class = 'editPrice btn btn-primary' data-id = "{{this.deliveryID}}" data-receiptNum = "{{this.deliveryReceiptNumber}}" data-materialID = "{{this.materialID}}" data-quantity = "{{this.quantity}}" data-invoice = "{{this.invoiceNumber}}" data-po = "{{this.poNumber}}" data-price="{{this.unitPrice}}" data-requestID = "{{this.requestID}}"><u>Edit</u></button></td>
+                    </tr>
+                {{/each}}
             </tbody>
-            <tfoot>
-              <tr>
-                <th>Item</th>
-                <th>Supplier</th>
-                <th>Qty</th>
-                <th>Price</th>
-                </tr>
-            </tfoot>
             <tbody>
             
             </tbody>
@@ -437,34 +499,36 @@
 
       <div class="modal-content">
           <div class="modal-header">
-              <h2>Add Price</h2>
+              <h2>Edit Delivery Details</h2>
 
                <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
-                          <span id = "close3" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
-                      </button>
-             
-                  
+                    <span id = "close3" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+               </button>
           </div>
       
           <div class="card-body">
-              <div>Item Name</div>
-              <div name = "item"> Acrylic Blue 2mm</div>
-              <div>Invoice Number</div> <input type="text">
-            
-            </select>
-            <div>Date</div>
-                    <select name = "date" id="date_dropdown">
-                        <option value="oct1">October 1</option>
-                        <option value="oct2">October 2</option>
-                        <option value="oct3">October 3</option>
-                    </select>
-
-            <div>Unit Cost</div>
-            <input class="form-control" type = "number" name = "unitcost" id="unitcostLabel">
-        </div>
+              <form action = "/clerk/editPrice" method = 'post'>
+                  <input type = 'number' id = 'requestIDLabel' name = 'requestID'>
+                  <input type = 'text' id = 'deliveryIDLabel' name = 'deliveryID'>
+                  <div>Delivery Receipt Number: </div>
+                  <div id = 'deliveryReceiptNumberLabel'></div>
+                  <div>Item Name: </div>
+                  <div id = "itemNameLabel"></div>
+                  <input type = 'text'name = 'itemID' id = 'itemIDLabel'>
+                  <div>Quantity: </div>
+                  <div id = 'qtyLabel'></div>
+                  <input type = 'number'name = 'quantity' id = 'quantityLabel'>
+                  <div>Invoice Number: </div> 
+                  <input type="text" id = 'invoiceNumberLabel' name = invoiceNumber>
+                  <div>P.O. Number: </div>
+                  <input type="text" id = 'poNumberLabel' name = poNumber>
+                  <div>Unit Cost: </div>
+                  <input type = "number" name = "unitCost" id="unitCostLabel">
+                  <input type = "submit" class = 'btn btn-primary' value = 'Save'>
+              </form>
           </div>
-    
-  
+      </div>
+   </div>
   <!-- /.container-fluid -->
 
  
@@ -475,7 +539,7 @@
      
     <!-- End of Content Wrapper -->
 
-  </div>
+ 
   <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
@@ -532,9 +596,6 @@
         var span = document.getElementsByClassName("close")[0];
 
         // When the user clicks on the button, open the modal
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {

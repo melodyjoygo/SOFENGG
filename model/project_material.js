@@ -14,3 +14,7 @@ exports.getAll = function() {
 exports.getAllProjectMaterials = function(projID){
     return database.query("SELECT * FROM softengdb.project_materials LEFT JOIN materials ON project_materials.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON materials.supplierID = suppliers.supplierID WHERE projectID = ?",[projID])
 }
+
+exports.edit = function(projectMaterialID,qty,itemID){
+   database.query("UPDATE project_materials SET quantity = ?, materialID = ? WHERE pmID = ?",[qty,itemID,projectMaterialID])
+}

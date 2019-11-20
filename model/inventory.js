@@ -12,7 +12,7 @@ exports.getAll = function() {
 }
 
 exports.getAllTableView = function() {
-    return database.query("SELECT inventory.materialID,inventory.inventoryID, material_types.type, materials.materialName,  unit_of_measures.unitOfMeasure, suppliers.supplierName, inventory.quantity FROM softengdb.inventory INNER JOIN softengdb.materials INNER JOIN softengdb.unit_of_measures INNER JOIN softengdb.suppliers INNER JOIN softengdb.material_types ON inventory.materialID = materials.materialID AND materials.materialType = material_types.mtID AND materials.supplierID = suppliers.supplierID AND unit_of_measures.uomID = materials.unitOfMeasure");
+    return database.query("SELECT * FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID");
 }
 
 exports.restock = function(invID,qty){
