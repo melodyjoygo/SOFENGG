@@ -40,6 +40,51 @@ router.post("/addProjectMaterials",(req,res)=>{
     })
 })
 
+router.post("/editProjectDetails",(req,res)=>{
+    let projID = req.body.projID
+    let clientID = req.body.clientID
+    let status = req.body.status
+    var empty = false
+    
+    if(projID === "" || clientID === "" || status === "")
+        empty = true
+    
+    if(empty){
+        res.render("projects.hbs",{
+            message:3
+        })
+    }
+    else{
+        Promise.resolve(Projects.editProjectDetails(projID,clientID,status)).then(function(value){
+            res.render("projects.hbs",{
+                message:4
+            })
+        })
+    }
+})
+
+router.post("/editProjectMaterial",(req,res)=>{
+    let pmID = req.body.pmID
+    let qty = req.body.qty
+    let itemID = req.body.itemID
+    
+    var empty = false
+    
+    if(pmID === "" || qty === "" || itemID === "")
+        empty = true
+    
+    if(empty){
+        res.render("projects.hbs",{
+            message:3
+        })
+    }
+    else{
+        Promise.resolve(projectMaterials.edit(pmID,qty,itemID))
+        res.send("success")
+       
+    }
+})
+
 router.post('/add',(req,res)=>{
     let clientID = req.body.clientID
     var exist = false

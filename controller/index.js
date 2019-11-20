@@ -14,7 +14,6 @@ router.use("/stockman",require("./stockman"))
 router.use("/clerk",require("./clerk"))
 
 router.get("/",(req,res)=>{
-    console.log('kekeke')
     res.render("login.hbs")
 })
 
@@ -44,7 +43,7 @@ router.post("/login" ,(req,res)=>{
                 else{
                     
                     req.session.userID = value[0].userID
-                    console.log(req.session.userID)
+                    req.session.userType = value[0].userType
                     switch(value[0].userType){
                         case 0 : res.redirect("/dashboard")
                         break

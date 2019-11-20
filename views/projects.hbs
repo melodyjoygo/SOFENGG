@@ -100,8 +100,26 @@
   
             color: black;
         }
+        
         #projectmaterialid{
-            display : none
+            display : none;
+        }
+        
+        #editProjectMaterialIDLabel{
+            display : none;
+        }
+        
+        #currProjID{
+            display : none;
+        }
+        
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
         }
     </style>
 
@@ -112,6 +130,22 @@
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src = '/jQuery.js'></script>
     <script>
+        
+        function loadProjectMaterialsTable(projID){
+            $('#viewModal').css("display", "none");
+            $('table.projectmaterials tbody').empty();
+            $('#addprojectmaterialbtn').attr("data-id",projID);
+            $.post( "/projects/loadProjectMaterials",{
+                    projID:projID
+                },function(data){
+                    for(let i = 0; i < data.length; i++){
+                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\" - " + data[i].supplierName +"</td><td>"+ data[i].quantity +"</td><td>0</td><td>0</td><td><button class = 'editProjectMaterialsBtn btn-danger btn' data-id = '"+ data[i].pmID + "' data-itemID = '"+ data[i].materialID+ "' data-quantity = '" + data[i].quantity + "' data-projectID = '"+ data[i].projectID+"'><u>Edit</u></button><td></tr>"
+                        $('table.projectmaterials tbody').append(newRow);
+                    }
+                    $('#viewModal').css("display", "block");
+                });
+        }
+        
         let warning = {{message}}
         $( document ).ready(function() {
             if(warning === 1){
@@ -126,6 +160,10 @@
                 alert("Please Do Not Leave Fields Empty")
                 window.location = '/projects'
             }
+            else if(warning === 4){
+                alert("Project Details Saved")
+                window.location = '/projects'
+            }
             
             $('button.viewdetails').click(function(){
                 $('table.projectmaterials tbody').empty();
@@ -135,7 +173,7 @@
                     projID:projID
                 },function(data){
                     for(let i = 0; i < data.length; i++){
-                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\" - " + data[i].supplierName +"</td><td>"+ data[i].quantity +"</td><td>0</td><td>0</td><td><button class = 'btn-danger editProjectMaterials' data-id = '"+ data[i].pmID + "'><u>Edit</u></button><td></tr>"
+                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\" - " + data[i].supplierName +"</td><td>"+ data[i].quantity +"</td><td>0</td><td>0</td><td><button class = 'editProjectMaterialsBtn btn-danger btn' data-id = '"+ data[i].pmID + "' data-itemID = '"+ data[i].materialID+ "' data-quantity = '" + data[i].quantity + "' data-projectID = '"+ data[i].projectID+"'><u>Edit</u></button><td></tr>"
                         $('table.projectmaterials tbody').append(newRow);
                     }
                     $('#viewModal').css("display", "block");
@@ -144,10 +182,12 @@
             
             $('#addprojectmaterialbtn').click(function(){
                 let projID = $(this).attr("data-id")
+                $('#projmaterialQty').val("")
                 $('#addProjectMaterialModal').css("display", "block");
                 $('#addProjectMaterialModal').css('z-index', 3000);
                 $('#projectmaterialid').val(projID)
             });
+            
             
             $('#addtoprojectmaterialbtn').click(function(){
                 
@@ -164,11 +204,65 @@
                         qty:qty
                     },function(data){
                         if(data === "Success")
+                            loadProjectMaterialsTable(projectID)
                             alert("Material Added Successfully")
                             $('#addProjectMaterialModal').css("display", "none");
                     })
                 }
-            })
+            });
+            
+            $('button.editProjectDetails').click(function(){
+                
+                let projectID = $(this).attr("data-id") 
+                let status = $(this).attr("data-status")
+                let clientID = $(this).attr("data-clientID")
+                
+                
+                $('#editProjectDetailID').val(projectID)
+                $('#clientIDDropdown').val(clientID)
+                $('#statusDropdown').val(status)
+                
+                modal2.style.display = "block";
+            });
+            
+            $(document).on('click', "button.editProjectMaterialsBtn", function() {
+                let pmID = $(this).attr("data-id")
+                let qty = $(this).attr("data-quantity")
+                let itemID = $(this).attr("data-itemID")
+                let projectID = $(this).attr("data-projectID")
+                
+                
+                
+                $('#editProjectMaterialIDLabel').val(pmID)
+                $('#editProjectMaterialQuantity').val(qty)
+                $('#editmaterialIDDropdown').val(itemID)
+                $('#currProjID').val(projectID)
+                
+                modal4.style.display = "block";
+            });
+            
+            $('button.submitEditProjectMaterialBtn').click(function(){
+                let pmID = $('#editProjectMaterialIDLabel').val()
+                let qty = $('#editProjectMaterialQuantity').val()
+                let itemID = $('#editMaterialIDDropdown').val()
+                let projID = $('#currProjID').val()
+                
+                
+                if (pmID === "" || qty === "" || itemID === "")
+                    alert("Please Do Not Leave Empty Fields")
+                else{
+                    $.post("/projects/editProjectMaterial",{
+                        pmID:pmID,
+                        qty:qty,
+                        itemID:itemID
+                    },function(data){
+                        if(data === "success"){
+                            loadProjectMaterialsTable(projID)
+                            modal4.style.display="none";
+                        }
+                    })
+                }
+            });
         });
     </script>
 </head>
@@ -402,60 +496,7 @@
             </div>   
 
             
-        <div id="editModal" class="modal">
-
-            <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Project</h5>
-                    <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
-                        
-                </div>
-                           <form action = "projects/view" method = "post">
-                        <div class="modal-body">
-                        <div>Project Number: (Project Number)</div>
-                        <div>Company Name: <select>
-                          <option>company 1</option>
-                          <option>company 2</option>
-                          <option>company 3</option>
-                        </select></div>
-                        <div>Date Requested: <input type="date"></div>
-                        <div>Status: <select>
-                          <option>Approved</option>
-                          <option>Pending</option>
-
-                        </select></div>
-                          <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Materials</h6>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                           <thead>
-                             <tr>
-                               <th>Material</th>
-                               <th>Quantity</th>
-                               <th>Unit Cost</th>
-                               <th>Total Cost</th>
-                             </tr>
-                           </thead>
-                           <tbody>
-
-                           </tbody>
-                           
-                  </table>
-                  </div>
-              </div>
-              </div>                             
-                        </div>
-                        <div class="modal-footer">
-                            <span class = "btn btn-danger"><U>Save</U></span>
-                        </div>
-                    </form>
-            </div>
-
-        </div>    
+       
             <div id="addProjectMaterialModal" class="modal">
 
                 <!-- Modal content -->
@@ -531,11 +572,78 @@
                         </div>
                         <div class="modal-footer">
                             <button id ="addprojectmaterialbtn" class = "btn btn-danger"><U>Add Material</U></button>
-                        </div>
-                    
+                        </div>  
             </div>
+        </div>   
+            <div id="editProjectDetailsModal" class="modal">
+                <!-- Modal content -->
+                
+                <div class = "modal-dialog modal-lg modal-ku">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Project Details</h5>
+                        <span class="close btn btn-danger btn-circle btn-sm" id = 'closeEditProjectDetailsModal'>&times;</span>
+                        
+                    </div>
+                    <form action = "projects/editProjectDetails" method = "post">
+                        <div class="modal-body">
+                            <div class = "row">
+                                <input type = text id = 'editProjectDetailID' name = 'projID'>
+                                <div class = "col-md-2">Client:</div>
+                                <select id = "clientIDDropdown" name = 'clientID'>
+                                    {{#each clients}}
+                                        <option value = "{{this.clientID}}">{{this.clientName}}</option>
+                                    {{/each}}
+                                </select>
+                                <div class = "col-md-2">Status :</div>
+                                <select id = "statusDropdown" name = 'status' >
+                                    <option value = "Pending">Pending</option>
+                                    <option value = "Approved">Approved</option>
+                                </select>
+                            </div>
+                        </div>
+                       
+                        <div class="modal-footer">
+                            <input class = "btn btn-success" type = 'submit' value = 'Save'>
+                        </div>
+                    </form>
+                </div>
+                </div>
 
-        </div>    
+            </div> 
+            
+            <div id="editProjectMaterialModal" class="modal">
+                <!-- Modal content -->
+                
+                <div class = "modal-dialog modal-lg modal-ku">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Project Material</h5>
+                        <span class="close btn btn-danger btn-circle btn-sm" id = 'closeEditProjectMaterialModal'>&times;</span>
+                        
+                    </div>
+                        <div class="modal-body">
+                            <div class = "row">
+                                <input type = text id = 'editProjectMaterialIDLabel' name = 'pmID'>
+                                <div class = "col-md-2">Material:</div>
+                                <select id = "editMaterialIDDropdown" name = 'clientID'>
+                                    {{#each materials}}
+                                        <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}}</option>
+                                    {{/each}}
+                                </select>
+                                <div class = "col-md-2">Quantity :</div>
+                                <input type = 'number' id = 'editProjectMaterialQuantity' name = 'quantity'>
+                                <input type = 'number' id = 'currProjID'>
+                            </div>
+                        </div>
+                       
+                        <div class="modal-footer">
+                            <button class = "submitEditProjectMaterialBtn btn-success" type = 'submit'>Save</button>
+                        </div>
+                </div>
+                </div>
+
+            </div> 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -550,7 +658,8 @@
                         <th>Project Number</th>
                         <th>Date Requested</th>
                         <th>Status</th>
-                        <th>Details</th>
+                        <th>Materials</th>
+                        <th>Edit Details</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -561,6 +670,7 @@
                         <td>{{this.dateAdded}}</td>
                         <td>{{this.status}}</td>
                         <td><button class = "viewdetails btn btn-danger" data-id = '{{this.projectID}}'>View Materials</button></td>
+                        <td><button class = "editProjectDetails btn btn-danger" data-id = '{{this.projectID}}' data-status = '{{this.status}}' data-clientID = '{{this.clientID}}'>Edit</button></td>  
                       </tr>
                       {{/each}}
                     </tbody>
@@ -626,19 +736,19 @@
         <script>
         // Get the modal
         var modal = document.getElementById("myModal");
-
+        var modal2 = document.getElementById("editProjectDetailsModal");
+        var modal3 = document.getElementById("viewModal");
+        var modal4 = document.getElementById("editProjectMaterialModal");
+        
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
-        
-     
-
 
         // Get the <span> element that closes the modal
         var span1 = document.getElementById("closeaddProjectMaterialModal");
         var span2 = document.getElementById("closeviewModal");
         var span3 = document.getElementsByClassName("close")[0];
-            
-
+        var span4 = document.getElementById("closeEditProjectDetailsModal");
+        var span5 = document.getElementById("closeEditProjectMaterialModal");
 
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
@@ -646,7 +756,8 @@
         }
        
 
-        var modal3 = document.getElementById("viewModal");
+        
+            
         
         // When the user clicks on <span> (x), close the modal
         span1.onclick = function() {
@@ -658,7 +769,15 @@
         }
 
         span3.onclick=function(){
-          modal.style.display="none";
+            modal.style.display="none";
+        }
+        
+        span4.onclick = function(){
+            modal2.style.display="none";
+        }
+        
+        span5.onclick = function(){
+            modal4.style.display="none";
         }
         
         // When the user clicks anywhere outside of the modal, close it

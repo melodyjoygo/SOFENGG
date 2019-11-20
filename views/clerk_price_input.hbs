@@ -87,6 +87,20 @@
             cursor: pointer;
         }
 
+        .close2 {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close2:hover,
+        .close2:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
         .modal-header {
             padding: 2px 16px;
   
@@ -100,15 +114,6 @@
   
             color: black;
         }
-
-        .table{
-          table-layout: fixed; 
-          word-wrap:break-word; 
-        }
-        
-        #editdeliveryid{
-            display : none;
-        }
         
         input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -119,49 +124,50 @@
             -moz-appearance: textfield;
         }
         
-        .currValues{
-            display : none
+        #deliveryIDLabel{
+            display : none;
         }
+        
+        #itemIDLabel{
+            display : none;
+        }
+        
+        #quantityLabel{
+            display : none;
+        }
+        
     </style>
     <script src = '/jQuery.js'></script>
     <script>
         let warning = {{message}}
-        $( document ).ready(function() {
+        $( document ).ready(function(){
             if(warning === 1){
                 alert("Please Do Not Leave Fields Empty")
-                window.location = '/stockman';
+                window.location = '/clerk/priceInput';
             }
             else if(warning === 2){
-                alert("Item has been Added")
-                window.location = '/stockman';
-            }
-            else if(warning === 3){
-                alert("Edit Request Sent")
-                window.location = '/stockman';
+                alert("Price has been Added")
+                window.location = '/clerk/priceInput';
             }
             
-            
-            $('button.edit').click(function(){
+            $('button.addPrice').click(function(){
+                let receiptNum = $(this).attr("data-receiptNum")
+                let materialID = $(this).attr("data-materialID")
+                let quantity = $(this).attr("data-quantity")
                 let deliveryID = $(this).attr("data-id")
-                let itemID = $(this).attr("data-item")
-                let qty = $(this).attr("data-quantity")
-                let suppID = $(this).attr("data-supplier")
-                let receipt = $(this).attr("data-receipt")
+                modal.style.display = "block";
                 
-                console.log(deliveryID)
+                $('#deliveryReceiptNumberLabel').html('')
+                $('#itemNameLabel').html('')
+                $('#qtyLabel').html('')
                 
-                $('#editdeliveryid').val(deliveryID)
-                $('#editdeliveryReceiptNumberLabel').val(receipt)
-                $('#supplier_dropdown').val(suppID)
-                $('#item_dropdown').val(itemID)
-                $('#editqtyLabel').val(qty)
+                $('#deliveryReceiptNumberLabel').append(" " + receiptNum)
+                $('#itemNameLabel').append(" " + materialID)
+                $('#qtyLabel').append(" " + quantity)
                 
-                $('#currdeliveryReceiptNumberLabel').val(receipt)
-                $('#currsuppIDLabel').val(suppID)
-                $('#curritemIDLabel').val(itemID)
-                $('#currqtyLabel').val(qty)
-                
-                modal2.style.display = "block";
+                $('#deliveryIDLabel').val(deliveryID)
+                $('#itemIDLabel').val(materialID)
+                $('#quantityLabel').val(quantity)
             })
         });
     </script>
@@ -198,21 +204,24 @@
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
           <li class="nav-item">
-          <a class="nav-link" href="/stockman">
+
+          <a class="nav-link" href="/clerk">
+
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Inventory</span></a>
         </li>
         <li class="nav-item active">
           <li class="nav-item">
-          <a class="nav-link" href="/stockman/requests">
+          <a class="nav-link" href="/clerk/priceInput">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Release Requests</span></a>
+            <span>Price Input</span></a>
         </li>
-       
-         
-      
-  
-        
+        <li class="nav-item active">
+            <li class="nav-item">
+            <a class="nav-link" href="/clerk/deliveryTracker">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Delivery Tracker</span></a>
+            </li>
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
   
@@ -273,7 +282,111 @@
               </div>
             </li>
 
-           
+            <!-- Nav Item - Alerts -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <!-- Counter - Alerts -->
+                <span class="badge badge-danger badge-counter">3+</span>
+              </a>
+              <!-- Dropdown - Alerts -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                  Alerts Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 12, 2019</div>
+                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-success">
+                      <i class="fas fa-donate text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 7, 2019</div>
+                    $290.29 has been deposited into your account!
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-warning">
+                      <i class="fas fa-exclamation-triangle text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 2, 2019</div>
+                    Spending Alert: We've noticed unusually high spending for your account.
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+              </div>
+            </li>
+
+            <!-- Nav Item - Messages -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
+                <!-- Counter - Messages -->
+                <span class="badge badge-danger badge-counter">7</span>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">
+                  Message Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div class="font-weight-bold">
+                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+                    <div class="small text-gray-500">Emily Fowler · 58m</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
+                    <div class="status-indicator"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
+                    <div class="small text-gray-500">Jae Chun · 1d</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
+                    <div class="status-indicator bg-warning"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
+                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
+                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+              </div>
+            </li>
+
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
@@ -313,171 +426,93 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Deliveries
-            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
-            <span class="icon text-white-50">
-                <b class = "plusicon">+</b>
-            </span>
-            <span class="text">Restock Item</span>
-         </a>
+          <h1 class="h3 mb-4 text-gray-800">Price Input</h1> 
          
-            
-        </h1> 
-            <!-- The Modal -->
-       
-          <!-- The Modal -->
-            <div id="myModal" class="modal">
-
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Restock Item</h5>
-                        <span class="btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
-                        
-                    </div>
-                    <form action = "/stockman/restock" method = "post">
-                        <div class="modal-body">
-                            <table name = "inventmaterials">
-                                <tr>
-                                    <th>Delivery Receipt Number</th>
-                                    <th>Item Name</th>
-                                    <th>Qty</th>
-
-                                </tr>
-                                <tr>
-                                <td>
-                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="deliveryReceiptNumberLabel">
-                                </td>
-                                <td>
-                                    <select name = "itemID" id="material_dropdown">
-                                            {{#each items}}
-                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}" - {{this.supplierName}}</option>
-                                            {{/each}}
-                                    </select>   
-                                </td>
-                              
-                    
-                                <td>
-                                    <input class="form-control" type = "number" name = "qty" id="qtyLabel">
-                                </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Restock</button>
-                        </div>
-                    </form>
-                    
-                </div>
-
-            </div> 
-
-            <div id="editModal" class="modal">
-
-            <!-- Modal content -->
-           <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Item</h5>
-                    <span class="close btn btn-danger btn-circle btn-sm" id ="close3">&times;</span>
-                        
-                </div>
-                <form action = "/stockman/editRequest" method = "post">
-                        <div class="modal-body">
-                          <input type = 'text' id = 'editdeliveryid' name = 'deliveryID'>
-                            <input type = 'text' class = 'currValues' id = 'currdeliveryReceiptNumberLabel' name = 'currdeliveryReceiptNumber'>
-                            <input type = 'text' class = 'currValues' id = 'curritemIDLabel' name = 'curritemID'>
-                            <input type = 'text' class = 'currValues' id = 'currqtyLabel' name = 'currqty'>
-                            <input type = 'text' class = 'currValues' id = 'currsuppIDLabel' name = 'currsuppID'>
-                            
-                            <table name = "inventmaterials">
-                                <tr>
-                                    <th>Delivery Receipt Number</th>
-                                    <th>Item Name</th>
-                                    <th>Qty</th>
-                                    <th>Supplier</th>
-
-                                </tr>
-                                <tr>
-                                <td>
-                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="editdeliveryReceiptNumberLabel">
-                                </td>
-                                <td>
-                                    <select name = "itemID" id="item_dropdown">
-                                            {{#each items}}
-                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}"</option>
-                                            {{/each}}
-                                    </select>   
-                                </td>
-                              
-                    
-                                <td>
-                                    <input class="form-control" type = "number" name = "qty" id="editqtyLabel">
-                                </td>
-                                 <td>
-                                    <select name = "suppID" id="supplier_dropdown">
-                                            {{#each suppliers}}
-                                                <option value = '{{this.supplierID}}'>{{this.supplierName}}</option>
-                                            {{/each}}
-                                    </select>   
-                                </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Save</button>
-                        </div>
-                    </form>
-            </div>
-
-        </div>
+             
           
-
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Deliveries</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Receipt Number</th>
-                      <th>Item Name</th>
-                      <th>Supplier</th>
-                      <th>Qty</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                        
-                  <tbody>
-                      {{#each deliveries}}
+<div>
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4" style="flex-grow:inherit">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"></h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                  <th>Delivery Receipt Number</th>
+                  <th>Item</th>
+                  <th>Supplier</th>
+                  <th>Qty</th>
+                  <th>Add Price</th>
+              </tr>
+            </thead>
+            <tbody>
+                    {{#each deliveries}}
                         <tr>
                             <td>{{this.deliveryReceiptNumber}}</td>
                             <td>{{this.type}} - "{{this.materialName}}"</td>
                             <td>{{this.supplierName}}</td>
                             <td>{{this.quantity}}</td>
-                            <td><button class = 'edit btn-primary btn' data-id = '{{this.deliveryID}}' data-item = '{{this.materialID}}' data-quantity = '{{this.quantity}}' data-supplier = '{{this.supplierID}}' data-receipt = '{{this.deliveryReceiptNumber}}'><u>Edit</u></button></td>
+                            <td><button class = 'addPrice btn btn-primary' data-id = "{{this.deliveryID}}" data-receiptNum = "{{this.deliveryReceiptNumber}}" data-materialID = "{{this.materialID}}" data-quantity = "{{this.quantity}}"><u>Add Price</u></button></td>
                         </tr>
-                      {{/each}}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
+                    {{/each}}
+            </tbody>
+            <tbody>
+            
+            </tbody>
+          </table>
         </div>
-        <!-- /.container-fluid -->
-
       </div>
-      <!-- End of Main Content -->
-
-    
-
     </div>
-    <!-- End of Content Wrapper -->
 
   </div>
+  <div id="addPriceModal" class="modal"> 
+     <!-- Tracking -->
+
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2>Add Price</h2>
+
+               <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                    <span id = "close3" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+               </button>
+          </div>
+      
+          <div class="card-body">
+              <form action = "/clerk/addPrice" method = 'post'>
+                  <input type = 'text' id = 'deliveryIDLabel' name = 'deliveryID'>
+                  <div>Delivery Receipt Number: </div>
+                  <div id = 'deliveryReceiptNumberLabel'></div>
+                  <div>Item Name: </div>
+                  <div id = "itemNameLabel"></div>
+                  <input type = 'text'name = 'itemID' id = 'itemIDLabel'>
+                  <div>Quantity: </div>
+                  <div id = 'qtyLabel'></div>
+                  <input type = 'number'name = 'quantity' id = 'quantityLabel'>
+                  <div>Invoice Number: </div> 
+                  <input type="text" id = 'invoiceNumberLabel' name = invoiceNumber>
+                  <div>P.O. Number: </div>
+                  <input type="text" id = 'poNumberLabel' name = poNumber>
+                  <div>Unit Cost: </div>
+                  <input type = "number" name = "unitCost" id="unitCostLabel">
+                  <input type = "submit" class = 'btn btn-primary' value = 'Add'>
+              </form>
+          </div>
+      </div>
+   </div>
+  <!-- /.container-fluid -->
+
+ 
+
+  
+      <!-- End of Main Content -->
+
+     
+    <!-- End of Content Wrapper -->
+
+ 
   <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
@@ -504,6 +539,7 @@
     </div>
   </div>
 
+  
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -522,23 +558,22 @@
   <script src="js/demo/datatables-demo.js"></script>
     <script>
         // Get the modal
-        var modal = document.getElementById("myModal");
-        var modal2 = document.getElementById("editModal");
+        var modal = document.getElementById("addPriceModal");
 
         // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
-        var editbtn = document.getElementById("edit");
+       
+
+        
 
         // Get the <span> element that closes the modal
-        var span2 = document.getElementById("close2");
-        var span3 = document.getElementById("close3");
+        var span = document.getElementsByClassName("close")[0];
 
         // When the user clicks on the button, open the modal
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-       
+
         // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
@@ -546,22 +581,7 @@
                 modal.style.display = "none";
             }
         }
-
-        // When the user clicks on <span> (x), close the modal
-        span2.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        span3.onclick = function() {
-            modal2.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal2) {
-                modal2.style.display = "none";
-            }
-        }
+   
     </script>
 </body>
 

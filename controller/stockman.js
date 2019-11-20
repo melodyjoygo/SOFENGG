@@ -26,20 +26,24 @@ router.get("/",(req,res)=>{
 router.get("/requests",(req,res)=>{
     Promise.resolve(Projects.getAll()).then(function(projects){
         Promise.resolve(Materials.getAllWithSupplier()).then(function(items){
-            res.render("stockman_release_request.hbs",{
-                projects:projects,
-                items:items
-            })
+            Promise.resolve(Requests.getPending()).then(function(pending){
+                Promise.resolve(Requests.getApproved()).then(function(approved){
+                    res.render("stockman_release_request.hbs",{
+                        projects:projects,
+                        items:items,
+                        pending:pending,
+                        approved:approved
+                    })
+                })
+            })  
         })
     })
-    
 })
 
 router.post("/restock",(req,res)=>{
     let receiptNumber = req.body.deliveryReceiptNumber
     let itemID = req.body.itemID
     let qty = req.body.qty
-    let suppID = req.body.suppID
     var empty = false
     
     if(qty === "" || receiptNumber === "")
@@ -51,7 +55,7 @@ router.post("/restock",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(Tracker.create(receiptNumber,itemID,qty,suppID)).then(function(value){
+        Promise.resolve(Tracker.create(receiptNumber,itemID,qty)).then(function(value){
             res.render("stockman_inventory.hbs",{
                 message:2
             })
@@ -63,7 +67,7 @@ router.post("/releaseRequest",(req,res)=>{
     let projectID = req.body.projectID
     let itemID = req.body.itemID
     let qty = req.body.qty
-    
+    let userID = req.session.userID
     var empty = false
     
     if(qty === "" || projectID === "" || itemID === "")
@@ -75,7 +79,7 @@ router.post("/releaseRequest",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(Requests.createReleaseRequest(projectID,itemID,qty,"Pending")).then(function(data){
+        Promise.resolve(Requests.createReleaseRequest(projectID,itemID,qty,"Pending",new Date().toISOString().slice(0, 19).replace('T', ' '),userID)).then(function(data){
             res.render("stockman_release_request.hbs",{
                 message:2
             }) 
@@ -94,6 +98,7 @@ router.post("/editRequest",(req,res)=>{
     let curritemID = req.body.curritemID
     let currqty = req.body.currqty
     let currsuppID = req.body.currsuppID
+    let userID = req.session.userID
     
     var empty = false
     
@@ -106,10 +111,11 @@ router.post("/editRequest",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(Requests.createEditRequest(deliveryID,newdeliveryReceiptNumber,newitemID,newqty,newsuppID,currdeliveryReceiptNumber,curritemID,currqty,currsuppID))
-        res.render("stockman_inventory.hbs",{
-            message:3
-        })
+        Promise.resolve(Requests.createEditRequest(deliveryID,newdeliveryReceiptNumber,newitemID,newqty,newsuppID,currdeliveryReceiptNumber,curritemID,currqty,currsuppID,userID)).then(function(value){
+            res.render("stockman_inventory.hbs",{
+                message:3
+            })
+        }) 
     }
 })
 

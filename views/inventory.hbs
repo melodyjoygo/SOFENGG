@@ -574,24 +574,23 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th> </th>
                       <th>Material</th>
                       <th>Item Name</th>
                       <th>Unit of Measures</th>
                       <th>Supplier</th>
                       <th>Qty</th>
+                      <th>Unit Cost</th>
                     </tr>
                   </thead>
                   <tbody>
                     {{#each inventory}}
                       <tr>
-                        <td>{{materialID}}</td>
-                        <td>{{type}}</td>
-                        <td>{{materialName}}</td>
-                        <td>{{unitOfMeasure}}</td>
-                        <td>{{supplierName}}</td>
-                        <td>{{quantity}}</td>
-                       
+                        <td>{{this.type}}</td>
+                        <td>{{this.materialName}}</td>
+                        <td>{{this.unitOfMeasure}}</td>
+                        <td>{{this.supplierName}}</td>
+                        <td>{{this.quantity}}</td>
+                        <td>{{this.aveCost}}</td>
                       </tr>
                       {{/each}}
                    
