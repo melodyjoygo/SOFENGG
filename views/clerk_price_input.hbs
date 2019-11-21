@@ -155,6 +155,7 @@
                 let materialID = $(this).attr("data-materialID")
                 let quantity = $(this).attr("data-quantity")
                 let deliveryID = $(this).attr("data-id")
+                let materialName = $(this).attr("data-materialName")
                 modal.style.display = "block";
                 
                 $('#deliveryReceiptNumberLabel').html('')
@@ -455,7 +456,7 @@
                             <td>{{this.type}} - "{{this.materialName}}"</td>
                             <td>{{this.supplierName}}</td>
                             <td>{{this.quantity}}</td>
-                            <td><button class = 'addPrice btn btn-primary' data-id = "{{this.deliveryID}}" data-receiptNum = "{{this.deliveryReceiptNumber}}" data-materialID = "{{this.materialID}}" data-quantity = "{{this.quantity}}"><u>Add Price</u></button></td>
+                            <td><button class = 'addPrice btn btn-primary' data-id = "{{this.deliveryID}}" data-receiptNum = "{{this.deliveryReceiptNumber}}" data-materialID = "{{this.materialID}}" data-quantity = "{{this.quantity}}" data-materialName = "{{this.materialName}}"><u>Add Price</u></button></td>
                         </tr>
                     {{/each}}
             </tbody>

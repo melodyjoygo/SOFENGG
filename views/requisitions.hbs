@@ -111,7 +111,7 @@
             -moz-appearance: textfield;
         }
         
-        .requestIDLabel{
+        .invLabel{
             display : none;
         }
     </style>
@@ -126,11 +126,11 @@
         $( document ).ready(function() {
             if(warning === 1){
                 alert("Please Do Not Leave Empty Fields")
-                window.location = '/orders';
+                window.location = '/requisitions';
             }
             else if(warning === 2){
-                alert("Order Successfully Placed")
-                window.location = '/orders'
+                alert("Item Added to Inventory")
+                window.location = '/requisitions'
             }
             else if(warning === 3){
                 alert("Edit Successfully Saved")
@@ -139,27 +139,69 @@
             
             $(document).on('click','button.clerkAddButton',function(){
                 let requestID = $(this).attr("data-id")
-                $('#clerkAddID').val(requestID)
+                let itemID = $(this).attr("data-itemID")
+                let quantity = $(this).attr("data-qty")
+                let unitPrice = $(this).attr("data-unitPrice")
+                let itemType = $(this).attr("data-type")
+                let itemName = $(this).attr("data-itemName")
+                let supplier = $(this).attr("data-supplier")
+                
+                $('#clerkAddRequestID').val(requestID)
+                $('#clerkAddItemID').val(itemID)
+                $('#clerkAddUnitCost').val(unitPrice)
+                $('#clerkAddQuantity').val(quantity)
+                
+                $('#clerkAddItemIDLabel').html(itemType + " - \"" + itemName + "\" " + supplier)
+                $('#clerkAddUnitCostLabel').html(unitPrice)
+                $('#clerkAddQuantityLabel').html(quantity)
+                
                 $('#clerkAddModal').css("display", "block")
             })
             
             $(document).on('click','button.stockmanEditButton',function(){
                 let requestID = $(this).attr("data-id")
+                let type = $(this).attr("data-type")
+                let itemName = $(this).attr("data-materialName")
+                let supplier = $(this).attr("data-supplierName")
+                let quantity = $(this).attr("data-quantity")
+                let receiptNumber = $(this).attr("data-receiptNumber")
+                
+                
+                data-newType = "{{this.newType}}" date-newItemName = "{{this.newItemName}}" data-newSupplier = "{{this.newSupplier}}" data-NewQuantity = "{{this.newQuantity}}" data-newReceiptNumber = "{{this.newDeliveryReceipt}}"
+                
                 $('#stockmanEditID').val(requestID)
                 $('#stockmanEditModal').css("display", "block")
             })
             
             $(document).on('click','button.stockmanReleaseButton',function(){
                 let requestID = $(this).attr("data-id")
-                $('#stockmanReleaseID').val(requestID)
+                let itemType = $(this).attr("data-type")
+                let itemName = $(this).attr("data-itemName")
+                let supplier = $(this).attr("data-supplier")
+                let projectNumber = $(this).attr("data-projectNumber")
+                let quantity = $(this).attr("data-quantity")
+                let itemID = $(this).attr("data-itemID")
+                
+                console.log("Project Number : " + projectNumber)
+                
+                $('#stockmanReleaseRequestID').val(requestID)
+                $('#stockmanReleaseProjectNumber').val(projectNumber)
+                $('#stockmanReleaseItemName').val(itemType + " - \"" + itemName + "\" " + supplier)
+                $('#stockmanReleaseItemID').val(itemID)
+                $('#stockmanReleaseQuantity').val(quantity)
+                
                 $('#stockmanReleaseModal').css("display", "block")
             })
             
-            $('#declineStockmanReleaseRequest').click(function(){
-                $('#stockmanReleaseModal').css("display", "none")
+            $('#closeClerkAdd').click(function(){
+                $('#clerkAddModal').css("display", "none")
             })
             
-            $('#closeStockmanReleaseRequest').click(function(){
+            $('#closeStockmanEdit').click(function(){
+                $('#stockmanEditModal').css("display", "none")
+            })
+            
+           $('#closeStockmanRelease').click(function(){
                 $('#stockmanReleaseModal').css("display", "none")
             })
             
@@ -368,130 +410,141 @@
           </h1>
            
             
+<!--
             <div id="clerkAddModal" class="modal">
 
-            <!-- Modal content -->
+             Modal content 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit </h5>
-                    <span class="close btn btn-danger btn-circle btn-sm" id = 'closeEdit'>&times;</span>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add To Database </h5>
+                    <span class="close btn btn-danger btn-circle btn-sm" id = 'closeClerkAdd'>&times;</span>
                         
                 </div>
                 <form action = "/requisitions/clerkAdd" method = "post">
                         <div class="modal-body">
-                            <input type = 'text' id = 'clerkAddID' class = 'requestIDLabel' name = 'requestID'>
+                            <input type = 'text' id = 'clerkAddRequestID' class = 'invLabel' name = 'requestID'>
+                            <input name = "itemID" type = "number" id = 'clerkAddItemID' class = 'invLabel'>
+                            <input name = "unitCost" type = "number" id = 'clerkAddUnitCost'class = 'invLabel'>
+                            <input name = "quantity" type = "number" id = 'clerkAddQuantity'class = 'invLabel'>
                              <table name = "ordermaterials">
                                 <tr>
                                     <th>Item Name</th>
-                                    <th>Qty.</th>
                                     <th>Unit Price</th>
+                                    <th>Qty.</th>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input name = "qty" type = "number" id = 'quantity'>
+                                        <div id = 'clerkAddItemIDLabel'></div>
                                     </td>
                                     <td>
-                                        <input name = "unitcost" type = "number" id = 'cost'>
+                                        <div id = 'clerkAddUnitCostLabel'></div>
                                     </td>
                                     <td>
-                                        <input name = "poNumber" type = "text" id = 'po'>
+                                        <div id = 'clerkAddQuantityLabel'></div>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Accept</button>
-                            <button type = "submit" class = "btn btn-success">Decline</button>
+                            <button type = "submit" class = "btn btn-success" name = 'action' value = 'Accept'>Accept</button>
+                            <button type = "submit" class = "btn btn-success" name = 'action' value = 'Decline'>Decline</button>
                         </div>
                     </form>
                 </div>
             </div> 
             
+-->
             <div id="stockmanEditModal" class="modal">
 
-            <!-- Modal content -->
+             Modal content 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit </h5>
-                    <span class="close btn btn-danger btn-circle btn-sm" id = 'closeEdit'>&times;</span>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Data Request </h5>
+                    <span class="close btn btn-danger btn-circle btn-sm" id = 'closeStockmanEdit'>&times;</span>
                         
                 </div>
-                <form action = "orders/edit" method = "post">
+                <form action = "/requisitions/stockmanEdit" method = "post">
                         <div class="modal-body">
-                            <input type = 'text' id = 'stockmanEditID' class = 'requestIDLabel' name = 'requestID'>
-                             <table name = "ordermaterials">
-                                <tr>
-                                    <th>Item Name</th>
-                                    <th>Qty.</th>
-                                    <th>Unit Cost</th>
-                                    <th>P.O. Number</th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <select name = "itemID" id='itemdropdown'>
-                                            {{#each items}}
-                                                <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
-                                            {{/each}}
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input name = "qty" type = "number" id = 'quantity'>
-                                    </td>
-                                    <td>
-                                        <input name = "unitcost" type = "number" id = 'cost'>
-                                    </td>
-                                    <td>
-                                        <input name = "poNumber" type = "text" id = 'po'>
-                                    </td>
-                                </tr>
-                            </table>
+                            <input type = 'text' id = 'stockmanEditID' class = 'invLabel' name = 'requestID'>
+                            <input type = 'text' id = 'stockmanReleaseID' class = 'invLabel' name = 'requestID'>
+                            <h3>Old Data: </h3>
+                            <div class = "row">
+                                <div class = "col-md-3">
+                                    <div>Delivery Receipt</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname" readonly>
+                                </div>
+                                <div class = "col-md-3">
+                                    <div>Item Name</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname" readonly>
+                                </div>
+                                <div class = "col-md-3">
+                                    <div>Quantity</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname" readonly>
+                                </div>
+                            </div>
+                            <h3>New Data: </h3>
+                            <div class = "row">
+                                <div class = "col-md-3">
+                                    <div>Delivery Receipt</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname" readonly>
+                                </div>
+                                <div class = "col-md-3">
+                                    <div>Item Name</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname" readonly>
+                                </div>
+                                <div class = "col-md-3">
+                                    <div>Quantity</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname" readonly>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Save</button>
+                            <button type = "submit" class = "btn btn-success" name = 'action' value = 'Accept'>Accept</button>
+                            <button type = "submit" class = "btn btn-success" name = 'action' value = 'Decline'>Decline</button>
                         </div>
                     </form>
                 </div>
             </div> 
             
             
+<!--
             <div id="stockmanReleaseModal" class="modal">
 
-            <!-- Modal content -->
+             Modal content 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit </h5>
-                    <span class="close btn btn-danger btn-circle btn-sm" id = 'closeStockmanReleaseRequest'>&times;</span>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Release Stock Request</h5>
+                    <span class="close btn btn-danger btn-circle btn-sm" id = 'closeStockmanRelease'>&times;</span>
                         
                 </div>
-                <form action = "orders/edit" method = "post">
+                <form action = "/requisitions/stockmanRelease" method = "post">
                         <div class="modal-body">
-                            <input type = 'text' id = 'stockmanReleaseID' class = 'requestIDLabel' name = 'requestID'>
-                             <table name = "ordermaterials">
-                                <tr>
-                                    <th>Item Name</th>
-                                    <th>Project Number</th>
-                                    <th>Quantity</th>
-                                    <th>Client Name</th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                            </table>
+                            <input type = 'text' id = 'stockmanReleaseRequestID' class = 'invLabel' name = 'requestID'>
+                            <h3>Release Request </h3>
+                            <div class = "row">
+                                <div class = "col-md-3">
+                                    <div>Project Number</div>
+                                    <input type="text" id = 'stockmanReleaseProjectNumber' class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" readonly>
+                                </div>
+                                <div class = "col-md-3">
+                                    <div>Item Name</div>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" id = 'stockmanReleaseItemName' readonly>
+                                    <input type="text" class= "invLabel" name = "itemID" id = 'stockmanReleaseItemID'>
+                                </div>
+                                <div class = "col-md-3">
+                                    <div>Quantity</div>
+                                    <input type="number" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "quantity" id = 'stockmanReleaseQuantity' readonly>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Accept</button>
-                            <button class = "btn btn-success" id = 'declineStockmanReleaseRequest'>Decline</button>
+                            <button type = "submit" class = "btn btn-success" name = 'action' value = 'Accept'>Accept</button>
+                            <button type = "submit" class = "btn btn-success" name = 'action' value = 'Decline'>Decline</button>
                         </div>
                     </form>
                 </div>
             </div> 
+-->
           
            <!-- DataTales Example -->
            <div class="card shadow mb-4">
@@ -515,7 +568,7 @@
                                 <td>{{this.firstName}} {{this.lastName}}</td>
                                 <td>Clerk</td>
                                 <td>Add To Inventory Request</td>
-                                <td><button class = 'btn btn-primary clerkAddButton' data-id = "{{this.requestID}}">View Details</button></td>
+                                <td><button class = 'btn btn-primary clerkAddButton' data-id = "{{this.requestID}}" data-itemID = "{{this.materialID}}" data-qty = "{{this.quantity}}" data-unitPrice = "{{this.unitPrice}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}">View Details</button></td>
                             </tr>
                         {{/each}}
                         
@@ -524,7 +577,7 @@
                                 <td>{{this.firstName}} {{this.lastName}}</td>
                                 <td>Stockman</td>
                                 <td>Edit Request</td>
-                                <td><button class = 'btn btn-primary stockmanEditButton' data-id = "{{this.requestID}}">View Details</button></td>
+                                <td><button class = 'btn btn-primary stockmanEditButton' data-id = "{{this.requestID}}" data-type = "{{this.type}}" date-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-quantity = "{{this.currQuantity}}" data-receiptNumber = "{{this.currDeliveryReceipt}}" data-newType = "{{this.newType}}" date-newItemName = "{{this.newItemName}}" data-newSupplier = "{{this.newSupplier}}" data-NewQuantity = "{{this.newQuantity}}" data-newReceiptNumber = "{{this.newDeliveryReceipt}}">View Details</button></td>
                             </tr>
                         {{/each}}
                         
@@ -533,7 +586,7 @@
                                 <td>{{this.firstName}} {{this.lastName}}</td>
                                 <td>Stockman</td>
                                 <td>Release Request</td>
-                                <td><button class = 'btn btn-primary stockmanReleaseButton' data-id = "{{this.requestID}}">View Details</button></td>
+                                <td><button class = 'btn btn-primary stockmanReleaseButton' data-id = "{{this.requestID}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-projectNumber = "{{this.projectNumber}}" data-quantity = "{{this.qty}}" data-itemID = "{{this.itemID}}">View Details</button></td>
                             </tr>
                         {{/each}}
                     </tbody>
@@ -574,7 +627,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-danger" href="login.html">Logout</a>
+          <a class="btn btn-danger" href="/logout">Logout</a>
         </div>
       </div>
     </div>
