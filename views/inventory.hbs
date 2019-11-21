@@ -383,11 +383,11 @@
 
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Inventory
-            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn"  data-toggle="modal" data-target="#myModal">
+            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
             <span class="icon text-white-50">
                 <b class = "plusicon">+</b>
             </span>
-            <span class="text">Add Material</span>
+            <span class="text">Add Material Type</span>
          </a>
          <a href="#" class="btn btn-danger btn-icon-split addemp2" id = "myBtn2">
             <span class="icon text-white-50">
@@ -396,28 +396,29 @@
             <span class="text">Add Item</span> </a>
         </h1> 
  <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop = "false">
-                <div class="modal-dialog " role="document">
-                    <div class="modal-content">
+           
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Add New Material</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Add New Material Type</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
                             </button>
                         </div>
-                        <form action = "inventory/material" method = "post">
+                        <form action = "inventory/addMaterial" method = "post">
                         <div class="modal-body">
                             <div>Name of Material</div>
                             <input type = "text" name = "materialName" class = "fullinput">
                         </div>
                         <div class="modal-footer">
        
-                            <button type="button" class="btn btn-success">Save</button>
+                            <input class="btn btn-success" type = 'submit' value = 'Save'>
                         </div>
                             </form>
                     </div>
-                </div>
-            </div>
+            </div> 
           <!-- The Modal -->
             <div id="addItemModal" class="modal">
 
@@ -625,7 +626,7 @@
                    
                   </tbody>
                 </table>
-               <div><span id ="edit" class = "btn btn-danger"><U>Edit Material</U></span></div> 
+               <div><span id ="edit" class = "btn btn-danger"><U>Edit Material Type</U></span></div> 
               </div>
             </div>
           </div>

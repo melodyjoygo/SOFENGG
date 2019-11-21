@@ -29,8 +29,142 @@
             position:relative;
             right:-660px;
         }
-    </style>
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .modal-ku {
+            width:900px;
+            margin:auto;
+        }
+        
+/* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 80%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
 
+/* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {top:-300px; opacity:0} 
+            to {top:0; opacity:1}
+        }
+
+        @keyframes animatetop {
+            from {top:-300px; opacity:0}
+            to {top:0; opacity:1}
+        }
+
+/* The Close Button */
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            padding: 2px 16px;
+  
+            color: black;
+        }
+
+        .modal-body {padding: 2px 16px;}
+
+        .modal-footer {
+            padding: 2px 16px;
+  
+            color: black;
+        }
+        
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        
+        .requestIDLabel{
+            display : none;
+        }
+    </style>
+    <script src = '/jQuery.js'></script>
+    <script>
+        
+        var clerkEditModal = document.getElementById("clerkEditModal")
+        var stockmanEditModal = document.getElementById("stockmanEditModal")
+        var stockmanReleaseModal = document.getElementById("stockmanReleaseModal");
+
+        let warning = {{message}}
+        $( document ).ready(function() {
+            if(warning === 1){
+                alert("Please Do Not Leave Empty Fields")
+                window.location = '/orders';
+            }
+            else if(warning === 2){
+                alert("Order Successfully Placed")
+                window.location = '/orders'
+            }
+            else if(warning === 3){
+                alert("Edit Successfully Saved")
+                window.location = '/orders'
+            }
+            
+            $(document).on('click','button.clerkAddButton',function(){
+                let requestID = $(this).attr("data-id")
+                $('#clerkAddID').val(requestID)
+                $('#clerkAddModal').css("display", "block")
+            })
+            
+            $(document).on('click','button.stockmanEditButton',function(){
+                let requestID = $(this).attr("data-id")
+                $('#stockmanEditID').val(requestID)
+                $('#stockmanEditModal').css("display", "block")
+            })
+            
+            $(document).on('click','button.stockmanReleaseButton',function(){
+                let requestID = $(this).attr("data-id")
+                $('#stockmanReleaseID').val(requestID)
+                $('#stockmanReleaseModal').css("display", "block")
+            })
+            
+            $('#declineStockmanReleaseRequest').click(function(){
+                $('#stockmanReleaseModal').css("display", "none")
+            })
+            
+            $('#closeStockmanReleaseRequest').click(function(){
+                $('#stockmanReleaseModal').css("display", "none")
+            })
+            
+        });
+    </script>
     <!-- Custom styles for this template -->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -233,6 +367,131 @@
               
           </h1>
            
+            
+            <div id="clerkAddModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit </h5>
+                    <span class="close btn btn-danger btn-circle btn-sm" id = 'closeEdit'>&times;</span>
+                        
+                </div>
+                <form action = "/requisitions/clerkAdd" method = "post">
+                        <div class="modal-body">
+                            <input type = 'text' id = 'clerkAddID' class = 'requestIDLabel' name = 'requestID'>
+                             <table name = "ordermaterials">
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Qty.</th>
+                                    <th>Unit Price</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input name = "qty" type = "number" id = 'quantity'>
+                                    </td>
+                                    <td>
+                                        <input name = "unitcost" type = "number" id = 'cost'>
+                                    </td>
+                                    <td>
+                                        <input name = "poNumber" type = "text" id = 'po'>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Accept</button>
+                            <button type = "submit" class = "btn btn-success">Decline</button>
+                        </div>
+                    </form>
+                </div>
+            </div> 
+            
+            <div id="stockmanEditModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit </h5>
+                    <span class="close btn btn-danger btn-circle btn-sm" id = 'closeEdit'>&times;</span>
+                        
+                </div>
+                <form action = "orders/edit" method = "post">
+                        <div class="modal-body">
+                            <input type = 'text' id = 'stockmanEditID' class = 'requestIDLabel' name = 'requestID'>
+                             <table name = "ordermaterials">
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Qty.</th>
+                                    <th>Unit Cost</th>
+                                    <th>P.O. Number</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select name = "itemID" id='itemdropdown'>
+                                            {{#each items}}
+                                                <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
+                                            {{/each}}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input name = "qty" type = "number" id = 'quantity'>
+                                    </td>
+                                    <td>
+                                        <input name = "unitcost" type = "number" id = 'cost'>
+                                    </td>
+                                    <td>
+                                        <input name = "poNumber" type = "text" id = 'po'>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div> 
+            
+            
+            <div id="stockmanReleaseModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit </h5>
+                    <span class="close btn btn-danger btn-circle btn-sm" id = 'closeStockmanReleaseRequest'>&times;</span>
+                        
+                </div>
+                <form action = "orders/edit" method = "post">
+                        <div class="modal-body">
+                            <input type = 'text' id = 'stockmanReleaseID' class = 'requestIDLabel' name = 'requestID'>
+                             <table name = "ordermaterials">
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Project Number</th>
+                                    <th>Quantity</th>
+                                    <th>Client Name</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Accept</button>
+                            <button class = "btn btn-success" id = 'declineStockmanReleaseRequest'>Decline</button>
+                        </div>
+                    </form>
+                </div>
+            </div> 
           
            <!-- DataTales Example -->
            <div class="card shadow mb-4">
@@ -247,19 +506,36 @@
                         <th>Name</th>
                         <th>Position</th>
                         <th>Type</th>
-                        <th> </th>
+                        <th>Details</th>
                       </tr>
                     </thead>
-                    <tfoot>
-                      <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Type</th>
-                        <th> </th>
-                      </tr>
-                    </tfoot>
                     <tbody>
-                      
+                        {{#each clerkEditRequests}}
+                            <tr>
+                                <td>{{this.firstName}} {{this.lastName}}</td>
+                                <td>Clerk</td>
+                                <td>Add To Inventory Request</td>
+                                <td><button class = 'btn btn-primary clerkAddButton' data-id = "{{this.requestID}}">View Details</button></td>
+                            </tr>
+                        {{/each}}
+                        
+                        {{#each stockmanEditRequests}}
+                            <tr>
+                                <td>{{this.firstName}} {{this.lastName}}</td>
+                                <td>Stockman</td>
+                                <td>Edit Request</td>
+                                <td><button class = 'btn btn-primary stockmanEditButton' data-id = "{{this.requestID}}">View Details</button></td>
+                            </tr>
+                        {{/each}}
+                        
+                        {{#each stockmanReleaseRequests}}
+                            <tr>
+                                <td>{{this.firstName}} {{this.lastName}}</td>
+                                <td>Stockman</td>
+                                <td>Release Request</td>
+                                <td><button class = 'btn btn-primary stockmanReleaseButton' data-id = "{{this.requestID}}">View Details</button></td>
+                            </tr>
+                        {{/each}}
                     </tbody>
                   </table>
                 </div>

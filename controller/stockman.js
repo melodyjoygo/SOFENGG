@@ -111,7 +111,7 @@ router.post("/editRequest",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(Requests.createEditRequest(deliveryID,newdeliveryReceiptNumber,newitemID,newqty,newsuppID,currdeliveryReceiptNumber,curritemID,currqty,currsuppID,userID)).then(function(value){
+        Promise.resolve(Requests.createEditRequest(deliveryID,newdeliveryReceiptNumber,newitemID,newqty,newsuppID,currdeliveryReceiptNumber,curritemID,currqty,currsuppID,userID,'Pending')).then(function(value){
             res.render("stockman_inventory.hbs",{
                 message:3
             })
