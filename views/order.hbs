@@ -488,7 +488,7 @@
                         <td>{{this.price}}</td>
                         <td>{{this.date}}</td> 
                         <td>{{this.status}}</td>
-                          <td><button class = "btn btn-danger edit" data-id = '{{this.transactionID}}' data-itemid = '{{this.materialID}}' data-qty = '{{this.quantity}}' data-price = '{{this.price}}' data-po = '{{this.poNumber}}'><U>Edit</U></button></td>
+                          <td><button class = "btn btn-success edit" data-id = '{{this.transactionID}}' data-itemid = '{{this.materialID}}' data-qty = '{{this.quantity}}' data-price = '{{this.price}}' data-po = '{{this.poNumber}}'><U>Edit</U></button></td>
                       </tr>
                       {{/each}}
                     </tbody>
@@ -589,6 +589,9 @@
             if (event.target == modal) {
                 modal.style.display = "none";
             }
+            if (event.target == editmodal) {
+                editmodal.style.display = "none";
+            } 
         }
     </script>
 </body>
