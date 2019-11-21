@@ -12,6 +12,7 @@ router.use("/inventory",require("./inventory"))
 router.use("/orders",require("./orders"))
 router.use("/stockman",require("./stockman"))
 router.use("/clerk",require("./clerk"))
+router.use("/requisitions",require("./requisitions"))
 
 router.get("/",(req,res)=>{
     res.render("login.hbs")

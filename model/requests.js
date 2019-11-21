@@ -1,7 +1,7 @@
 const Database = require("./database");
 var database = new Database();
 
-exports.getClerkEditRequests = function(){
+exports.getClerkAddRequests = function(){
     return database.query("SELECT * FROM clerk_add_request LEFT JOIN users ON clerk_add_request.userID = users.userID LEFT JOIN user_Types on users.userType = user_Types.utID")
 }
 

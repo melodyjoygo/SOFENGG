@@ -10,6 +10,8 @@ USE `softengdb`;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
  SET NAMES utf8 ;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
@@ -28,6 +30,7 @@ CREATE TABLE `clerk_add_request` (
   `quantity` varchar(45) NOT NULL,
   `unitPrice` varchar(45) NOT NULL,
   `userID` int(11) NOT NULL,
+  `status` varchar(45) NOT NULL,
   PRIMARY KEY (`requestID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -36,9 +39,11 @@ CREATE TABLE `clerk_add_request` (
 -- Dumping data for table `clerk_add_request`
 --
 
+LOCK TABLES `clerk_add_request` WRITE;
 /*!40000 ALTER TABLE `clerk_add_request` DISABLE KEYS */;
-INSERT INTO `clerk_add_request` VALUES (1,'1','123','100',2);
+INSERT INTO `clerk_add_request` VALUES (1,'1','100','123',3,'Pending');
 /*!40000 ALTER TABLE `clerk_add_request` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `clients`
@@ -58,9 +63,11 @@ CREATE TABLE `clients` (
 -- Dumping data for table `clients`
 --
 
+LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
 INSERT INTO `clients` VALUES (1,'Riot Games'),(2,'Samsung'),(3,'Kfc'),(4,'Miki');
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `delivery_tracker`
@@ -87,9 +94,11 @@ CREATE TABLE `delivery_tracker` (
 -- Dumping data for table `delivery_tracker`
 --
 
+LOCK TABLES `delivery_tracker` WRITE;
 /*!40000 ALTER TABLE `delivery_tracker` DISABLE KEYS */;
-INSERT INTO `delivery_tracker` VALUES (1,'VN555',1,123,'IN123','P001',0,100,1);
+INSERT INTO `delivery_tracker` VALUES (1,'VN555',1,100,'IN123','P001',0,123,1);
 /*!40000 ALTER TABLE `delivery_tracker` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `inventory`
@@ -113,8 +122,10 @@ CREATE TABLE `inventory` (
 -- Dumping data for table `inventory`
 --
 
+LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `material_types`
@@ -134,9 +145,11 @@ CREATE TABLE `material_types` (
 -- Dumping data for table `material_types`
 --
 
+LOCK TABLES `material_types` WRITE;
 /*!40000 ALTER TABLE `material_types` DISABLE KEYS */;
-INSERT INTO `material_types` VALUES (1,'Plastic'),(2,'Wood'),(3,'Acrylic'),(4,'Metal'),(5,'Bronze'),(6,'Gold');
+INSERT INTO `material_types` VALUES (1,'Plastic'),(2,'Wood'),(3,'Acrylic'),(4,'Metal'),(5,'Bronze'),(6,'Gold'),(7,'Sterling');
 /*!40000 ALTER TABLE `material_types` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `materials`
@@ -160,9 +173,11 @@ CREATE TABLE `materials` (
 -- Dumping data for table `materials`
 --
 
+LOCK TABLES `materials` WRITE;
 /*!40000 ALTER TABLE `materials` DISABLE KEYS */;
 INSERT INTO `materials` VALUES (1,'2x4',2,1,1),(2,'2x4',1,1,1),(3,'Tent',3,1,1);
 /*!40000 ALTER TABLE `materials` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `project_materials`
@@ -188,9 +203,11 @@ CREATE TABLE `project_materials` (
 -- Dumping data for table `project_materials`
 --
 
+LOCK TABLES `project_materials` WRITE;
 /*!40000 ALTER TABLE `project_materials` DISABLE KEYS */;
 INSERT INTO `project_materials` VALUES (1,1,1,22222,0),(2,2,1,10,0),(3,1,1,12,0),(4,1,1,123,0),(5,1,3,10,0),(6,3,2,10,0),(7,1,1,123,0),(8,1,3,1,0);
 /*!40000 ALTER TABLE `project_materials` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `projects`
@@ -213,9 +230,11 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
+LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
 INSERT INTO `projects` VALUES (1,3,'P1911-00000','2019-11-17','Approved'),(2,1,'P1911-00001','2019-11-17','Pending'),(3,2,'P1911-00002','2019-11-18','Pending'),(4,1,'P1911-00003','2019-11-19','Pending');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `stockman_edit_requests`
@@ -236,6 +255,7 @@ CREATE TABLE `stockman_edit_requests` (
   `currQuantity` varchar(45) NOT NULL,
   `currSupplierID` varchar(45) NOT NULL,
   `userID` int(11) NOT NULL,
+  `status` varchar(45) NOT NULL,
   PRIMARY KEY (`requestID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -244,9 +264,10 @@ CREATE TABLE `stockman_edit_requests` (
 -- Dumping data for table `stockman_edit_requests`
 --
 
+LOCK TABLES `stockman_edit_requests` WRITE;
 /*!40000 ALTER TABLE `stockman_edit_requests` DISABLE KEYS */;
-INSERT INTO `stockman_edit_requests` VALUES (1,'1','VN555','1','100','1','VN555','1','123','1',3);
 /*!40000 ALTER TABLE `stockman_edit_requests` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `stockman_release_requests`
@@ -271,9 +292,10 @@ CREATE TABLE `stockman_release_requests` (
 -- Dumping data for table `stockman_release_requests`
 --
 
+LOCK TABLES `stockman_release_requests` WRITE;
 /*!40000 ALTER TABLE `stockman_release_requests` DISABLE KEYS */;
-INSERT INTO `stockman_release_requests` VALUES (1,'1','1','100','Pending','2019-11-19',3);
 /*!40000 ALTER TABLE `stockman_release_requests` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `suppliers`
@@ -294,9 +316,11 @@ CREATE TABLE `suppliers` (
 -- Dumping data for table `suppliers`
 --
 
+LOCK TABLES `suppliers` WRITE;
 /*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
 INSERT INTO `suppliers` VALUES (1,'Ace Hardware','8878888'),(2,'Mcdonalds','88886236');
 /*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `transactions`
@@ -322,9 +346,11 @@ CREATE TABLE `transactions` (
 -- Dumping data for table `transactions`
 --
 
+LOCK TABLES `transactions` WRITE;
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
 INSERT INTO `transactions` VALUES (1,1,1,100.0000,'2019-11-19','Pending',12,'P002');
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `unit_of_measures`
@@ -344,9 +370,11 @@ CREATE TABLE `unit_of_measures` (
 -- Dumping data for table `unit_of_measures`
 --
 
+LOCK TABLES `unit_of_measures` WRITE;
 /*!40000 ALTER TABLE `unit_of_measures` DISABLE KEYS */;
 INSERT INTO `unit_of_measures` VALUES (1,'pc'),(2,'block'),(3,'pint');
 /*!40000 ALTER TABLE `unit_of_measures` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user_types`
@@ -366,9 +394,11 @@ CREATE TABLE `user_types` (
 -- Dumping data for table `user_types`
 --
 
+LOCK TABLES `user_types` WRITE;
 /*!40000 ALTER TABLE `user_types` DISABLE KEYS */;
 INSERT INTO `user_types` VALUES (0,'Super Admin'),(1,'User Admin'),(2,'Admin'),(3,'Clerk'),(4,'Stockman');
 /*!40000 ALTER TABLE `user_types` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `users`
@@ -393,9 +423,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
+LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES (1,'Melody','Go','melody_go@dlsu.edu.ph','U2FsdGVkX19T8gjGy2tGPtfrn/rnuWE0HuxziIUopGo=',0),(2,'Rebecalyn','Lao','rebecalyn_lao@dlsu.edu.ph','U2FsdGVkX19Y7gb2XVpkBnheS2NLLZsfhXG4J7DIZUQ=',3),(3,'Darren','Tee','darren_tee@dlsu.edu.ph','U2FsdGVkX19YYa+sOn7aF33GDofFaCQQTuucgvK6S9I=',4);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `year_tracker`
@@ -415,9 +447,12 @@ CREATE TABLE `year_tracker` (
 -- Dumping data for table `year_tracker`
 --
 
+LOCK TABLES `year_tracker` WRITE;
 /*!40000 ALTER TABLE `year_tracker` DISABLE KEYS */;
 INSERT INTO `year_tracker` VALUES (1,2019);
 /*!40000 ALTER TABLE `year_tracker` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
@@ -427,4 +462,4 @@ INSERT INTO `year_tracker` VALUES (1,2019);
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed
+-- Dump completed on 2019-11-21 15:18:59

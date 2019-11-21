@@ -91,7 +91,7 @@ router.post("/addMaterial",(req,res)=>{
     }
     else{
         Promise.resolve(materialType.getAll()).then(function(value){
-            for(let i = 0; i < value.length(); i++){
+            for(let i = 0; i < value.length; i++){
                 if(material.toLowerCase() === value[i].type.toLowerCase())
                     exist = true
             }
