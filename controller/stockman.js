@@ -9,10 +9,10 @@ const Tracker = require("../model/delivery_tracker")
 const Requests = require("../model/stockman_requests")
 
 router.get("/",(req,res)=>{
-    
+    let userID = req.session.userID
     Promise.resolve(Suppliers.getAll()).then(function(suppliers){
         Promise.resolve(Materials.getAllWithSupplier()).then(function(items){
-            Promise.resolve(Tracker.getAll()).then(function(deliveries){
+            Promise.resolve(Tracker.getStockmanEditable(userID)).then(function(deliveries){
                 res.render("stockman_inventory.hbs",{
                     suppliers:suppliers,
                     items:items,
@@ -24,10 +24,11 @@ router.get("/",(req,res)=>{
 })
 
 router.get("/requests",(req,res)=>{
+    let userID = req.session.userID
     Promise.resolve(Projects.getAll()).then(function(projects){
         Promise.resolve(Materials.getAllWithSupplier()).then(function(items){
-            Promise.resolve(Requests.getPending()).then(function(pending){
-                Promise.resolve(Requests.getApproved()).then(function(approved){
+            Promise.resolve(Requests.getPending(userID)).then(function(pending){
+                Promise.resolve(Requests.getApproved(userID)).then(function(approved){
                     res.render("stockman_release_request.hbs",{
                         projects:projects,
                         items:items,
@@ -44,6 +45,7 @@ router.post("/restock",(req,res)=>{
     let receiptNumber = req.body.deliveryReceiptNumber
     let itemID = req.body.itemID
     let qty = req.body.qty
+    let userID = req.session.userID
     var empty = false
     
     if(qty === "" || receiptNumber === "")
@@ -55,7 +57,7 @@ router.post("/restock",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(Tracker.create(receiptNumber,itemID,qty)).then(function(value){
+        Promise.resolve(Tracker.create(receiptNumber,itemID,qty,userID)).then(function(value){
             res.render("stockman_inventory.hbs",{
                 message:2
             })
@@ -79,10 +81,24 @@ router.post("/releaseRequest",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(Requests.createReleaseRequest(projectID,itemID,qty,"Pending",new Date().toISOString().slice(0, 19).replace('T', ' '),userID)).then(function(data){
-            res.render("stockman_release_request.hbs",{
-                message:2
-            }) 
+        Promise.resolve(Items.getTotalQty(itemID)).then(function(data){
+            if(data === ''){
+                res.render("stockman_release_request.hbs",{
+                    message:4
+                }) 
+            }
+            else if(qty > data[0].totalQty){
+                res.render("stockman_release_request.hbs",{
+                    message:3
+                }) 
+            }
+            else{
+                Promise.resolve(Requests.createReleaseRequest(projectID,itemID,qty,"Pending",new Date().toISOString().slice(0, 19).replace('T', ' '),userID)).then(function(data){
+                    res.render("stockman_release_request.hbs",{
+                        message:2
+                    }) 
+                })
+            }
         })
     }
 })
@@ -116,6 +132,56 @@ router.post("/editRequest",(req,res)=>{
                 message:3
             })
         }) 
+    }
+})
+
+router.post("/releaseStock",(req,res)=>{
+    let quantity = req.body.quantity
+    let itemID = req.body.itemID
+    let requestID = req.body.requestID
+    let action = req.body.action
+    
+    var empty = false
+    
+    if(quantity === "" || itemID === "")
+        empty = true
+    
+    if(empty){
+        res.render("stockman_release_request.hbs",{
+            message:1
+        })
+    }
+    
+    else{
+        if(action === 'Accept'){
+            Promise.resolve(Items.getItemForRelease(itemID)).then(async function(data){
+                
+                for(let i = 0; i<data.length; i++){
+                    let itemQuantity = data[i].quantity 
+                    let inventoryID = data[i].inventoryID
+                    
+                    if(quantity >= itemQuantity){
+                        quantity -= itemQuantity
+                        itemQuantity = 0
+                    }
+                    else{
+                        itemQuantity -= quantity
+                        quantity = 0
+                    }
+                    await Promise.resolve(Items.setQuantity(itemQuantity,inventoryID))
+                    
+                    if(quantity == 0)
+                        break
+                }
+                Promise.resolve(Requests.setReleased(requestID))
+            })
+            
+            res.render("stockman_release_request.hbs",{
+                message:5
+            })
+        }
+        else
+            res.redirect("/stockman/requests")
     }
 })
 
