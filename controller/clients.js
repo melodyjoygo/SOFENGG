@@ -83,3 +83,12 @@ router.post("/edit",(req,res)=>{
 })
 
 module.exports = router;
+
+//UNIT TESTING
+var assert = require('assert');
+describe('Mocha test for editing Clients', function () {
+ it('should return true, McDonalds is an acceptable case', function () {
+		var isValid = Clients.create("McDonalds");
+        assert.equal(isValid, true);
+    });
+});

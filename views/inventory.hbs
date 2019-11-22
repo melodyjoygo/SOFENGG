@@ -21,6 +21,16 @@
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
+        .modal-ku {
+            width:800px;
+            margin:auto;
+        }
+        .fullinput {
+            width:350px;
+        }
+        .modal-backdrop {
+            z-index:0;
+        }
         .smallertxt {
             width:50px;
         }
@@ -39,7 +49,7 @@
             width:200px;
         }
         .itemnametxt {
-            width:150px;
+            width:120px;
             
         }
         .plusicon {
@@ -273,7 +283,7 @@
 
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="delivery_tracker.html">
+        <a class="nav-link" href="/delivery_tracker">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>
@@ -400,6 +410,7 @@
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
+                <div class = "modal-dialog">
                 <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">Add New Material Type</h5>
@@ -409,8 +420,13 @@
                         </div>
                         <form action = "inventory/addMaterial" method = "post">
                         <div class="modal-body">
-                            <div>Name of Material</div>
-                            <input type = "text" name = "materialName" class = "fullinput">
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div>Name of Material</div>
+                                    <input type = "text" name = "materialName" class = "fullinput">
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="modal-footer">
        
@@ -418,11 +434,13 @@
                         </div>
                             </form>
                     </div>
+                    </div>
             </div> 
           <!-- The Modal -->
             <div id="addItemModal" class="modal">
 
                 <!-- Modal content -->
+                <div class = "modal-dialog modal-lg modal-ku">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Add Item</h5>
@@ -445,7 +463,7 @@
                                         <div class = "fieldheight bottomtxt">Item Name</div>
                                         <input type = "text" class = "itemnametxt" name = "itemName">
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <div class = "fieldheight bottomtxt">Unit of Measure</div>
                                         <select name = "unit" id="supplierDrop">
                                             {{#each unit}}
@@ -471,7 +489,7 @@
                     </form>
                     
                 </div>
-
+</div>
             </div> 
 
             <div id="editModal" class="modal">
@@ -581,6 +599,7 @@
                       <th>Supplier</th>
                       <th>Qty</th>
                       <th>Unit Cost</th>
+                      <th>Total Cost</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -590,8 +609,9 @@
                         <td>{{this.materialName}}</td>
                         <td>{{this.unitOfMeasure}}</td>
                         <td>{{this.supplierName}}</td>
-                        <td>{{this.quantity}}</td>
-                        <td>{{this.aveCost}}</td>
+                        <td>{{this.totalQty}}</td>
+                        <td>{{this.averageUnitCost}}</td>
+                        <td>{{this.totalCost}}</td>
                       </tr>
                       {{/each}}
                    
@@ -651,7 +671,7 @@
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade modal-backdrop" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

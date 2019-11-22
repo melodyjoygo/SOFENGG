@@ -123,6 +123,10 @@
         input[type="number"] {
             -moz-appearance: textfield;
         }
+        
+        .invLabel{
+            display : none;
+        }
     </style>
     <script src = '/jQuery.js'></script>
     <script>
@@ -136,6 +140,34 @@
                 alert("Request Added Successfully")
                 window.location = '/stockman/requests';
             }
+            else if(warning === 3){
+                alert("Not Enough Stock in Inventory to Release that Amount")
+                window.location = '/stockman/requests';
+            }
+            else if(warning ===4){
+                alert("Item Does Not Exist in Inventory")
+                window.location = '/stockman/requests';
+            }
+             else if(warning ===5){
+                alert("Stock Has Been Released")
+                window.location = '/stockman/requests';
+            }
+            
+            $('button.releaseStock').click(function(){
+                let itemID = $(this).attr("data-itemID")
+                let quantity = $(this).attr("data-quantity")
+                let requestID = $(this).attr("data-requestID")
+                
+                $('#releaseItemIDLabel').val(itemID)
+                $('#releaseQuantityLabel').val(quantity)
+                $('#releaseRequestIDLabel').val(requestID)
+            
+                $('#releaseConfirmationModal').css("display","block")
+            })
+            
+            $('#closeReleaseConfirmationModal').click(function(){
+                $('#releaseConfirmationModal').css("display","none")
+            })
         });
     </script>
 </head>
@@ -173,7 +205,7 @@
           <li class="nav-item">
           <a class="nav-link" href="/stockman">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Inventory</span></a>
+            <span>Deliveries</span></a>
         </li>
         <li class="nav-item active">
           <li class="nav-item">
@@ -306,7 +338,7 @@
                         <span class="close btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
                         
                     </div>
-                    <form action = "releaseRequest" method = "post">
+                    <form action = "/stockman/releaseRequest" method = "post">
                         <div class="modal-body">
                             
                             <table name = "requestMaterials">
@@ -344,6 +376,30 @@
                 </div>
 
 
+            </div> 
+            
+            <div id="releaseConfirmationModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Release Stock</h5>
+                        <form action = "/stockman/releaseStock" method = "post">
+                        <span class="close btn btn-danger btn-circle btn-sm" id = 'closeReleaseConfirmationModal'>&times;</span>
+                        <div class='row'>
+                            Release This Stock ?
+                        </div>
+                        <input type = 'text' class = 'invLabel' name = 'quantity' id = 'releaseQuantityLabel'>
+                        <input type = 'text' class = 'invLabel' name = 'itemID' id = 'releaseItemIDLabel'>
+                        <input type = 'text' class = 'invLabel' name = 'requestID' id = 'releaseRequestIDLabel'> 
+                            
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success" name = 'action' value = 'Accept'>Yes</button>
+                            <button type = "submit" class = "btn btn-success" name = 'action' value = 'Decline'>No</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
             </div> 
           
 <div>
@@ -395,6 +451,7 @@
                       <th>Item</th>
                       <th>Supplier</th>
                       <th>Qty</th>
+                      <th>Release</th>
               </tr>
             </thead>
             <tbody>
@@ -404,6 +461,7 @@
                         <td>{{this.type}} - "{{this.materialName}}"</td>
                         <td>{{this.supplierName}}</td>
                         <td>{{this.qty}}</td>
+                        <td><button class = 'btn btn-primary releaseStock' data-itemID = "{{this.materialID}}" data-quantity = "{{this.qty}}" data-requestID = "{{this.requestID}}"><u>Release</u></button></td>
                     </tr>
                 {{/each}}
             </tbody>
@@ -445,15 +503,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to log out?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-danger" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+          <a class="btn btn-danger" href="/">Yes</a>
         </div>
       </div>
     </div>
@@ -513,15 +571,6 @@
         // Get the <span> element that closes the modal
         var span2 = document.getElementsByClassName("close2")[0];
 
-        // When the user clicks on the button, open the modal
-        btn2.onclick = function() {
-            modal2.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span2.onclick = function() {
-            modal2.style.display = "none";
-        }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {

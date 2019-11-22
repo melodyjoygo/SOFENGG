@@ -346,7 +346,6 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th></th>
                       <th>Material</th>
                       <th>Item Name</th>
                       <th>Unit of Measure</th>
@@ -357,15 +356,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {{#each items}}
+                    {{#each inventory}}
                       <tr>
                         <td>{{this.type}}</td>
                         <td>{{this.materialName}}</td>
                         <td>{{this.unitOfMeasure}}</td>
                         <td>{{this.supplierName}}</td>
-                        <td>{{this.totalQuantity}}</td>
-                        <td>{{this.avePrice}}</td>
-                        <td>{{this.totalPrice}}</td>
+                        <td>{{this.totalQty}}</td>
+                        <td>{{this.averageUnitCost}}</td>
+                        <td>{{this.totalCost}}</td>
                       </tr>
                     {{/each}}
                   </tbody>
@@ -406,15 +405,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to log out?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-danger" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+          <a class="btn btn-danger" href="/">Yes</a>
         </div>
       </div>
     </div>

@@ -13,6 +13,7 @@ router.use("/orders",require("./orders"))
 router.use("/stockman",require("./stockman"))
 router.use("/clerk",require("./clerk"))
 router.use("/requisitions",require("./requisitions"))
+router.use("/delivery_tracker",require("./delivery_tracker"))
 
 router.get("/",(req,res)=>{
     res.render("login.hbs")
@@ -42,10 +43,16 @@ router.post("/login" ,(req,res)=>{
                     })   
                 }
                 else{
-                    
-                    req.session.userID = value[0].userID
-                    req.session.userType = value[0].userType
-                    switch(value[0].userType){
+                    console.log("User ID Before : " + req.session.userID)
+                    console.log("User Type Before : " + req.session.userType)
+                    if(typeof req.session.userID === "undefined"){
+                        console.log("Adding Current USER ID")
+                        req.session.userID = value[0].userID
+                        req.session.userType = value[0].userType
+                    }
+                    console.log("User ID After : " + req.session.userID)
+                    console.log("User Type After : " + req.session.userType)
+                    switch(req.session.userType){
                         case 0 : res.redirect("/dashboard")
                         break
                         case 1 : res.redirect("/dashboard")
@@ -70,12 +77,14 @@ router.post("/login" ,(req,res)=>{
         
 })
 
-router.get("/dashboard",(req,res)=>{
-    res.render("dashboard.hbs")
+router.get("/logout",(req,res)=>{
+    req.session.userID = ""
+    req.session.userType = ""
+    res.redirect("/")
 })
 
-router.get("/requisitions",(req,res)=>{
-    res.render("requisitions.hbs")
+router.get("/dashboard",(req,res)=>{
+    res.render("dashboard.hbs")
 })
 
 router.get("/reports",(req,res)=>{
@@ -84,3 +93,17 @@ router.get("/reports",(req,res)=>{
 
 
 module.exports = router;
+
+
+// //UNIT TESTING
+// var assert = require('assert');
+// describe('Mocha test for checking User', function () {
+//  it('should return true user is in the system', function () {
+// 		var isValid = Users.getUser("melody_go@dlsu.edu.ph");
+//         assert.equal(isValid, true);
+//     });
+//  it('should return if the password matches the email', function (req) {
+//         var isValid = Users.validate(req.body.email, req.body.pw);
+// 		assert.equal(isValid, true);
+//     });
+// });

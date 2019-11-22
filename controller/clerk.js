@@ -22,7 +22,8 @@ router.get("/priceInput",(req,res)=>{
 })
 
 router.get("/deliveryTracker",(req,res)=>{
-    Promise.resolve(Delivery.getAllWithPrice()).then(function(deliveries){
+    let userID = req.session.userID
+    Promise.resolve(Delivery.getClerkEditable(userID)).then(function(deliveries){
         res.render("clerk_delivery_tracker.hbs",{
             deliveries:deliveries
         })
@@ -53,10 +54,10 @@ router.post("/add",(req,res)=>{
 })
 
 router.post("/addPrice",(req,res)=>{
+    let deliveryID = req.body.deliveryID
     let invoiceNumber = req.body.invoiceNumber
     let poNumber = req.body.poNumber
     let unitCost = req.body.unitCost
-    let deliveryID = req.body.deliveryID
     let itemID = req.body.itemID
     let quantity = req.body.quantity
     let userID = req.session.userID
@@ -71,16 +72,23 @@ router.post("/addPrice",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(ClerkRequest.getCurrRequest()).then(function(data){
-            let count = data[0].count + 1
-            Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,count)).then(function(value){
-                Promise.resolve(ClerkRequest.addToInvRequest(itemID,quantity,unitCost,userID,'Pending')).then(function(value){
-                    res.render("clerk_price_input.hbs",{
-                        message:2
+        Promise.resolve(Delivery.getDelivery(deliveryID)).then(function(delivery){
+            if(delivery[0].invoiceNumber == '0' && delivery[0].poNumber == '0' && delivery[0].unitPrice == '0'){
+                Promise.resolve(ClerkRequest.getCurrRequest()).then(function(data){
+                    let count = data[0].count + 1
+                    Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,count)).then(function(value){
+                        Promise.resolve(ClerkRequest.addToInvRequest(itemID,quantity,unitCost,userID,'Pending')).then(function(value){
+                            res.render("clerk_price_input.hbs",{
+                                message:2
+                            })
+                        }) 
                     })
-                }) 
-            })
-        })       
+                })  
+            }
+            else{
+                res.redirect("/clerk/priceInput")
+            }
+        })
     }
 })
 
@@ -96,14 +104,14 @@ router.post("/editPrice",(req,res)=>{
         empty = true;
     
     if(empty){
-        res.render("clerk_price_input.hbs",{
+        res.render("clerk_delivery_tracker.hbs",{
             message:1
         })
     }
     else{
         Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,requestID)).then(function(value){
             Promise.resolve(ClerkRequest.edit(unitCost,requestID)).then(function(value){
-                res.render("clerk_price_input.hbs",{
+                res.render("clerk_delivery_tracker.hbs",{
                     message:2
                 })
             })
