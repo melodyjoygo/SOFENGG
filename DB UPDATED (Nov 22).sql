@@ -38,7 +38,7 @@ CREATE TABLE `clerk_add_request` (
 --
 
 /*!40000 ALTER TABLE `clerk_add_request` DISABLE KEYS */;
-INSERT INTO `clerk_add_request` VALUES (1,'2','100','100',2,'Approved');
+INSERT INTO `clerk_add_request` VALUES (1,'2','100','100',2,'Approved'),(2,'2','123','500',1,'Approved'),(3,'2','100','700',1,'Approved'),(4,'1','123','123',1,'Approved'),(5,'1','23','3',1,'Approved'),(6,'1','1','1',1,'Approved'),(7,'1','1231','123',1,'Approved'),(8,'1','2','2',1,'Declined'),(9,'1','3','3',1,'Approved');
 /*!40000 ALTER TABLE `clerk_add_request` ENABLE KEYS */;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `delivery_tracker` (
 --
 
 /*!40000 ALTER TABLE `delivery_tracker` DISABLE KEYS */;
-INSERT INTO `delivery_tracker` VALUES (1,'VN555',2,100,'IN123','P001',1,100,'1','3');
+INSERT INTO `delivery_tracker` VALUES (1,'VN555',2,100,'IN123','P001',1,100,'1','3'),(2,'VN555',2,123,'IN123','P001',1,500,'2','1'),(3,'VN556',2,100,'IN123','P002',1,700,'3','1'),(4,'VN588',1,123,'123','1123',1,123,'4','1'),(5,'VN557',1,23,'3','3',1,3,'5','1'),(6,'1',1,1,'1','1',1,1,'6','1'),(7,'123',1,1231,'123','123',1,123,'7','1'),(8,'2',1,2,'2','2',0,2,'8','1'),(9,'3',1,3,'3','3',1,3,'9','1');
 /*!40000 ALTER TABLE `delivery_tracker` ENABLE KEYS */;
 
 --
@@ -116,7 +116,7 @@ CREATE TABLE `inventory` (
 --
 
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (1,1,1,'2019-11-21',100),(2,1,100,'2019-11-21',123),(3,1,0,'2019-11-22',20),(4,2,100,'2019-11-22',100);
+INSERT INTO `inventory` VALUES (1,1,1,'2019-11-21',100),(2,1,100,'2019-11-21',123),(3,1,0,'2019-11-22',20),(4,2,100,'2019-11-22',100),(5,2,123,'2019-11-22',500),(6,2,100,'2019-11-22',700),(7,1,123,'2019-11-22',123),(8,1,23,'2019-11-22',3),(9,1,1,'2019-11-22',1),(10,1,1231,'2019-11-22',123),(11,1,3,'2019-11-22',3);
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 
 --
