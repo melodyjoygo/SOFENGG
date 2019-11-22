@@ -3,6 +3,7 @@ const router = express.Router();
 const cryptojs = require("crypto-js")
 
 const Users = require("../model/user")
+const Materials = require("../model/materials")
 
 router.use("/employees", require("./employees"))
 router.use("/clients",require("./clients"))
@@ -106,4 +107,11 @@ module.exports = router;
 //         var isValid = Users.validate(req.body.email, req.body.pw);
 // 		assert.equal(isValid, true);
 //     });
+// });
+
+// //checking if there is the user is adding a duplicate item
+// var assert = require('assert');
+// it('should return true if material is in the system', function(){
+//     var isValid = Materials.findItem("Tent");
+//     assert.equal(isValid, true);
 // });
