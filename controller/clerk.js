@@ -96,14 +96,14 @@ router.post("/editPrice",(req,res)=>{
         empty = true;
     
     if(empty){
-        res.render("clerk_price_input.hbs",{
+        res.render("clerk_delivery_tracker.hbs",{
             message:1
         })
     }
     else{
         Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,requestID)).then(function(value){
             Promise.resolve(ClerkRequest.edit(unitCost,requestID)).then(function(value){
-                res.render("clerk_price_input.hbs",{
+                res.render("clerk_delivery_tracker.hbs",{
                     message:2
                 })
             })

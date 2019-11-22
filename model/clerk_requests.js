@@ -15,3 +15,6 @@ exports.edit = function(unitPrice,requestID){
     return database.query("UPDATE clerk_add_request SET unitPrice = ? WHERE requestID = ?",[unitPrice,requestID])
 }
  
+exports.updateStatus = function(requestID,status){
+    return database.query("UPDATE clerk_add_request SET status = ? WHERE requestID = ?",[status,requestID])
+}

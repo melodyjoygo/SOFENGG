@@ -1,9 +1,9 @@
 const Database = require("./database");
 var database = new Database();
 
-exports.create = function(materialID,  quantity, dateModified) {
+exports.create = function(materialID,  quantity, dateModified,unitPrice) {
     Promise.resolve(database.query("SELECT COUNT(inventoryID) AS 'count' FROM inventory")).then(function(value) {
-        database.query("INSERT INTO inventory (inventoryID, materialID, quantity, dateModified) VALUES ?", [[[(value[0].count + 1), materialID,quantity, dateModified]]])
+        database.query("INSERT INTO inventory (inventoryID, materialID, quantity, dateModified,unitPrice) VALUES ?", [[[(value[0].count + 1), materialID,quantity, dateModified,unitPrice]]])
     })
 }
 
@@ -12,7 +12,7 @@ exports.getAll = function() {
 }
 
 exports.getAllTableView = function() {
-    return database.query("SELECT * FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID");
+    return database.query("SELECT * FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID");
 }
 
 exports.restock = function(invID,qty){

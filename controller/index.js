@@ -70,12 +70,14 @@ router.post("/login" ,(req,res)=>{
         
 })
 
-router.get("/dashboard",(req,res)=>{
-    res.render("dashboard.hbs")
+router.get("/logout",(req,res)=>{
+    req.session.userID = ""
+    req.session.userType = ""
+    res.redirect("/")
 })
 
-router.get("/requisitions",(req,res)=>{
-    res.render("requisitions.hbs")
+router.get("/dashboard",(req,res)=>{
+    res.render("dashboard.hbs")
 })
 
 router.get("/reports",(req,res)=>{
