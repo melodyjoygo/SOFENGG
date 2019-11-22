@@ -18,3 +18,7 @@ exports.edit = function(unitPrice,requestID){
 exports.updateStatus = function(requestID,status){
     return database.query("UPDATE clerk_add_request SET status = ? WHERE requestID = ?",[status,requestID])
 }
+
+exports.editAddToInv = function(requestID,materialID,quantity){
+    database.query("UPDATE clerk_add_request SET materialID = ?,quantity = ? WHERE requestID = ?",[materialID,quantity,requestID])
+}
