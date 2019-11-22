@@ -21,6 +21,13 @@
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
+        .modal-ku {
+            width:800px;
+            margin:auto;
+        }
+        .fullinput {
+            width:350px;
+        }
         .modal-backdrop {
             z-index:0;
         }
@@ -42,7 +49,7 @@
             width:200px;
         }
         .itemnametxt {
-            width:150px;
+            width:120px;
             
         }
         .plusicon {
@@ -403,6 +410,7 @@
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
+                <div class = "modal-dialog">
                 <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">Add New Material Type</h5>
@@ -412,8 +420,13 @@
                         </div>
                         <form action = "inventory/addMaterial" method = "post">
                         <div class="modal-body">
-                            <div>Name of Material</div>
-                            <input type = "text" name = "materialName" class = "fullinput">
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div>Name of Material</div>
+                                    <input type = "text" name = "materialName" class = "fullinput">
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="modal-footer">
        
@@ -421,11 +434,13 @@
                         </div>
                             </form>
                     </div>
+                    </div>
             </div> 
           <!-- The Modal -->
             <div id="addItemModal" class="modal">
 
                 <!-- Modal content -->
+                <div class = "modal-dialog modal-lg modal-ku">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Add Item</h5>
@@ -448,7 +463,7 @@
                                         <div class = "fieldheight bottomtxt">Item Name</div>
                                         <input type = "text" class = "itemnametxt" name = "itemName">
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <div class = "fieldheight bottomtxt">Unit of Measure</div>
                                         <select name = "unit" id="supplierDrop">
                                             {{#each unit}}
@@ -474,7 +489,7 @@
                     </form>
                     
                 </div>
-
+</div>
             </div> 
 
             <div id="editModal" class="modal">
