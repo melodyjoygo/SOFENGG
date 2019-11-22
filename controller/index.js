@@ -42,10 +42,16 @@ router.post("/login" ,(req,res)=>{
                     })   
                 }
                 else{
-                    
-                    req.session.userID = value[0].userID
-                    req.session.userType = value[0].userType
-                    switch(value[0].userType){
+                    console.log("User ID Before : " + req.session.userID)
+                    console.log("User Type Before : " + req.session.userType)
+                    if(typeof req.session.userID === "undefined"){
+                        console.log("Adding Current USER ID")
+                        req.session.userID = value[0].userID
+                        req.session.userType = value[0].userType
+                    }
+                    console.log("User ID After : " + req.session.userID)
+                    console.log("User Type After : " + req.session.userType)
+                    switch(req.session.userType){
                         case 0 : res.redirect("/dashboard")
                         break
                         case 1 : res.redirect("/dashboard")
