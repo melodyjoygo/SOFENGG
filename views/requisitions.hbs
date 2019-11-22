@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="stylesheets/sample.css" rel="stylesheet">
+  <link href="/stylesheets/sample.css" rel="stylesheet">
     <style>
         .plusicon {
             color:white;
@@ -134,7 +134,10 @@
             }
             else if(warning === 3){
                 alert("Edit Successfully Saved")
-                window.location = '/orders'
+                window.location = '/requisitions'
+            }else if(warning === 4){
+                alert("Release Request Approved")
+                window.location = '/requisitions'
             }
             
             $(document).on('click','button.clerkAddButton',function(){
@@ -161,15 +164,30 @@
             $(document).on('click','button.stockmanEditButton',function(){
                 let requestID = $(this).attr("data-id")
                 let type = $(this).attr("data-type")
-                let itemName = $(this).attr("data-materialName")
-                let supplier = $(this).attr("data-supplierName")
+                let itemName = $(this).attr("data-itemName")
+                let supplier = $(this).attr("data-supplier")
                 let quantity = $(this).attr("data-quantity")
                 let receiptNumber = $(this).attr("data-receiptNumber")
+                let newType = $(this).attr("data-newType")
+                let newItemName = $(this).attr("data-newItemName")
+                let newSupplier = $(this).attr("data-newSupplier")
+                let newQuantity = $(this).attr("data-NewQuantity")
+                let newReceiptNumber = $(this).attr("data-newReceiptNumber")
+                let deliveryID = $(this).attr("data-deliveryID")
+                let newItemID = $(this).attr("data-newItemID")
                 
                 
-                data-newType = "{{this.newType}}" date-newItemName = "{{this.newItemName}}" data-newSupplier = "{{this.newSupplier}}" data-NewQuantity = "{{this.newQuantity}}" data-newReceiptNumber = "{{this.newDeliveryReceipt}}"
-                
+                $('#currQuantityLabel').val(quantity)
+                $('#currItemLabel').val(type + " - \"" + itemName + "\" " + supplier)
+                $('#currDeliveryReceiptLabel').val(receiptNumber)
+                $('#newDeliveryReceiptLabel').val(newReceiptNumber)
+                $('#newItemLabel').val(newType + " - \"" + newItemName + "\" " + newSupplier)
+                $('#newQuantityLabel').val(newQuantity)
                 $('#stockmanEditID').val(requestID)
+                $('#stockmanEditDeliveryID').val(deliveryID)
+                $('#stockmanEditNewItemID').val(newItemID)
+                
+                
                 $('#stockmanEditModal').css("display", "block")
             })
             
@@ -410,7 +428,6 @@
           </h1>
            
             
-<!--
             <div id="clerkAddModal" class="modal">
 
              Modal content 
@@ -453,7 +470,6 @@
                 </div>
             </div> 
             
--->
             <div id="stockmanEditModal" class="modal">
 
              Modal content 
@@ -466,35 +482,36 @@
                 <form action = "/requisitions/stockmanEdit" method = "post">
                         <div class="modal-body">
                             <input type = 'text' id = 'stockmanEditID' class = 'invLabel' name = 'requestID'>
-                            <input type = 'text' id = 'stockmanReleaseID' class = 'invLabel' name = 'requestID'>
+                            <input type = 'text' id = 'stockmanEditDeliveryID' class = 'invLabel' name = 'deliveryID'>
+                            <input type = 'text' id = 'stockmanEditNewItemID' class = 'invLabel' name = 'newItemID'>
                             <h3>Old Data: </h3>
                             <div class = "row">
                                 <div class = "col-md-3">
                                     <div>Delivery Receipt</div>
-                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname" readonly>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" id = 'currDeliveryReceiptLabel' readonly>
                                 </div>
                                 <div class = "col-md-3">
                                     <div>Item Name</div>
-                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname" readonly>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" id = 'currItemLabel' readonly>
                                 </div>
                                 <div class = "col-md-3">
                                     <div>Quantity</div>
-                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname" readonly>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" id = 'currQuantityLabel' readonly>
                                 </div>
                             </div>
                             <h3>New Data: </h3>
                             <div class = "row">
                                 <div class = "col-md-3">
                                     <div>Delivery Receipt</div>
-                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname" readonly>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" id = 'newDeliveryReceiptLabel' name = "deliveryReceiptNumber" readonly>
                                 </div>
                                 <div class = "col-md-3">
                                     <div>Item Name</div>
-                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname" readonly>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" id = 'newItemLabel' name = "itemName" readonly>
                                 </div>
                                 <div class = "col-md-3">
                                     <div>Quantity</div>
-                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname" readonly>
+                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" id = 'newQuantityLabel' name = "quantity" readonly>
                                 </div>
                             </div>
                         </div>
@@ -507,7 +524,6 @@
             </div> 
             
             
-<!--
             <div id="stockmanReleaseModal" class="modal">
 
              Modal content 
@@ -544,7 +560,6 @@
                     </form>
                 </div>
             </div> 
--->
           
            <!-- DataTales Example -->
            <div class="card shadow mb-4">
@@ -577,7 +592,7 @@
                                 <td>{{this.firstName}} {{this.lastName}}</td>
                                 <td>Stockman</td>
                                 <td>Edit Request</td>
-                                <td><button class = 'btn btn-primary stockmanEditButton' data-id = "{{this.requestID}}" data-type = "{{this.type}}" date-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-quantity = "{{this.currQuantity}}" data-receiptNumber = "{{this.currDeliveryReceipt}}" data-newType = "{{this.newType}}" date-newItemName = "{{this.newItemName}}" data-newSupplier = "{{this.newSupplier}}" data-NewQuantity = "{{this.newQuantity}}" data-newReceiptNumber = "{{this.newDeliveryReceipt}}">View Details</button></td>
+                                <td><button class = 'btn btn-primary stockmanEditButton' data-id = "{{this.requestID}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-quantity = "{{this.currQuantity}}" data-receiptNumber = "{{this.currDeliveryReceipt}}" data-newType = "{{this.newType}}" data-newItemName = "{{this.newItemName}}" data-newSupplier = "{{this.newSupplier}}" data-NewQuantity = "{{this.newQuantity}}" data-newReceiptNumber = "{{this.newDeliveryReceipt}}" data-deliveryID = "{{this.deliveryID}}" data-newItemID = "{{this.newItemID}}">View Details</button></td>
                             </tr>
                         {{/each}}
                         
