@@ -94,7 +94,7 @@ router.get("/reports",(req,res)=>{
 
 module.exports = router;
 
-
+/*
 //UNIT TESTING
 var assert = require('assert');
 describe('Mocha test for checking User', function () {
@@ -107,3 +107,4 @@ describe('Mocha test for checking User', function () {
 		assert.equal(isValid, true);
     });
 });
+*/
