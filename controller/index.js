@@ -3,7 +3,7 @@ const router = express.Router();
 const cryptojs = require("crypto-js")
 
 const Users = require("../model/user")
-
+const key = "password_key"
 router.use("/employees", require("./employees"))
 router.use("/clients",require("./clients"))
 router.use("/suppliers",require("./suppliers"))
@@ -35,7 +35,7 @@ router.post("/login" ,(req,res)=>{
     else {
         Promise.resolve(Users.getUser(email)).then(function(value){
             if(value != ''){
-                var phash = cryptojs.AES.decrypt(value[0].password,"password_key")
+                var phash = cryptojs.AES.decrypt(value[0].password,key)
                 var pnormal = phash.toString(cryptojs.enc.Utf8)
                 if(pass != pnormal){
                     res.render("login.hbs",{
