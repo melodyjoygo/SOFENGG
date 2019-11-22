@@ -12,7 +12,7 @@ exports.getAll = function() {
 }
 
 exports.getAllTableView = function() {
-    return database.query("SELECT *,SUM(quantity) AS 'totalQty',AVG(unitPrice) AS 'averageUnitCost',(SUM(quantity) * AVG(unitPrice)) AS 'totalCost' FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID GROUP BY inventory.materialID");
+    return database.query("SELECT *,SUM(quantity) AS 'totalQty',cast(AVG(unitPrice) as decimal(10,2)) AS 'averageUnitCost',cast((SUM(quantity) * AVG(unitPrice)) as decimal(10,2)) AS 'totalCost' FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID GROUP BY inventory.materialID");
 }
 
 exports.restock = function(invID,qty){

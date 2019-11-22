@@ -51,9 +51,12 @@ router.post("/clerkAdd",(req,res)=>{
                 })
             })
         }
-        else
-            Promise.resolve(clerkRequests.updateStatus(clerkAddRequestID,'Declined'))
-            res.redirect("/requisitions")
+        else{
+            Promise.resolve(stockmanRequests.changeReleaseStatus(requestID,'Declined')).then(function(){
+                res.redirect("/requisitions")
+            })
+        }
+            
     }
 })
 
@@ -90,9 +93,11 @@ router.post("/stockmanEdit",(req,res)=>{
                 })
             })
         }
-        else
-            Promise.resolve(stockmanRequests.changeEditStatus(requestID,'Declined'))
-            res.redirect("/requisitions")
+        else{
+            Promise.resolve(stockmanRequests.changeReleaseStatus(requestID,'Declined')).then(function(){
+                res.redirect("/requisitions")
+            }) 
+        }
     }
 })
 
@@ -119,9 +124,12 @@ router.post("/stockmanRelease",(req,res)=>{
                 })
             })
         }
-        else
-            Promise.resolve(stockmanRequests.changeReleaseStatus(requestID,'Declined'))
-            res.redirect("/requisitions")
+        else{
+            Promise.resolve(stockmanRequests.changeReleaseStatus(requestID,'Declined')).then(function(){
+                res.redirect("/requisitions")
+            })
+        }
+            
     }
 })
 

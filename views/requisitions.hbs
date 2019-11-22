@@ -124,18 +124,18 @@
 
         let warning = {{message}}
         $( document ).ready(function() {
-            if(warning === 1){
+            if(warning == 1){
                 alert("Please Do Not Leave Empty Fields")
                 window.location = '/requisitions';
             }
-            else if(warning === 2){
+            else if(warning == 2){
                 alert("Item Added to Inventory")
                 window.location = '/requisitions'
             }
-            else if(warning === 3){
+            else if(warning == 3){
                 alert("Edit Successfully Saved")
                 window.location = '/requisitions'
-            }else if(warning === 4){
+            }else if(warning == 4){
                 alert("Release Request Approved")
                 window.location = '/requisitions'
             }
@@ -314,7 +314,7 @@
       </li>
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="delivery_tracker.html">
+        <a class="nav-link" href="/delivery_tracker">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>
@@ -581,7 +581,7 @@
                         {{#each clerkEditRequests}}
                             <tr>
                                 <td>{{this.firstName}} {{this.lastName}}</td>
-                                <td>Clerk</td>
+                                <td>{{this.userTypeString}}</td>
                                 <td>Add To Inventory Request</td>
                                 <td><button class = 'btn btn-primary clerkAddButton' data-id = "{{this.requestID}}" data-itemID = "{{this.materialID}}" data-qty = "{{this.quantity}}" data-unitPrice = "{{this.unitPrice}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}">View Details</button></td>
                             </tr>
@@ -590,7 +590,7 @@
                         {{#each stockmanEditRequests}}
                             <tr>
                                 <td>{{this.firstName}} {{this.lastName}}</td>
-                                <td>Stockman</td>
+                                <td>{{this.userTypeString}}</td>
                                 <td>Edit Request</td>
                                 <td><button class = 'btn btn-primary stockmanEditButton' data-id = "{{this.requestID}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-quantity = "{{this.currQuantity}}" data-receiptNumber = "{{this.currDeliveryReceipt}}" data-newType = "{{this.newType}}" data-newItemName = "{{this.newItemName}}" data-newSupplier = "{{this.newSupplier}}" data-NewQuantity = "{{this.newQuantity}}" data-newReceiptNumber = "{{this.newDeliveryReceipt}}" data-deliveryID = "{{this.deliveryID}}" data-newItemID = "{{this.newItemID}}">View Details</button></td>
                             </tr>
@@ -599,7 +599,7 @@
                         {{#each stockmanReleaseRequests}}
                             <tr>
                                 <td>{{this.firstName}} {{this.lastName}}</td>
-                                <td>Stockman</td>
+                                <td>{{this.userTypeString}}</td>
                                 <td>Release Request</td>
                                 <td><button class = 'btn btn-primary stockmanReleaseButton' data-id = "{{this.requestID}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-projectNumber = "{{this.projectNumber}}" data-quantity = "{{this.qty}}" data-itemID = "{{this.itemID}}">View Details</button></td>
                             </tr>

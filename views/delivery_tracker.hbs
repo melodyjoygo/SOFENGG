@@ -9,46 +9,194 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Buttons</title>
+  <title>SB Admin 2 - Tables</title>
 
-  <!-- Custom fonts for this template-->
+  <!-- Custom fonts for this template -->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-  <!-- Custom styles for this template-->
-  <link href="stylesheets/sample.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="/stylesheets/sb-admin-2.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this page -->
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
         .plusicon {
             color:white;
         }
-        .setdate {
+        .addemp {
             position:relative;
-            right:-690px;
+            right:-590px;
         }
-        .export {
+        .addemp2 {
             position:relative;
-            right:-710px;
+            right:-640px;
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+/* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 80%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+
+/* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {top:-300px; opacity:0} 
+            to {top:0; opacity:1}
+        }
+
+        @keyframes animatetop {
+            from {top:-300px; opacity:0}
+            to {top:0; opacity:1}
+        }
+
+/* The Close Button */
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .close2 {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close2:hover,
+        .close2:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            padding: 2px 16px;
+  
+            color: black;
+        }
+
+        .modal-body {padding: 2px 16px;}
+
+        .modal-footer {
+            padding: 2px 16px;
+  
+            color: black;
+        }
+        
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        
+        #deliveryIDLabel{
+            display : none;
+        }
+        
+        #requestIDLabel{
+            display : none;
         }
     </style>
+    <script src = '/jQuery.js'></script>
+    <script>
+        let warning = {{message}}
+        $( document ).ready(function(){
+            if(warning === 1){
+                alert("Please Do Not Leave Fields Empty")
+                window.location = '/delivery_tracker';
+            }
+            else if(warning === 2){
+                alert("Stock has been Added")
+                window.location = '/delivery_tracker';
+            }
+            else if(warning === 3){
+                alert("Edit Saved")
+                window.location = '/delivery_tracker';
+            }
+            
+            $('button.edit').click(function(){
+                let deliveryID = $(this).attr("data-id")
+                let receiptNumber = $(this).attr("data-receiptNumber")
+                let itemID = $(this).attr("data-itemID")
+                let quantity = $(this).attr("data-quantity")
+                let invoiceNumber = $(this).attr("data-invoiceNumber")
+                let poNumber = $(this).attr("data-poNumber")
+                let unitPrice = $(this).attr("data-unitPrice")
+                let requestID = $(this).attr("data-requestID")
+                
+                console.log("receiptNumber: " + receiptNumber)
+                $('#deliveryIDLabel').val(deliveryID)
+                $('#deliveryReceiptNumberLabel').val(receiptNumber)
+                $('#material_dropdown').val(itemID)
+                $('#quantityLabel').val(quantity)
+                $('#invoiceNumberLabel').val(invoiceNumber)
+                $('#poNumberLabel').val(poNumber)
+                $('#unitCostLabel').val(unitPrice)
+                $('#requestIDLabel').val(requestID)
+    
+                $('#editDeliveryModal').css("display","block")
+            })
+            
+            $('#close3').click(function(){
+                $('#editDeliveryModal').css("display","none")
+            })
+        });
+    </script>
 </head>
 
 <body id="page-top">
+
   <!-- Page Wrapper -->
   <div id="wrapper">
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">UP RISING</div>
-      </a>
-
-      <!-- Divider -->
-     <hr class="sidebar-divider my-0">
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">UP RISING</div>
+        </a>
+  
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
@@ -118,21 +266,16 @@
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>
-
-       
-    
-
-      
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
-    </ul>
-    <!-- End of Sidebar -->
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+  
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+  
+      </ul>
+      <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -174,7 +317,7 @@
                   <div class="input-group">
                     <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
+                      <button class="btn btn-danger" type="button">
                         <i class="fas fa-search fa-sm"></i>
                       </button>
                     </div>
@@ -327,200 +470,168 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Reports
-              
-              <a href="#" class="btn btn-secondary btn-icon-split setdate">
-                <span class="icon text-white-50">
-                      <i class="fas fa-info-circle"></i>
-                    </span>
-                <span class="text">Set Dates</span>
-              </a>
-              <a href="#" class="btn btn-secondary btn-icon-split export">
-                <span class="icon text-white-50">
-                      <i class="fas fa-info-circle"></i>
-                    </span>
-                <span class="text">Export</span>
-              </a>
-          </h1>
-           
+          <h1 class="h3 mb-4 text-gray-800">Deliveries</h1>
+            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
+            <span class="icon text-white-50">
+                <b class = "plusicon">+</b>
+            </span>
+            <span class="text">Restock Item</span>
+         </a>
+         
+             
           
-          <div class="row">
-
-            <div class="col-lg-6">
-
-              <!-- Circle Buttons -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Circle Buttons</h6>
-                </div>
-                <div class="card-body">
-                  <p>Use Font Awesome Icons (included with this theme package) along with the circle buttons as shown in the examples below!</p>
-                  <!-- Circle Buttons (Default) -->
-                  <div class="mb-2">
-                    <code>.btn-circle</code>
-                  </div>
-                  <a href="#" class="btn btn-primary btn-circle">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                  <a href="#" class="btn btn-success btn-circle">
-                    <i class="fas fa-check"></i>
-                  </a>
-                  <a href="#" class="btn btn-info btn-circle">
-                    <i class="fas fa-info-circle"></i>
-                  </a>
-                  <a href="#" class="btn btn-warning btn-circle">
-                    <i class="fas fa-exclamation-triangle"></i>
-                  </a>
-                  <a href="#" class="btn btn-danger btn-circle">
-                    <i class="fas fa-trash"></i>
-                  </a>
-                  <!-- Circle Buttons (Small) -->
-                  <div class="mt-4 mb-2">
-                    <code>.btn-circle .btn-sm</code>
-                  </div>
-                  <a href="#" class="btn btn-primary btn-circle btn-sm">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                  <a href="#" class="btn btn-success btn-circle btn-sm">
-                    <i class="fas fa-check"></i>
-                  </a>
-                  <a href="#" class="btn btn-info btn-circle btn-sm">
-                    <i class="fas fa-info-circle"></i>
-                  </a>
-                  <a href="#" class="btn btn-warning btn-circle btn-sm">
-                    <i class="fas fa-exclamation-triangle"></i>
-                  </a>
-                  <a href="#" class="btn btn-danger btn-circle btn-sm">
-                    <i class="fas fa-trash"></i>
-                  </a>
-                  <!-- Circle Buttons (Large) -->
-                  <div class="mt-4 mb-2">
-                    <code>.btn-circle .btn-lg</code>
-                  </div>
-                  <a href="#" class="btn btn-primary btn-circle btn-lg">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                  <a href="#" class="btn btn-success btn-circle btn-lg">
-                    <i class="fas fa-check"></i>
-                  </a>
-                  <a href="#" class="btn btn-info btn-circle btn-lg">
-                    <i class="fas fa-info-circle"></i>
-                  </a>
-                  <a href="#" class="btn btn-warning btn-circle btn-lg">
-                    <i class="fas fa-exclamation-triangle"></i>
-                  </a>
-                  <a href="#" class="btn btn-danger btn-circle btn-lg">
-                    <i class="fas fa-trash"></i>
-                  </a>
-                </div>
-              </div>
-
-              <!-- Brand Buttons -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Brand Buttons</h6>
-                </div>
-                <div class="card-body">
-                  <p>Google and Facebook buttons are available featuring each company's respective brand color. They are used on the user login and registration pages.</p>
-                  <p>You can create more custom buttons by adding a new color variable in the <code>_variables.scss</code> file and then using the Bootstrap button variant mixin to create a new style, as demonstrated in the <code>_buttons.scss</code> file.</p>
-                  <a href="#" class="btn btn-google btn-block"><i class="fab fa-google fa-fw"></i> .btn-google</a>
-                  <a href="#" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f fa-fw"></i> .btn-facebook</a>
-
-                </div>
-              </div>
-
-            </div>
-
-            <div class="col-lg-6">
-
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Split Buttons with Icon</h6>
-                </div>
-                <div class="card-body">
-                  <p>Works with any button colors, just use the <code>.btn-icon-split</code> class and the markup in the examples below. The examples below also use the <code>.text-white-50</code> helper class on the icons for additional styling, but it is not required.</p>
-                  <a href="#" class="btn btn-primary btn-icon-split">
-                    <span class="icon text-white-50">
-                      <b class = "plusicon">+</b>
-                    </span>
-                    <span class="text">Split Button Primary</span>
-                  </a>
-                  <div class="my-2"></div>
-                  <a href="#" class="btn btn-success btn-icon-split">
-                    <span class="icon text-white-50">
-                      <i class="fas fa-check"></i>
-                    </span>
-                    <span class="text">Split Button Success</span>
-                  </a>
-                  <div class="my-2"></div>
-                  <a href="#" class="btn btn-info btn-icon-split">
-                    <span class="icon text-white-50">
-                      <i class="fas fa-info-circle"></i>
-                    </span>
-                    <span class="text">Split Button Info</span>
-                  </a>
-                  <div class="my-2"></div>
-                  <a href="#" class="btn btn-warning btn-icon-split">
-                    <span class="icon text-white-50">
-                      <i class="fas fa-exclamation-triangle"></i>
-                    </span>
-                    <span class="text">Split Button Warning</span>
-                  </a>
-                  <div class="my-2"></div>
-                  <a href="#" class="btn btn-danger btn-icon-split">
-                    <span class="icon text-white-50">
-                      <i class="fas fa-trash"></i>
-                    </span>
-                    <span class="text">Split Button Danger</span>
-                  </a>
-                  <div class="my-2"></div>
-                  <a href="#" class="btn btn-secondary btn-icon-split">
-                    <span class="icon text-white-50">
-                      <i class="fas fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Split Button Secondary</span>
-                  </a>
-                  <div class="my-2"></div>
-                  <a href="#" class="btn btn-light btn-icon-split">
-                    <span class="icon text-gray-600">
-                      <i class="fas fa-arrow-right"></i>
-                    </span>
-                    <span class="text">Split Button Primary</span>
-                  </a>
-                  <div class="mb-4"></div>
-                  <p>Also works with small and large button classes!</p>
-                  <a href="#" class="btn btn-primary btn-icon-split btn-sm">
-                    <span class="icon text-white-50">
-                      <i class="fas fa-flag"></i>
-                    </span>
-                    <span class="text">Split Button Small</span>
-                  </a>
-                  <div class="my-2"></div>
-                  <a href="#" class="btn btn-primary btn-icon-split btn-lg">
-                    <span class="icon text-white-50">
-                      <i class="fas fa-flag"></i>
-                    </span>
-                    <span class="text">Split Button Large</span>
-                  </a>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-        <!-- /.container-fluid -->
-
+<div>
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4" style="flex-grow:inherit">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"></h6>
       </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                  <th>Delivery Receipt Number</th>
+                  <th>Item</th>
+                  <th>Supplier</th>
+                  <th>Qty</th>
+                  <th>Unit Price</th>
+                  <th>Invoice Number</th>
+                  <th>P.O. Number</th>
+                  <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+                    {{#each deliveries}}
+                        <tr>
+                            <td>{{this.deliveryReceiptNumber}}</td>
+                            <td>{{this.type}} - "{{this.materialName}}"</td>
+                            <td>{{this.supplierName}}</td>
+                            <td>{{this.quantity}}</td>
+                            <td>{{this.unitPrice}}</td>
+                            <td>{{this.invoiceNumber}}</td>
+                            <td>{{this.poNumber}}</td>
+                            <td><button class = 'btn btn-primary edit' data-id = "{{this.deliveryID}}" data-receiptNumber = "{{this.deliveryReceiptNumber}}" data-itemID = "{{this.materialID}}" data-quantity = "{{this.quantity}}" data-invoiceNumber = "{{this.invoiceNumber}}" data-poNumber = "{{this.poNumber}}" data-unitPrice = "{{this.unitPrice}}" data-requestID = "{{this.requestID}}"><u>Edit</u></button></td>
+                        </tr>
+                    {{/each}}
+            </tbody>
+            <tbody>
+            
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+            
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Restock Item</h5>
+                        <span class="btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
+                        
+                    </div>
+                    <form action = "/delivery_tracker/restock" method = "post">
+                        <div class="modal-body">
+                            <table name = "inventmaterials">
+                                <tr>
+                                    <th>Delivery Receipt Number</th>
+                                    <th>Item Name</th>
+                                    <th>Qty</th>
+                                    <th>Invoice Number</th>
+                                    <th>P.O. Number</th>
+                                    <th>Unit Price</th>
+                                    
+                                </tr>
+                                <tr>
+                                <td>
+                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" >
+                                </td>
+                                <td>
+                                    <select name = "itemID">
+                                            {{#each items}}
+                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}" - {{this.supplierName}}</option>
+                                            {{/each}}
+                                    </select>   
+                                </td>
+                              
+                    
+                                <td>
+                                    <input class="form-control" type = "number" name = "qty">
+                                </td>
+                                <td>
+                                    <input class="form-control" type = "text" name = "invoiceNumber">
+                                </td>
+                                <td>
+                                    <input class="form-control" type = "text" name = "poNumber">
+                                </td>
+                                <td>
+                                    <input class="form-control" type = "number" name = "unitPrice">
+                                </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Restock</button>
+                        </div>
+                    </form>
+                    
+                </div>
+
+            </div> 
+            
+            
+  <div id="editDeliveryModal" class="modal"> 
+     <!-- Tracking -->
+
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2>Edit Delivery</h2>
+
+               <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                    <span id = "close3" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+               </button>
+          </div>
+      
+          <div class="card-body">
+              <form action = "/delivery_tracker/edit" method = 'post'>
+                  <input type = 'text' id = 'requestIDLabel' name = 'requestID'>
+                  <input type = 'text' id = 'deliveryIDLabel' name = 'deliveryID'>
+                  <div>Delivery Receipt Number: </div>
+                  <input type = 'text' id = 'deliveryReceiptNumberLabel' name = 'deliveryReceiptNumber'>
+                  <div>Item Name: </div>
+                  <select name = "itemID" id="material_dropdown">
+                    {{#each items}}
+                        <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}" - {{this.supplierName}}</option>
+                    {{/each}}
+                  </select> 
+                  <div>Quantity: </div>
+                  <input type = 'number'name = 'quantity' id = 'quantityLabel'>
+                  <div>Invoice Number: </div> 
+                  <input type="text" id = 'invoiceNumberLabel' name = invoiceNumber>
+                  <div>P.O. Number: </div>
+                  <input type="text" id = 'poNumberLabel' name = poNumber>
+                  <div>Unit Cost: </div>
+                  <input type = "number" name = "unitCost" id="unitCostLabel">
+                  <input type = "submit" class = 'btn btn-primary' value = 'Save'>
+              </form>
+          </div>
+      </div>
+   </div>
+  <!-- /.container-fluid -->
+
+ 
+
+  
       <!-- End of Main Content -->
 
      
-
-    </div>
     <!-- End of Content Wrapper -->
 
-  </div>
+ 
   <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
@@ -541,13 +652,14 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-danger" href="login.html">Logout</a>
         </div>
       </div>
     </div>
   </div>
-    
-      <!-- Bootstrap core JavaScript-->
+
+  
+  <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -557,6 +669,45 @@
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
 
+  <!-- Page level plugins -->
+  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="js/demo/datatables-demo.js"></script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById("addPriceModal");
+        var modal2 = document.getElementById("myModal");
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        var span = document.getElementById("close2");
+        
+        btn.onclick = function() {
+            modal2.style.display = "block";
+        }
+        
+        span.onclick = function() {
+            modal2.style.display = "none";
+        }
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+   
+    </script>
 </body>
 
 </html>
