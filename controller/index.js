@@ -93,16 +93,3 @@ router.get("/reports",(req,res)=>{
 
 module.exports = router;
 
-
-// // //UNIT TESTING
-//  var assert = require('assert');
-//  describe('Mocha test for checking User', function () {
-//   it('should return true if user is in the system', function () {
-//  		var isValid = Users.getUser("abc@123.com");
-//          assert.equal(isValid, true);
-//      });
-//   it('should return if the password matches the email', function (req) {
-//          var isValid = Users.validate("melody_go@dlsu.edu.ph", "123");
-//  		assert.equal(isValid, true);
-//      });
-//  });
