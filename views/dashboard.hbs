@@ -173,7 +173,7 @@
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400" id = profil></i>
                   Profile
                 </a>
                 <a class="dropdown-item" href="#" >
@@ -532,7 +532,7 @@
           </div>
         
           <div class="modal-footer">
-            <a class="btn btn-success" id ="editProfile" data-toggle="modal" data-target="#enterPassword">Edit Profile</a>
+            <a class="btn btn-success" id ="editProfile" data-toggle="modal" data-target="#enterPassword"  data-dismiss="modal" aria-label="Close">Edit Profile</a>
           </div>
         </div>
       </div>
@@ -553,7 +553,7 @@
           </div>
         
           <div class="modal-footer">
-            <a id ="confirm" class="btn btn-success" >Confirm</a>
+            <input type="submit" id = "confirm" class="btn btn-success" value="Confirm" data-dismiss="modal" aria-label="Close"> 
           </div>
         </div>
       </div>
