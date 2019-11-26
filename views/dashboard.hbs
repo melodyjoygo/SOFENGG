@@ -516,12 +516,12 @@
   
 
     <!-- Profile Modal-->
-    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="profileModal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <button class="close" type="button" data-dismiss="#editProfileModal #profileModal #enterPassword" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
@@ -529,8 +529,6 @@
             <div>Name: (name)</div>
             <div>Email: (email)</div>
             <div>UserType: (usertype)</div>
-
-
           </div>
         
           <div class="modal-footer">
@@ -545,7 +543,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Please enter yur password to confirm</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <button class="close" type="button" data-dismiss="#editProfileModal #profileModal #enterPassword" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
@@ -567,7 +565,7 @@
           <div class="modal-header">
               <h2>Edit Profile</h2>
 
-               <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+               <button type="button"  class="close" data-dismiss="#editProfileModal #profileModal #enterPassword" aria-label="Close">
                     <span id = "close3" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
                </button>
           </div>
@@ -584,13 +582,15 @@
                   <input type = 'password' name = 'newPassLabel' id = 'npass'>
                   <div>Confirm Password </div> 
                   <input type="password" id = 'cpass' name = 'confirmPassLabel'>
+                  <div>
+                      <input type = "submit" class = 'btn btn-primary' value = 'Save'>
+                  </div>
                   
-                  <input type = "submit" class = 'btn btn-primary' value = 'Save'>
               </form>
           </div>
       </div>
    </div>
-</div>
+
 
 
     <!-- Bootstrap core JavaScript-->
@@ -632,7 +632,7 @@
         span.onclick = function() {
            editProfile.style.display = "none";
             enterPass.style.display = "none";
-            profile.style.display = "none";
+          profile.style.display = "none";
         }
 
       
