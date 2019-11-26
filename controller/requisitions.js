@@ -52,7 +52,8 @@ router.post("/clerkAdd",(req,res)=>{
             })
         }
         else{
-            Promise.resolve(stockmanRequests.changeReleaseStatus(requestID,'Declined')).then(function(){
+            console.log("Decline")
+            Promise.resolve(clerkRequests.updateStatus(clerkAddRequestID,'Declined')).then(function(){
                 res.redirect("/requisitions")
             })
         }
