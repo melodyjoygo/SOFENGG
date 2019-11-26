@@ -109,6 +109,14 @@
     <script>
         let warning = {{error}}
         $( document ).ready(function() {
+            
+            let userType = {{userType}}
+            
+            if(userType == 2){
+                $('#myBtn').css("display","none")
+                $('button.edit').css("display","none")
+            }
+            
             if(warning === 1){
                 alert("User Already Exists")
                 window.location = '/employees';

@@ -57,7 +57,7 @@ router.post("/login" ,(req,res)=>{
                         break
                         case 1 : res.redirect("/dashboard")
                         break
-                        case 2 : res.redirect("/clerk")
+                        case 2 : res.redirect("/dashboard")
                         break
                         case 3 : res.redirect("/clerk")
                         break

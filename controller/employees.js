@@ -16,7 +16,8 @@ router.get("/",(req,res)=>{
     Promise.resolve(Users.getAllTableView()).then(function(value){
         
         res.render("employees.hbs",{
-            employees:value
+            employees:value,
+            userType:req.session.userType
         })  
     })
 })

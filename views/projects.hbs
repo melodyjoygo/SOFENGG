@@ -152,6 +152,13 @@
         
         let warning = {{message}}
         $( document ).ready(function() {
+            let userType = {{userType}}
+            if(userType == 2 || userType == 1){
+                $('#myBtn').css("display","none")
+                $('button.viewdetails').css("display","none")
+                $('button.editProjectDetails').css("display","none")
+            }    
+            
             if(warning === 1){
                 alert("Project With Client Already Exist")
                 window.location = '/projects';

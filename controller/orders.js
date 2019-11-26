@@ -9,7 +9,8 @@ router.get("/",(req,res)=>{
         Promise.resolve(Items.loadItems()).then(function(orders){
             res.render("order.hbs",{
                 items:items,
-                orders:orders
+                orders:orders,
+                userType:req.session.userType
             })
         })
     })

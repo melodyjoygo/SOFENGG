@@ -124,6 +124,14 @@
 
         let warning = {{message}}
         $( document ).ready(function() {
+            
+            let userType = {{userType}}
+            if(userType == 1){
+                $('button.clerkAddButton').css("display","none")
+                $('button.stockmanEditButton').css("display","none")
+                $('button.stockmanReleseButton').css("display","none")
+            }
+            
             if(warning == 1){
                 alert("Please Do Not Leave Empty Fields")
                 window.location = '/requisitions';

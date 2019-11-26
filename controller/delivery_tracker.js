@@ -12,7 +12,8 @@ router.get("/",(req,res)=>{
         Promise.resolve(Materials.getAllWithSupplier()).then(function(items){
             res.render("delivery_tracker.hbs",{
                 deliveries:deliveries,
-                items:items
+                items:items,
+                userType:req.session.userType
             })
         })
     })

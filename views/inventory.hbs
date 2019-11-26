@@ -150,7 +150,15 @@
     <script src = '/jQuery.js'></script>
     <script>
        let warning = {{message}}
+       
         $( document ).ready(function() {
+           let userType = {{userType}}
+            if(userType == 2 || userType == 1){
+                $('#myBtn').css("display","none")
+                $('#myBtn2').css("display","none")
+                $('button.edit').css("display","none")
+                $('#edit').css("display","none")
+            }     
             if(warning === 1){
                 alert("Item Already Exists")
                 window.location = '/inventory';
