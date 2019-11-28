@@ -433,6 +433,7 @@
                       <th>Item Name</th>
                       <th>Supplier</th>
                       <th>Qty</th>
+                      <th>Status</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -444,6 +445,7 @@
                             <td>{{this.type}} - "{{this.materialName}}"</td>
                             <td>{{this.supplierName}}</td>
                             <td>{{this.quantity}}</td>
+                            <td></td>
                             <td><button class = 'edit btn-primary btn' data-id = '{{this.deliveryID}}' data-item = '{{this.materialID}}' data-quantity = '{{this.quantity}}' data-supplier = '{{this.supplierID}}' data-receipt = '{{this.deliveryReceiptNumber}}'><u>Edit</u></button></td>
                         </tr>
                       {{/each}}
