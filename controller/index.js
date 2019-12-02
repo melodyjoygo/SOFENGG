@@ -4,16 +4,17 @@ const cryptojs = require("crypto-js")
 
 const Users = require("../model/user")
 const key = "password_key"
-router.use("/employees", require("./employees"))
-router.use("/clients",require("./clients"))
-router.use("/suppliers",require("./suppliers"))
-router.use("/projects",require("./projects"))
-router.use("/inventory",require("./inventory"))
-router.use("/orders",require("./orders"))
-router.use("/stockman",require("./stockman"))
-router.use("/clerk",require("./clerk"))
-router.use("/requisitions",require("./requisitions"))
-router.use("/delivery_tracker",require("./delivery_tracker"))
+router.use("/employees", loginRequired,require("./employees"))
+router.use("/clients",loginRequired,require("./clients"))
+router.use("/suppliers",loginRequired,require("./suppliers"))
+router.use("/projects",loginRequired,require("./projects"))
+router.use("/inventory",loginRequired,require("./inventory"))
+router.use("/orders",loginRequired,require("./orders"))
+router.use("/requisitions",loginRequired,require("./requisitions"))
+router.use("/delivery_tracker",loginRequired,require("./delivery_tracker"))
+
+router.use("/stockman",checkStockman,require("./stockman"))
+router.use("/clerk",checkClerk,require("./clerk"))
 
 router.get("/",(req,res)=>{
     res.render("login.hbs")
@@ -142,7 +143,7 @@ router.get("/logout",(req,res)=>{
     res.redirect("/")
 })
 
-router.get("/dashboard",(req,res)=>{
+router.get("/dashboard",loginRequired,(req,res)=>{
     res.render("dashboard.hbs",{
         firstName: req.session.firstName,
         lastName :req.session.lastName,
@@ -152,10 +153,66 @@ router.get("/dashboard",(req,res)=>{
     })
 })
 
-router.get("/reports",(req,res)=>{
+router.get("/reports",loginRequired,(req,res)=>{
     res.render("reports.hbs")
 })
 
+router.get("/handleMissing",(req,res)=>{
+    if(req.session.userType == 0 || req.session.userType == 1 || req.session.userType == 2)
+        res.redirect("/dashboard")
+    else if(req.session.userType == 3)
+        res.redirect("/clerk")
+    else if(req.session.userType == 4)
+        res.redirect("/stockman")
+    else
+        res.redirect("/")
+})
+
+router.get("*",(req,res)=>{
+    res.render("404.hbs")
+})
+
+function loginRequired(req,res,next){
+    if(req.session.userType || req.session.userType == 0){
+        if(req.session.userType == 0 || req.session.userType == 1 || req.session.userType == 2)
+            next();
+         else if(req.session.userType == 3)
+            res.redirect("/clerk")
+         else if(req.session.userType == 4)
+            res.redirect("/stockman")
+    }
+    else{
+        res.redirect("/")
+    }
+}
+
+function checkClerk(req,res,next){
+    if(req.session.userType || req.session.userType == 0){
+        if(req.session.userType == 0 || req.session.userType == 1 || req.session.userType == 2)
+            res.redirect("/dashboard")
+         else if(req.session.userType == 3)
+            next();
+         else if(req.session.userType == 4)
+            res.redirect("/stockman")
+    }
+    else{
+        res.redirect("/")
+    }
+}
+
+function checkStockman(req,res,next){
+    if(req.session.userType || req.session.userType == 0){
+        if(req.session.userType == 0 || req.session.userType == 1 || req.session.userType == 2)
+            res.redirect("/dashboard")
+         else if(req.session.userType == 3)
+            res.redirect("/clerk")
+         else if(req.session.userType == 4)
+            next();
+    }
+    else{
+        res.redirect("/")
+    }
+}
 
 module.exports = router;
 
