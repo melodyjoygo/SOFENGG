@@ -298,7 +298,7 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
@@ -449,6 +449,83 @@
     </div>
   </div>
 
+   <!-- Profile Modal-->
+    <div class="modal fade" id="profileModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>Name: (name)</div>
+            <div>Email: (email)</div>
+            <div>UserType: (usertype)</div>
+          </div>
+        
+          <div class="modal-footer">
+            <a class="btn btn-success" id ="editProfile" data-toggle="modal" data-target="#enterPassword"  data-dismiss="modal" aria-label="Close">Edit Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--Confirm Password Modal-->
+    <div class="modal fade" id="enterPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Please enter yur password to confirm</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="text" name="password" id="pass">
+
+          </div>
+        
+          <div class="modal-footer">
+            <input type="submit" id = "confirm" class="btn btn-success" value="Confirm" data-dismiss="modal" aria-label="Close"> 
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- Edit Profile Modal-->
+     <div class="modal" id = "editProfileModal"> 
+
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2>Edit Profile</h2>
+
+               <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                    <span id = "close3" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+               </button>
+          </div>
+
+     <div class="card-body" >
+              <form >
+                  <div>First Name</div>
+                  <input type = 'text' id = 'firstNameLabel' name = 'fName'>
+                  <div>Last Name </div>
+                  <input type = 'text' id = 'lastNameLabel' name = 'lName'>
+                  <div>Email: </div>
+                  <input type = 'text' name = 'email' id = 'emailLabel'>
+                  <div>New Password: </div>
+                  <input type = 'password' name = 'newPassLabel' id = 'npass'>
+                  <div>Confirm Password </div> 
+                  <input type="password" id = 'cpass' name = 'confirmPassLabel'>
+                  <div>
+                      <input type = "submit" class = 'btn btn-primary' value = 'Save'>
+                  </div>
+                  
+              </form>
+          </div>
+      </div>
+   </div>
+
   
   <!-- Bootstrap core JavaScript-->
   <script src="/vendor/jquery/jquery.min.js"></script>
@@ -472,6 +549,26 @@
 
         // Get the button that opens the modal
        
+        var confirmBtn = document.getElementById("confirm");
+        var editProfile = document.getElementById("editProfileModal");
+        var enterPass = document.getElementById("enterPassword");
+        var profile = document.getElementById("profileModal");
+     // var confirmBtn = document.getElementById("editProfile2");
+      
+
+      confirmBtn.onclick = function(){
+        editProfile.style.display = "block";
+        enterPass.style.display = "none";
+        profile.style.display = "none";
+      }
+
+       var span2 = document.getElementById("close3");
+
+       span2.onclick = function() {
+           editProfile.style.display = "none";
+            enterPass.style.display = "none";
+          profile.style.display = "none";
+        }
 
         
 

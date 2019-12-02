@@ -15,7 +15,8 @@ router.get("/",(req,res)=>{
                 res.render("requisitions.hbs",{
                     clerkEditRequests:clerkEditRequests,
                     stockmanEditRequests:stockmanEditRequests,
-                    stockmanReleaseRequests:stockmanReleaseRequests
+                    stockmanReleaseRequests:stockmanReleaseRequests,
+                    userType:req.session.userType
                 })
             })
         })

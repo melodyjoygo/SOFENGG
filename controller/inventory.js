@@ -26,7 +26,8 @@ router.get("/",(req,res)=>{
                             supplier:suppliers,
                             inventory:inventory,
                             unit:units,
-                            items:items
+                            items:items,
+                            userType:req.session.userType
                         }) 
                     })
                 })

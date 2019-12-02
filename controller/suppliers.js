@@ -16,7 +16,8 @@ function titleCase(str) {
 router.get("/",(req,res)=>{
     Promise.resolve(Suppliers.getAll()).then(function(value){
         res.render("suppliers.hbs",{
-            suppliers:value         
+            suppliers:value,
+            userType:req.session.userType
         })
     })
 })
