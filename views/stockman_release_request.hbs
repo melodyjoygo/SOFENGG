@@ -21,6 +21,10 @@
   <!-- Custom styles for this page -->
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
+
+        .modal-backdrop {
+            z-index: 0;
+        }
         .plusicon {
             color:white;
         }
@@ -518,7 +522,7 @@
   </div>
 
    <!-- Profile Modal-->
-    <div class="modal fade" id="profileModal">
+    <div class="modal fade modal-backdrop" id="profileModal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
