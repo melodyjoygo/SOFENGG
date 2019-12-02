@@ -94,7 +94,7 @@ router.post("/editAccount",(req,res)=>{
     let notvalid = false
     var regx = /^([a-z A-Z 0-9\.-_]+)@([a-z A-Z 0-9-]+).([a-z A-Z]{2,8})(.[a-z A-Z]{2,8})$/
     
-    if(fname === ""  || lname === "" || email === "")
+    if(fname === ""  || lname === "" || email === "" || pass === "" || conf === "")
         empty = true
     
     if(!regx.test(email)){
@@ -115,12 +115,20 @@ router.post("/editAccount",(req,res)=>{
                 }
                 else{
                     Promise.resolve(Users.editAccount(id,fname,lname,email,cryptojs.AES.encrypt(pass,"password_key").toString())).then(function(value){
+                        req.session.firstName = fname
+                        req.session.lastName = lname
+                        req.session.email = email
+                        req.session.password = pass
                         res.send("success")
                     }) 
                 }
             }
             else{
                Promise.resolve(Users.editAccount(id,fname,lname,email,cryptojs.AES.encrypt(pass,"password_key").toString())).then(function(value){
+                    req.session.firstName = fname
+                    req.session.lastName = lname
+                    req.session.email = email
+                    req.session.password = pass 
                     res.send("success")
                 }) 
             }

@@ -97,6 +97,15 @@
         #userid{
             display : none;
         }
+        
+        #errorMessage{
+            color : red;
+            display : none;
+        }
+        #editFormMessage{
+            color : red;
+            display : none;
+        }
     </style>
 
     <!-- Custom styles for this template -->
@@ -107,6 +116,10 @@
     
     <script src = '/jQuery.js'></script>
     <script>
+        let firstName = "{{firstName}}"
+        let lastName = "{{lastName}}"
+        let email = "{{currEmail}}"
+        let password = "{{password}}"
         let warning = {{error}}
         $( document ).ready(function() {
             
@@ -155,6 +168,63 @@
                 
                 modal2.style.display = "block"
                 
+            })
+            
+            $('#confirmBtn').click(function(){
+                let pass = $('#confirmPassLabel').val()
+                
+                if(pass.toString() === password.toString()){
+                    
+                    $("#firstNameLabel").val(firstName)
+                    $("#lastNameLabel").val(lastName)
+                    $("#emailLabel").val(email)
+                    
+                    editProfile.style.display = "block";
+                    enterPass.style.display = "none";
+                    profile.style.display = "none";  
+                }
+                else{
+                    $("#errorMessage").html("Wrong Password")
+                    $("#errorMessage").css("display","block")
+                }
+            })
+            
+            $('#editProfileBtn').click(function(){
+                let fname = $("#firstNameLabel").val()
+                let lname = $("#lastNameLabel").val()
+                let email = $("#emailLabel").val()
+                let password = $("#npass").val()
+                let confpassword = $("#cpass").val()
+                
+                $.post("/editAccount",{
+                    fname: fname,
+                    lname: lname,
+                    email: email,
+                    password: password,
+                    confpassword: confpassword
+                },function(data){
+                    if(data === "success"){
+                        alert("Account Details Saved")
+                        window.location = '/employees'
+                    }
+                    else if(data === "exist"){
+                        $("#editFormMessage").html("Email Already Exists")
+                        $("#editFormMessage").css("display","block")
+                    }
+                    else if(data === "invalid"){
+                        $("#editFormMessage").html("Invalid Email")
+                        $("#editFormMessage").css("display","block")
+                    }
+                    else if(data === "empty"){
+                        $("#editFormMessage").html("Please Do Not Leave Empty Fields")
+                        $("#editFormMessage").css("display","block")
+                    }
+                })
+            })
+            
+            $('#editProfileClose').click(function(){
+                editProfile.style.display = "none";
+                $('div.modal-backdrop').css("display","none")
             })
         });
     </script>
@@ -563,9 +633,9 @@
             </button>
           </div>
           <div class="modal-body">
-            <div>Name: (name)</div>
-            <div>Email: (email)</div>
-            <div>UserType: (usertype)</div>
+            <div>Name: {{firstName}} {{lastName}}</div>
+            <div>Email: {{currEmail}}</div>
+            <div>UserType: {{currType}}</div>
           </div>
         
           <div class="modal-footer">
@@ -580,18 +650,18 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Please enter yur password to confirm</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Please enter your password to confirm</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
           <div class="modal-body">
-            <input type="text" name="password" id="pass">
-
+            <input type="password" name="password" id="confirmPassLabel">
+              <div id = 'errorMessage'></div>
           </div>
         
           <div class="modal-footer">
-            <input type="submit" id = "confirm" class="btn btn-success" value="Confirm" data-dismiss="modal" aria-label="Close"> 
+            <button  id = "confirmBtn" class="btn btn-success">Submit</button> 
           </div>
         </div>
       </div>
@@ -604,27 +674,25 @@
               <h2>Edit Profile</h2>
 
                <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
-                    <span id = "close3" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+                    <span id = "editProfileClose" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
                </button>
           </div>
 
      <div class="card-body" >
-              <form >
                   <div>First Name</div>
-                  <input type = 'text' id = 'firstNameLabel' name = 'fName'>
+                  <input type = 'text' id = 'firstNameLabel' name = 'fname'>
                   <div>Last Name </div>
-                  <input type = 'text' id = 'lastNameLabel' name = 'lName'>
+                  <input type = 'text' id = 'lastNameLabel' name = 'lname'>
                   <div>Email: </div>
-                  <input type = 'text' name = 'email' id = 'emailLabel'>
+                  <input type = 'emails' name = 'email' id = 'emailLabel'>
                   <div>New Password: </div>
-                  <input type = 'password' name = 'newPassLabel' id = 'npass'>
+                  <input type = 'password' name = 'password' id = 'npass'>
                   <div>Confirm Password </div> 
-                  <input type="password" id = 'cpass' name = 'confirmPassLabel'>
+                  <input type="password" id = 'cpass' name = 'confpassword'>
+                  <div id = 'editFormMessage'></div>
                   <div>
-                      <input type = "submit" class = 'btn btn-primary' value = 'Save'>
+                      <input type = "submit" class = 'btn btn-primary' value = 'Save' id = 'editProfileBtn'>
                   </div>
-                  
-              </form>
           </div>
       </div>
    </div>

@@ -16,7 +16,12 @@ router.get("/",(req,res)=>{
                     clerkEditRequests:clerkEditRequests,
                     stockmanEditRequests:stockmanEditRequests,
                     stockmanReleaseRequests:stockmanReleaseRequests,
-                    userType:req.session.userType
+                    userType:req.session.userType,
+                    firstName: req.session.firstName,
+                    lastName :req.session.lastName,
+                    currEmail: req.session.email,
+                    currType: req.session.type,
+                    password: req.session.password
                 })
             })
         })

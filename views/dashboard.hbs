@@ -82,6 +82,7 @@
                 },function(data){
                     if(data === "success"){
                         alert("Account Details Saved")
+                        window.location = '/dashboard'
                     }
                     else if(data === "exist"){
                         $("#editFormMessage").html("Email Already Exists")
@@ -479,9 +480,6 @@
      var profile = document.getElementById("profileModal");
      // var confirmBtn = document.getElementById("editProfile2");
       
-
-      
-
        var span = document.getElementById("close3");
 
         // When the user clicks on the button, open the modal

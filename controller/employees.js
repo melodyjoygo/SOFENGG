@@ -17,7 +17,12 @@ router.get("/",(req,res)=>{
         
         res.render("employees.hbs",{
             employees:value,
-            userType:req.session.userType
+            userType:req.session.userType,
+            firstName: req.session.firstName,
+            lastName :req.session.lastName,
+            currEmail: req.session.email,
+            currType: req.session.type,
+            password: req.session.password
         })  
     })
 })
