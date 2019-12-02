@@ -38,7 +38,7 @@ CREATE TABLE `clerk_add_request` (
 --
 
 /*!40000 ALTER TABLE `clerk_add_request` DISABLE KEYS */;
-INSERT INTO `clerk_add_request` VALUES (1,'2','100','100',2,'Approved'),(2,'2','123','500',1,'Approved'),(3,'2','100','700',1,'Approved'),(4,'1','123','123',1,'Approved'),(5,'1','23','3',1,'Approved'),(6,'1','1','1',1,'Approved'),(7,'1','1231','123',1,'Approved'),(8,'1','2','2',1,'Declined'),(9,'1','3','3',1,'Approved');
+INSERT INTO `clerk_add_request` VALUES (1,'1','100','100',2,'Declined'),(2,'1','100','100',2,'Approved');
 /*!40000 ALTER TABLE `clerk_add_request` ENABLE KEYS */;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `delivery_tracker` (
 --
 
 /*!40000 ALTER TABLE `delivery_tracker` DISABLE KEYS */;
-INSERT INTO `delivery_tracker` VALUES (1,'VN555',2,100,'IN123','P001',1,100,'1','3'),(2,'VN555',2,123,'IN123','P001',1,500,'2','1'),(3,'VN556',2,100,'IN123','P002',1,700,'3','1'),(4,'VN588',1,123,'123','1123',1,123,'4','1'),(5,'VN557',1,23,'3','3',1,3,'5','1'),(6,'1',1,1,'1','1',1,1,'6','1'),(7,'123',1,1231,'123','123',1,123,'7','1'),(8,'2',1,2,'2','2',0,2,'8','1'),(9,'3',1,3,'3','3',1,3,'9','1');
+INSERT INTO `delivery_tracker` VALUES (1,'VN555',1,100,'IN123','P001',0,100,'1','3'),(2,'VN556',1,100,'IN124','P001',1,100,'2','3');
 /*!40000 ALTER TABLE `delivery_tracker` ENABLE KEYS */;
 
 --
@@ -116,7 +116,7 @@ CREATE TABLE `inventory` (
 --
 
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (1,1,1,'2019-11-21',100),(2,1,100,'2019-11-21',123),(3,1,0,'2019-11-22',20),(4,2,100,'2019-11-22',100),(5,2,123,'2019-11-22',500),(6,2,100,'2019-11-22',700),(7,1,123,'2019-11-22',123),(8,1,23,'2019-11-22',3),(9,1,1,'2019-11-22',1),(10,1,1231,'2019-11-22',123),(11,1,3,'2019-11-22',3);
+INSERT INTO `inventory` VALUES (1,1,100,'2019-11-23',100);
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 
 --
@@ -276,7 +276,6 @@ CREATE TABLE `stockman_release_requests` (
 --
 
 /*!40000 ALTER TABLE `stockman_release_requests` DISABLE KEYS */;
-INSERT INTO `stockman_release_requests` VALUES (1,'1','1','10','Approved','2019-11-21',3,1),(2,'1','1','135','Approved','2019-11-21',3,1),(3,'1','1','54','Approved','2019-11-22',3,1);
 /*!40000 ALTER TABLE `stockman_release_requests` ENABLE KEYS */;
 
 --
@@ -327,7 +326,6 @@ CREATE TABLE `transactions` (
 --
 
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `transactions` VALUES (1,1,1,100.0000,'2019-11-19','Pending',12,'P002');
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 
 --
@@ -390,7 +388,7 @@ CREATE TABLE `users` (
   `userType` int(11) NOT NULL,
   PRIMARY KEY (`userID`),
   UNIQUE KEY `userID_UNIQUE` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -398,7 +396,7 @@ CREATE TABLE `users` (
 --
 
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Melody','Go','melody_go@dlsu.edu.ph','U2FsdGVkX19T8gjGy2tGPtfrn/rnuWE0HuxziIUopGo=',0),(2,'Rebecalyn','Lao','rebecalyn_lao@dlsu.edu.ph','U2FsdGVkX19Y7gb2XVpkBnheS2NLLZsfhXG4J7DIZUQ=',3),(3,'Darren','Tee','darren_tee@dlsu.edu.ph','U2FsdGVkX19YYa+sOn7aF33GDofFaCQQTuucgvK6S9I=',4),(4,'Casper','Go','casper_go@dlsu.edu.ph','U2FsdGVkX1+2jp6zpWCnLaLFmH5AC2ZMgdqecdcGOTI=',4),(5,'Jits','Jitsugen','jits_jitsugen@gmail.com','U2FsdGVkX1+7v7exz+ZuNefxpBwJtv2vbjOer0Wd0is=',3);
+INSERT INTO `users` VALUES (1,'Melody','Go','melody_go@dlsu.edu.ph','U2FsdGVkX19LkaTwkDA/Mz53Sen5h53BuM2pmav+JqI=',0),(2,'Rebecalyn','Lao','rebecalyn_lao@dlsu.edu.ph','U2FsdGVkX19Y7gb2XVpkBnheS2NLLZsfhXG4J7DIZUQ=',3),(3,'Darren','Tee','darren_tee@dlsu.edu.ph','U2FsdGVkX19YYa+sOn7aF33GDofFaCQQTuucgvK6S9I=',4),(4,'Cas','Go','casper_go@dlsu.edu.ph','U2FsdGVkX1+2jp6zpWCnLaLFmH5AC2ZMgdqecdcGOTI=',1),(5,'Jits','Jitsugen','jits_jitsugen@gmail.com','U2FsdGVkX1+7v7exz+ZuNefxpBwJtv2vbjOer0Wd0is=',3),(6,'Qwe','Qwe','qwe@dlsu.edu.ph','U2FsdGVkX19O2i4UUMtk5mdrMKhKaTy03vr71W3F1pA=',1),(7,'Viktor','Ty','viktor_ty@dlsu.edu.ph','U2FsdGVkX1/Rz6TEw0DcAPkQRpIPe3Q8KuMQkTNxCME=',2),(8,'Phoebe','Chen','feebee@dlsu.edu.ph','U2FsdGVkX18tAIgksObsUIWsa12M1eHEWRGr+c9Ehdo=',1),(9,'A','A','aaa@dlsu.edu.ph','U2FsdGVkX1+xHGMRUY/ntVjaicn3NPVqOM1jee4jo4g=',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 --
