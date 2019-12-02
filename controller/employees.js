@@ -85,8 +85,8 @@ router.post("/edit",(req,res)=>{
     let lname = req.body.lname
     let email = req.body.email
     let type = req.body.role
-    //let pass = req.body.password
-    //let conf = req.body.confpassword
+    let pass = req.body.password
+    let conf = req.body.confpassword
     
     
     let empty = false
@@ -119,7 +119,7 @@ router.post("/edit",(req,res)=>{
                     })
                 }
                 else{
-                    Promise.resolve(Users.edit(id,fname,lname,email,type)).then(function(value){
+                    Promise.resolve(Users.edit(id,fname,lname,email,cryptojs.AES.encrypt(pass,"password_key").toString(),type)).then(function(value){
                         res.render("employees.hbs",{
                             error:6
                         })
@@ -127,7 +127,7 @@ router.post("/edit",(req,res)=>{
                 }
             }
             else{
-               Promise.resolve(Users.edit(id,fname,lname,email,type)).then(function(value){
+               Promise.resolve(Users.edit(id,fname,lname,email,cryptojs.AES.encrypt(pass,"password_key").toString(),type)).then(function(value){
                     res.render("employees.hbs",{
                         error:6
                     })
