@@ -16,7 +16,7 @@ router.use("/delivery_tracker",loginRequired,require("./delivery_tracker"))
 router.use("/stockman",checkStockman,require("./stockman"))
 router.use("/clerk",checkClerk,require("./clerk"))
 
-router.get("/",(req,res)=>{
+router.get("/",checkExisting,(req,res)=>{
     res.render("login.hbs")
 })
 
@@ -171,6 +171,20 @@ router.get("/handleMissing",(req,res)=>{
 router.get("*",(req,res)=>{
     res.render("404.hbs")
 })
+
+function checkExisting(req,res,next){
+    if(req.session.userType || req.session.userType == 0){
+        if(req.session.userType == 0 || req.session.userType == 1 || req.session.userType == 2)
+            res.redirect("/dashboard")
+         else if(req.session.userType == 3)
+            res.redirect("/clerk")
+         else if(req.session.userType == 4)
+            res.redirect("/stockman")
+    }
+    else{
+        next();
+    }
+}
 
 function loginRequired(req,res,next){
     if(req.session.userType || req.session.userType == 0){

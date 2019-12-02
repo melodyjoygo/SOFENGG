@@ -137,8 +137,8 @@
         let warning = {{message}}
         $( document ).ready(function() {
             
-            let userType = {{userType}}
-            if(userType == 2 || userType == 1){
+            let userType = "{{userType}}"
+            if(userType == "2" || userType == "1"){
                 $('#myBtn').css("display","none")
                 $('button.edit').css("display","none")
             }
@@ -450,11 +450,11 @@
                                 </div>
                                 <div class = "col-md-1">
                                     <div>Qty</div>
-                                    <input name = "qty" type = "number" class = "smallnumbox">
+                                    <input name = "qty" type = "number" class = "smallnumbox" min = '0' pattern="[0-9]">
                                 </div>
                                 <div class = "col-md-3">
                                     <div>Unit Cost</div>
-                                    <input name = "unitcost" type = "number">
+                                    <input name = "unitcost" type = "number" min = '0' step="0.01">
                                 </div>
                                 <div class = "col-md-3">
                                     <div>P.O. Number</div>
@@ -503,10 +503,10 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input name = "qty" type = "number" id = 'quantity'>
+                                        <input name = "qty" type = "number" id = 'quantity' min = '0' pattern="[0-9]">
                                     </td>
                                     <td>
-                                        <input name = "unitcost" type = "number" id = 'cost'>
+                                        <input name = "unitcost" type = "number" id = 'cost' min = '0' step="0.01">
                                     </td>
                                     <td>
                                         <input name = "poNumber" type = "text" id = 'po'>
@@ -731,31 +731,11 @@
         span1.onclick = function() {
             editmodal.style.display = "none";
         }
-
-          var confirmBtn = document.getElementById("confirm");
+        
      var editProfile = document.getElementById("editProfileModal");
      var enterPass = document.getElementById("enterPassword");
      var profile = document.getElementById("profileModal");
      // var confirmBtn = document.getElementById("editProfile2");
-      
-
-      confirmBtn.onclick = function(){
-        editProfile.style.display = "block";
-        enterPass.style.display = "none";
-        profile.style.display = "none";
-      }
-
-       var span2 = document.getElementById("close3");
-
-        // When the user clicks on the button, open the modal
-
-        // When the user clicks on <span> (x), close the modal
-        span2.onclick = function() {
-           editProfile.style.display = "none";
-            enterPass.style.display = "none";
-          profile.style.display = "none";
-        }
-
       
 
         // When the user clicks anywhere outside of the modal, close it

@@ -84,7 +84,7 @@ router.post("/addItem",(req,res)=>{
 })
 
 router.post("/addMaterial",(req,res)=>{
-    let material = req.body.materialName
+    let material = req.body.materialName.trim()
     var empty = false
     var exist = false
     if(material === "")

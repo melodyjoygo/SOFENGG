@@ -121,8 +121,8 @@
             
         $( document ).ready(function() {
             
-            let userType = {{userType}}
-            if(userType == 2 || userType == 1){
+            let userType = "{{userType}}"
+            if(userType == "2" || userType == "1"){
                 $('#myBtn').css("display","none")
                 $('button.edit').css("display","none")
             }

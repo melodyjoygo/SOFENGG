@@ -165,8 +165,8 @@
         let password = "{{password}}"
         let warning = {{message}}
         $( document ).ready(function() {
-            let userType = {{userType}}
-            if(userType == 2 || userType == 1){
+            let userType = "{{userType}}"
+            if(userType == "2" || userType == "1"){
                 $('#myBtn').css("display","none")
                 $('button.viewdetails').css("display","none")
                 $('button.editProjectDetails').css("display","none")
@@ -425,7 +425,7 @@
       
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="delivery_tracker.html">
+        <a class="nav-link" href="/delivery_tracker">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>
@@ -906,32 +906,11 @@
             modal.style.display = "block";
         }
        
-        var confirmBtn = document.getElementById("confirm");
+       
      var editProfile = document.getElementById("editProfileModal");
      var enterPass = document.getElementById("enterPassword");
      var profile = document.getElementById("profileModal");
      // var confirmBtn = document.getElementById("editProfile2");
-      
-
-      confirmBtn.onclick = function(){
-        editProfile.style.display = "block";
-        enterPass.style.display = "none";
-        profile.style.display = "none";
-      }
-
-       var span6 = document.getElementById("close5");
-
-        // When the user clicks on the button, open the modal
-
-        // When the user clicks on <span> (x), close the modal
-        span6.onclick = function() {
-           editProfile.style.display = "none";
-            enterPass.style.display = "none";
-          profile.style.display = "none";
-        }
-
-        
-            
         
         // When the user clicks on <span> (x), close the modal
         span1.onclick = function() {

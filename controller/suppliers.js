@@ -27,8 +27,8 @@ router.get("/",(req,res)=>{
     })
 })
 router.post("/add",(req,res)=>{
-    let supplier = req.body.supplierName
-    let contactNum = req.body.contactNum
+    let supplier = req.body.supplierName.trim()
+    let contactNum = req.body.contactNum.trim()
     var exist = false
     var empty = false
     
@@ -62,7 +62,6 @@ router.post("/add",(req,res)=>{
             }
         })   
     }
-        
 })
 
 
