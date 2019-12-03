@@ -12,14 +12,14 @@
   <title>SB Admin 2 - Tables</title>
 
   <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template -->
   <link href="/stylesheets/sb-admin-2.min.css" rel="stylesheet">
 
   <!-- Custom styles for this page -->
-  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
         .plusicon {
             color:white;
@@ -135,10 +135,21 @@
         #quantityLabel{
             display : none;
         }
-        
+        #errorMessage{
+            color : red;
+            display : none;
+        }
+        #editFormMessage{
+            color : red;
+            display : none;
+        }
     </style>
     <script src = '/jQuery.js'></script>
     <script>
+        let firstName = "{{firstName}}"
+        let lastName = "{{lastName}}"
+        let email = "{{currEmail}}"
+        let password = "{{password}}"
         let warning = {{message}}
         $( document ).ready(function(){
             if(warning === 1){
@@ -169,6 +180,63 @@
                 $('#deliveryIDLabel').val(deliveryID)
                 $('#itemIDLabel').val(materialID)
                 $('#quantityLabel').val(quantity)
+            })
+            
+            ('#confirmBtn').click(function(){
+                let pass = $('#confirmPassLabel').val()
+                
+                if(pass.toString() === password.toString()){
+                    
+                    $("#firstNameLabel").val(firstName)
+                    $("#lastNameLabel").val(lastName)
+                    $("#emailLabel").val(email)
+                    
+                    editProfile.style.display = "block";
+                    enterPass.style.display = "none";
+                    profile.style.display = "none";  
+                }
+                else{
+                    $("#errorMessage").html("Wrong Password")
+                    $("#errorMessage").css("display","block")
+                }
+            })
+            
+            $('#editProfileBtn').click(function(){
+                let fname = $("#firstNameLabel").val()
+                let lname = $("#lastNameLabel").val()
+                let email = $("#emailLabel").val()
+                let password = $("#npass").val()
+                let confpassword = $("#cpass").val()
+                
+                $.post("/editAccount",{
+                    fname: fname,
+                    lname: lname,
+                    email: email,
+                    password: password,
+                    confpassword: confpassword
+                },function(data){
+                    if(data === "success"){
+                        alert("Account Details Saved")
+                        window.location = '/dashboard'
+                    }
+                    else if(data === "exist"){
+                        $("#editFormMessage").html("Email Already Exists")
+                        $("#editFormMessage").css("display","block")
+                    }
+                    else if(data === "invalid"){
+                        $("#editFormMessage").html("Invalid Email")
+                        $("#editFormMessage").css("display","block")
+                    }
+                    else if(data === "empty"){
+                        $("#editFormMessage").html("Please Do Not Leave Empty Fields")
+                        $("#editFormMessage").css("display","block")
+                    }
+                })
+            })
+            
+            $('#editProfileClose').click(function(){
+                editProfile.style.display = "none";
+                $('div.modal-backdrop').css("display","none")
             })
         });
     </script>
@@ -268,125 +336,7 @@
               <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-danger" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
-
-            <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
-              </a>
-              <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                  Alerts Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-              </div>
-            </li>
-
-            <!-- Nav Item - Messages -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-envelope fa-fw"></i>
-                <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                <h6 class="dropdown-header">
-                  Message Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                    <div class="status-indicator"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-                    <div class="status-indicator bg-warning"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-              </div>
-            </li>
+                         </li>
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -503,10 +453,85 @@
           </div>
       </div>
    </div>
+            <!-- Profile Modal-->
+    <div class="modal fade" id="profileModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>Name: {{firstName}} {{lastName}}</div>
+            <div>Email: {{currEmail}}</div>
+            <div>UserType: {{currType}}</div>
+          </div>
+        
+          <div class="modal-footer">
+            <a class="btn btn-success" id ="editProfile" data-toggle="modal" data-target="#enterPassword"  data-dismiss="modal" aria-label="Close">Edit Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--Confirm Password Modal-->
+    <div class="modal fade" id="enterPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Please enter your password to confirm</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="password" name="password" id="confirmPassLabel">
+              <div id = 'errorMessage'></div>
+          </div>
+        
+          <div class="modal-footer">
+            <button  id = "confirmBtn" class="btn btn-success">Submit</button> 
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- Edit Profile Modal-->
+     <div class="modal" id = "editProfileModal"> 
+
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2>Edit Profile</h2>
+
+               <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                    <span id = "editProfileClose" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+               </button>
+          </div>
+
+     <div class="card-body" >
+                  <div>First Name</div>
+                  <input type = 'text' id = 'firstNameLabel' name = 'fname'>
+                  <div>Last Name </div>
+                  <input type = 'text' id = 'lastNameLabel' name = 'lname'>
+                  <div>Email: </div>
+                  <input type = 'emails' name = 'email' id = 'emailLabel'>
+                  <div>New Password: </div>
+                  <input type = 'password' name = 'password' id = 'npass'>
+                  <div>Confirm Password </div> 
+                  <input type="password" id = 'cpass' name = 'confpassword'>
+                  <div id = 'editFormMessage'></div>
+                  <div>
+                      <input type = "submit" class = 'btn btn-primary' value = 'Save' id = 'editProfileBtn'>
+                  </div>
+          </div>
+      </div>
+   </div>
   <!-- /.container-fluid -->
-
- 
-
+          </div>
+        </div>
+      </div>
+    </div>
   
       <!-- End of Main Content -->
 
@@ -526,15 +551,14 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Are your sure you want to log out?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-danger" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+          <a class="btn btn-danger" href="/logout">Yes</a>
         </div>
       </div>
     </div>
@@ -542,21 +566,21 @@
 
   
   <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+  <script src="/js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
+  <script src="/js/demo/datatables-demo.js"></script>
     <script>
         // Get the modal
         var modal = document.getElementById("addPriceModal");

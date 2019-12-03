@@ -16,7 +16,13 @@ router.get("/",(req,res)=>{
     Promise.resolve(Users.getAllTableView()).then(function(value){
         
         res.render("employees.hbs",{
-            employees:value
+            employees:value,
+            userType:req.session.userType,
+            firstName: req.session.firstName,
+            lastName :req.session.lastName,
+            currEmail: req.session.email,
+            currType: req.session.type,
+            password: req.session.password
         })  
     })
 })
@@ -84,8 +90,8 @@ router.post("/edit",(req,res)=>{
     let lname = req.body.lname
     let email = req.body.email
     let type = req.body.role
-    //let pass = req.body.password
-    //let conf = req.body.confpassword
+    let pass = req.body.password
+    let conf = req.body.confpassword
     
     
     let empty = false
@@ -118,7 +124,7 @@ router.post("/edit",(req,res)=>{
                     })
                 }
                 else{
-                    Promise.resolve(Users.edit(id,fname,lname,email,type)).then(function(value){
+                    Promise.resolve(Users.edit(id,fname,lname,email,cryptojs.AES.encrypt(pass,"password_key").toString(),type)).then(function(value){
                         res.render("employees.hbs",{
                             error:6
                         })
@@ -126,7 +132,7 @@ router.post("/edit",(req,res)=>{
                 }
             }
             else{
-               Promise.resolve(Users.edit(id,fname,lname,email,type)).then(function(value){
+               Promise.resolve(Users.edit(id,fname,lname,email,cryptojs.AES.encrypt(pass,"password_key").toString(),type)).then(function(value){
                     res.render("employees.hbs",{
                         error:6
                     })

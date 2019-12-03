@@ -3,18 +3,20 @@ const router = express.Router();
 const cryptojs = require("crypto-js")
 
 const Users = require("../model/user")
+const key = "password_key"
+router.use("/employees", loginRequired,require("./employees"))
+router.use("/clients",loginRequired,require("./clients"))
+router.use("/suppliers",loginRequired,require("./suppliers"))
+router.use("/projects",loginRequired,require("./projects"))
+router.use("/inventory",loginRequired,require("./inventory"))
+router.use("/orders",loginRequired,require("./orders"))
+router.use("/requisitions",loginRequired,require("./requisitions"))
+router.use("/delivery_tracker",loginRequired,require("./delivery_tracker"))
 
-router.use("/employees", require("./employees"))
-router.use("/clients",require("./clients"))
-router.use("/suppliers",require("./suppliers"))
-router.use("/projects",require("./projects"))
-router.use("/inventory",require("./inventory"))
-router.use("/orders",require("./orders"))
-router.use("/stockman",require("./stockman"))
-router.use("/clerk",require("./clerk"))
-router.use("/requisitions",require("./requisitions"))
+router.use("/stockman",checkStockman,require("./stockman"))
+router.use("/clerk",checkClerk,require("./clerk"))
 
-router.get("/",(req,res)=>{
+router.get("/",checkExisting,(req,res)=>{
     res.render("login.hbs")
 })
 
@@ -34,7 +36,7 @@ router.post("/login" ,(req,res)=>{
     else {
         Promise.resolve(Users.getUser(email)).then(function(value){
             if(value != ''){
-                var phash = cryptojs.AES.decrypt(value[0].password,"password_key")
+                var phash = cryptojs.AES.decrypt(value[0].password,key)
                 var pnormal = phash.toString(cryptojs.enc.Utf8)
                 if(pass != pnormal){
                     res.render("login.hbs",{
@@ -48,6 +50,11 @@ router.post("/login" ,(req,res)=>{
                         console.log("Adding Current USER ID")
                         req.session.userID = value[0].userID
                         req.session.userType = value[0].userType
+                        req.session.firstName = value[0].firstName
+                        req.session.lastName = value[0].lastName
+                        req.session.email = value[0].email
+                        req.session.password = pnormal
+                        req.session.type = value[0].type
                     }
                     console.log("User ID After : " + req.session.userID)
                     console.log("User Type After : " + req.session.userType)
@@ -56,7 +63,7 @@ router.post("/login" ,(req,res)=>{
                         break
                         case 1 : res.redirect("/dashboard")
                         break
-                        case 2 : res.redirect("/clerk")
+                        case 2 : res.redirect("/dashboard")
                         break
                         case 3 : res.redirect("/clerk")
                         break
@@ -76,19 +83,150 @@ router.post("/login" ,(req,res)=>{
         
 })
 
+router.post("/editAccount",(req,res)=>{
+    let id = req.session.userID
+    let fname = req.body.fname
+    let lname = req.body.lname
+    let email = req.body.email
+    let pass = req.body.password
+    let conf = req.body.confpassword
+    
+    let empty = false
+    let notvalid = false
+    var regx = /^([a-z A-Z 0-9\.-_]+)@([a-z A-Z 0-9-]+).([a-z A-Z]{2,8})(.[a-z A-Z]{2,8})$/
+    
+    if(fname === ""  || lname === "" || email === "" || pass === "" || conf === "")
+        empty = true
+    
+    if(!regx.test(email)){
+        notvalid = true   
+    }
+    
+    if(empty){
+        res.send("empty")
+    }
+    else if(notvalid){
+         res.send("invalid")
+    }
+    else{
+        Promise.resolve(Users.checkuser(email)).then(function(value){
+            if(value != ''){
+                if(value[0].userID != id){
+                    res.send("exist")
+                }
+                else{
+                    Promise.resolve(Users.editAccount(id,fname,lname,email,cryptojs.AES.encrypt(pass,"password_key").toString())).then(function(value){
+                        req.session.firstName = fname
+                        req.session.lastName = lname
+                        req.session.email = email
+                        req.session.password = pass
+                        res.send("success")
+                    }) 
+                }
+            }
+            else{
+               Promise.resolve(Users.editAccount(id,fname,lname,email,cryptojs.AES.encrypt(pass,"password_key").toString())).then(function(value){
+                    req.session.firstName = fname
+                    req.session.lastName = lname
+                    req.session.email = email
+                    req.session.password = pass 
+                    res.send("success")
+                }) 
+            }
+
+        })  
+    }
+})
+
 router.get("/logout",(req,res)=>{
-    req.session.userID = ""
-    req.session.userType = ""
+    req.session.destroy();
     res.redirect("/")
 })
 
-router.get("/dashboard",(req,res)=>{
-    res.render("dashboard.hbs")
+router.get("/dashboard",loginRequired,(req,res)=>{
+    res.render("dashboard.hbs",{
+        firstName: req.session.firstName,
+        lastName :req.session.lastName,
+        currEmail: req.session.email,
+        currType: req.session.type,
+        password: req.session.password
+    })
 })
 
-router.get("/reports",(req,res)=>{
+router.get("/reports",loginRequired,(req,res)=>{
     res.render("reports.hbs")
 })
 
+router.get("/handleMissing",(req,res)=>{
+    if(req.session.userType == 0 || req.session.userType == 1 || req.session.userType == 2)
+        res.redirect("/dashboard")
+    else if(req.session.userType == 3)
+        res.redirect("/clerk")
+    else if(req.session.userType == 4)
+        res.redirect("/stockman")
+    else
+        res.redirect("/")
+})
+
+router.get("*",(req,res)=>{
+    res.render("404.hbs")
+})
+
+function checkExisting(req,res,next){
+    if(req.session.userType || req.session.userType == 0){
+        if(req.session.userType == 0 || req.session.userType == 1 || req.session.userType == 2)
+            res.redirect("/dashboard")
+         else if(req.session.userType == 3)
+            res.redirect("/clerk")
+         else if(req.session.userType == 4)
+            res.redirect("/stockman")
+    }
+    else{
+        next();
+    }
+}
+
+function loginRequired(req,res,next){
+    if(req.session.userType || req.session.userType == 0){
+        if(req.session.userType == 0 || req.session.userType == 1 || req.session.userType == 2)
+            next();
+         else if(req.session.userType == 3)
+            res.redirect("/clerk")
+         else if(req.session.userType == 4)
+            res.redirect("/stockman")
+    }
+    else{
+        res.redirect("/")
+    }
+}
+
+function checkClerk(req,res,next){
+    if(req.session.userType || req.session.userType == 0){
+        if(req.session.userType == 0 || req.session.userType == 1 || req.session.userType == 2)
+            res.redirect("/dashboard")
+         else if(req.session.userType == 3)
+            next();
+         else if(req.session.userType == 4)
+            res.redirect("/stockman")
+    }
+    else{
+        res.redirect("/")
+    }
+}
+
+function checkStockman(req,res,next){
+    if(req.session.userType || req.session.userType == 0){
+        if(req.session.userType == 0 || req.session.userType == 1 || req.session.userType == 2)
+            res.redirect("/dashboard")
+         else if(req.session.userType == 3)
+            res.redirect("/clerk")
+         else if(req.session.userType == 4)
+            next();
+    }
+    else{
+        res.redirect("/")
+    }
+}
 
 module.exports = router;
+

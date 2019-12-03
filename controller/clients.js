@@ -14,7 +14,13 @@ function titleCase(str) {
 router.get("/",(req,res)=>{
     Promise.resolve(Clients.getAllTableView()).then(function(value){
         res.render("clients.hbs",{
-            clients:value
+            clients:value,
+            userType:req.session.userType,
+            firstName: req.session.firstName,
+            lastName :req.session.lastName,
+            currEmail: req.session.email,
+            currType: req.session.type,
+            password: req.session.password
         })  
     })
 })

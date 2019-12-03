@@ -26,7 +26,13 @@ router.get("/",(req,res)=>{
                             supplier:suppliers,
                             inventory:inventory,
                             unit:units,
-                            items:items
+                            items:items,
+                            userType:req.session.userType,
+                            firstName: req.session.firstName,
+                            lastName :req.session.lastName,
+                            currEmail: req.session.email,
+                            currType: req.session.type,
+                            password: req.session.password
                         }) 
                     })
                 })
@@ -78,7 +84,7 @@ router.post("/addItem",(req,res)=>{
 })
 
 router.post("/addMaterial",(req,res)=>{
-    let material = req.body.materialName
+    let material = req.body.materialName.trim()
     var empty = false
     var exist = false
     if(material === "")

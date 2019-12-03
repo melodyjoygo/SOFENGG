@@ -16,7 +16,12 @@ router.get("/",(req,res)=>{
                 res.render("stockman_inventory.hbs",{
                     suppliers:suppliers,
                     items:items,
-                    deliveries:deliveries
+                    deliveries:deliveries,
+                    firstName: req.session.firstName,
+                    lastName :req.session.lastName,
+                    currEmail: req.session.email,
+                    currType: req.session.type,
+                    password: req.session.password
                 }) 
             })     
         })                                     
@@ -33,7 +38,12 @@ router.get("/requests",(req,res)=>{
                         projects:projects,
                         items:items,
                         pending:pending,
-                        approved:approved
+                        approved:approved,
+                        firstName: req.session.firstName,
+                        lastName :req.session.lastName,
+                        currEmail: req.session.email,
+                        currType: req.session.type,
+                        password: req.session.password
                     })
                 })
             })  

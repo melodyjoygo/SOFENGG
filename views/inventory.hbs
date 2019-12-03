@@ -21,6 +21,13 @@
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
+        .modal-ku {
+            width:800px;
+            margin:auto;
+        }
+        .fullinput {
+            width:350px;
+        }
         .modal-backdrop {
             z-index:0;
         }
@@ -42,7 +49,7 @@
             width:200px;
         }
         .itemnametxt {
-            width:150px;
+            width:120px;
             
         }
         .plusicon {
@@ -138,12 +145,33 @@
         #curritem{
             display : none;
         }
+        
+        #errorMessage{
+            color : red;
+            display : none;
+        }
+        #editFormMessage{
+            color : red;
+            display : none;
+        }
     </style>
     
     <script src = '/jQuery.js'></script>
     <script>
-       let warning = {{message}}
+        let firstName = "{{firstName}}"
+        let lastName = "{{lastName}}"
+        let email = "{{currEmail}}"
+        let password = "{{password}}"
+        let warning = {{message}}
+       
         $( document ).ready(function() {
+           let userType = "{{userType}}"
+            if(userType == "2" || userType == "1"){
+                $('#myBtn').css("display","none")
+                $('#myBtn2').css("display","none")
+                $('button.edit').css("display","none")
+                $('#edit').css("display","none")
+            }     
             if(warning === 1){
                 alert("Item Already Exists")
                 window.location = '/inventory';
@@ -186,6 +214,63 @@
                 $("#newunitdropdown").val(unit)
                 $("#newsupplierdropdown").val(supplier)
                 modal4.style.display = "block"
+            })
+            
+            $('#confirmBtn').click(function(){
+                let pass = $('#confirmPassLabel').val()
+                
+                if(pass.toString() === password.toString()){
+                    
+                    $("#firstNameLabel").val(firstName)
+                    $("#lastNameLabel").val(lastName)
+                    $("#emailLabel").val(email)
+                    
+                    editProfile.style.display = "block";
+                    enterPass.style.display = "none";
+                    profile.style.display = "none";  
+                }
+                else{
+                    $("#errorMessage").html("Wrong Password")
+                    $("#errorMessage").css("display","block")
+                }
+            })
+            
+            $('#editProfileBtn').click(function(){
+                let fname = $("#firstNameLabel").val()
+                let lname = $("#lastNameLabel").val()
+                let email = $("#emailLabel").val()
+                let password = $("#npass").val()
+                let confpassword = $("#cpass").val()
+                
+                $.post("/editAccount",{
+                    fname: fname,
+                    lname: lname,
+                    email: email,
+                    password: password,
+                    confpassword: confpassword
+                },function(data){
+                    if(data === "success"){
+                        alert("Account Details Saved")
+                        window.location = '/inventory'
+                    }
+                    else if(data === "exist"){
+                        $("#editFormMessage").html("Email Already Exists")
+                        $("#editFormMessage").css("display","block")
+                    }
+                    else if(data === "invalid"){
+                        $("#editFormMessage").html("Invalid Email")
+                        $("#editFormMessage").css("display","block")
+                    }
+                    else if(data === "empty"){
+                        $("#editFormMessage").html("Please Do Not Leave Empty Fields")
+                        $("#editFormMessage").css("display","block")
+                    }
+                })
+            })
+            
+            $('#editAccountClose').click(function(){
+                editProfile.style.display = "none";
+                $('div.modal-backdrop').css("display","none")
             })
         
         });
@@ -267,16 +352,10 @@
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Orders</span></a>
       </li>
+    
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="reports">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Reports</span></a>
-      </li>
-
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="delivery_tracker.html">
+        <a class="nav-link" href="/delivery_tracker">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>
@@ -356,7 +435,7 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
@@ -403,6 +482,7 @@
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
+                <div class = "modal-dialog">
                 <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">Add New Material Type</h5>
@@ -412,8 +492,13 @@
                         </div>
                         <form action = "inventory/addMaterial" method = "post">
                         <div class="modal-body">
-                            <div>Name of Material</div>
-                            <input type = "text" name = "materialName" class = "fullinput">
+                            <div class = "row">
+                                <div class = "col-md-12">
+                                    <div>Name of Material</div>
+                                    <input type = "text" name = "materialName" class = "fullinput">
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="modal-footer">
        
@@ -421,11 +506,13 @@
                         </div>
                             </form>
                     </div>
+                    </div>
             </div> 
           <!-- The Modal -->
             <div id="addItemModal" class="modal">
 
                 <!-- Modal content -->
+                <div class = "modal-dialog modal-lg modal-ku">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Add Item</h5>
@@ -448,9 +535,9 @@
                                         <div class = "fieldheight bottomtxt">Item Name</div>
                                         <input type = "text" class = "itemnametxt" name = "itemName">
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <div class = "fieldheight bottomtxt">Unit of Measure</div>
-                                        <select name = "unit" id="supplierDrop">
+                                        <select name = "unit" >
                                             {{#each unit}}
                                                 <option value="{{this.uomID}}">{{this.unitOfMeasure}}</option>
                                             {{/each}}
@@ -458,7 +545,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class = "fieldheight bottomtxt">Supplier</div>
-                                        <select name = "supplier" id="supplierDrop">
+                                        <select name = "supplier" >
                                             {{#each supplier}}
                                                 <option value="{{this.supplierID}}">{{this.supplierName}}</option>
                                             {{/each}}
@@ -474,7 +561,7 @@
                     </form>
                     
                 </div>
-
+</div>
             </div> 
 
             <div id="editModal" class="modal">
@@ -656,23 +743,98 @@
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade modal-backdrop" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to log out?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Are your sure you want to log out?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
-          <a class="btn btn-danger" href="/">Yes</a>
+          <a class="btn btn-danger" href="/logout">Yes</a>
         </div>
       </div>
     </div>
   </div>
+
+       <!-- Profile Modal-->
+    <div class="modal fade" id="profileModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>Name: {{firstName}} {{lastName}}</div>
+            <div>Email: {{currEmail}}</div>
+            <div>UserType: {{currType}}</div>
+          </div>
+        
+          <div class="modal-footer">
+            <a class="btn btn-success" id ="editProfile" data-toggle="modal" data-target="#enterPassword"  data-dismiss="modal" aria-label="Close">Edit Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--Confirm Password Modal-->
+    <div class="modal fade" id="enterPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Please enter your password to confirm</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="password" name="password" id="confirmPassLabel">
+              <div id = 'errorMessage'></div>
+          </div>
+        
+          <div class="modal-footer">
+            <button  id = "confirmBtn" class="btn btn-success">Submit</button> 
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- Edit Profile Modal-->
+     <div class="modal" id = "editProfileModal"> 
+
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2>Edit Profile</h2>
+
+               <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                    <span id = "editAccountClose" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+               </button>
+          </div>
+
+     <div class="card-body" >
+                  <div>First Name</div>
+                  <input type = 'text' id = 'firstNameLabel' name = 'fname'>
+                  <div>Last Name </div>
+                  <input type = 'text' id = 'lastNameLabel' name = 'lname'>
+                  <div>Email: </div>
+                  <input type = 'emails' name = 'email' id = 'emailLabel'>
+                  <div>New Password: </div>
+                  <input type = 'password' name = 'password' id = 'npass'>
+                  <div>Confirm Password </div> 
+                  <input type="password" id = 'cpass' name = 'confpassword'>
+                  <div id = 'editFormMessage'></div>
+                  <div>
+                      <input type = "submit" class = 'btn btn-primary' value = 'Save' id = 'editProfileBtn'>
+                  </div>
+          </div>
+      </div>
+   </div>
+
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
@@ -760,6 +922,25 @@
         }
         span4.onclick = function() {
             modal4.style.display = "none";
+        }
+
+          var confirmBtn = document.getElementById("confirm");
+     var editProfile = document.getElementById("editProfileModal");
+     var enterPass = document.getElementById("enterPassword");
+     var profile = document.getElementById("profileModal");
+     // var confirmBtn = document.getElementById("editProfile2");
+      
+
+        var span5 = document.getElementById("close5");
+        var span2 = document.getElementById("close3");
+        // When the user clicks on the button, open the modal
+
+        // When the user clicks on <span> (x), close the modal
+        span2.onclick = function(){
+            editProfile.style.display = "none";
+            enterPass.style.display = "none";
+            profile.style.display = "none";
+            $('div.modal-backdrop').css("display","none")
         }
 
         // When the user clicks anywhere outside of the modal, close it

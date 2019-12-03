@@ -15,7 +15,13 @@ router.get("/",(req,res)=>{
                 res.render("requisitions.hbs",{
                     clerkEditRequests:clerkEditRequests,
                     stockmanEditRequests:stockmanEditRequests,
-                    stockmanReleaseRequests:stockmanReleaseRequests
+                    stockmanReleaseRequests:stockmanReleaseRequests,
+                    userType:req.session.userType,
+                    firstName: req.session.firstName,
+                    lastName :req.session.lastName,
+                    currEmail: req.session.email,
+                    currType: req.session.type,
+                    password: req.session.password
                 })
             })
         })
@@ -51,9 +57,13 @@ router.post("/clerkAdd",(req,res)=>{
                 })
             })
         }
-        else
-            Promise.resolve(clerkRequests.updateStatus(clerkAddRequestID,'Declined'))
-            res.redirect("/requisitions")
+        else{
+            console.log("Decline")
+            Promise.resolve(clerkRequests.updateStatus(clerkAddRequestID,'Declined')).then(function(){
+                res.redirect("/requisitions")
+            })
+        }
+            
     }
 })
 
@@ -90,9 +100,11 @@ router.post("/stockmanEdit",(req,res)=>{
                 })
             })
         }
-        else
-            Promise.resolve(stockmanRequests.changeEditStatus(requestID,'Declined'))
-            res.redirect("/requisitions")
+        else{
+            Promise.resolve(stockmanRequests.changeReleaseStatus(requestID,'Declined')).then(function(){
+                res.redirect("/requisitions")
+            }) 
+        }
     }
 })
 
@@ -119,9 +131,12 @@ router.post("/stockmanRelease",(req,res)=>{
                 })
             })
         }
-        else
-            Promise.resolve(stockmanRequests.changeReleaseStatus(requestID,'Declined'))
-            res.redirect("/requisitions")
+        else{
+            Promise.resolve(stockmanRequests.changeReleaseStatus(requestID,'Declined')).then(function(){
+                res.redirect("/requisitions")
+            })
+        }
+            
     }
 })
 
