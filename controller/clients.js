@@ -26,7 +26,7 @@ router.get("/",(req,res)=>{
 })
 
 router.post("/add",(req,res)=>{
-    let client = req.body.clientname
+    let client = req.body.clientname.trim()
     var exist = false;
     var empty = false;
     
@@ -41,7 +41,7 @@ router.post("/add",(req,res)=>{
     else{
         Promise.resolve(Clients.getAll()).then(function(value){
             for(let i = 0; i < value.length; i++){
-                if(client.toLowerCase() === value[i].clientName.toLowerCase()){
+                if(client.toLowerCase() === value[i].clientName.toLowerCase().trim()){
                     exist = true
                 }
             }
@@ -62,24 +62,40 @@ router.post("/add",(req,res)=>{
     }
 })
 
-router.post("/edit",(req,res)=>{
+router.post("/edit",async (req,res)=>{
     clientID = req.body.clientID
-    clientName = req.body.clientName
+    clientName = req.body.clientName.trim()
     
     console.log(clientID)
     console.log(clientName)
     
     var empty = false;
+    var exist = false;
     
     if(clientID === "" || clientName === "")
         empty = true
     
+    await Promise.resolve(Clients.getAll()).then(function(value){
+        for(let i = 0; i < value.length; i++){
+            if(clientName.toLowerCase() === value[i].clientName.toLowerCase().trim()){
+                if(clientID != value[i].clientID)
+                    exist = true
+            }            
+        }
+    })
+    
     if(empty){
         res.render("clients.hbs",{
                     message:3
-                }) 
+        }) 
+    }
+    else if(exist){
+        res.render("clients.hbs",{
+                    message:1
+        }) 
     }
     else{
+        clientName = titleCase(clientName)
         Promise.resolve(Clients.edit(clientID,clientName)).then(function(data){
             res.render("clients.hbs",{
                 message:4

@@ -92,7 +92,7 @@ router.post("/releaseRequest",(req,res)=>{
     }
     else{
         Promise.resolve(Items.getTotalQty(itemID)).then(function(data){
-            if(data === ''){
+            if(data.length == 0){
                 res.render("stockman_release_request.hbs",{
                     message:4
                 }) 

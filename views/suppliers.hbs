@@ -115,6 +115,9 @@
             color : red;
             display : none;
         }
+        #message{
+            color : red;
+        }
     </style>
 
     <!-- Custom styles for this template -->
@@ -226,6 +229,14 @@
                 editProfile.style.display = "none";
                 $('div.modal-backdrop').css("display","none")
             })
+            
+//            $('#addSupplierForm').submit(function(e){
+//                if($('#contactNumberLabel').val() == "" || $('#contactNumberLabel').val() == ""){
+//                    e.preventDefault()
+//                    $('#message').text("Please Do Not Leave Empty Fields").show.fadeOut(1000).empty()
+//                }
+//            })
+            
         });
     </script>
 </head>
@@ -431,13 +442,14 @@
                         <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
                         
                     </div>
-                    <form action = "suppliers/add" method = "post">
+                    <form action = "suppliers/add" method = "post" id = 'addSupplierForm'>
                         <div class="modal-body">
                         
                             <div>Supplier Name</div>
-                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "supplierName">
+                            <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "supplierName" id = 'supplierNameLabel' required>
                             <div>Contact Number</div>
-                            <input type="number" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "contactNum">
+                            <input type="number" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "contactNum" min = '0' id = 'contactNumberLabel' required> 
+                            <span id = 'message'></span>  
                         </div>
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success">Save</button>
