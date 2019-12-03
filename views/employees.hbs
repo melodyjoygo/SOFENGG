@@ -437,11 +437,11 @@
                             <div class = "row">
                                 <div class = "col-md-6">
                                     <div>First Name</div>
-                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
+                                    <input type="text" class="form-control bg-light border-0 small alphaonlytext" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
                                 </div>
                                 <div class = "col-md-6">
                                     <div>Last Name</div>
-                                    <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "lname">
+                                    <input type="text" class="form-control bg-light border-0 small alphaonlytext2" aria-label="Search" aria-describedby="basic-addon2" name = "lname">
                                 </div>
                                 
                             </div>
@@ -716,6 +716,22 @@
   <script src="/js/demo/datatables-demo.js"></script>
     <!--modalscript-->
     <script>
+       $(document).ready(function(){
+    $(".alphaonlytext").keypress(function(event){
+        var inputValue = event.which;
+        // allow letters and whitespaces only.
+        if(!(inputValue >= 65 && inputValue <= 90) && !(inputValue >= 97 && inputValue <= 122) && (inputValue != 32 && inputValue != 0 && inputValue != 46)) { 
+            event.preventDefault(); 
+        }
+    });
+           $(".alphaonlytext2").keypress(function(event){
+        var inputValue = event.which;
+        // allow letters and whitespaces only.
+        if(!(inputValue >= 65 && inputValue <= 90) && !(inputValue >= 97 && inputValue <= 122) && (inputValue != 32 && inputValue != 0)) { 
+            event.preventDefault(); 
+        }
+    });
+});
         // Get the modal
         var modal = document.getElementById("myModal");
 

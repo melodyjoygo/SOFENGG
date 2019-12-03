@@ -117,7 +117,7 @@
         let lastName = "{{lastName}}"
         let email = "{{currEmail}}"
         let password = "{{password}}"
-        let warning = {{message}}
+        let warning = "{{message}}"
             
         $( document ).ready(function() {
             
@@ -127,19 +127,19 @@
                 $('button.edit').css("display","none")
             }
             
-            if(warning === 1){
+            if(warning === "1"){
                 alert("Client Already Exists")
                 window.location = '/clients';
             }
-            else if(warning === 2){
+            else if(warning === "2"){
                 alert("Client has been added Succesfully")
                 window.location = '/clients';
             }
-            else if(warning === 3){
+            else if(warning === "3"){
                 alert("Please Do Not Leave Fields Empty")
                 window.location = '/clients';
             }
-            else if(warning === 4){
+            else if(warning === "4"){
                 alert("Edit Successfully Saved")
                 window.location = '/clients';
             }

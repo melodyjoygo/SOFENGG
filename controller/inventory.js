@@ -83,7 +83,7 @@ router.post("/addItem",(req,res)=>{
     }
 })
 
-router.post("/addMaterial",(req,res)=>{
+router.post("/addMaterial",async (req,res)=>{
     let material = req.body.materialName.trim()
     var empty = false
     var exist = false
@@ -96,13 +96,12 @@ router.post("/addMaterial",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(materialType.getAll()).then(function(value){
+        await Promise.resolve(materialType.getAll()).then(function(value){
             for(let i = 0; i < value.length; i++){
                 if(material.toLowerCase() === value[i].type.toLowerCase())
                     exist = true
             }
         })
-        
         if(exist){
             res.render("inventory.hbs",{
                     message:5
@@ -146,20 +145,35 @@ router.post("/editMaterial",(req,res)=>{
 })
 
 
-router.post("/editMaterialType",(req,res)=>{
+router.post("/editMaterialType",async (req,res)=>{
     let currType = req.body.currType
-    let newType = req.body.newType
+    let newType = req.body.newType.trim()
     var empty = false
-    
+    var exist = false
     if(newType === "")
         empty = true
+    
+    await Promise.resolve(materialType.getAll()).then(function(data){
+        for(let i = 0; i < data.length; i++){
+            if(newType.toLowerCase() === data[i].type.toLowerCase()){
+                if(currType != data[i].mtID)
+                    exist = true
+            }
+        }
+    })
     
     if(empty){
         res.render("inventory.hbs",{
             message:3
         })
     }
+    else if(exist){
+        res.render("inventory.hbs",{
+            message:5
+        })
+    }
     else{
+        newType = titleCase(newType)
         Promise.resolve(materialType.edit(currType,newType)).then(function(data){
             res.render("inventory.hbs",{
                 message:6

@@ -32,7 +32,7 @@ exports.getAllMeasurements = function(){
 }
 
 exports.getTotalQty = function(materialID){
-    return database.query("SELECT *,SUM(quantity) AS 'totalQty',AVG(unitPrice) AS 'averageUnitCost',(SUM(quantity) * AVG(unitPrice)) AS 'totalCost' FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID WHERE inventory.materialID = 1 GROUP BY inventory.materialID ",[materialID])
+    return database.query("SELECT *,SUM(quantity) AS 'totalQty',AVG(unitPrice) AS 'averageUnitCost',(SUM(quantity) * AVG(unitPrice)) AS 'totalCost' FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID WHERE inventory.materialID = ? GROUP BY inventory.materialID ",[materialID])
 }
 
 exports.getItemForRelease = function(materialID){
