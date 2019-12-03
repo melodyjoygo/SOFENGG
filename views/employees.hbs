@@ -720,14 +720,14 @@
     $(".alphaonlytext").keypress(function(event){
         var inputValue = event.which;
         // allow letters and whitespaces only.
-        if(!(inputValue >= 65 && inputValue <= 122) && (inputValue != 32 && inputValue != 0 && inputValue != 46)) { 
+        if(!(inputValue >= 65 && inputValue <= 90) && !(inputValue >= 97 && inputValue <= 122) && (inputValue != 32 && inputValue != 0 && inputValue != 46)) { 
             event.preventDefault(); 
         }
     });
            $(".alphaonlytext2").keypress(function(event){
         var inputValue = event.which;
         // allow letters and whitespaces only.
-        if(!(inputValue >= 65 && inputValue <= 122) && (inputValue != 32 && inputValue != 0)) { 
+        if(!(inputValue >= 65 && inputValue <= 90) && !(inputValue >= 97 && inputValue <= 122) && (inputValue != 32 && inputValue != 0)) { 
             event.preventDefault(); 
         }
     });
