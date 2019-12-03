@@ -441,7 +441,7 @@
                                 </div>
                                 <div class = "col-md-6">
                                     <div>Last Name</div>
-                                    <input type="text" class="form-control bg-light border-0 small alphaonlytext" aria-label="Search" aria-describedby="basic-addon2" name = "lname">
+                                    <input type="text" class="form-control bg-light border-0 small alphaonlytext2" aria-label="Search" aria-describedby="basic-addon2" name = "lname">
                                 </div>
                                 
                             </div>
@@ -721,6 +721,13 @@
         var inputValue = event.which;
         // allow letters and whitespaces only.
         if(!(inputValue >= 65 && inputValue <= 122) && (inputValue != 32 && inputValue != 0 && inputValue != 46)) { 
+            event.preventDefault(); 
+        }
+    });
+           $(".alphaonlytext2").keypress(function(event){
+        var inputValue = event.which;
+        // allow letters and whitespaces only.
+        if(!(inputValue >= 65 && inputValue <= 122) && (inputValue != 32 && inputValue != 0)) { 
             event.preventDefault(); 
         }
     });
