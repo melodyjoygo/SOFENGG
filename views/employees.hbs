@@ -716,11 +716,15 @@
   <script src="/js/demo/datatables-demo.js"></script>
     <!--modalscript-->
     <script>
-        $('.alphaonlytext').bind('keyup blur',function(){ 
-            var node = $(this);
-            node.val(node.val().replace(/[^a-z]/g,'') ); 
-            }
-         );
+       $(document).ready(function(){
+    $(".alphaonlytext").keypress(function(event){
+        var inputValue = event.which;
+        // allow letters and whitespaces only.
+        if(!(inputValue >= 65 && inputValue <= 120) && (inputValue != 32 && inputValue != 0)) { 
+            event.preventDefault(); 
+        }
+    });
+});
         // Get the modal
         var modal = document.getElementById("myModal");
 
