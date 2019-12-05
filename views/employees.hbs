@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Buttons</title>
+  <title>UpRising</title>
 
   <!-- Custom fonts for this template-->
   <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -238,7 +238,7 @@
     <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -354,22 +354,14 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{firstName}} {{lastName}}</span>
+               
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -477,11 +469,11 @@
                              <div class = "row">
                                  <div class = "col-md-6">
                                      <div>First Name</div>
-                                     <input type="text" id = 'firstname'class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
+                                     <input type="text" id = 'firstname'class="form-control bg-light border-0 small alphaonlytext" aria-label="Search" aria-describedby="basic-addon2" name = "fname">
                                  </div>
                                  <div class = "col-md-6">
                                      <div>Last Name</div>
-                                     <input type="text" id = 'lastname' class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" name = "lname">
+                                     <input type="text" id = 'lastname' class="form-control bg-light border-0 small alphaonlytext2" aria-label="Search" aria-describedby="basic-addon2" name = "lname">
                                  </div>
                             </div>
                             <div class = "row">
@@ -653,9 +645,9 @@
 
      <div class="card-body" >
                   <div>First Name</div>
-                  <input type = 'text' id = 'firstNameLabel' name = 'fname'>
+                  <input type = 'text' id = 'firstNameLabel' name = 'fname' class = 'alphaonlytext'>
                   <div>Last Name </div>
-                  <input type = 'text' id = 'lastNameLabel' name = 'lname'>
+                  <input type = 'text' id = 'lastNameLabel' name = 'lname' class = 'alphaonlytext2'>
                   <div>Email: </div>
                   <input type = 'emails' name = 'email' id = 'emailLabel'>
                   <div>New Password: </div>

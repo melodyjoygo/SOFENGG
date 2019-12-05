@@ -4,6 +4,10 @@ const cryptojs = require("crypto-js")
 
 const Users = require("../model/user")
 const key = "password_key"
+router.use(function(req, res, next) {
+  res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0')
+  next()
+})
 router.use("/employees", loginRequired,require("./employees"))
 router.use("/clients",loginRequired,require("./clients"))
 router.use("/suppliers",loginRequired,require("./suppliers"))
@@ -85,11 +89,11 @@ router.post("/login" ,(req,res)=>{
 
 router.post("/editAccount",(req,res)=>{
     let id = req.session.userID
-    let fname = req.body.fname
-    let lname = req.body.lname
-    let email = req.body.email
-    let pass = req.body.password
-    let conf = req.body.confpassword
+    let fname = req.body.fname.trim()
+    let lname = req.body.lname.trim()
+    let email = req.body.email.trim()
+    let pass = req.body.password.trim()
+    let conf = req.body.confpassword.trim()
     
     let empty = false
     let notvalid = false
