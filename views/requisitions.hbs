@@ -421,41 +421,11 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-danger" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-
+         
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-danger" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
-
+           
             
             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -463,7 +433,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -656,7 +626,7 @@
                                 <td>{{this.firstName}} {{this.lastName}}</td>
                                 <td>{{this.userTypeString}}</td>
                                 <td>Add To Inventory Request</td>
-                                <td><button class = 'btn btn-primary clerkAddButton' data-id = "{{this.requestID}}" data-itemID = "{{this.materialID}}" data-qty = "{{this.quantity}}" data-unitPrice = "{{this.unitPrice}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}">View Details</button></td>
+                                <td><button class = 'btn btn-success clerkAddButton' data-id = "{{this.requestID}}" data-itemID = "{{this.materialID}}" data-qty = "{{this.quantity}}" data-unitPrice = "{{this.unitPrice}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}">View Details</button></td>
                             </tr>
                         {{/each}}
                         
@@ -665,7 +635,7 @@
                                 <td>{{this.firstName}} {{this.lastName}}</td>
                                 <td>{{this.userTypeString}}</td>
                                 <td>Edit Request</td>
-                                <td><button class = 'btn btn-primary stockmanEditButton' data-id = "{{this.requestID}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-quantity = "{{this.currQuantity}}" data-receiptNumber = "{{this.currDeliveryReceipt}}" data-newType = "{{this.newType}}" data-newItemName = "{{this.newItemName}}" data-newSupplier = "{{this.newSupplier}}" data-NewQuantity = "{{this.newQuantity}}" data-newReceiptNumber = "{{this.newDeliveryReceipt}}" data-deliveryID = "{{this.deliveryID}}" data-newItemID = "{{this.newItemID}}">View Details</button></td>
+                                <td><button class = 'btn btn-success stockmanEditButton' data-id = "{{this.requestID}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-quantity = "{{this.currQuantity}}" data-receiptNumber = "{{this.currDeliveryReceipt}}" data-newType = "{{this.newType}}" data-newItemName = "{{this.newItemName}}" data-newSupplier = "{{this.newSupplier}}" data-NewQuantity = "{{this.newQuantity}}" data-newReceiptNumber = "{{this.newDeliveryReceipt}}" data-deliveryID = "{{this.deliveryID}}" data-newItemID = "{{this.newItemID}}">View Details</button></td>
                             </tr>
                         {{/each}}
                         
@@ -674,7 +644,7 @@
                                 <td>{{this.firstName}} {{this.lastName}}</td>
                                 <td>{{this.userTypeString}}</td>
                                 <td>Release Request</td>
-                                <td><button class = 'btn btn-primary stockmanReleaseButton' data-id = "{{this.requestID}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-projectNumber = "{{this.projectNumber}}" data-quantity = "{{this.qty}}" data-itemID = "{{this.itemID}}">View Details</button></td>
+                                <td><button class = 'btn btn-success stockmanReleaseButton' data-id = "{{this.requestID}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-projectNumber = "{{this.projectNumber}}" data-quantity = "{{this.qty}}" data-itemID = "{{this.itemID}}">View Details</button></td>
                             </tr>
                         {{/each}}
                     </tbody>
