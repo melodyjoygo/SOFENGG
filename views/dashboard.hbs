@@ -274,6 +274,15 @@
                           <th>Date Requested</th>
                           <th>Status</th>
                         </thead>
+                        <tbody>
+                          {{#each projects}}
+                            <tr>
+                              <td>{{this.projectNumber}}</td>
+                              <td>{{this.dateAdded}}</td>
+                              <td>{{this.status}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
                       </table>
                     </div>                    
                   </div>
@@ -319,6 +328,17 @@
                           <th>Qty</th>
                           <th>Date Ordered</th>
                         </thead>
+                        <tbody>
+                          {{#each items}}
+                            <tr>
+                              <td>{{this.materialName}}</td>
+                              <td>{{this.quantity}}</td>
+                              <td>{{this.dateModified}}</td>
+
+                            </tr>
+                            {{/each}}
+                            
+                        </tbody>
                       </table>
                     </div>           
                    

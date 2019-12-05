@@ -1,6 +1,8 @@
 const express = require("express")
 const router = express.Router();
 const cryptojs = require("crypto-js")
+const Inventory = require("../model/inventory");
+const Projects = require("../model/projects");
 
 const Users = require("../model/user")
 const key = "password_key"
@@ -144,13 +146,21 @@ router.get("/logout",(req,res)=>{
 })
 
 router.get("/dashboard",loginRequired,(req,res)=>{
-    res.render("dashboard.hbs",{
-        firstName: req.session.firstName,
-        lastName :req.session.lastName,
-        currEmail: req.session.email,
-        currType: req.session.type,
-        password: req.session.password
+    Promise.resolve(Inventory.getLowOnStock()).then(function(items){
+        Promise.resolve(Projects.getAllTableView()).then(function(projects){
+            res.render("dashboard.hbs",{
+                firstName: req.session.firstName,
+                lastName :req.session.lastName,
+                currEmail: req.session.email,
+                currType: req.session.type,
+                password: req.session.password,
+                items:items,
+                projects:projects
+            })
+        })
+        
     })
+    
 })
 
 router.get("/reports",loginRequired,(req,res)=>{
