@@ -47,6 +47,8 @@
         let warning = {{error}}
         $( document ).ready(function() {
             
+            
+            
             $('#confirmBtn').click(function(){
                 let pass = $('#confirmPassLabel').val()
                 
@@ -63,7 +65,15 @@
                 else{
                     $("#errorMessage").html("Wrong Password")
                     $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
                 }
+            })
+            
+            $('#confirmPasslabel').on('input',function(){
+                console.log("KSKDJKSJ")
+                $("#errorMessage").css("display","none")
             })
             
             $('#editProfileBtn').click(function(){
