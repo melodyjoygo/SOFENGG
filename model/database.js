@@ -6,7 +6,7 @@ class Database {
             host: 'localhost',
             user: 'root',
             port: '3306',
-            password: 'lodi',
+            password: 'pandapanda1',
             database: 'softengdb'
         });
     }

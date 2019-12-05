@@ -85,11 +85,11 @@ router.post("/login" ,(req,res)=>{
 
 router.post("/editAccount",(req,res)=>{
     let id = req.session.userID
-    let fname = req.body.fname
-    let lname = req.body.lname
-    let email = req.body.email
-    let pass = req.body.password
-    let conf = req.body.confpassword
+    let fname = req.body.fname.trim()
+    let lname = req.body.lname.trim()
+    let email = req.body.email.trim()
+    let pass = req.body.password.trim()
+    let conf = req.body.confpassword.trim()
     
     let empty = false
     let notvalid = false
