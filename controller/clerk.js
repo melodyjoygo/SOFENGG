@@ -92,7 +92,7 @@ router.post("/addPrice",(req,res)=>{
                 Promise.resolve(ClerkRequest.getCurrRequest()).then(function(data){
                     let count = data[0].count + 1
                     Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,count)).then(function(value){
-                        Promise.resolve(ClerkRequest.addToInvRequest(itemID,quantity,unitCost,userID,'Pending')).then(function(value){
+                        Promise.resolve(ClerkRequest.addToInvRequest(itemID,quantity,unitCost,userID,'Pending',poNumber)).then(function(value){
                             res.render("clerk_price_input.hbs",{
                                 message:2
                             })
