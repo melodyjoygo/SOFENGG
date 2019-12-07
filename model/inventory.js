@@ -42,3 +42,7 @@ exports.getItemForRelease = function(materialID){
 exports.setQuantity = function(quantity,inventoryID){
     database.query("UPDATE inventory SET quantity = ? WHERE inventoryID = ?",[quantity,inventoryID])
 }
+
+exports.getLowOnStock = function(){
+    return database.query("SELECT *,date_format(dateModified, '%Y-%m-%d') AS dateModifiedFormat FROM inventory INNER JOIN materials ON inventory.materialID = materials.materialID WHERE quantity <=20");
+}

@@ -186,6 +186,9 @@
                 else{
                     $("#errorMessage").html("Wrong Password")
                     $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
                 }
             })
             
@@ -226,6 +229,8 @@
                 editProfile.style.display = "none";
                 $('div.modal-backdrop').css("display","none")
             })
+            
+            $('#editBtn0').css("display","none")
         });
     </script>
 </head>
@@ -541,7 +546,7 @@
                         <td>{{this.fullName}}</td>
                         <td>{{this.type}}</td>
                         <td>{{this.email}}</td>
-                        <td><button class = 'edit btn btn-success' data-id = '{{this.userID}}' data-email = "{{this.email}}" data-fname = '{{this.firstName}}' data-lname = '{{this.lastName}}'><u>Edit</u></button></td>
+                        <td><button class = 'edit btn btn-success' data-id = '{{this.userID}}' data-email = "{{this.email}}" data-fname = '{{this.firstName}}' data-lname = '{{this.lastName}}' id = 'editBtn{{this.userType}}'><u>Edit</u></button></td>
                       </tr>
                       {{/each}}
             

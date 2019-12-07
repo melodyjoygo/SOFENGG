@@ -47,6 +47,8 @@
         let warning = {{error}}
         $( document ).ready(function() {
             
+            
+            
             $('#confirmBtn').click(function(){
                 let pass = $('#confirmPassLabel').val()
                 
@@ -63,7 +65,15 @@
                 else{
                     $("#errorMessage").html("Wrong Password")
                     $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
                 }
+            })
+            
+            $('#confirmPasslabel').on('input',function(){
+                console.log("KSKDJKSJ")
+                $("#errorMessage").css("display","none")
             })
             
             $('#editProfileBtn').click(function(){
@@ -274,6 +284,15 @@
                           <th>Date Requested</th>
                           <th>Status</th>
                         </thead>
+                        <tbody>
+                          {{#each projects}}
+                            <tr>
+                              <td>{{this.projectNumber}}</td>
+                              <td>{{this.date}}</td>
+                              <td>{{this.status}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
                       </table>
                     </div>                    
                   </div>
@@ -319,6 +338,17 @@
                           <th>Qty</th>
                           <th>Date Ordered</th>
                         </thead>
+                        <tbody>
+                          {{#each items}}
+                            <tr>
+                              <td>{{this.materialName}}</td>
+                              <td>{{this.quantity}}</td>
+                              <td>{{this.dateModifiedFormat}}</td>
+
+                            </tr>
+                            {{/each}}
+                            
+                        </tbody>
                       </table>
                     </div>           
                    

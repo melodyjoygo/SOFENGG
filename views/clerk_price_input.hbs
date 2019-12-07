@@ -214,6 +214,9 @@
                 else{
                     $("#errorMessage").html("Wrong Password")
                     $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
                 }
             })
             
@@ -400,7 +403,7 @@
                             <td>{{this.type}} - "{{this.materialName}}"</td>
                             <td>{{this.supplierName}}</td>
                             <td>{{this.quantity}}</td>
-                            <td><button class = 'addPrice btn btn-primary' data-id = "{{this.deliveryID}}" data-receiptNum = "{{this.deliveryReceiptNumber}}" data-materialID = "{{this.materialID}}" data-quantity = "{{this.quantity}}" data-materialName = "{{this.materialName}}"><u>Add Price</u></button></td>
+                            <td><button class = 'addPrice btn btn-success' data-id = "{{this.deliveryID}}" data-receiptNum = "{{this.deliveryReceiptNumber}}" data-materialID = "{{this.materialID}}" data-quantity = "{{this.quantity}}" data-materialName = "{{this.materialName}}"><u>Add Price</u></button></td>
                         </tr>
                     {{/each}}
             </tbody>
@@ -442,7 +445,7 @@
                   <input type="text" id = 'poNumberLabel' name = poNumber>
                   <div>Unit Cost: </div>
                   <input type = "number" name = "unitCost" id="unitCostLabel" min = '0' step = '0.01'>
-                  <input type = "submit" class = 'btn btn-primary' value = 'Add'>
+                  <input type = "submit" class = 'btn btn-success' value = 'Add'>
               </form>
           </div>
       </div>
@@ -516,7 +519,7 @@
                   <input type="password" id = 'cpass' name = 'confpassword'>
                   <div id = 'editFormMessage'></div>
                   <div>
-                      <input type = "submit" class = 'btn btn-primary' value = 'Save' id = 'editProfileBtn'>
+                      <input type = "submit" class = 'btn btn-success' value = 'Save' id = 'editProfileBtn'>
                   </div>
           </div>
       </div>

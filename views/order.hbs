@@ -188,6 +188,9 @@
                 else{
                     $("#errorMessage").html("Wrong Password")
                     $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
                 }
             })
             
@@ -485,15 +488,6 @@
 
             <div style="display: flex;flex-direction: column float:left;">
                   <div class="card shadow mb-4" style="display: flex;flex-direction: column">
-              <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Date Ordered</h6>
-                <select>
-                  {{#each orders}}
-                    <option>{{this.date}}</option>
-                  {{/each}}
-
-                </select>
-              </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

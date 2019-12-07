@@ -169,15 +169,22 @@
                 let itemType = $(this).attr("data-type")
                 let itemName = $(this).attr("data-itemName")
                 let supplier = $(this).attr("data-supplier")
+                let poNumber = $(this).attr("data-poNumber")
+                
+                console.log(poNumber)
                 
                 $('#clerkAddRequestID').val(requestID)
                 $('#clerkAddItemID').val(itemID)
                 $('#clerkAddUnitCost').val(unitPrice)
                 $('#clerkAddQuantity').val(quantity)
+                $('#clerkAddpoNumber').val(poNumber)
+                
+                
                 
                 $('#clerkAddItemIDLabel').html(itemType + " - \"" + itemName + "\" " + supplier)
                 $('#clerkAddUnitCostLabel').html(unitPrice)
                 $('#clerkAddQuantityLabel').html(quantity)
+                $('#clerkAddPoNumberLabel').html(poNumber)
                 
                 $('#clerkAddModal').css("display", "block")
             })
@@ -260,6 +267,9 @@
                 else{
                     $("#errorMessage").html("Wrong Password")
                     $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
                 }
             })
             
@@ -478,21 +488,31 @@
                             <input name = "itemID" type = "number" id = 'clerkAddItemID' class = 'invLabel'>
                             <input name = "unitCost" type = "number" id = 'clerkAddUnitCost'class = 'invLabel'>
                             <input name = "quantity" type = "number" id = 'clerkAddQuantity'class = 'invLabel'>
-                             <table name = "ordermaterials">
+                            <input name = "poNumber" type = "text" id = 'clerkAddpoNumber'class = 'invLabel'>
+                             <table name = "ordermaterials" class = "table">
+                          
                                 <tr>
                                     <th>Item Name</th>
+                                    
                                     <th>Unit Price</th>
+                                    
                                     <th>Qty.</th>
+                                    <th>P.O. Number</th>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div id = 'clerkAddItemIDLabel'></div>
                                     </td>
+                                   
                                     <td>
                                         <div id = 'clerkAddUnitCostLabel'></div>
                                     </td>
+                                   
                                     <td>
                                         <div id = 'clerkAddQuantityLabel'></div>
+                                    </td>
+                                    <td>
+                                        <div id = 'clerkAddPoNumberLabel'></div>
                                     </td>
                                 </tr>
                             </table>
@@ -618,7 +638,7 @@
                                 <td>{{this.firstName}} {{this.lastName}}</td>
                                 <td>{{this.userTypeString}}</td>
                                 <td>Add To Inventory Request</td>
-                                <td><button class = 'btn btn-success clerkAddButton' data-id = "{{this.requestID}}" data-itemID = "{{this.materialID}}" data-qty = "{{this.quantity}}" data-unitPrice = "{{this.unitPrice}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}">View Details</button></td>
+                                <td><button class = 'btn btn-success clerkAddButton' data-id = "{{this.requestID}}" data-itemID = "{{this.materialID}}" data-qty = "{{this.quantity}}" data-unitPrice = "{{this.unitPrice}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-poNumber = "{{this.poNumber}}">View Details</button></td>
                             </tr>
                         {{/each}}
                         

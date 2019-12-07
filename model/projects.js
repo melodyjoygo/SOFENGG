@@ -16,7 +16,7 @@ exports.getLatest = function(){
 }
 
 exports.getAllTableView = function() {
-    return database.query("SELECT clients.clientName, projects.projectNumber, projects.dateAdded, projects.status FROM softengdb.clients INNER JOIN softengdb.projects ON clients.clientID = projects.clientID;");
+    return database.query("SELECT clients.clientName, projects.projectNumber, DATE_FORMAT(projects.dateAdded,'%Y-%m-%d') AS 'date', projects.status FROM softengdb.clients INNER JOIN softengdb.projects ON clients.clientID = projects.clientID;");
 }
 
 exports.editProjectDetails = function(projectID,clientID,status){

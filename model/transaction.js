@@ -19,3 +19,7 @@ exports.loadItems = function(){
 exports.edit = function(materialID,supplierID,price,quantity,transactionID,poNumber){
     database.query("UPDATE transactions SET materialID = ?, supplierID = ?, price = ? ,quantity = ? ,poNumber = ? WHERE transactionID = ?",[materialID,supplierID,price,quantity,poNumber,transactionID])
 }
+
+exports.arrived = function(materialID,quantity,unitPrice,poNumber){
+    database.query("UPDATE transactions SET status = 'Arrived' WHERE price = ? AND materialID = ? AND poNumber = ? AND quantity = ?",[unitPrice,materialID,poNumber,quantity])
+}

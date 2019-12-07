@@ -188,6 +188,9 @@
                 else{
                     $("#errorMessage").html("Wrong Password")
                     $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
                 }
             })
             
@@ -480,7 +483,7 @@
                             <td>{{this.supplierName}}</td>
                             <td>{{this.quantity}}</td>
                             <td>{{this.status}}</td>
-                            <td><button class = 'edit btn-primary btn' data-id = '{{this.deliveryID}}' data-item = '{{this.materialID}}' data-quantity = '{{this.quantity}}' data-supplier = '{{this.supplierID}}' data-receipt = '{{this.deliveryReceiptNumber}}'><u>Edit</u></button></td>
+                            <td><button class = 'edit btn-success btn' data-id = '{{this.deliveryID}}' data-item = '{{this.materialID}}' data-quantity = '{{this.quantity}}' data-supplier = '{{this.supplierID}}' data-receipt = '{{this.deliveryReceiptNumber}}'><u>Edit</u></button></td>
                         </tr>
                       {{/each}}
                   </tbody>
