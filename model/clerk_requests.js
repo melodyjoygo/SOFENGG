@@ -11,8 +11,8 @@ exports.getCurrRequest = function(){
     return database.query("SELECT COUNT(requestID) AS 'count' FROM clerk_add_request")
 }
 
-exports.edit = function(unitPrice,requestID){
-    return database.query("UPDATE clerk_add_request SET unitPrice = ? WHERE requestID = ?",[unitPrice,requestID])
+exports.edit = function(unitPrice,poNumber,requestID){
+    return database.query("UPDATE clerk_add_request SET unitPrice = ?,poNumber = ? WHERE requestID = ?",[unitPrice,poNumber,requestID])
 }
  
 exports.updateStatus = function(requestID,status){

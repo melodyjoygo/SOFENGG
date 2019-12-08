@@ -170,6 +170,8 @@
                 $('#myBtn').css("display","none")
                 $('button.viewdetails').css("display","none")
                 $('button.editProjectDetails').css("display","none")
+                $('#itemTable td:nth-child(5),#itemTable th:nth-child(5)').hide()
+                $('#itemTable td:nth-child(6),#itemTable th:nth-child(6)').hide()
             }    
             
             if(warning === 1){
@@ -701,7 +703,7 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <table class="table table-bordered" id="itemTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
                         <th>Company Name</th>

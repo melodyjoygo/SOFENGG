@@ -125,6 +125,7 @@
             if(userType == "2" || userType == "1"){
                 $('#myBtn').css("display","none")
                 $('button.edit').css("display","none")
+                $('#itemTable td:nth-child(3),#itemTable th:nth-child(3)').hide()
             }
             
             if(warning === "1"){
@@ -447,12 +448,12 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <table class="table table-bordered" id="itemTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
                         <th>Company Name</th>
                         <th>Last Order Requested</th>
-                        <th></th>
+                        <th>Edit</th>
                       </tr>
                     </thead>
                     <tbody>
