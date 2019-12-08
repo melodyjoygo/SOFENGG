@@ -259,14 +259,23 @@
                     else if(data === "exist"){
                         $("#editFormMessage").html("Email Already Exists")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "invalid"){
                         $("#editFormMessage").html("Invalid Email")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "empty"){
                         $("#editFormMessage").html("Please Do Not Leave Empty Fields")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                 })
             })
@@ -275,8 +284,31 @@
                 editProfile.style.display = "none";
                 $('div.modal-backdrop').css("display","none")
             })
-        
-        });
+
+            $('#monthSelector').on('change', function(){
+              changeview()
+            })
+            
+            $('#yearSelector').on('change', function(){
+              changeview()
+            })
+
+            function changeview(){
+              let month = $('#monthSelector').val()
+              let year = $('#yearSelector').val()
+              $('#releasedTable tbody').empty()
+              
+              $.post("/inventory/getReleased",{
+                month:month,
+                year:year
+              },function(data){
+                for(let i = 0; i < data.length; i++){
+                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\"</td><td>"+ data[i].qty +"</td><td>"+ data[i].projectNumber +"</td><td>"+ data[i].date +"</td></tr>";
+                        $('#releasedTable tbody').append(newRow)
+                }
+              })
+            }
+        })
     </script>
 </head>
 
@@ -680,7 +712,7 @@
                           <td>{{this.supplierName}}</td>
                           <td><button class = 'edit btn btn-success' data-id = '{{this.materialID}}' data-name = '{{this.materialName}}' data-type = '{{this.mtID}}' data-supplier = '{{this.supplierID}}' data-unit = '{{this.unitOfMeasure}}'><u>Edit</u></button></td>
                       </tr>
-                      {{/each}}
+                    {{/each}}
                    
                   </tbody>
                 </table>
@@ -697,33 +729,49 @@
             <div class="card-body">
               <div class="row" style="margin: 10px;">
                 <h6 class="col-md-1">Month</h6>
-                <select>
-                  <option>january</option>
-
+                <select id = 'monthSelector'> 
+                  <option value = '1'>January</option>
+                  <option value = '2'>Febuary</option>
+                  <option value = '3'>March</option>
+                  <option value = '4'>April</option>
+                  <option value = '5'>May</option>
+                  <option value = '6'>June</option>
+                  <option value = '7'>July</option>
+                  <option value = '8'>August</option>
+                  <option value = '9'>September</option>
+                  <option value = '10'>October</option>
+                  <option value = '11'>November</option>
+                  <option value = '12'>December</option>
+                  <option value = '13'>All Months</option>
                 </select>
                 <h6 class="col-md-1">Year</h6>
-                <select>
-                  <option>2019</option>
-
+                <select id = 'yearSelector'>
+                  {{#each years}}
+                    <option value = "{{this.years}}">{{this.years}}</option>
+                  {{/each}}
                 </select>
                
               </div>
                
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="releasedTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      
                       <th>Item Name</th>
                       <th>Qty</th>
-                      <th>Unit Cost</th>
-                      <th>Total Cost</th>
                       <th>Project</th>
                       <th>Date</th>
                     </tr>
                   </thead>
                   <tbody>
-                   
+                    {{#each released}}
+                      <tr>
+                        <td>{{this.type}} - "{{this.materialName}}"</td>
+                        <td>{{this.qty}}</td>
+                        <td>{{this.projectNumber}}</td>
+                        <td>{{this.date}}</td>
+                      </tr>
+                    {{/each}}
                   </tbody>
                 </table>
               </div>

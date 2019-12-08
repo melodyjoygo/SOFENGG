@@ -216,14 +216,23 @@
                     else if(data === "exist"){
                         $("#editFormMessage").html("Email Already Exists")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "invalid"){
                         $("#editFormMessage").html("Invalid Email")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "empty"){
                         $("#editFormMessage").html("Please Do Not Leave Empty Fields")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                 })
             })

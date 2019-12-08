@@ -12,7 +12,7 @@
   <title>UpRising</title>
 
   <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
@@ -122,10 +122,10 @@
     </style>
 
     <!-- Custom styles for this template -->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
   <!-- Custom styles for this page -->
-  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     
     <script src = '/jQuery.js'></script>
     <script>
@@ -215,14 +215,23 @@
                     else if(data === "exist"){
                         $("#editFormMessage").html("Email Already Exists")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "invalid"){
                         $("#editFormMessage").html("Invalid Email")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "empty"){
                         $("#editFormMessage").html("Please Do Not Leave Empty Fields")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                 })
             })
@@ -272,6 +281,12 @@
           <a class="nav-link" href="/stockman/requests">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Release Requests</span></a>
+        </li>
+        <li class="nav-item active">
+          <li class="nav-item">
+          <a class="nav-link" href="/stockman/inventory">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Inventory</span></a>
         </li>
        
     
@@ -340,159 +355,46 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-          <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Deliveries
-            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
-            <span class="icon text-white-50">
-                <b class = "plusicon">+</b>
-            </span>
-            <span class="text">Restock Item</span>
-            </a>
-         
-            </h1>
-        <div id="myModal" class="modal">
-
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Restock Item</h5>
-                        <span class="btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
-                        
-                    </div>
-                    <form action = "/stockman/restock" method = "post">
-                        <div class="modal-body">
-                            <table name = "inventmaterials">
-                                <tr>
-                                    <th>Delivery Receipt Number</th>
-                                    <th>Item Name</th>
-                                    <th>Qty</th>
-
-                                </tr>
-                                <tr>
-                                <td>
-                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="deliveryReceiptNumberLabel">
-                                </td>
-                                <td>
-                                    <select name = "itemID" id="material_dropdown">
-                                            {{#each items}}
-                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}" - {{this.supplierName}}</option>
-                                            {{/each}}
-                                    </select>   
-                                </td>
-                              
-                    
-                                <td>
-                                    <input class="form-control" type = "number" name = "qty" id="qtyLabel">
-                                </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Restock</button>
-                        </div>
-                    </form>
-                    
-                </div>
-
-            </div> 
-
-            <div id="editModal" class="modal">
-
-            <!-- Modal content -->
-           <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Item</h5>
-                    <span class="close btn btn-danger btn-circle btn-sm" id ="close3">&times;</span>
-                        
-                </div>
-                <form action = "/stockman/editRequest" method = "post">
-                        <div class="modal-body">
-                            <input type = 'text' class = 'currValues' id = 'editdeliveryid' name = 'deliveryID'>
-                            <input type = 'text' class = 'currValues' id = 'currdeliveryReceiptNumberLabel' name = 'currdeliveryReceiptNumber'>
-                            <input type = 'text' class = 'currValues' id = 'curritemIDLabel' name = 'curritemID'>
-                            <input type = 'text' class = 'currValues' id = 'currqtyLabel' name = 'currqty'>
-                            <input type = 'text' class = 'currValues' id = 'currsuppIDLabel' name = 'currsuppID'>
-                            
-                            <table name = "inventmaterials">
-                                <tr>
-                                    <th>Delivery Receipt Number</th>
-                                    <th>Item Name</th>
-                                    <th>Qty</th>
-                                    <th>Supplier</th>
-
-                                </tr>
-                                <tr>
-                                <td>
-                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="editdeliveryReceiptNumberLabel">
-                                </td>
-                                <td>
-                                    <select name = "itemID" id="item_dropdown">
-                                            {{#each items}}
-                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}"</option>
-                                            {{/each}}
-                                    </select>   
-                                </td>
-                              
-                    
-                                <td>
-                                    <input class="form-control" type = "number" name = "qty" id="editqtyLabel">
-                                </td>
-                                 <td>
-                                    <select name = "suppID" id="supplier_dropdown">
-                                            {{#each suppliers}}
-                                                <option value = '{{this.supplierID}}'>{{this.supplierName}}</option>
-                                            {{/each}}
-                                    </select>   
-                                </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Save</button>
-                        </div>
-                    </form>
-            </div>
-
-        </div>
-          
-
-          <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Deliveries</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Inventory</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>Receipt Number</th>
+                      <th>Material</th>
                       <th>Item Name</th>
+                      <th>Unit of Measures</th>
                       <th>Supplier</th>
                       <th>Qty</th>
-                      <th>In Inventory</th>
-                      <th></th>
+                      <th>Unit Cost</th>
+                      <th>Total Cost</th>
                     </tr>
                   </thead>
-                        
                   <tbody>
-                      {{#each deliveries}}
-                        <tr>
-                            <td>{{this.deliveryReceiptNumber}}</td>
-                            <td>{{this.type}} - "{{this.materialName}}"</td>
-                            <td>{{this.supplierName}}</td>
-                            <td>{{this.quantity}}</td>
-                            <td>{{this.status}}</td>
-                            <td><button class = 'edit btn-success btn' data-id = '{{this.deliveryID}}' data-item = '{{this.materialID}}' data-quantity = '{{this.quantity}}' data-supplier = '{{this.supplierID}}' data-receipt = '{{this.deliveryReceiptNumber}}'><u>Edit</u></button></td>
-                        </tr>
+                    {{#each inventory}}
+                      <tr>
+                        <td>{{this.type}}</td>
+                        <td>{{this.materialName}}</td>
+                        <td>{{this.unitOfMeasure}}</td>
+                        <td>{{this.supplierName}}</td>
+                        <td>{{this.totalQty}}</td>
+                        <td>{{this.averageUnitCost}}</td>
+                        <td>{{this.totalCost}}</td>
+                      </tr>
                       {{/each}}
+                   
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
+
+          
   
-          </div>
+        </div>
           <!-- /.container-fluid -->
   
         </div>
@@ -604,21 +506,21 @@
    </div>
     
       <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+  <script src="/js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
+  <script src="/js/demo/datatables-demo.js"></script>
     <!--modalscript-->
     <script>
         $(document).ready(function(){
