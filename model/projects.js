@@ -8,7 +8,7 @@ exports.create = function(clientID,projectNumber,dateAdded) {
 }
 
 exports.getAll = function() {
-    return database.query("SELECT * FROM projects LEFT JOIN clients ON projects.clientID = clients.clientID");
+    return database.query("SELECT * ,date_format(dateAdded,'%Y-%m-%d') as 'date' FROM projects LEFT JOIN clients ON projects.clientID = clients.clientID");
 }
 
 exports.getLatest = function(){

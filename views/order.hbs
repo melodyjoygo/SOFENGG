@@ -141,6 +141,7 @@
             if(userType == "2" || userType == "1"){
                 $('#myBtn').css("display","none")
                 $('button.edit').css("display","none")
+                $('#itemTable td:nth-child(8),#itemTable th:nth-child(8)').hide()
             }
             
             if(warning === 1){
@@ -499,7 +500,7 @@
                   <div class="card shadow mb-4" style="display: flex;flex-direction: column">
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <table class="table table-bordered" id="itemTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
                         <th>Item</th>
@@ -520,7 +521,7 @@
                         <td>{{this.supplierName}}</td>
                         <td>{{this.quantity}}</td>
                         <td>{{this.price}}</td>
-                        <td>{{this.date}}</td> 
+                        <td>{{this.dateFormat}}</td> 
                         <td>{{this.status}}</td>
                           <td><button class = "btn btn-success edit" data-id = '{{this.transactionID}}' data-itemid = '{{this.materialID}}' data-qty = '{{this.quantity}}' data-price = '{{this.price}}' data-po = '{{this.poNumber}}'><U>Edit</U></button></td>
                       </tr>
