@@ -38,11 +38,11 @@ exports.getDelivery = function(deliveryID){
 }
 
 exports.getStockmanEditable = function(userID){
-    return database.query("SELECT * FROM delivery_tracker NATURAL JOIN materials NATURAL JOIN suppliers LEFT JOIN material_types ON materials.materialType = material_types.mtID WHERE userID = ? AND inInventory = '0'",[userID])
+    return database.query("SELECT *,CASE WHEN inInventory = '0' THEN 'No'ELSE 'Yes' END as status FROM delivery_tracker NATURAL JOIN materials NATURAL JOIN suppliers LEFT JOIN material_types ON materials.materialType = material_types.mtID WHERE userID = ? AND inInventory = '0'",[userID])
 }
 
 exports.getClerkEditable = function(userID){
-    return database.query("SELECT * FROM softengdb.delivery_tracker NATURAL JOIN materials NATURAL JOIN suppliers LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN clerk_add_request ON clerk_add_request.requestID = delivery_tracker.requestID WHERE (invoiceNumber != '0' OR poNumber != '0' OR delivery_tracker.unitPrice != '0') AND inInventory = '0' AND clerk_add_request.status = 'Pending' AND clerk_add_request.userID = ?",[userID])
+    return database.query("SELECT * FROM softengdb.delivery_tracker NATURAL JOIN materials NATURAL JOIN suppliers LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN clerk_add_request ON clerk_add_request.requestID = delivery_tracker.requestID WHERE (invoiceNumber != '0' OR delivery_tracker.poNumber != '0' OR delivery_tracker.unitPrice != '0') AND inInventory = '0' AND clerk_add_request.status = 'Pending' AND clerk_add_request.userID = ?",[userID])
 }
 
 exports.stockmanEdit = function(deliveryID,deliveryReceiptNumber,quantity,newItemID){

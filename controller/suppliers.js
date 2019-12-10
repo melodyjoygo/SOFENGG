@@ -16,13 +16,19 @@ function titleCase(str) {
 router.get("/",(req,res)=>{
     Promise.resolve(Suppliers.getAll()).then(function(value){
         res.render("suppliers.hbs",{
-            suppliers:value         
+            suppliers:value,
+            userType:req.session.userType,
+            firstName: req.session.firstName,
+            lastName :req.session.lastName,
+            currEmail: req.session.email,
+            currType: req.session.type,
+            password: req.session.password
         })
     })
 })
 router.post("/add",(req,res)=>{
-    let supplier = req.body.supplierName
-    let contactNum = req.body.contactNum
+    let supplier = req.body.supplierName.trim()
+    let contactNum = req.body.contactNum.trim()
     var exist = false
     var empty = false
     
@@ -56,23 +62,35 @@ router.post("/add",(req,res)=>{
             }
         })   
     }
-        
 })
 
 
-router.post("/edit",(req,res)=>{
+router.post("/edit", async (req,res)=>{
     let suppID = req.body.suppID
-    let supplierName = req.body.supplierName
+    let supplierName = req.body.supplierName.trim()
     let contactNum = req.body.contactNum
     
     var empty = false
-    
+    var exist = false
     if(suppID === "" || supplierName === "" || contactNum === "")
         empty = true
+    
+    await Promise.resolve(Suppliers.getAll()).then(function(data){
+        for(let i = 0; i < data.length; i++){
+            if(supplierName.toLowerCase() === data[i].supplierName.toLowerCase())
+                if(suppID != data[i].supplierID)
+                    exist = true
+        }
+    })
     
     if(empty){
         res.render("suppliers.hbs",{
             message:3
+        })
+    }
+    else if (exist){
+        res.render("suppliers.hbs",{
+            message:1
         })
     }
     else{

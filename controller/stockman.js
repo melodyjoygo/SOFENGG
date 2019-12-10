@@ -7,16 +7,22 @@ const Materials = require("../model/materials")
 const Suppliers = require("../model/suppliers")
 const Tracker = require("../model/delivery_tracker")
 const Requests = require("../model/stockman_requests")
+const Inventory = require("../model/inventory")
 
 router.get("/",(req,res)=>{
     let userID = req.session.userID
     Promise.resolve(Suppliers.getAll()).then(function(suppliers){
         Promise.resolve(Materials.getAllWithSupplier()).then(function(items){
             Promise.resolve(Tracker.getStockmanEditable(userID)).then(function(deliveries){
-                res.render("stockman_inventory.hbs",{
+                res.render("stockman_delivery.hbs",{
                     suppliers:suppliers,
                     items:items,
-                    deliveries:deliveries
+                    deliveries:deliveries,
+                    firstName: req.session.firstName,
+                    lastName :req.session.lastName,
+                    currEmail: req.session.email,
+                    currType: req.session.type,
+                    password: req.session.password
                 }) 
             })     
         })                                     
@@ -33,10 +39,29 @@ router.get("/requests",(req,res)=>{
                         projects:projects,
                         items:items,
                         pending:pending,
-                        approved:approved
+                        approved:approved,
+                        firstName: req.session.firstName,
+                        lastName :req.session.lastName,
+                        currEmail: req.session.email,
+                        currType: req.session.type,
+                        password: req.session.password
                     })
                 })
             })  
+        })
+    })
+})
+
+router.get("/inventory",(req,res)=>{
+    let userID = req.session.userID
+    Promise.resolve(Inventory.getAllTableView()).then(function(inventory){
+        res.render("stockman_inventory.hbs",{
+            inventory:inventory,
+            firstName: req.session.firstName,
+            lastName :req.session.lastName,
+            currEmail: req.session.email,
+            currType: req.session.type,
+            password: req.session.password
         })
     })
 })
@@ -52,13 +77,13 @@ router.post("/restock",(req,res)=>{
         empty = true
     
     if(empty){
-        res.render("stockman_inventory.hbs",{
+        res.render("stockman_delivery.hbs",{
             message:1
         })
     }
     else{
         Promise.resolve(Tracker.create(receiptNumber,itemID,qty,userID)).then(function(value){
-            res.render("stockman_inventory.hbs",{
+            res.render("stockman_delivery.hbs",{
                 message:2
             })
         })
@@ -82,7 +107,7 @@ router.post("/releaseRequest",(req,res)=>{
     }
     else{
         Promise.resolve(Items.getTotalQty(itemID)).then(function(data){
-            if(data === ''){
+            if(data.length == 0){
                 res.render("stockman_release_request.hbs",{
                     message:4
                 }) 
@@ -122,13 +147,13 @@ router.post("/editRequest",(req,res)=>{
         empty = true
     
     if(empty){
-        res.render("stockman_inventory.hbs",{
+        res.render("stockman_delivery.hbs",{
                 message:1
         })
     }
     else{
         Promise.resolve(Requests.createEditRequest(deliveryID,newdeliveryReceiptNumber,newitemID,newqty,newsuppID,currdeliveryReceiptNumber,curritemID,currqty,currsuppID,userID,'Pending')).then(function(value){
-            res.render("stockman_inventory.hbs",{
+            res.render("stockman_delivery.hbs",{
                 message:3
             })
         }) 
@@ -173,9 +198,8 @@ router.post("/releaseStock",(req,res)=>{
                     if(quantity == 0)
                         break
                 }
-                Promise.resolve(Requests.setReleased(requestID))
+                await Promise.resolve(Requests.setReleased(requestID,new Date().toISOString().slice(0, 19).replace('T', ' ')))
             })
-            
             res.render("stockman_release_request.hbs",{
                 message:5
             })

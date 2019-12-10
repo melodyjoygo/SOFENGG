@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Tables</title>
+  <title>UpRising</title>
 
   <!-- Custom fonts for this template -->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -145,12 +145,35 @@
         #curritem{
             display : none;
         }
+        
+        #errorMessage{
+            color : red;
+            display : none;
+        }
+        #editFormMessage{
+            color : red;
+            display : none;
+        }
     </style>
     
     <script src = '/jQuery.js'></script>
     <script>
-       let warning = {{message}}
+        let firstName = "{{firstName}}"
+        let lastName = "{{lastName}}"
+        let email = "{{currEmail}}"
+        let password = "{{password}}"
+        let warning = {{message}}
+       
         $( document ).ready(function() {
+           let userType = "{{userType}}"
+            if(userType == "2" || userType == "1"){
+                $('#myBtn').css("display","none")
+                $('#myBtn2').css("display","none")
+                $('button.edit').css("display","none")
+                $('#edit').css("display","none")
+                $('#itemTable td:nth-child(3),#itemTable th:nth-child(3)').hide()
+            } 
+
             if(warning === 1){
                 alert("Item Already Exists")
                 window.location = '/inventory';
@@ -194,8 +217,100 @@
                 $("#newsupplierdropdown").val(supplier)
                 modal4.style.display = "block"
             })
-        
-        });
+            
+            $('#confirmBtn').click(function(){
+                let pass = $('#confirmPassLabel').val()
+                
+                if(pass.toString() === password.toString()){
+                    
+                    $("#firstNameLabel").val(firstName)
+                    $("#lastNameLabel").val(lastName)
+                    $("#emailLabel").val(email)
+                    
+                    editProfile.style.display = "block";
+                    enterPass.style.display = "none";
+                    profile.style.display = "none";  
+                }
+                else{
+                    $("#errorMessage").html("Wrong Password")
+                    $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
+                }
+            })
+            
+            $('#editProfileBtn').click(function(){
+                let fname = $("#firstNameLabel").val()
+                let lname = $("#lastNameLabel").val()
+                let email = $("#emailLabel").val()
+                let password = $("#npass").val()
+                let confpassword = $("#cpass").val()
+                
+                $.post("/editAccount",{
+                    fname: fname,
+                    lname: lname,
+                    email: email,
+                    password: password,
+                    confpassword: confpassword
+                },function(data){
+                    if(data === "success"){
+                        alert("Account Details Saved")
+                        window.location = '/inventory'
+                    }
+                    else if(data === "exist"){
+                        $("#editFormMessage").html("Email Already Exists")
+                        $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
+                    }
+                    else if(data === "invalid"){
+                        $("#editFormMessage").html("Invalid Email")
+                        $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
+                    }
+                    else if(data === "empty"){
+                        $("#editFormMessage").html("Please Do Not Leave Empty Fields")
+                        $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
+                    }
+                })
+            })
+            
+            $('#editAccountClose').click(function(){
+                editProfile.style.display = "none";
+                $('div.modal-backdrop').css("display","none")
+            })
+
+            $('#monthSelector').on('change', function(){
+              changeview()
+            })
+            
+            $('#yearSelector').on('change', function(){
+              changeview()
+            })
+
+            function changeview(){
+              let month = $('#monthSelector').val()
+              let year = $('#yearSelector').val()
+              $('#releasedTable tbody').empty()
+              
+              $.post("/inventory/getReleased",{
+                month:month,
+                year:year
+              },function(data){
+                for(let i = 0; i < data.length; i++){
+                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\"</td><td>"+ data[i].qty +"</td><td>"+ data[i].projectNumber +"</td><td>"+ data[i].date +"</td></tr>";
+                        $('#releasedTable tbody').append(newRow)
+                }
+              })
+            }
+        })
     </script>
 </head>
 
@@ -208,7 +323,7 @@
     <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
           </div>
@@ -234,60 +349,53 @@
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="inventory">
+        <a class="nav-link" href="/inventory">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Inventory</span></a>
       </li>
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="requisitions">
+        <a class="nav-link" href="/requisitions">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Requisitions</span></a>
       </li>
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="employees">
+        <a class="nav-link" href="/employees">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Employees</span></a>
       </li>
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="clients">
+        <a class="nav-link" href="/clients">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Clients</span></a>
       </li>
         <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="projects">
+        <a class="nav-link" href="/projects">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Projects</span></a>
       </li>
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="suppliers">
+        <a class="nav-link" href="/suppliers">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Suppliers</span></a>
       </li>
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="orders">
+        <a class="nav-link" href="/orders">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Orders</span></a>
       </li>
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="reports">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Reports</span></a>
-      </li>
-
+    
       <li class="nav-item active">
         <li class="nav-item">
         <a class="nav-link" href="/delivery_tracker">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>
-  
          
       
   
@@ -317,40 +425,12 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-danger" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
+         
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-danger" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
+          
 
 
             <div class="topbar-divider d-none d-sm-block"></div>
@@ -358,22 +438,14 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{firstName}} {{lastName}}</span>
+               
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -423,7 +495,7 @@
                             <div class = "row">
                                 <div class = "col-md-12">
                                     <div>Name of Material</div>
-                                    <input type = "text" name = "materialName" class = "fullinput">
+                                    <input type = "text" name = "materialName" class = "fullinput" required>
                                 </div>
                             </div>
                             
@@ -465,7 +537,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class = "fieldheight bottomtxt">Unit of Measure</div>
-                                        <select name = "unit" id="supplierDrop">
+                                        <select name = "unit" >
                                             {{#each unit}}
                                                 <option value="{{this.uomID}}">{{this.unitOfMeasure}}</option>
                                             {{/each}}
@@ -473,7 +545,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class = "fieldheight bottomtxt">Supplier</div>
-                                        <select name = "supplier" id="supplierDrop">
+                                        <select name = "supplier" >
                                             {{#each supplier}}
                                                 <option value="{{this.supplierID}}">{{this.supplierName}}</option>
                                             {{/each}}
@@ -627,7 +699,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="itemTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>Item Name</th>
@@ -642,11 +714,68 @@
                           <td>{{this.supplierName}}</td>
                           <td><button class = 'edit btn btn-success' data-id = '{{this.materialID}}' data-name = '{{this.materialName}}' data-type = '{{this.mtID}}' data-supplier = '{{this.supplierID}}' data-unit = '{{this.unitOfMeasure}}'><u>Edit</u></button></td>
                       </tr>
-                      {{/each}}
+                    {{/each}}
                    
                   </tbody>
                 </table>
                <div><span id ="edit" class = "btn btn-danger"><U>Edit Material Type</U></span></div> 
+              </div>
+            </div>
+          </div>
+
+           <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Released Items</h6>
+            </div>
+            <div class="card-body">
+              <div class="row" style="margin: 10px;">
+                <h6 class="col-md-1">Month</h6>
+                <select id = 'monthSelector'> 
+                  <option value = '1'>January</option>
+                  <option value = '2'>Febuary</option>
+                  <option value = '3'>March</option>
+                  <option value = '4'>April</option>
+                  <option value = '5'>May</option>
+                  <option value = '6'>June</option>
+                  <option value = '7'>July</option>
+                  <option value = '8'>August</option>
+                  <option value = '9'>September</option>
+                  <option value = '10'>October</option>
+                  <option value = '11'>November</option>
+                  <option value = '12'>December</option>
+                  <option value = '13'>All Months</option>
+                </select>
+                <h6 class="col-md-1">Year</h6>
+                <select id = 'yearSelector'>
+                  {{#each years}}
+                    <option value = "{{this.years}}">{{this.years}}</option>
+                  {{/each}}
+                </select>
+               
+              </div>
+               
+              <div class="table-responsive">
+                <table class="table table-bordered" id="releasedTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Item Name</th>
+                      <th>Qty</th>
+                      <th>Project</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each released}}
+                      <tr>
+                        <td>{{this.type}} - "{{this.materialName}}"</td>
+                        <td>{{this.qty}}</td>
+                        <td>{{this.projectNumber}}</td>
+                        <td>{{this.date}}</td>
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -671,23 +800,98 @@
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade modal-backdrop" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to log out?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Are your sure you want to log out?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
-          <a class="btn btn-danger" href="/">Yes</a>
+          <a class="btn btn-danger" href="/logout">Yes</a>
         </div>
       </div>
     </div>
   </div>
+
+       <!-- Profile Modal-->
+    <div class="modal fade" id="profileModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>Name: {{firstName}} {{lastName}}</div>
+            <div>Email: {{currEmail}}</div>
+            <div>UserType: {{currType}}</div>
+          </div>
+        
+          <div class="modal-footer">
+            <a class="btn btn-success" id ="editProfile" data-toggle="modal" data-target="#enterPassword"  data-dismiss="modal" aria-label="Close">Edit Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--Confirm Password Modal-->
+    <div class="modal fade" id="enterPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Please enter your password to confirm</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="password" name="password" id="confirmPassLabel">
+              <div id = 'errorMessage'></div>
+          </div>
+        
+          <div class="modal-footer">
+            <button  id = "confirmBtn" class="btn btn-success">Submit</button> 
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- Edit Profile Modal-->
+     <div class="modal" id = "editProfileModal"> 
+
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2>Edit Profile</h2>
+
+               <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                    <span id = "editAccountClose" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+               </button>
+          </div>
+
+     <div class="card-body" >
+                  <div>First Name</div>
+                  <input type = 'text' id = 'firstNameLabel' name = 'fname' class = 'alphaonlytext'>
+                  <div>Last Name </div>
+                  <input type = 'text' id = 'lastNameLabel' name = 'lname' class = 'alphaonlytext2'>
+                  <div>Email: </div>
+                  <input type = 'emails' name = 'email' id = 'emailLabel'>
+                  <div>New Password: </div>
+                  <input type = 'password' name = 'password' id = 'npass'>
+                  <div>Confirm Password </div> 
+                  <input type="password" id = 'cpass' name = 'confpassword'>
+                  <div id = 'editFormMessage'></div>
+                  <div>
+                      <input type = "submit" class = 'btn btn-primary' value = 'Save' id = 'editProfileBtn'>
+                  </div>
+          </div>
+      </div>
+   </div>
+
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
@@ -706,6 +910,22 @@
   <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     <script>
+        $(document).ready(function(){
+    $(".alphaonlytext").keypress(function(event){
+        var inputValue = event.which;
+        // allow letters and whitespaces only.
+        if(!(inputValue >= 65 && inputValue <= 90) && !(inputValue >= 97 && inputValue <= 122) && (inputValue != 0 && inputValue != 46)) { 
+            event.preventDefault(); 
+        }
+    });
+           $(".alphaonlytext2").keypress(function(event){
+        var inputValue = event.which;
+        // allow letters and whitespaces only.
+        if(!(inputValue >= 65 && inputValue <= 90) && !(inputValue >= 97 && inputValue <= 122) && (inputValue != 0)) { 
+            event.preventDefault(); 
+        }
+    });
+});
         // Get the modal
         var modal = document.getElementById("myModal");
         var modal3 = document.getElementById("editModal");
@@ -775,6 +995,25 @@
         }
         span4.onclick = function() {
             modal4.style.display = "none";
+        }
+
+          var confirmBtn = document.getElementById("confirm");
+     var editProfile = document.getElementById("editProfileModal");
+     var enterPass = document.getElementById("enterPassword");
+     var profile = document.getElementById("profileModal");
+     // var confirmBtn = document.getElementById("editProfile2");
+      
+
+        var span5 = document.getElementById("close5");
+        var span2 = document.getElementById("close3");
+        // When the user clicks on the button, open the modal
+
+        // When the user clicks on <span> (x), close the modal
+        span2.onclick = function(){
+            editProfile.style.display = "none";
+            enterPass.style.display = "none";
+            profile.style.display = "none";
+            $('div.modal-backdrop').css("display","none")
         }
 
         // When the user clicks anywhere outside of the modal, close it

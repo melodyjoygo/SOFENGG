@@ -16,7 +16,7 @@ exports.validate = function(name, password) {
 }
 
 exports.getUser = function(email){
-    return database.query("SELECT * FROM users WHERE users.email = ? ", [email]);
+    return database.query("SELECT * FROM users LEFT JOIN user_types ON users.userType = user_types.utID WHERE users.email = ? ", [email]);
 }
 
 exports.getAllUsers = function() {
@@ -27,7 +27,11 @@ exports.getAllTableView = function() {
     return database.query("SELECT userID,userType,utID,type,email, concat(" + "firstName, ' ', lastname" + ") as fullName,firstName,lastName FROM users LEFT JOIN user_types ON users.userType = user_types.utID");
 }
 
-exports.edit = function(userID, fname,lname, email,userType) {
-    database.query("UPDATE users SET firstName = ?, lastName = ?, email = ? , userType = ? WHERE userID = ?", [fname, lname, email, userType, userID]);
+exports.edit = function(userID, fname,lname, email,password,userType) {
+    database.query("UPDATE users SET firstName = ?, lastName = ?, email = ? , password = ? , userType = ? WHERE userID = ?", [fname, lname, email,password, userType, userID]);
+ }
+
+exports.editAccount = function(userID, fname,lname, email,password) {
+    database.query("UPDATE users SET firstName = ?, lastName = ?, email = ? , password = ? WHERE userID = ?", [fname, lname, email, password, userID]);
  }
  

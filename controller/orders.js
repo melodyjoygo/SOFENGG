@@ -9,7 +9,13 @@ router.get("/",(req,res)=>{
         Promise.resolve(Items.loadItems()).then(function(orders){
             res.render("order.hbs",{
                 items:items,
-                orders:orders
+                orders:orders,
+                userType:req.session.userType,
+                firstName: req.session.firstName,
+                lastName :req.session.lastName,
+                currEmail: req.session.email,
+                currType: req.session.type,
+                password: req.session.password
             })
         })
     })
@@ -68,6 +74,5 @@ router.post("/edit",(req,res)=>{
         })
         
     }
-    
 })
 module.exports = router

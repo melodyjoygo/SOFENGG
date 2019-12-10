@@ -13,7 +13,7 @@ exports.getAll = function() {
 }
 
 exports.getAllTableView = function() {
-    return database.query("SELECT clients.clientID,clients.clientName,proj.lastRequestDate FROM clients Left JOIN (SELECT clientID,MAX(projects.dateAdded) AS lastRequestDate FROM projects GROUP BY projects.clientID) proj ON proj.clientID = clients.clientID");
+    return database.query("SELECT clients.clientID,clients.clientName,date_format(proj.lastRequestDate,'%Y-%m-%d') AS 'date' FROM clients Left JOIN (SELECT clientID,MAX(projects.dateAdded) AS lastRequestDate FROM projects GROUP BY projects.clientID) proj ON proj.clientID = clients.clientID");
 }
 
 exports.edit = function(clientID, clientName) {

@@ -9,18 +9,22 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Tables</title>
+  <title>UpRising</title>
 
   <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template -->
   <link href="/stylesheets/sb-admin-2.min.css" rel="stylesheet">
 
   <!-- Custom styles for this page -->
-  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
+
+        .modal-backdrop {
+            z-index: 0;
+        }
         .plusicon {
             color:white;
         }
@@ -127,9 +131,37 @@
         .invLabel{
             display : none;
         }
+        #errorMessage{
+            color : red;
+            display : none;
+        }
+        #editFormMessage{
+            color : red;
+            display : none;
+        }
+        #profileModal{
+            z-index:9999;
+            position:fixed
+        }
+        #enterPassword{
+            z-index:9000;
+            position:fixed
+        }
+        #editProfileModal{
+            z-index:9000;
+            position:fixed
+        }
+        .modal_backdrop{
+            z-index:5000;
+            position:fixed
+        }
     </style>
     <script src = '/jQuery.js'></script>
     <script>
+        let firstName = "{{firstName}}"
+        let lastName = "{{lastName}}"
+        let email = "{{currEmail}}"
+        let password = "{{password}}"
         let warning = {{message}}
         $( document ).ready(function() {
             if(warning === 1){
@@ -168,6 +200,75 @@
             $('#closeReleaseConfirmationModal').click(function(){
                 $('#releaseConfirmationModal').css("display","none")
             })
+            
+            $('#confirmBtn').click(function(){
+                let pass = $('#confirmPassLabel').val()
+                
+                if(pass.toString() === password.toString()){
+                    
+                    $("#firstNameLabel").val(firstName)
+                    $("#lastNameLabel").val(lastName)
+                    $("#emailLabel").val(email)
+                    
+                    editProfile.style.display = "block";
+                    enterPass.style.display = "none";
+                    profile.style.display = "none";  
+                }
+                else{
+                    $("#errorMessage").html("Wrong Password")
+                    $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
+                }
+            })
+            
+            $('#editProfileBtn').click(function(){
+                let fname = $("#firstNameLabel").val()
+                let lname = $("#lastNameLabel").val()
+                let email = $("#emailLabel").val()
+                let password = $("#npass").val()
+                let confpassword = $("#cpass").val()
+                
+                $.post("/editAccount",{
+                    fname: fname,
+                    lname: lname,
+                    email: email,
+                    password: password,
+                    confpassword: confpassword
+                },function(data){
+                    if(data === "success"){
+                        alert("Account Details Saved")
+                        window.location = '/stockman/requests'
+                    }
+                    else if(data === "exist"){
+                        $("#editFormMessage").html("Email Already Exists")
+                        $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
+                    }
+                    else if(data === "invalid"){
+                        $("#editFormMessage").html("Invalid Email")
+                        $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
+                    }
+                    else if(data === "empty"){
+                        $("#editFormMessage").html("Please Do Not Leave Empty Fields")
+                        $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
+                    }
+                })
+            })
+            
+            $('#editProfileClose').click(function(){
+                editProfile.style.display = "none";
+                $('div.modal-backdrop').css("display","none")
+            })
         });
     </script>
 </head>
@@ -181,7 +282,7 @@
     <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/stockman">
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
           </div>
@@ -212,6 +313,12 @@
           <a class="nav-link" href="/stockman/requests">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Release Requests</span></a>
+        </li>
+        <li class="nav-item active">
+          <li class="nav-item">
+          <a class="nav-link" href="/stockman/inventory">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Inventory</span></a>
         </li>
         
        
@@ -244,60 +351,24 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-danger" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
+          
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-danger" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
+            
 
-            <!-- Nav Item - User Information -->
+           <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{firstName}} {{lastName}}</span>
+               
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -335,8 +406,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Request</h5>
-                        <span class="close btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
-                        
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class=" btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
+                        </button>                        
                     </div>
                     <form action = "/stockman/releaseRequest" method = "post">
                         <div class="modal-body">
@@ -363,7 +435,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control" type = "number" name = "qty" id="qtyLabel">
+                                        <input class="form-control" type = "number" name = "qty" id="qtyLabel" min = '0'>
                                     </td>
                                 </tr>
                             </table>
@@ -461,7 +533,7 @@
                         <td>{{this.type}} - "{{this.materialName}}"</td>
                         <td>{{this.supplierName}}</td>
                         <td>{{this.qty}}</td>
-                        <td><button class = 'btn btn-primary releaseStock' data-itemID = "{{this.materialID}}" data-quantity = "{{this.qty}}" data-requestID = "{{this.requestID}}"><u>Release</u></button></td>
+                        <td><button class = 'btn btn-success releaseStock' data-itemID = "{{this.materialID}}" data-quantity = "{{this.qty}}" data-requestID = "{{this.requestID}}"><u>Release</u></button></td>
                     </tr>
                 {{/each}}
             </tbody>
@@ -490,7 +562,6 @@
     </div>
     <!-- End of Content Wrapper -->
 
-  </div>
   <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
@@ -511,30 +582,122 @@
         
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
-          <a class="btn btn-danger" href="/">Yes</a>
+          <a class="btn btn-danger" href="/logout">Yes</a>
         </div>
       </div>
     </div>
   </div>
 
+   <div class="modal fade" id="profileModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>Name: {{firstName}} {{lastName}}</div>
+            <div>Email: {{currEmail}}</div>
+            <div>UserType: {{currType}}</div>
+          </div>
+        
+          <div class="modal-footer">
+            <a class="btn btn-success" id ="editProfile" data-toggle="modal" data-target="#enterPassword"  data-dismiss="modal" aria-label="Close">Edit Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--Confirm Password Modal-->
+    <div class="modal fade" id="enterPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Please enter your password to confirm</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="password" name="password" id="confirmPassLabel">
+              <div id = 'errorMessage'></div>
+          </div>
+        
+          <div class="modal-footer">
+            <button  id = "confirmBtn" class="btn btn-success">Submit</button> 
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- Edit Profile Modal-->
+     <div class="modal" id = "editProfileModal"> 
+
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2>Edit Profile</h2>
+
+               <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                    <span id = "editProfileClose" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+               </button>
+          </div>
+
+     <div class="card-body" >
+                  <div>First Name</div>
+                  <input type = 'text' id = 'firstNameLabel' name = 'fname' class = 'alphaonlytext'>
+                  <div>Last Name </div>
+                  <input type = 'text' id = 'lastNameLabel' name = 'lname' class = 'alphaonlytext2'>
+                  <div>Email: </div>
+                  <input type = 'emails' name = 'email' id = 'emailLabel'>
+                  <div>New Password: </div>
+                  <input type = 'password' name = 'password' id = 'npass'>
+                  <div>Confirm Password </div> 
+                  <input type="password" id = 'cpass' name = 'confpassword'>
+                  <div id = 'editFormMessage'></div>
+                  <div>
+                      <input type = "submit" class = 'btn btn-primary' value = 'Save' id = 'editProfileBtn'>
+                  </div>
+          </div>
+      </div>
+   </div>
+
+
+
   
   <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+  <script src="j/s/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
+  <script src="/js/demo/datatables-demo.js"></script>
     <script>
+        $(document).ready(function(){
+    $(".alphaonlytext").keypress(function(event){
+        var inputValue = event.which;
+        // allow letters and whitespaces only.
+        if(!(inputValue >= 65 && inputValue <= 90) && !(inputValue >= 97 && inputValue <= 122) && (inputValue != 0 && inputValue != 46)) { 
+            event.preventDefault(); 
+        }
+    });
+           $(".alphaonlytext2").keypress(function(event){
+        var inputValue = event.which;
+        // allow letters and whitespaces only.
+        if(!(inputValue >= 65 && inputValue <= 90) && !(inputValue >= 97 && inputValue <= 122) && (inputValue != 0)) { 
+            event.preventDefault(); 
+        }
+    });
+});
         // Get the modal
         var modal = document.getElementById("myModal");
 
@@ -570,6 +733,13 @@
 
         // Get the <span> element that closes the modal
         var span2 = document.getElementsByClassName("close2")[0];
+
+        
+     var editProfile = document.getElementById("editProfileModal");
+     var enterPass = document.getElementById("enterPassword");
+     var profile = document.getElementById("profileModal");
+     // var confirmBtn = document.getElementById("editProfile2");
+      
 
 
         // When the user clicks anywhere outside of the modal, close it

@@ -7,6 +7,7 @@ const Inventory = require("../model/inventory")
 const clerkRequests = require("../model/clerk_requests")
 const stockmanRequests = require("../model/stockman_requests")
 const deliveryTracker = require("../model/delivery_tracker")
+const orders = require("../model/transaction")
 
 router.get("/",(req,res)=>{
     Promise.resolve(Requests.getClerkAddRequests()).then(function(clerkEditRequests){
@@ -15,7 +16,13 @@ router.get("/",(req,res)=>{
                 res.render("requisitions.hbs",{
                     clerkEditRequests:clerkEditRequests,
                     stockmanEditRequests:stockmanEditRequests,
-                    stockmanReleaseRequests:stockmanReleaseRequests
+                    stockmanReleaseRequests:stockmanReleaseRequests,
+                    userType:req.session.userType,
+                    firstName: req.session.firstName,
+                    lastName :req.session.lastName,
+                    currEmail: req.session.email,
+                    currType: req.session.type,
+                    password: req.session.password
                 })
             })
         })
@@ -28,6 +35,9 @@ router.post("/clerkAdd",(req,res)=>{
     let unitCost = req.body.unitCost
     let quantity = req.body.quantity
     let action = req.body.action
+    let poNumber = req.body.poNumber
+    
+    console.log("PO:" + poNumber)
     
     var empty = false
     
@@ -44,15 +54,18 @@ router.post("/clerkAdd",(req,res)=>{
             Promise.resolve(Inventory.create(itemID,quantity,new Date().toISOString().slice(0, 19).replace('T', ' '),unitCost)).then(function(){
                 Promise.resolve(deliveryTracker.inInventory(clerkAddRequestID,1)).then(function(){
                     Promise.resolve(clerkRequests.updateStatus(clerkAddRequestID,'Approved')).then(function(){
-                        res.render("requisitions.hbs",{
-                            message:2
+                        Promise.resolve(orders.arrived(itemID,quantity,unitCost,poNumber)).then(function(){
+                            res.render("requisitions.hbs",{
+                                message:2
+                            })
                         })
                     })
                 })
             })
         }
         else{
-            Promise.resolve(stockmanRequests.changeReleaseStatus(requestID,'Declined')).then(function(){
+            console.log("Decline")
+            Promise.resolve(clerkRequests.updateStatus(clerkAddRequestID,'Declined')).then(function(){
                 res.redirect("/requisitions")
             })
         }

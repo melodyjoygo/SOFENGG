@@ -14,7 +14,13 @@ router.get("/",(req,res)=>{
                res.render("projects.hbs",{
                     projects:projects,
                     clients:clients,
-                    materials:materials
+                    materials:materials,
+                    userType:req.session.userType,
+                    firstName: req.session.firstName,
+                    lastName :req.session.lastName,
+                    currEmail: req.session.email,
+                    currType: req.session.type,
+                    password: req.session.password
                 }) 
             }) 
         })
