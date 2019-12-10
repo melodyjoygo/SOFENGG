@@ -152,7 +152,7 @@
                     projID:projID
                 },function(data){
                     for(let i = 0; i < data.length; i++){
-                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\" - " + data[i].supplierName +"</td><td>"+ data[i].quantity +"</td><td><button class = 'editProjectMaterialsBtn btn-danger btn' data-id = '"+ data[i].pmID + "' data-itemID = '"+ data[i].materialID+ "' data-quantity = '" + data[i].quantity + "' data-projectID = '"+ data[i].projectID+"'><u>Edit</u></button><td></tr>"
+                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\" - " + data[i].supplierName +"</td><td>"+ data[i].quantity +"</td><td><button class = 'editProjectMaterialsBtn btn-success btn' data-id = '"+ data[i].pmID + "' data-itemID = '"+ data[i].materialID+ "' data-quantity = '" + data[i].quantity + "' data-projectID = '"+ data[i].projectID+"'><u>Edit</u></button><td></tr>"
                         $('table.projectmaterials tbody').append(newRow);
                     }
                     $('#viewModal').css("display", "block");
@@ -199,7 +199,7 @@
                     projID:projID
                 },function(data){
                     for(let i = 0; i < data.length; i++){
-                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\" - " + data[i].supplierName +"</td><td>"+ data[i].quantity +"</td><td><button class = 'editProjectMaterialsBtn btn-danger btn' data-id = '"+ data[i].pmID + "' data-itemID = '"+ data[i].materialID+ "' data-quantity = '" + data[i].quantity + "' data-projectID = '"+ data[i].projectID+"'><u>Edit</u></button><td></tr>"
+                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\" - " + data[i].supplierName +"</td><td>"+ data[i].quantity +"</td><td><button class = 'editProjectMaterialsBtn btn-success btn' data-id = '"+ data[i].pmID + "' data-itemID = '"+ data[i].materialID+ "' data-quantity = '" + data[i].quantity + "' data-projectID = '"+ data[i].projectID+"'><u>Edit</u></button><td></tr>"
                         $('table.projectmaterials tbody').append(newRow);
                     }
                     $('#viewModal').css("display", "block");
