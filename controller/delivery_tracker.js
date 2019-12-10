@@ -47,7 +47,7 @@ router.post("/restock",(req,res)=>{
         Promise.resolve(ClerkRequest.getCurrRequest()).then(function(data){
              let count = data[0].count + 1
              Promise.resolve(Deliveries.createSuperAdmin(deliveryReceiptNumber,itemID,qty,invoiceNumber,poNumber,unitPrice,userID,count)).then(function(){
-                Promise.resolve(ClerkRequest.addToInvRequest(itemID,qty,unitPrice,userID,'Pending')).then(function(){
+                Promise.resolve(ClerkRequest.addToInvRequest(itemID,qty,unitPrice,userID,'Pending',poNumber)).then(function(){
                     res.render("delivery_tracker.hbs",{
                         message:2
                     })
