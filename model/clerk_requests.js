@@ -1,9 +1,9 @@
 const Database = require("./database");
 var database = new Database();
 
-exports.addToInvRequest = function(materialID,quantity,unitPrice,userID,status){
+exports.addToInvRequest = function(materialID,quantity,unitPrice,userID,status,poNumber){
      Promise.resolve(database.query("SELECT COUNT(requestID) AS 'count' FROM clerk_add_request")).then(function(value) {
-        database.query("INSERT INTO clerk_add_request (requestID, materialID,quantity,unitPrice,userID,status) VALUES ?", [[[(value[0].count + 1), materialID,quantity,unitPrice,userID,status]]])
+        database.query("INSERT INTO clerk_add_request (requestID, materialID,quantity,unitPrice,userID,status,poNumber) VALUES ?", [[[(value[0].count + 1), materialID,quantity,unitPrice,userID,status,poNumber]]])
     })
 }
 
@@ -11,8 +11,8 @@ exports.getCurrRequest = function(){
     return database.query("SELECT COUNT(requestID) AS 'count' FROM clerk_add_request")
 }
 
-exports.edit = function(unitPrice,requestID){
-    return database.query("UPDATE clerk_add_request SET unitPrice = ? WHERE requestID = ?",[unitPrice,requestID])
+exports.edit = function(unitPrice,poNumber,requestID){
+    return database.query("UPDATE clerk_add_request SET unitPrice = ?,poNumber = ? WHERE requestID = ?",[unitPrice,poNumber,requestID])
 }
  
 exports.updateStatus = function(requestID,status){

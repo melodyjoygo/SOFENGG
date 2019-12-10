@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Tables</title>
+  <title>UpRising</title>
 
   <!-- Custom fonts for this template -->
   <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -217,6 +217,9 @@
                 else{
                     $("#errorMessage").html("Wrong Password")
                     $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
                 }
             })
             
@@ -241,14 +244,23 @@
                     else if(data === "exist"){
                         $("#editFormMessage").html("Email Already Exists")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "invalid"){
                         $("#editFormMessage").html("Invalid Email")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "empty"){
                         $("#editFormMessage").html("Please Do Not Leave Empty Fields")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                 })
             })
@@ -270,7 +282,7 @@
     <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/stockman">
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
           </div>
@@ -301,6 +313,12 @@
           <a class="nav-link" href="/stockman/requests">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Release Requests</span></a>
+        </li>
+        <li class="nav-item active">
+          <li class="nav-item">
+          <a class="nav-link" href="/stockman/inventory">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Inventory</span></a>
         </li>
         
        

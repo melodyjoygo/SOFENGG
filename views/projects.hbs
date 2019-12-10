@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Buttons</title>
+  <title>UpRising</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -152,7 +152,7 @@
                     projID:projID
                 },function(data){
                     for(let i = 0; i < data.length; i++){
-                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\" - " + data[i].supplierName +"</td><td>"+ data[i].quantity +"</td><td>0</td><td>0</td><td><button class = 'editProjectMaterialsBtn btn-danger btn' data-id = '"+ data[i].pmID + "' data-itemID = '"+ data[i].materialID+ "' data-quantity = '" + data[i].quantity + "' data-projectID = '"+ data[i].projectID+"'><u>Edit</u></button><td></tr>"
+                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\" - " + data[i].supplierName +"</td><td>"+ data[i].quantity +"</td><td><button class = 'editProjectMaterialsBtn btn-success btn' data-id = '"+ data[i].pmID + "' data-itemID = '"+ data[i].materialID+ "' data-quantity = '" + data[i].quantity + "' data-projectID = '"+ data[i].projectID+"'><u>Edit</u></button><td></tr>"
                         $('table.projectmaterials tbody').append(newRow);
                     }
                     $('#viewModal').css("display", "block");
@@ -170,6 +170,8 @@
                 $('#myBtn').css("display","none")
                 $('button.viewdetails').css("display","none")
                 $('button.editProjectDetails').css("display","none")
+                $('#itemTable td:nth-child(5),#itemTable th:nth-child(5)').hide()
+                $('#itemTable td:nth-child(6),#itemTable th:nth-child(6)').hide()
             }    
             
             if(warning === 1){
@@ -197,7 +199,7 @@
                     projID:projID
                 },function(data){
                     for(let i = 0; i < data.length; i++){
-                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\" - " + data[i].supplierName +"</td><td>"+ data[i].quantity +"</td><td>0</td><td>0</td><td><button class = 'editProjectMaterialsBtn btn-danger btn' data-id = '"+ data[i].pmID + "' data-itemID = '"+ data[i].materialID+ "' data-quantity = '" + data[i].quantity + "' data-projectID = '"+ data[i].projectID+"'><u>Edit</u></button><td></tr>"
+                        var newRow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\" - " + data[i].supplierName +"</td><td>"+ data[i].quantity +"</td><td><button class = 'editProjectMaterialsBtn btn-success btn' data-id = '"+ data[i].pmID + "' data-itemID = '"+ data[i].materialID+ "' data-quantity = '" + data[i].quantity + "' data-projectID = '"+ data[i].projectID+"'><u>Edit</u></button><td></tr>"
                         $('table.projectmaterials tbody').append(newRow);
                     }
                     $('#viewModal').css("display", "block");
@@ -304,6 +306,9 @@
                 else{
                     $("#errorMessage").html("Wrong Password")
                     $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
                 }
             })
             
@@ -328,14 +333,23 @@
                     else if(data === "exist"){
                         $("#editFormMessage").html("Email Already Exists")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "invalid"){
                         $("#editFormMessage").html("Invalid Email")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "empty"){
                         $("#editFormMessage").html("Please Do Not Leave Empty Fields")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                 })
             })
@@ -356,7 +370,7 @@
     <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -584,7 +598,7 @@
                         
                 </div>
                 
-              <div class="modal-body">
+              <div class="modal-body pre-scrollable">
               <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Materials</h6>
@@ -596,8 +610,6 @@
                                <tr>
                                    <th>Material</th>
                                    <th>Quantity</th>
-                                   <th>Unit Cost</th>
-                                   <th>Total Cost</th>
                                    <th>Edit</th>
                                </tr>
                            </thead>
@@ -691,7 +703,7 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <table class="table table-bordered" id="itemTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
                         <th>Company Name</th>
@@ -707,7 +719,7 @@
                       <tr>
                         <td>{{this.clientName}}</td>
                         <td>{{this.projectNumber}}</td>
-                        <td>{{this.dateAdded}}</td>
+                        <td>{{this.date}}</td>
                         <td>{{this.status}}</td>
                         <td><button class = "viewdetails btn btn-success" data-id = '{{this.projectID}}'>View Materials</button></td>
                         <td><button class = "editProjectDetails btn btn-success" data-id = '{{this.projectID}}' data-status = '{{this.status}}' data-clientID = '{{this.clientID}}'>Edit</button></td>  

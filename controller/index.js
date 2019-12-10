@@ -6,6 +6,10 @@ const Projects = require("../model/projects");
 
 const Users = require("../model/user")
 const key = "password_key"
+router.use(function(req, res, next) {
+  res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0')
+  next()
+})
 router.use("/employees", loginRequired,require("./employees"))
 router.use("/clients",loginRequired,require("./clients"))
 router.use("/suppliers",loginRequired,require("./suppliers"))

@@ -16,7 +16,7 @@ router.get("/",(req,res)=>{
                     clients:clients,
                     materials:materials,
                     userType:req.session.userType,
-                   firstName: req.session.firstName,
+                    firstName: req.session.firstName,
                     lastName :req.session.lastName,
                     currEmail: req.session.email,
                     currType: req.session.type,

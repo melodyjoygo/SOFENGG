@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Buttons</title>
+  <title>UpRising</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -47,6 +47,8 @@
         let warning = {{error}}
         $( document ).ready(function() {
             
+            
+            
             $('#confirmBtn').click(function(){
                 let pass = $('#confirmPassLabel').val()
                 
@@ -63,7 +65,15 @@
                 else{
                     $("#errorMessage").html("Wrong Password")
                     $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
                 }
+            })
+            
+            $('#confirmPasslabel').on('input',function(){
+                console.log("KSKDJKSJ")
+                $("#errorMessage").css("display","none")
             })
             
             $('#editProfileBtn').click(function(){
@@ -87,14 +97,23 @@
                     else if(data === "exist"){
                         $("#editFormMessage").html("Email Already Exists")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "invalid"){
                         $("#editFormMessage").html("Invalid Email")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "empty"){
                         $("#editFormMessage").html("Please Do Not Leave Empty Fields")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                 })
             })
@@ -111,7 +130,7 @@
     <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -123,7 +142,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="dashboard">
+        <a class="nav-link" href="/dashboard">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -278,7 +297,7 @@
                           {{#each projects}}
                             <tr>
                               <td>{{this.projectNumber}}</td>
-                              <td>{{this.dateAdded}}</td>
+                              <td>{{this.date}}</td>
                               <td>{{this.status}}</td>
                             </tr>
                             {{/each}}
@@ -349,7 +368,7 @@
                             <tr>
                               <td>{{this.materialName}}</td>
                               <td>{{this.quantity}}</td>
-                              <td>{{this.dateModified}}</td>
+                              <td>{{this.dateModifiedFormat}}</td>
 
                             </tr>
                             {{/each}}

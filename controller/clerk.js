@@ -92,7 +92,7 @@ router.post("/addPrice",(req,res)=>{
                 Promise.resolve(ClerkRequest.getCurrRequest()).then(function(data){
                     let count = data[0].count + 1
                     Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,count)).then(function(value){
-                        Promise.resolve(ClerkRequest.addToInvRequest(itemID,quantity,unitCost,userID,'Pending')).then(function(value){
+                        Promise.resolve(ClerkRequest.addToInvRequest(itemID,quantity,unitCost,userID,'Pending',poNumber)).then(function(value){
                             res.render("clerk_price_input.hbs",{
                                 message:2
                             })
@@ -113,6 +113,8 @@ router.post("/editPrice",(req,res)=>{
     let unitCost = req.body.unitCost
     let deliveryID = req.body.deliveryID
     let requestID = req.body.requestID
+
+    console.log(poNumber)
     var empty = false
     
     if(invoiceNumber === '' || poNumber === "" || unitCost === "" || deliveryID === "" || requestID === "")
@@ -125,7 +127,7 @@ router.post("/editPrice",(req,res)=>{
     }
     else{
         Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,requestID)).then(function(value){
-            Promise.resolve(ClerkRequest.edit(unitCost,requestID)).then(function(value){
+            Promise.resolve(ClerkRequest.edit(unitCost,poNumber,requestID)).then(function(value){
                 res.render("clerk_delivery_tracker.hbs",{
                     message:2
                 })

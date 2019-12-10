@@ -18,9 +18,6 @@
   <!-- Custom styles for this template-->
   <link href="/stylesheets/sample.css" rel="stylesheet">
     <style>
-        .smallnumbox {
-            width:30px;
-        }
         .plusicon {
             color:white;
         }
@@ -41,11 +38,7 @@
             background-color: rgb(0,0,0); /* Fallback color */
             background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         }
-        .modal-ku {
-            width:900px;
-            margin:auto;
-        }
-        
+
 /* Modal Content */
         .modal-content {
             position: relative;
@@ -101,6 +94,14 @@
             color: black;
         }
         
+        #userid{
+            display : none;
+        }
+        
+        .currValues{
+            display : none;
+        }
+        
         input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
@@ -110,10 +111,7 @@
             -moz-appearance: textfield;
         }
         
-        #transactionid{
-            display : none;
-        }
-        #errorMessage{
+       #errorMessage{
             color : red;
             display : none;
         }
@@ -128,6 +126,7 @@
 
   <!-- Custom styles for this page -->
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
     <script src = '/jQuery.js'></script>
     <script>
         let firstName = "{{firstName}}"
@@ -136,41 +135,41 @@
         let password = "{{password}}"
         let warning = {{message}}
         $( document ).ready(function() {
-            
-            let userType = "{{userType}}"
-            if(userType == "2" || userType == "1"){
-                $('#myBtn').css("display","none")
-                $('button.edit').css("display","none")
-                $('#itemTable td:nth-child(8),#itemTable th:nth-child(8)').hide()
-            }
-            
             if(warning === 1){
-                alert("Please Do Not Leave Empty Fields")
-                window.location = '/orders';
+                alert("Please Do Not Leave Fields Empty")
+                window.location = '/stockman';
             }
             else if(warning === 2){
-                alert("Order Successfully Placed")
-                window.location = '/orders'
+                alert("Item has been Added")
+                window.location = '/stockman';
             }
             else if(warning === 3){
-                alert("Edit Successfully Saved")
-                window.location = '/orders'
+                alert("Edit Request Sent")
+                window.location = '/stockman';
             }
             
+            
             $('button.edit').click(function(){
-                let transactionID = $(this).attr("data-id")
-                let itemID= $(this).attr("data-itemid")
-                let qty = $(this).attr("data-qty")
-                let price = $(this).attr("data-price")
-                let poNumber = $(this).attr("data-po")
+                let deliveryID = $(this).attr("data-id")
+                let itemID = $(this).attr("data-item")
+                let qty = $(this).attr("data-quantity")
+                let suppID = $(this).attr("data-supplier")
+                let receipt = $(this).attr("data-receipt")
                 
-                $("#transactionid").val(transactionID)
-                $("#itemdropdown").val(itemID)
-                $("#quantity").val(qty)
-                $("#cost").val(price)
-                $("#po").val(poNumber)
+                console.log(deliveryID)
                 
-                editmodal.style.display = "block";
+                $('#editdeliveryid').val(deliveryID)
+                $('#editdeliveryReceiptNumberLabel').val(receipt)
+                $('#supplier_dropdown').val(suppID)
+                $('#item_dropdown').val(itemID)
+                $('#editqtyLabel').val(qty)
+                
+                $('#currdeliveryReceiptNumberLabel').val(receipt)
+                $('#currsuppIDLabel').val(suppID)
+                $('#curritemIDLabel').val(itemID)
+                $('#currqtyLabel').val(qty)
+                
+                modal2.style.display = "block";
             })
             
             $('#confirmBtn').click(function(){
@@ -211,7 +210,7 @@
                 },function(data){
                     if(data === "success"){
                         alert("Account Details Saved")
-                        window.location = '/orders'
+                        window.location = '/stockman'
                     }
                     else if(data === "exist"){
                         $("#editFormMessage").html("Email Already Exists")
@@ -253,7 +252,7 @@
     <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/stockman">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -261,14 +260,8 @@
       </a>
 
       <!-- Divider -->
-     <hr class="sidebar-divider my-0">
+      <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="dashboard">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -278,55 +271,23 @@
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="/inventory">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Inventory</span></a>
-      </li>
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="/requisitions">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Requisitions</span></a>
-      </li>
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="/employees">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Employees</span></a>
-      </li>
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="/clients">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Clients</span></a>
-      </li>
+          <li class="nav-item">
+          <a class="nav-link" href="/stockman">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Deliveries</span></a>
+        </li>
         <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="/projects">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Projects</span></a>
-      </li>
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="/suppliers">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Suppliers</span></a>
-      </li>
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="/orders">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Orders</span></a>
-      </li>
-    
-      <li class="nav-item active">
-        <li class="nav-item">
-        <a class="nav-link" href="/delivery_tracker">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Delivery Tracker</span></a>
-      </li>
-
+          <li class="nav-item">
+          <a class="nav-link" href="/stockman/requests">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Release Requests</span></a>
+        </li>
+        <li class="nav-item active">
+          <li class="nav-item">
+          <a class="nav-link" href="/stockman/inventory">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Inventory</span></a>
+        </li>
        
     
 
@@ -356,12 +317,13 @@
             <i class="fa fa-bars"></i>
           </button>
 
-       
+         
+
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
            
-           
+
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -384,7 +346,9 @@
                 </a>
               </div>
             </li>
+
           </ul>
+
         </nav>
         <!-- End of Topbar -->
 
@@ -392,98 +356,109 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Orders<a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
-                <span class="icon text-white-50">
-                    <b class = "plusicon">+</b>
-                </span>
-                <span class="text">Order Stock</span>
-        </a></h1>
-          <!-- The Modal -->
-            <div id="myModal" class="modal">
+        <h1 class="h3 mb-4 text-gray-800">Deliveries
+            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
+            <span class="icon text-white-50">
+                <b class = "plusicon">+</b>
+            </span>
+            <span class="text">Restock Item</span>
+            </a>
+         
+            </h1>
+        <div id="myModal" class="modal">
 
                 <!-- Modal content -->
-                <div class = "modal-dialog modal-ku modal-lg">
-                <div class = "modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Order Stock</h5>
-                        <span class="close btn btn-danger btn-circle btn-sm">&times;</span>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Restock Item</h5>
+                        <span class="btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
                         
                     </div>
-                    <form action = "orders/add" method = "post">
+                    <form action = "/stockman/restock" method = "post">
                         <div class="modal-body">
-                            <div class = "row">
-                                <div class = "col-md-4">
-                                    <div>Item Name</div>
-                                    <select name = "item">
+                            <table name = "inventmaterials">
+                                <tr>
+                                    <th>Delivery Receipt Number</th>
+                                    <th>Item Name</th>
+                                    <th>Qty</th>
+
+                                </tr>
+                                <tr>
+                                <td>
+                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="deliveryReceiptNumberLabel">
+                                </td>
+                                <td>
+                                    <select name = "itemID" id="material_dropdown">
                                             {{#each items}}
-                                                <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
+                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}" - {{this.supplierName}}</option>
                                             {{/each}}
-                                        </select>
-                                </div>
-                                <div class = "col-md-1">
-                                    <div>Qty</div>
-                                    <input name = "qty" type = "number" class = "smallnumbox" min = '0' pattern="[0-9]">
-                                </div>
-                                <div class = "col-md-3">
-                                    <div>Unit Cost</div>
-                                    <input name = "unitcost" type = "number" min = '0' step="0.01">
-                                </div>
-                                <div class = "col-md-3">
-                                    <div>P.O. Number</div>
-                                    <input name = "poNumber" type = "text">
-                                </div>
-                            </div>
-                            
+                                    </select>   
+                                </td>
+                              
+                    
+                                <td>
+                                    <input class="form-control" type = "number" name = "qty" id="qtyLabel">
+                                </td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="modal-footer">
-                            <button type = "submit" class = "btn btn-success">Save</button>
+                            <button type = "submit" class = "btn btn-success">Restock</button>
                         </div>
                     </form>
                     
                 </div>
-                    </div>
-                    </div>
-                    </div>
-                
-            
 
-             <div id="editModal" class="modal">
+            </div> 
+
+            <div id="editModal" class="modal">
 
             <!-- Modal content -->
-            <div class="modal-content">
+           <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit </h5>
-                    <span class="close btn btn-danger btn-circle btn-sm" id = 'closeEdit'>&times;</span>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Item</h5>
+                    <span class="close btn btn-danger btn-circle btn-sm" id ="close3">&times;</span>
                         
                 </div>
-                <form action = "orders/edit" method = "post">
+                <form action = "/stockman/editRequest" method = "post">
                         <div class="modal-body">
-                            <input type = 'text' id = 'transactionid' name = 'transactionID'>
-                             <table name = "ordermaterials">
+                            <input type = 'text' class = 'currValues' id = 'editdeliveryid' name = 'deliveryID'>
+                            <input type = 'text' class = 'currValues' id = 'currdeliveryReceiptNumberLabel' name = 'currdeliveryReceiptNumber'>
+                            <input type = 'text' class = 'currValues' id = 'curritemIDLabel' name = 'curritemID'>
+                            <input type = 'text' class = 'currValues' id = 'currqtyLabel' name = 'currqty'>
+                            <input type = 'text' class = 'currValues' id = 'currsuppIDLabel' name = 'currsuppID'>
+                            
+                            <table name = "inventmaterials">
                                 <tr>
+                                    <th>Delivery Receipt Number</th>
                                     <th>Item Name</th>
-                                    <th>Qty.</th>
-                                    <th>Unit Cost</th>
-                                    <th>P.O. Number</th>
+                                    <th>Qty</th>
+                                    <th>Supplier</th>
+
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <select name = "itemID" id='itemdropdown'>
+                                <td>
+                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="editdeliveryReceiptNumberLabel">
+                                </td>
+                                <td>
+                                    <select name = "itemID" id="item_dropdown">
                                             {{#each items}}
-                                                <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
+                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}"</option>
                                             {{/each}}
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input name = "qty" type = "number" id = 'quantity' min = '0' pattern="[0-9]">
-                                    </td>
-                                    <td>
-                                        <input name = "unitcost" type = "number" id = 'cost' min = '0' step="0.01">
-                                    </td>
-                                    <td>
-                                        <input name = "poNumber" type = "text" id = 'po'>
-                                    </td>
+                                    </select>   
+                                </td>
+                              
+                    
+                                <td>
+                                    <input class="form-control" type = "number" name = "qty" id="editqtyLabel">
+                                </td>
+                                 <td>
+                                    <select name = "suppID" id="supplier_dropdown">
+                                            {{#each suppliers}}
+                                                <option value = '{{this.supplierID}}'>{{this.supplierName}}</option>
+                                            {{/each}}
+                                    </select>   
+                                </td>
                                 </tr>
                             </table>
                         </div>
@@ -491,62 +466,54 @@
                             <button type = "submit" class = "btn btn-success">Save</button>
                         </div>
                     </form>
-                </div>
-            </div> 
-          <!-- DataTales Example -->
-          <div id = "bodydiv" style="display: flex flex-direction: column">
+            </div>
 
-            <div style="display: flex;flex-direction: column float:left;">
-                  <div class="card shadow mb-4" style="display: flex;flex-direction: column">
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-bordered" id="itemTable" width="100%" cellspacing="0">
-                    <thead>
-                      <tr>
-                        <th>Item</th>
-                        <th>P.O. Number</th>
-                        <th>Supplier</th>
-                        <th>Qty</th>
-                        <th>Cost</th>
-                        <th>Date Ordered</th>
-                        <th>Status</th>
-                        <th>Edit</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {{#each orders}}
-                      <tr>
-                        <td>{{this.type}} - "{{this.materialName}}"</td>
-                        <td>{{this.poNumber}}</td>
-                        <td>{{this.supplierName}}</td>
-                        <td>{{this.quantity}}</td>
-                        <td>{{this.price}}</td>
-                        <td>{{this.dateFormat}}</td> 
-                        <td>{{this.status}}</td>
-                          <td><button class = "btn btn-success edit" data-id = '{{this.transactionID}}' data-itemid = '{{this.materialID}}' data-qty = '{{this.quantity}}' data-price = '{{this.price}}' data-po = '{{this.poNumber}}'><U>Edit</U></button></td>
-                      </tr>
-                      {{/each}}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-             
-      </div> 
-       
-            </div>
+        </div>
           
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Deliveries</h6>
             </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Receipt Number</th>
+                      <th>Item Name</th>
+                      <th>Supplier</th>
+                      <th>Qty</th>
+                      <th>In Inventory</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                        
+                  <tbody>
+                      {{#each deliveries}}
+                        <tr>
+                            <td>{{this.deliveryReceiptNumber}}</td>
+                            <td>{{this.type}} - "{{this.materialName}}"</td>
+                            <td>{{this.supplierName}}</td>
+                            <td>{{this.quantity}}</td>
+                            <td>{{this.status}}</td>
+                            <td><button class = 'edit btn-success btn' data-id = '{{this.deliveryID}}' data-item = '{{this.materialID}}' data-quantity = '{{this.quantity}}' data-supplier = '{{this.supplierID}}' data-receipt = '{{this.deliveryReceiptNumber}}'><u>Edit</u></button></td>
+                        </tr>
+                      {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
   
           </div>
-             
-       
           <!-- /.container-fluid -->
   
         </div>
         <!-- End of Main Content -->
 
- 
-
+  
     </div>
     <!-- End of Content Wrapper -->
 
@@ -563,12 +530,11 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to log out?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Are your sure you want to log out?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
           <a class="btn btn-danger" href="/logout">Yes</a>
@@ -577,7 +543,7 @@
     </div>
   </div>
 
-  <!-- Profile Modal-->
+     <!-- Profile Modal-->
     <div class="modal fade" id="profileModal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -651,7 +617,6 @@
           </div>
       </div>
    </div>
-
     
       <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
@@ -669,6 +634,7 @@
 
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
+    <!--modalscript-->
     <script>
         $(document).ready(function(){
     $(".alphaonlytext").keypress(function(event){
@@ -688,29 +654,47 @@
 });
         // Get the modal
         var modal = document.getElementById("myModal");
-        var editmodal = document.getElementById("editModal");
+        var modal2 = document.getElementById("editModal");
 
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
+        var editbtn = document.getElementById("edit");
 
         // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-        var span1 = document.getElementById('closeEdit')
+        var span2 = document.getElementById("close2");
+        var span3 = document.getElementById("close3");
+
+       
+     var editProfile = document.getElementById("editProfileModal");
+     var enterPass = document.getElementById("enterPassword");
+     var profile = document.getElementById("profileModal");
+     // var confirmBtn = document.getElementById("editProfile2");
+      
+      
 
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
             modal.style.display = "block";
         }
+       
+        // When the user clicks on <span> (x), close the modal
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
 
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
+        span2.onclick = function() {
             modal.style.display = "none";
         }
 
-        
-        span1.onclick = function() {
-            editmodal.style.display = "none";
+        span3.onclick = function() {
+            modal2.style.display = "none";
         }
+
         
      var editProfile = document.getElementById("editProfileModal");
      var enterPass = document.getElementById("enterPassword");
@@ -718,14 +702,17 @@
      // var confirmBtn = document.getElementById("editProfile2");
       
 
+      
+
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
+            if (event.target == modal2) {
+                modal2.style.display = "none";
+            }    
             if (event.target == modal) {
                 modal.style.display = "none";
-            }
-            if (event.target == editmodal) {
-                editmodal.style.display = "none";
-            } 
+            }         
+
         }
     </script>
 </body>

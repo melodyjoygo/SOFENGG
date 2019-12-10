@@ -44,5 +44,5 @@ exports.setQuantity = function(quantity,inventoryID){
 }
 
 exports.getLowOnStock = function(){
-    return database.query("SELECT * FROM inventory INNER JOIN materials ON inventory.materialID = materials.materialID WHERE quantity <=20");
+    return database.query("SELECT *,date_format(dateModified, '%Y-%m-%d') AS dateModifiedFormat FROM inventory INNER JOIN materials ON inventory.materialID = materials.materialID WHERE quantity <=20");
 }

@@ -6,6 +6,7 @@ const materialType = require("../model/materials_types")
 const Clients = require("../model/clients")
 const Suppliers = require("../model/suppliers");
 const Inventory = require("../model/inventory");
+const Releases = require("../model/stockman_requests")
 
 function titleCase(str) {
    var splitStr = str.toLowerCase().split(' ');
@@ -21,19 +22,43 @@ router.get("/",(req,res)=>{
             Promise.resolve(Inventory.getAllTableView()).then(function(inventory){
                 Promise.resolve(Inventory.getAllMeasurements()).then(function(units){
                     Promise.resolve(materials.getAllWithSupplier()).then(function(items){
-                        res.render("inventory.hbs",{
-                            types:types,
-                            supplier:suppliers,
-                            inventory:inventory,
-                            unit:units,
-                            items:items,
-                            userType:req.session.userType,
-                            firstName: req.session.firstName,
-                            lastName :req.session.lastName,
-                            currEmail: req.session.email,
-                            currType: req.session.type,
-                            password: req.session.password
-                        }) 
+                        Promise.resolve(Releases.getYears()).then(function(years){
+                            if (years != ''){
+                                Promise.resolve(Releases.getReleased(1,years[0].years)).then(function(released){
+                                    res.render("inventory.hbs",{
+                                        types:types,
+                                        supplier:suppliers,
+                                        inventory:inventory,
+                                        unit:units,
+                                        items:items,
+                                        years:years,
+                                        released:released,
+                                        userType:req.session.userType,
+                                        firstName: req.session.firstName,
+                                        lastName :req.session.lastName,
+                                        currEmail: req.session.email,
+                                        currType: req.session.type,
+                                        password: req.session.password
+                                    })
+                                })
+                            }
+                            else{
+                                res.render("inventory.hbs",{
+                                    types:types,
+                                    supplier:suppliers,
+                                    inventory:inventory,
+                                    unit:units,
+                                    items:items,
+                                    years:years,
+                                    userType:req.session.userType,
+                                    firstName: req.session.firstName,
+                                    lastName :req.session.lastName,
+                                    currEmail: req.session.email,
+                                    currType: req.session.type,
+                                    password: req.session.password
+                                })
+                            }
+                        })
                     })
                 })
             })
@@ -181,6 +206,22 @@ router.post("/editMaterialType",async (req,res)=>{
         })
     }
         
+})
+
+router.post("/getReleased",(req,res)=>{
+    let month = req.body.month
+    let year = req.body.year
+
+    if(month == 13){
+        Promise.resolve(Releases.getReleasedAllMonth(year)).then(function(data){
+            res.send(data)
+        })
+    }
+    else{
+        Promise.resolve(Releases.getReleased(month,year)).then(function(data){
+            res.send(data)
+        })
+    }
 })
 
 module.exports = router;
