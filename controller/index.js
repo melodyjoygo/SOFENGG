@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router();
+const JSONToCSV = require("json2csv").parse;
 const cryptojs = require("crypto-js")
 const Inventory = require("../model/inventory");
 const Projects = require("../model/projects");
@@ -18,6 +19,7 @@ router.use("/inventory",loginRequired,require("./inventory"))
 router.use("/orders",loginRequired,require("./orders"))
 router.use("/requisitions",loginRequired,require("./requisitions"))
 router.use("/delivery_tracker",loginRequired,require("./delivery_tracker"))
+router.use("/reports",loginRequired,require("./reports"))
 
 router.use("/stockman",checkStockman,require("./stockman"))
 router.use("/clerk",checkClerk,require("./clerk"))
@@ -87,6 +89,15 @@ router.post("/login" ,(req,res)=>{
         })  
     }
         
+})
+
+router.post("/csvtrial",(req,res)=>{
+    Promise.resolve(Inventory.test()).then(function(data){
+        const csv = JSONToCSV(data,{fields:["Item ID","Item","Material","Supplier","Quantity","Average Unit Cost","Total Cost"]})
+        res.setHeader('Content-disposition','attachment; filename=inventorySample.csv')
+        res.set('Content-Type','text/csv')
+        res.send(csv);
+    })
 })
 
 router.post("/editAccount",(req,res)=>{
@@ -168,10 +179,6 @@ router.get("/dashboard",loginRequired,(req,res)=>{
     })
     })
     
-})
-
-router.get("/reports",loginRequired,(req,res)=>{
-    res.render("reports.hbs")
 })
 
 router.get("/handleMissing",(req,res)=>{
