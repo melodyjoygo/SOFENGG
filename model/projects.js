@@ -23,4 +23,8 @@ exports.editProjectDetails = function(projectID,clientID,status){
     database.query("UPDATE projects SET clientID = ?, status = ? WHERE projectID = ?",[clientID,status,projectID])
 }
 
+exports.getProjectCount = function(month){
+    return database.query("SELECT month(dateAdded) as month, COUNT(month(dateAdded)) as count FROM softengdb.projects GROUP BY month(dateAdded) ORDER BY month(dateAdded);")
+}
+
  
