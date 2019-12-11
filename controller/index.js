@@ -155,6 +155,7 @@ router.get("/logout",(req,res)=>{
 router.get("/dashboard",loginRequired,(req,res)=>{
     Promise.resolve(Inventory.getLowOnStock()).then(function(items){
         Promise.resolve(Projects.getAllTableView()).then(function(projects){
+            Promise.resolve(Projects.getProjectCount()).then(function(projectsCounts){
             res.render("dashboard.hbs",{
                 firstName: req.session.firstName,
                 lastName :req.session.lastName,
@@ -162,10 +163,12 @@ router.get("/dashboard",loginRequired,(req,res)=>{
                 currType: req.session.type,
                 password: req.session.password,
                 items:items,
-                projects:projects
+                projects:projects,
+                projectsCounts:projectsCounts
             })
         })
         
+    })
     })
     
 })

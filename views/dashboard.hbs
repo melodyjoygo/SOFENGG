@@ -320,9 +320,25 @@
                   </div>
                   <!-- Card Body -->
                   <div class="card-body">
-                    <div class="chart-area">
-                      <canvas id="myAreaChart"></canvas>
-                    </div>
+                       <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                          <th>Month</th>
+                          <th>Number of Projects</th>
+                        </thead>
+                        <tbody>
+                          {{#each projectsCounts}}
+                          <tr>
+                            <td>{{this.month}}</td>
+                            <td>{{this.count}}</td>
+
+                          </tr>
+                          {{/each}}
+                        </tbody>
+                      </table>
+                    </div>                    
+                  </div>
                   </div>
                 </div>
               </div>
@@ -443,7 +459,7 @@
 <!-- Edit Profile Modal-->
      <div class="modal" id = "editProfileModal"> 
 
-      <div class="modal-content">
+      <div class="modal-content" style="width: fit-content;">
           <div class="modal-header">
               <h2>Edit Profile</h2>
 
@@ -484,12 +500,9 @@
     <script src="js/sb-admin-2.min.js"></script>
   
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-  
+    
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-
+   
     <script>
         $(document).ready(function(){
     $(".alphaonlytext").keypress(function(event){

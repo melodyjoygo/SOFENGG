@@ -457,20 +457,28 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Release Stock</h5>
                         <form action = "/stockman/releaseStock" method = "post">
-                        <span class="close btn btn-danger btn-circle btn-sm" id = 'closeReleaseConfirmationModal'>&times;</span>
-                        <div class='row'>
+                        <button type="button" id = 'closeReleaseConfirmationModal'class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+                            </button>
+                        <!--<span class="close btn btn-danger btn-circle btn-sm" id = 'closeReleaseConfirmationModal'>&times;</span>-->
+                      </div> 
+                        <div class="modal-body">
+                            <div class="row">
                             Release This Stock ?
+                            </div>
+                            
+                            <input type = 'text' class = 'invLabel' name = 'quantity' id = 'releaseQuantityLabel'>
+                            <input type = 'text' class = 'invLabel' name = 'itemID' id = 'releaseItemIDLabel'>
+                            <input type = 'text' class = 'invLabel' name = 'requestID' id = 'releaseRequestIDLabel'> 
+                            
                         </div>
-                        <input type = 'text' class = 'invLabel' name = 'quantity' id = 'releaseQuantityLabel'>
-                        <input type = 'text' class = 'invLabel' name = 'itemID' id = 'releaseItemIDLabel'>
-                        <input type = 'text' class = 'invLabel' name = 'requestID' id = 'releaseRequestIDLabel'> 
                             
                         <div class="modal-footer">
                             <button type = "submit" class = "btn btn-success" name = 'action' value = 'Accept'>Yes</button>
                             <button type = "submit" class = "btn btn-success" name = 'action' value = 'Decline'>No</button>
                         </div>
                         </form>
-                    </div>
+                    
                 </div>
             </div> 
           
@@ -482,7 +490,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <table class="table table-bordered" id="pendingTable" width="100%" cellspacing="0">
             <thead>
               <tr>
               </tr>
@@ -514,7 +522,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <table class="table table-bordered" id="approvedTable" width="100%" cellspacing="0">
             <thead>
               <tr>
               </tr>
@@ -634,7 +642,7 @@
 <!-- Edit Profile Modal-->
      <div class="modal" id = "editProfileModal"> 
 
-      <div class="modal-content">
+      <div class="modal-content" style="width: fit-content;">
           <div class="modal-header">
               <h2>Edit Profile</h2>
 
