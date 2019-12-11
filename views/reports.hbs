@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Buttons</title>
+  <title>UpRising</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -294,7 +294,7 @@
           <div class="row">
             <div>Report Type</div>  
             <div class ="col-md-4">
-               <select name = "reportType">
+               <select name = "reportType" class="reportType">
                   <option>Inventory Report</option>
                   <option>Released Items Report</option>
                   <option>Released Items per Project Report</option>
@@ -305,7 +305,7 @@
            
 
               <!-- Inventory Reports -->
-              <div class="card shadow mb-4">
+              <div class="card shadow mb-4" id = "inventory_report">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">Inventory Report</h6>
                 </div>
@@ -362,7 +362,7 @@
         </div>
 
         <!-- Released Items Reports -->
-              <div class="card shadow mb-4">
+              <div class="card shadow mb-4" id ="released_items">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">Released Items Report</h6>
                 </div>
@@ -412,7 +412,7 @@
         </div>
 
         <!-- Released Items per Project Reports -->
-              <div class="card shadow mb-4">
+              <div class="card shadow mb-4" id ="released_project">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">Released Items per Project Report</h6>
                 </div>
@@ -491,8 +491,8 @@
         </div>
        
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="/logout">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+          <a class="btn btn-danger" href="/logout">yes</a>
         </div>
       </div>
     </div>
@@ -587,6 +587,60 @@
 
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
+
+  <script>
+     var inventoryReport = document.getElementById("inventory_report");
+    $(document).ready(function(){
+       $( "#released_items" ).hide( "fast", function() {
+             //alert( "Animation complete." );
+          });
+          $( "#released_project" ).hide( "fast", function() {
+             //alert( "Animation complete." );
+          });
+          $( "#inventory_report" ).show( "fast", function() {
+             //alert( "Animation complete." );
+          });
+    $("select.reportType").change(function(){
+        var type = $(this).children("option:selected").val();
+        if(type == "Inventory Report"){
+          //alert("You have selected the country - " + type);
+          $( "#released_items" ).hide( "fast", function() {
+             //alert( "Animation complete." );
+          });
+          $( "#released_project" ).hide( "fast", function() {
+             //alert( "Animation complete." );
+          });
+          $( "#inventory_report" ).show( "fast", function() {
+             //alert( "Animation complete." );
+          });
+
+        }
+        else if(type == "Released Items Report"){
+            $( "#released_items" ).show( "fast", function() {
+             //alert( "Animation complete." );
+          });
+          $( "#released_project" ).hide( "fast", function() {
+             //alert( "Animation complete." );
+          });
+          $( "#inventory_report" ).hide( "fast", function() {
+             //alert( "Animation complete." );
+          });
+        }
+        else if(type == "Released Items per Project Report"){
+          $( "#released_items" ).hide( "fast", function() {
+             //alert( "Animation complete." );
+          });
+          $( "#released_project" ).show( "fast", function() {
+             //alert( "Animation complete." );
+          });
+          $( "#inventory_report" ).hide( "fast", function() {
+             //alert( "Animation complete." );
+          });
+        }
+        
+    });
+});
+  </script>
   
 
 </body>
