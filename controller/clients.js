@@ -27,6 +27,7 @@ router.get("/",(req,res)=>{
 
 router.post("/add",(req,res)=>{
     let client = req.body.clientname.trim()
+    client = client.replace(/<[^>]*>/g, '');
     var exist = false;
     var empty = false;
     
