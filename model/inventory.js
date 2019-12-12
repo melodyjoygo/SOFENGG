@@ -12,7 +12,7 @@ exports.getAll = function() {
 }
 
 exports.getAllTableView = function() {
-    return database.query("SELECT *,SUM(quantity) AS 'totalQty',cast(AVG(unitPrice) as decimal(10,2)) AS 'averageUnitCost',cast((SUM(quantity) * AVG(unitPrice)) as decimal(10,2)) AS 'totalCost' FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID GROUP BY inventory.materialID");
+    return database.query("SELECT *,SUM(quantity) AS 'totalQty',cast(AVG(unitPrice) as decimal(10,2)) AS 'averageUnitCost',cast((SUM(quantity) * AVG(unitPrice)) as decimal(10,2)) AS 'totalCost', unit_of_measures.unitOfMeasure AS 'unit' FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID LEFT JOIN unit_of_measures ON materials.unitOfMeasure = unit_of_measures.uomID GROUP BY inventory.materialID");
 }
 
 exports.restock = function(invID,qty){
@@ -45,4 +45,8 @@ exports.setQuantity = function(quantity,inventoryID){
 
 exports.getLowOnStock = function(){
     return database.query("SELECT *,date_format(dateModified, '%Y-%m-%d') AS dateModifiedFormat FROM inventory INNER JOIN materials ON inventory.materialID = materials.materialID WHERE quantity <=20");
+}
+
+exports.test = function(){
+    return database.query("SELECT inventoryID AS 'Item ID', materialName AS 'Item',type AS 'Material',supplierName AS 'Supplier',SUM(quantity) AS 'Quantity',cast(AVG(unitPrice) as decimal(10,2)) AS 'Average Unit Cost',cast((SUM(quantity) * AVG(unitPrice)) as decimal(10,2)) AS 'Total Cost' FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID GROUP BY inventory.materialID")
 }
