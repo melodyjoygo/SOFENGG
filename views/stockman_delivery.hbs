@@ -433,7 +433,6 @@
                                     <th>Delivery Receipt Number</th>
                                     <th>Item Name</th>
                                     <th>Qty</th>
-                                    <th>Supplier</th>
 
                                 </tr>
                                 <tr>
@@ -443,7 +442,7 @@
                                 <td>
                                     <select name = "itemID" id="item_dropdown">
                                             {{#each items}}
-                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}"</option>
+                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}" - {{this.supplierName}}</option>
                                             {{/each}}
                                     </select>   
                                 </td>
@@ -451,13 +450,6 @@
                     
                                 <td>
                                     <input class="form-control" type = "number" name = "qty" id="editqtyLabel">
-                                </td>
-                                 <td>
-                                    <select name = "suppID" id="supplier_dropdown">
-                                            {{#each suppliers}}
-                                                <option value = '{{this.supplierID}}'>{{this.supplierName}}</option>
-                                            {{/each}}
-                                    </select>   
                                 </td>
                                 </tr>
                             </table>
@@ -483,7 +475,6 @@
                     <tr>
                       <th>Receipt Number</th>
                       <th>Item Name</th>
-                      <th>Supplier</th>
                       <th>Qty</th>
                       <th>In Inventory</th>
                       <th></th>
@@ -494,8 +485,7 @@
                       {{#each deliveries}}
                         <tr>
                             <td>{{this.deliveryReceiptNumber}}</td>
-                            <td>{{this.type}} - "{{this.materialName}}"</td>
-                            <td>{{this.supplierName}}</td>
+                            <td>{{this.type}} - "{{this.materialName}}" - {{this.supplierName}}</td>
                             <td>{{this.quantity}}</td>
                             <td>{{this.status}}</td>
                             <td><button class = 'edit btn-success btn' data-id = '{{this.deliveryID}}' data-item = '{{this.materialID}}' data-quantity = '{{this.quantity}}' data-supplier = '{{this.supplierID}}' data-receipt = '{{this.deliveryReceiptNumber}}'><u>Edit</u></button></td>

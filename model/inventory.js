@@ -44,7 +44,7 @@ exports.setQuantity = function(quantity,inventoryID){
 }
 
 exports.getLowOnStock = function(){
-    return database.query("SELECT *,date_format(dateModified, '%Y-%m-%d') AS dateModifiedFormat FROM inventory INNER JOIN materials ON inventory.materialID = materials.materialID WHERE quantity <=20");
+    return database.query("SELECT a.materialName,a.totalQty,a.dateModifiedFormat FROM(SELECT *,SUM(quantity) AS 'totalQty',date_format(max(dateModified), '%Y-%m-%d') AS dateModifiedFormat FROM inventory NATURAL JOIN materials GROUP BY inventory.materialID)a WHERE a.totalQty <= 20");
 }
 
 exports.test = function(){

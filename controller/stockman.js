@@ -133,17 +133,15 @@ router.post("/editRequest",(req,res)=>{
     let newdeliveryReceiptNumber = req.body.deliveryReceiptNumber
     let newitemID = req.body.itemID
     let newqty = req.body.qty
-    let newsuppID = req.body.suppID
     
     let currdeliveryReceiptNumber = req.body.currdeliveryReceiptNumber
     let curritemID = req.body.curritemID
     let currqty = req.body.currqty
-    let currsuppID = req.body.currsuppID
     let userID = req.session.userID
     
     var empty = false
     
-     if(deliveryID === "" || newdeliveryReceiptNumber === "" || newitemID === "" || newqty === "" || newsuppID === "")
+    if(deliveryID === "" || newdeliveryReceiptNumber === "" || newitemID === "" || newqty === "")
         empty = true
     
     if(empty){
@@ -152,7 +150,7 @@ router.post("/editRequest",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(Requests.createEditRequest(deliveryID,newdeliveryReceiptNumber,newitemID,newqty,newsuppID,currdeliveryReceiptNumber,curritemID,currqty,currsuppID,userID,'Pending')).then(function(value){
+        Promise.resolve(Requests.createEditRequest(deliveryID,newdeliveryReceiptNumber,newitemID,newqty,currdeliveryReceiptNumber,curritemID,currqty,userID,'Pending')).then(function(value){
             res.render("stockman_delivery.hbs",{
                 message:3
             })
