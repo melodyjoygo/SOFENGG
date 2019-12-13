@@ -121,10 +121,10 @@
     </style>
 
     <!-- Custom styles for this template -->
-  <link href="stylesheets/sb-admin-2.min.css" rel="stylesheet">
+  <link href="/stylesheets/sb-admin-2.min.css" rel="stylesheet">
 
   <!-- Custom styles for this page -->
-  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <script src = '/jQuery.js'></script>
     <script>
         let firstName = "{{firstName}}"
@@ -176,6 +176,7 @@
             })
             
             $('#confirmBtn').click(function(){
+              console.log('inside password checker')
                 let pass = $('#confirmPassLabel').val()
                 
                 if(pass.toString() === password.toString()){
@@ -620,7 +621,6 @@
       </div>
    </div>
 
-
     
       <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
@@ -671,16 +671,8 @@
      var enterPass = document.getElementById("enterPassword");
      var profile = document.getElementById("profileModal");
      // var confirmBtn = document.getElementById("editProfile2");
+    
       
-
-      confirmBtn.onclick = function(){
-        editProfile.style.display = "block";
-        enterPass.style.display = "none";
-        profile.style.display = "none";
-      }
-
-      
-
         // When the user clicks on the button, open the modal
         btn.onclick = function() {
             modal.style.display = "block";
