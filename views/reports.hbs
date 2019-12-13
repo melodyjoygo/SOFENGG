@@ -81,18 +81,19 @@
         }
 
 /* Modal Content */
-        .modal-content {
-            position: relative;
-            background-color: #fefefe;
-            margin: auto;
-            padding: 0;
-            border: 1px solid #888;
-            width: 80%;
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-            -webkit-animation-name: animatetop;
-            -webkit-animation-duration: 0.4s;
-            animation-name: animatetop;
-            animation-duration: 0.4s
+        .modal-content2 {
+            
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+
         }
 
 /* Add Animation */
@@ -482,7 +483,7 @@
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+      <div class="modal-content modal-content2">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to log out?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -492,7 +493,7 @@
        
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
-          <a class="btn btn-danger" href="/logout">yes</a>
+          <a class="btn btn-danger" href="/logout">Yes</a>
         </div>
       </div>
     </div>
