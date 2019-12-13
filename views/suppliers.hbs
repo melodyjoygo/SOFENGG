@@ -139,6 +139,7 @@
                 $('#myBtn').css("display","none")
                 $('button.edit').css("display","none")
                 $('#itemTable td:nth-child(3),#itemTable th:nth-child(3)').hide()
+                $('#deliveryTrackerSpan').css('display','none')
             }
             
             if(warning === 1){
@@ -331,7 +332,7 @@
     
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="/delivery_tracker">
+        <a class="nav-link" href="/delivery_tracker" id = 'deliveryTrackerSpan'>
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>

@@ -91,15 +91,6 @@ router.post("/login" ,(req,res)=>{
         
 })
 
-router.post("/csvtrial",(req,res)=>{
-    Promise.resolve(Inventory.test()).then(function(data){
-        const csv = JSONToCSV(data,{fields:["Item ID","Item","Material","Supplier","Quantity","Average Unit Cost","Total Cost"]})
-        res.setHeader('Content-disposition','attachment; filename=inventorySample.csv')
-        res.set('Content-Type','text/csv')
-        res.send(csv);
-    })
-})
-
 router.post("/editAccount",(req,res)=>{
     let id = req.session.userID
     let fname = req.body.fname.trim()
@@ -165,6 +156,7 @@ router.get("/dashboard",loginRequired,(req,res)=>{
         Promise.resolve(Projects.getAllTableView()).then(function(projects){
             Promise.resolve(Projects.getProjectCount()).then(function(projectsCounts){
             res.render("dashboard.hbs",{
+                userType:req.session.userType,
                 firstName: req.session.firstName,
                 lastName :req.session.lastName,
                 currEmail: req.session.email,

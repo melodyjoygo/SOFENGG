@@ -136,6 +136,19 @@
         }
         
     </style>
+    <script src = '/jQuery.js'></script>
+    <script>
+      $( document ).ready(function() {
+        let userType = "{{userType}}"
+        if(userType == "2" || userType == "1"){
+          $('#deliveryTrackerSpan').css('display','none')
+        }
+
+        $('#generateInventory').click(function(){
+          window.open('http://localhost:3000/reports/generateInventory')
+        })
+      })
+    </script>
 </head>
 
 <body id="page-top">
@@ -215,7 +228,7 @@
       
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="/delivery_tracker">
+        <a class="nav-link" href="/delivery_tracker" id = 'deliveryTrackerSpan'>
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>
