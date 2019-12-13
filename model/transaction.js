@@ -13,7 +13,7 @@ exports.getAll = function() {
 
 
 exports.loadItems = function(){
-    return database.query("SELECT * FROM transactions NATURAL JOIN suppliers NATURAL JOIN materials LEFT JOIN material_types ON materials.materialType = material_types.mtID")
+    return database.query("SELECT *,date_format(date,'%Y-%m-%d') as 'dateFormat' FROM transactions NATURAL JOIN suppliers NATURAL JOIN materials LEFT JOIN material_types ON materials.materialType = material_types.mtID")
 }
 
 exports.edit = function(materialID,supplierID,price,quantity,transactionID,poNumber){

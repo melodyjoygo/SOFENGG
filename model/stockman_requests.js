@@ -31,7 +31,18 @@ exports.changeReleaseStatus = function(requestID,status){
      database.query("UPDATE stockman_release_requests SET status = ? WHERE requestID = ?",[status,requestID])
 }
 
-exports.setReleased = function(requestID){
-     database.query("UPDATE stockman_release_requests SET released = 1 WHERE requestID = ?",[requestID])
+exports.setReleased = function(requestID,dateReleased){
+     database.query("UPDATE stockman_release_requests SET released = 1, dateReleased = ? WHERE requestID = ?",[dateReleased,requestID])
 }
 
+exports.getYears = function(){
+    return database.query("SELECT DISTINCT YEAR(dateReleased) AS 'years' from stockman_release_requests ORDER BY years ASC")
+}
+
+exports.getReleased = function(month,year){
+    return database.query("SELECT *,date_format(dateReleased, '%Y-%m-%d') AS 'date' FROM softengdb.stockman_release_requests LEFT JOIN materials ON materials.materialID = stockman_release_requests.itemID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN projects ON projects.projectID = stockman_release_requests.projectID WHERE YEAR(dateReleased) = ? AND MONTH(dateReleased) = ?",[year,month])
+}
+
+exports.getReleasedAllMonth = function(year){
+    return database.query("SELECT *,date_format(dateReleased, '%Y-%m-%d') AS 'date' FROM softengdb.stockman_release_requests LEFT JOIN materials ON materials.materialID = stockman_release_requests.itemID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN projects ON projects.projectID = stockman_release_requests.projectID WHERE YEAR(dateReleased) = ?",[year])
+}

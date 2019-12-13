@@ -46,7 +46,7 @@
             margin: auto;
             padding: 0;
             border: 1px solid #888;
-            width: 80%;
+            width: fit-content;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
             -webkit-animation-name: animatetop;
             -webkit-animation-duration: 0.4s;
@@ -138,6 +138,7 @@
             if(userType == "2" || userType == "1"){
                 $('#myBtn').css("display","none")
                 $('button.edit').css("display","none")
+                $('#itemTable td:nth-child(3),#itemTable th:nth-child(3)').hide()
             }
             
             if(warning === 1){
@@ -216,14 +217,23 @@
                     else if(data === "exist"){
                         $("#editFormMessage").html("Email Already Exists")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "invalid"){
                         $("#editFormMessage").html("Invalid Email")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "empty"){
                         $("#editFormMessage").html("Please Do Not Leave Empty Fields")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                 })
             })
@@ -324,6 +334,13 @@
         <a class="nav-link" href="/delivery_tracker">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
+      </li>
+
+      <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="reports">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Reports</span></a>
       </li>
        
     
@@ -467,7 +484,7 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <table class="table table-bordered" id="itemTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
                         <th>Supplier</th>
@@ -574,7 +591,7 @@
 <!-- Edit Profile Modal-->
      <div class="modal" id = "editProfileModal"> 
 
-      <div class="modal-content">
+      <div class="modal-content" style="width: fit-content;">
           <div class="modal-header">
               <h2>Edit Profile</h2>
 

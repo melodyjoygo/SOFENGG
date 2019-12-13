@@ -18,12 +18,16 @@
   <!-- Custom styles for this template-->
   <link href="/stylesheets/sample.css" rel="stylesheet">
     <style>
+        .buttonright {
+            position: relative;
+            right: -790px;
+        }
         .plusicon {
             color:white;
         }
         .addemp {
             position:relative;
-            right:-590px;
+            right:-970px;
         }
         .addemp2 {
             position:relative;
@@ -157,6 +161,7 @@
             if(userType == "2" || userType == "1"){
                 $('#myBtn').css("display","none")
                 $('button.edit').css("display","none")
+                $('#itemTable td:nth-child(8),#itemTable th:nth-child(8)').hide()
             }
             
             if(warning === 1){
@@ -242,14 +247,23 @@
                     else if(data === "exist"){
                         $("#editFormMessage").html("Email Already Exists")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "invalid"){
                         $("#editFormMessage").html("Invalid Email")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "empty"){
                         $("#editFormMessage").html("Please Do Not Leave Empty Fields")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                 })
             })
@@ -343,6 +357,13 @@
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>
+
+       <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="reports">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Reports</span></a>
+      </li>
        
     
 
@@ -409,14 +430,17 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Deliveries</h1>
+        <h1 class="h3 mb-4 text-gray-800">Deliveries
             <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
             <span class="icon text-white-50">
                 <b class = "plusicon">+</b>
             </span>
             <span class="text">Restock Item</span>
          </a>
+            </h1>
+            
         
+            
             <div>
   <!-- DataTales Example -->
   <div class="card shadow mb-4" style="flex-grow:inherit">
@@ -425,7 +449,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <table class="table table-bordered" id="itemTable" width="100%" cellspacing="0">
             <thead>
               <tr>
                   <th>Delivery Receipt Number</th>
@@ -497,7 +521,7 @@
                               
                     
                                 <td>
-                                    <input class="form-control" type = "number" name = "qty">
+                                    <input class="form-control" type = "number" name = "qty" min = '0'>
                                 </td>
                                 <td>
                                     <input class="form-control" type = "text" name = "invoiceNumber">
@@ -506,7 +530,7 @@
                                     <input class="form-control" type = "text" name = "poNumber">
                                 </td>
                                 <td>
-                                    <input class="form-control" type = "number" name = "unitPrice">
+                                    <input class="form-control" type = "number" name = "unitPrice" min = '0' step = '0.01'>
                                 </td>
                                 </tr>
                             </table>
@@ -642,7 +666,7 @@
 <!-- Edit Profile Modal-->
      <div class="modal" id = "editProfileModal"> 
 
-      <div class="modal-content">
+      <div class="modal-content" style="width: fit-content;">
           <div class="modal-header">
               <h2>Edit Profile</h2>
 

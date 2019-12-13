@@ -294,14 +294,23 @@
                     else if(data === "exist"){
                         $("#editFormMessage").html("Email Already Exists")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "invalid"){
                         $("#editFormMessage").html("Invalid Email")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                     else if(data === "empty"){
                         $("#editFormMessage").html("Please Do Not Leave Empty Fields")
                         $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
                     }
                 })
             })
@@ -400,6 +409,13 @@
         <a class="nav-link" href="/delivery_tracker">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
+      </li>
+
+      <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="reports">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Reports</span></a>
       </li>
 
        
@@ -622,8 +638,8 @@
                 <h6 class="m-0 font-weight-bold text-primary">Requisitions</h6>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <div class="table">
+                  <table class="table-bordered" id="requisitionsTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
                         <th>Name</th>
@@ -647,7 +663,7 @@
                                 <td>{{this.firstName}} {{this.lastName}}</td>
                                 <td>{{this.userTypeString}}</td>
                                 <td>Edit Request</td>
-                                <td><button class = 'btn btn-success stockmanEditButton' data-id = "{{this.requestID}}" data-type = "{{this.type}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-quantity = "{{this.currQuantity}}" data-receiptNumber = "{{this.currDeliveryReceipt}}" data-newType = "{{this.newType}}" data-newItemName = "{{this.newItemName}}" data-newSupplier = "{{this.newSupplier}}" data-NewQuantity = "{{this.newQuantity}}" data-newReceiptNumber = "{{this.newDeliveryReceipt}}" data-deliveryID = "{{this.deliveryID}}" data-newItemID = "{{this.newItemID}}">View Details</button></td>
+                                <td><button class = 'btn btn-success stockmanEditButton' data-id = "{{this.requestID}}" data-type = "{{this.matType}}" data-itemName = "{{this.materialName}}" data-supplier = "{{this.supplierName}}" data-quantity = "{{this.currQuantity}}" data-receiptNumber = "{{this.currDeliveryReceipt}}" data-newType = "{{this.newType}}" data-newItemName = "{{this.newItemName}}" data-newSupplier = "{{this.newSupplier}}" data-NewQuantity = "{{this.newQuantity}}" data-newReceiptNumber = "{{this.newDeliveryReceipt}}" data-deliveryID = "{{this.deliveryID}}" data-newItemID = "{{this.newItemID}}">View Details</button></td>
                             </tr>
                         {{/each}}
                         
@@ -750,7 +766,7 @@
 <!-- Edit Profile Modal-->
      <div class="modal" id = "editProfileModal"> 
 
-      <div class="modal-content">
+      <div class="modal-content" style="width: fit-content;">
           <div class="modal-header">
               <h2>Edit Profile</h2>
 

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>UpRising</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="/stylesheets/sample.css" rel="stylesheet">
+    <style>
+        .plusicon {
+            color:white;
+        }
+        .addemp {
+            position:relative;
+            right:-790px;
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+/* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 80%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+
+/* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {top:-300px; opacity:0} 
+            to {top:0; opacity:1}
+        }
+
+        @keyframes animatetop {
+            from {top:-300px; opacity:0}
+            to {top:0; opacity:1}
+        }
+
+/* The Close Button */
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            padding: 2px 16px;
+  
+            color: black;
+        }
+
+        .modal-body {padding: 2px 16px;}
+
+        .modal-footer {
+            padding: 2px 16px;
+  
+            color: black;
+        }
+        
+        #userid{
+            display : none;
+        }
+        
+        .currValues{
+            display : none;
+        }
+        
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        
+       #errorMessage{
+            color : red;
+            display : none;
+        }
+        #editFormMessage{
+            color : red;
+            display : none;
+        }
+    </style>
+
+    <!-- Custom styles for this template -->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this page -->
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <script src = '/jQuery.js'></script>
+    <script>
+        let firstName = "{{firstName}}"
+        let lastName = "{{lastName}}"
+        let email = "{{currEmail}}"
+        let password = "{{password}}"
+        let warning = {{message}}
+        $( document ).ready(function() {
+            if(warning === 1){
+                alert("Please Do Not Leave Fields Empty")
+                window.location = '/stockman';
+            }
+            else if(warning === 2){
+                alert("Item has been Added")
+                window.location = '/stockman';
+            }
+            else if(warning === 3){
+                alert("Edit Request Sent")
+                window.location = '/stockman';
+            }
+            
+            
+            $('button.edit').click(function(){
+                let deliveryID = $(this).attr("data-id")
+                let itemID = $(this).attr("data-item")
+                let qty = $(this).attr("data-quantity")
+                let suppID = $(this).attr("data-supplier")
+                let receipt = $(this).attr("data-receipt")
+                
+                console.log(deliveryID)
+                
+                $('#editdeliveryid').val(deliveryID)
+                $('#editdeliveryReceiptNumberLabel').val(receipt)
+                $('#supplier_dropdown').val(suppID)
+                $('#item_dropdown').val(itemID)
+                $('#editqtyLabel').val(qty)
+                
+                $('#currdeliveryReceiptNumberLabel').val(receipt)
+                $('#currsuppIDLabel').val(suppID)
+                $('#curritemIDLabel').val(itemID)
+                $('#currqtyLabel').val(qty)
+                
+                modal2.style.display = "block";
+            })
+            
+            $('#confirmBtn').click(function(){
+                let pass = $('#confirmPassLabel').val()
+                
+                if(pass.toString() === password.toString()){
+                    
+                    $("#firstNameLabel").val(firstName)
+                    $("#lastNameLabel").val(lastName)
+                    $("#emailLabel").val(email)
+                    
+                    editProfile.style.display = "block";
+                    enterPass.style.display = "none";
+                    profile.style.display = "none";  
+                }
+                else{
+                    $("#errorMessage").html("Wrong Password")
+                    $("#errorMessage").css("display","block")
+                    setTimeout(function() {
+                        $('#errorMessage').fadeOut('fast');
+                    }, 1000)
+                }
+            })
+            
+            $('#editProfileBtn').click(function(){
+                let fname = $("#firstNameLabel").val()
+                let lname = $("#lastNameLabel").val()
+                let email = $("#emailLabel").val()
+                let password = $("#npass").val()
+                let confpassword = $("#cpass").val()
+                
+                $.post("/editAccount",{
+                    fname: fname,
+                    lname: lname,
+                    email: email,
+                    password: password,
+                    confpassword: confpassword
+                },function(data){
+                    if(data === "success"){
+                        alert("Account Details Saved")
+                        window.location = '/stockman'
+                    }
+                    else if(data === "exist"){
+                        $("#editFormMessage").html("Email Already Exists")
+                        $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
+                    }
+                    else if(data === "invalid"){
+                        $("#editFormMessage").html("Invalid Email")
+                        $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
+                    }
+                    else if(data === "empty"){
+                        $("#editFormMessage").html("Please Do Not Leave Empty Fields")
+                        $("#editFormMessage").css("display","block")
+                        setTimeout(function() {
+                            $('#editFormMessage').fadeOut('fast');
+                        }, 1000)
+                    }
+                })
+            })
+            
+            $('#editProfileClose').click(function(){
+                editProfile.style.display = "none";
+                $('div.modal-backdrop').css("display","none")
+            })
+        });
+    </script>
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/stockman">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">UP RISING</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item active">
+          <li class="nav-item">
+          <a class="nav-link" href="/stockman">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Deliveries</span></a>
+        </li>
+        <li class="nav-item active">
+          <li class="nav-item">
+          <a class="nav-link" href="/stockman/requests">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Release Requests</span></a>
+        </li>
+        <li class="nav-item active">
+          <li class="nav-item">
+          <a class="nav-link" href="/stockman/inventory">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Inventory</span></a>
+        </li>
+       
+    
+
+      
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+         
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+           
+
+
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{firstName}} {{lastName}}</span>
+               
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+        <h1 class="h3 mb-4 text-gray-800">Deliveries
+            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
+            <span class="icon text-white-50">
+                <b class = "plusicon">+</b>
+            </span>
+            <span class="text">Restock Item</span>
+            </a>
+         
+            </h1>
+        <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Restock Item</h5>
+                        <span class="btn btn-danger btn-circle btn-sm" id = 'close2'>&times;</span>
+                        
+                    </div>
+                    <form action = "/stockman/restock" method = "post">
+                        <div class="modal-body">
+                            <table name = "inventmaterials">
+                                <tr>
+                                    <th>Delivery Receipt Number</th>
+                                    <th>Item Name</th>
+                                    <th>Qty</th>
+
+                                </tr>
+                                <tr>
+                                <td>
+                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="deliveryReceiptNumberLabel">
+                                </td>
+                                <td>
+                                    <select name = "itemID" id="material_dropdown">
+                                            {{#each items}}
+                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}" - {{this.supplierName}}</option>
+                                            {{/each}}
+                                    </select>   
+                                </td>
+                              
+                    
+                                <td>
+                                    <input class="form-control" type = "number" name = "qty" id="qtyLabel">
+                                </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Restock</button>
+                        </div>
+                    </form>
+                    
+                </div>
+
+            </div> 
+
+            <div id="editModal" class="modal">
+
+            <!-- Modal content -->
+           <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Item</h5>
+                    <span class="close btn btn-danger btn-circle btn-sm" id ="close3">&times;</span>
+                        
+                </div>
+                <form action = "/stockman/editRequest" method = "post">
+                        <div class="modal-body">
+                            <input type = 'text' class = 'currValues' id = 'editdeliveryid' name = 'deliveryID'>
+                            <input type = 'text' class = 'currValues' id = 'currdeliveryReceiptNumberLabel' name = 'currdeliveryReceiptNumber'>
+                            <input type = 'text' class = 'currValues' id = 'curritemIDLabel' name = 'curritemID'>
+                            <input type = 'text' class = 'currValues' id = 'currqtyLabel' name = 'currqty'>
+                            <input type = 'text' class = 'currValues' id = 'currsuppIDLabel' name = 'currsuppID'>
+                            
+                            <table name = "inventmaterials">
+                                <tr>
+                                    <th>Delivery Receipt Number</th>
+                                    <th>Item Name</th>
+                                    <th>Qty</th>
+                                    <th>Supplier</th>
+
+                                </tr>
+                                <tr>
+                                <td>
+                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="editdeliveryReceiptNumberLabel">
+                                </td>
+                                <td>
+                                    <select name = "itemID" id="item_dropdown">
+                                            {{#each items}}
+                                                <option value = '{{this.materialID}}'>{{this.type}} - "{{this.materialName}}"</option>
+                                            {{/each}}
+                                    </select>   
+                                </td>
+                              
+                    
+                                <td>
+                                    <input class="form-control" type = "number" name = "qty" id="editqtyLabel">
+                                </td>
+                                 <td>
+                                    <select name = "suppID" id="supplier_dropdown">
+                                            {{#each suppliers}}
+                                                <option value = '{{this.supplierID}}'>{{this.supplierName}}</option>
+                                            {{/each}}
+                                    </select>   
+                                </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type = "submit" class = "btn btn-success">Save</button>
+                        </div>
+                    </form>
+            </div>
+
+        </div>
+          
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Deliveries</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="deliveriesTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Receipt Number</th>
+                      <th>Item Name</th>
+                      <th>Supplier</th>
+                      <th>Qty</th>
+                      <th>In Inventory</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                        
+                  <tbody>
+                      {{#each deliveries}}
+                        <tr>
+                            <td>{{this.deliveryReceiptNumber}}</td>
+                            <td>{{this.type}} - "{{this.materialName}}"</td>
+                            <td>{{this.supplierName}}</td>
+                            <td>{{this.quantity}}</td>
+                            <td>{{this.status}}</td>
+                            <td><button class = 'edit btn-success btn' data-id = '{{this.deliveryID}}' data-item = '{{this.materialID}}' data-quantity = '{{this.quantity}}' data-supplier = '{{this.supplierID}}' data-receipt = '{{this.deliveryReceiptNumber}}'><u>Edit</u></button></td>
+                        </tr>
+                      {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+  
+          </div>
+          <!-- /.container-fluid -->
+  
+        </div>
+        <!-- End of Main Content -->
+
+  
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Are your sure you want to log out?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+          <a class="btn btn-danger" href="/logout">Yes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+     <!-- Profile Modal-->
+    <div class="modal fade" id="profileModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>Name: {{firstName}} {{lastName}}</div>
+            <div>Email: {{currEmail}}</div>
+            <div>UserType: {{currType}}</div>
+          </div>
+        
+          <div class="modal-footer">
+            <a class="btn btn-success" id ="editProfile" data-toggle="modal" data-target="#enterPassword"  data-dismiss="modal" aria-label="Close">Edit Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--Confirm Password Modal-->
+    <div class="modal fade" id="enterPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Please enter your password to confirm</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="password" name="password" id="confirmPassLabel">
+              <div id = 'errorMessage'></div>
+          </div>
+        
+          <div class="modal-footer">
+            <button  id = "confirmBtn" class="btn btn-success">Submit</button> 
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- Edit Profile Modal-->
+     <div class="modal" id = "editProfileModal"> 
+
+      <div class="modal-content" style="width: fit-content;">
+          <div class="modal-header">
+              <h2>Edit Profile</h2>
+
+               <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                    <span id = "editProfileClose" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>
+               </button>
+          </div>
+
+     <div class="card-body" >
+                  <div>First Name</div>
+                  <input type = 'text' id = 'firstNameLabel' name = 'fname' class = 'alphaonlytext'>
+                  <div>Last Name </div>
+                  <input type = 'text' id = 'lastNameLabel' name = 'lname' class = 'alphaonlytext2'>
+                  <div>Email: </div>
+                  <input type = 'emails' name = 'email' id = 'emailLabel'>
+                  <div>New Password: </div>
+                  <input type = 'password' name = 'password' id = 'npass'>
+                  <div>Confirm Password </div> 
+                  <input type="password" id = 'cpass' name = 'confpassword'>
+                  <div id = 'editFormMessage'></div>
+                  <div>
+                      <input type = "submit" class = 'btn btn-primary' value = 'Save' id = 'editProfileBtn'>
+                  </div>
+          </div>
+      </div>
+   </div>
+    
+      <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="js/demo/datatables-demo.js"></script>
+    <!--modalscript-->
+    <script>
+        $(document).ready(function(){
+    $(".alphaonlytext").keypress(function(event){
+        var inputValue = event.which;
+        // allow letters and whitespaces only.
+        if(!(inputValue >= 65 && inputValue <= 90) && !(inputValue >= 97 && inputValue <= 122) && (inputValue != 0 && inputValue != 46)) { 
+            event.preventDefault(); 
+        }
+    });
+           $(".alphaonlytext2").keypress(function(event){
+        var inputValue = event.which;
+        // allow letters and whitespaces only.
+        if(!(inputValue >= 65 && inputValue <= 90) && !(inputValue >= 97 && inputValue <= 122) && (inputValue != 0)) { 
+            event.preventDefault(); 
+        }
+    });
+});
+        // Get the modal
+        var modal = document.getElementById("myModal");
+        var modal2 = document.getElementById("editModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        var editbtn = document.getElementById("edit");
+
+        // Get the <span> element that closes the modal
+        var span2 = document.getElementById("close2");
+        var span3 = document.getElementById("close3");
+
+       
+     var editProfile = document.getElementById("editProfileModal");
+     var enterPass = document.getElementById("enterPassword");
+     var profile = document.getElementById("profileModal");
+     // var confirmBtn = document.getElementById("editProfile2");
+      
+      
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+       
+        // When the user clicks on <span> (x), close the modal
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span2.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        span3.onclick = function() {
+            modal2.style.display = "none";
+        }
+
+        
+     var editProfile = document.getElementById("editProfileModal");
+     var enterPass = document.getElementById("enterPassword");
+     var profile = document.getElementById("profileModal");
+     // var confirmBtn = document.getElementById("editProfile2");
+      
+
+      
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal2) {
+                modal2.style.display = "none";
+            }    
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }         
+
+        }
+    </script>
+</body>
+
+</html>

@@ -8,7 +8,7 @@ exports.create = function(clientID,projectNumber,dateAdded) {
 }
 
 exports.getAll = function() {
-    return database.query("SELECT * FROM projects LEFT JOIN clients ON projects.clientID = clients.clientID");
+    return database.query("SELECT * ,date_format(dateAdded,'%Y-%m-%d') as 'date' FROM projects LEFT JOIN clients ON projects.clientID = clients.clientID");
 }
 
 exports.getLatest = function(){
@@ -21,6 +21,10 @@ exports.getAllTableView = function() {
 
 exports.editProjectDetails = function(projectID,clientID,status){
     database.query("UPDATE projects SET clientID = ?, status = ? WHERE projectID = ?",[clientID,status,projectID])
+}
+
+exports.getProjectCount = function(month){
+    return database.query("SELECT month(dateAdded) as month, COUNT(month(dateAdded)) as count FROM softengdb.projects GROUP BY month(dateAdded) ORDER BY month(dateAdded);")
 }
 
  
