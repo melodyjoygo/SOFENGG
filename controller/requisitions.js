@@ -107,7 +107,7 @@ router.post("/stockmanEdit",(req,res)=>{
             })
         }
         else{
-            Promise.resolve(stockmanRequests.changeReleaseStatus(requestID,'Declined')).then(function(){
+            Promise.resolve(stockmanRequests.changeEditStatus(requestID,'Declined')).then(function(){
                 res.redirect("/requisitions")
             }) 
         }

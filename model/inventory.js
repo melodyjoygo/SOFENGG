@@ -44,9 +44,9 @@ exports.setQuantity = function(quantity,inventoryID){
 }
 
 exports.getLowOnStock = function(){
-    return database.query("SELECT *,date_format(dateModified, '%Y-%m-%d') AS dateModifiedFormat FROM inventory INNER JOIN materials ON inventory.materialID = materials.materialID WHERE quantity <=20");
+    return database.query("SELECT a.materialName,a.totalQty,a.dateModifiedFormat FROM(SELECT *,SUM(quantity) AS 'totalQty',date_format(max(dateModified), '%Y-%m-%d') AS dateModifiedFormat FROM inventory NATURAL JOIN materials GROUP BY inventory.materialID)a WHERE a.totalQty <= 20");
 }
 
-exports.test = function(){
+exports.generate = function(){
     return database.query("SELECT inventoryID AS 'Item ID', materialName AS 'Item',type AS 'Material',supplierName AS 'Supplier',SUM(quantity) AS 'Quantity',cast(AVG(unitPrice) as decimal(10,2)) AS 'Average Unit Cost',cast((SUM(quantity) * AVG(unitPrice)) as decimal(10,2)) AS 'Total Cost' FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID GROUP BY inventory.materialID")
 }

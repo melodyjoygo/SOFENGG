@@ -142,6 +142,7 @@
                 $('#myBtn').css("display","none")
                 $('button.edit').css("display","none")
                 $('#itemTable td:nth-child(8),#itemTable th:nth-child(8)').hide()
+                $('#deliveryTrackerSpan').css('display','none')
             }
             
             if(warning === 1){
@@ -322,7 +323,7 @@
     
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="/delivery_tracker">
+        <a class="nav-link" href="/delivery_tracker" id = 'deliveryTrackerSpan'>
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>
@@ -458,7 +459,7 @@
              <div id="editModal" class="modal">
 
             <!-- Modal content -->
-            <div class="modal-content">
+            <div class="modal-content" style="width: fit-content;">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Edit </h5>
                     <span class="close btn btn-danger btn-circle btn-sm" id = 'closeEdit'>&times;</span>
@@ -483,7 +484,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input name = "qty" type = "number" id = 'quantity' min = '0' pattern="[0-9]">
+                                        <input name = "qty" type = "number" id = 'quantity' min = '0' pattern="[0-9]" class="smallnumbox" >
                                     </td>
                                     <td>
                                         <input name = "unitcost" type = "number" id = 'cost' min = '0' step="0.01">
@@ -501,10 +502,10 @@
                 </div>
             </div> 
           <!-- DataTales Example -->
-          <div id = "bodydiv" style="display: flex flex-direction: column">
+          <div id = "bodydiv" >
 
-            <div style="display: flex;flex-direction: column float:left;">
-                  <div class="card shadow mb-4" style="display: flex;flex-direction: column">
+            <div>
+                  <div class="card shadow mb-4">
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table table-bordered" id="itemTable" width="100%" cellspacing="0">
@@ -633,7 +634,7 @@
 
       <div class="modal-content" style="width: fit-content;">
           <div class="modal-header">
-              <h2>Edit Profile</h2>
+              <h5 class="modal-title">Edit Profile</h5>
 
                <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
                     <span id = "editProfileClose" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>

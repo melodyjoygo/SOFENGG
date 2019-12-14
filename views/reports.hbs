@@ -81,18 +81,19 @@
         }
 
 /* Modal Content */
-        .modal-content {
-            position: relative;
-            background-color: #fefefe;
-            margin: auto;
-            padding: 0;
-            border: 1px solid #888;
-            width: 80%;
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-            -webkit-animation-name: animatetop;
-            -webkit-animation-duration: 0.4s;
-            animation-name: animatetop;
-            animation-duration: 0.4s
+        .modal-content2 {
+            
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+
         }
 
 /* Add Animation */
@@ -136,6 +137,19 @@
         }
         
     </style>
+    <script src = '/jQuery.js'></script>
+    <script>
+      $( document ).ready(function() {
+        let userType = "{{userType}}"
+        if(userType == "2" || userType == "1"){
+          $('#deliveryTrackerSpan').css('display','none')
+        }
+
+        $('#generateInventory').click(function(){
+          window.open('http://localhost:3000/reports/generateInventory')
+        })
+      })
+    </script>
 </head>
 
 <body id="page-top">
@@ -215,7 +229,7 @@
       
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="/delivery_tracker">
+        <a class="nav-link" href="/delivery_tracker" id = 'deliveryTrackerSpan'>
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>
@@ -310,7 +324,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">Inventory Report</h6>
                 </div>
                 <div class="card-body">
-                    <div class = "row">
+                    {{!-- <div class = "row">
                       <div class="col-md-1">
                         <div>Start</div>
                       </div>
@@ -326,7 +340,7 @@
                       <div class ="col-md-3">
                           <input type ="date">
                       </div>
-                    </div>
+                    </div> --}}
                     <div class ="table-responsive">
                       <table class="table table-bordered" id="inventoryTable" width="100%" cellspacing="0">
                   <thead>
@@ -482,7 +496,7 @@
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+      <div class="modal-content modal-content2">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to log out?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -492,7 +506,7 @@
        
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
-          <a class="btn btn-danger" href="/logout">yes</a>
+          <a class="btn btn-danger" href="/logout">Yes</a>
         </div>
       </div>
     </div>
@@ -546,7 +560,7 @@
 
       <div class="modal-content" style="width: fit-content;">
           <div class="modal-header">
-              <h2>Edit Profile</h2>
+              <h5 class="modal-title">Edit Profile</h5>
 
                <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
                     <span id = "close3" aria-hidden="true" class = " btn btn-danger btn-circle btn-sm">&times;</span>

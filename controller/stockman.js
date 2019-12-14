@@ -67,10 +67,10 @@ router.get("/inventory",(req,res)=>{
 })
 
 router.post("/restock",(req,res)=>{
-    let receiptNumber = req.body.deliveryReceiptNumber
-    let itemID = req.body.itemID
-    let qty = req.body.qty
-    let userID = req.session.userID
+    let receiptNumber = req.body.deliveryReceiptNumber.replace(/<[^>]*>/g, '');
+    let itemID = req.body.itemID.replace(/<[^>]*>/g, '');
+    let qty = req.body.qty.replace(/<[^>]*>/g, '');
+    let userID = req.session.userID.replace(/<[^>]*>/g, '');
     var empty = false
     
     if(qty === "" || receiptNumber === "")
@@ -91,10 +91,10 @@ router.post("/restock",(req,res)=>{
 })
 
 router.post("/releaseRequest",(req,res)=>{
-    let projectID = req.body.projectID
-    let itemID = req.body.itemID
-    let qty = req.body.qty
-    let userID = req.session.userID
+    let projectID = req.body.projectID.replace(/<[^>]*>/g, '');
+    let itemID = req.body.itemID.replace(/<[^>]*>/g, '');
+    let qty = req.body.qty.replace(/<[^>]*>/g, '');
+    let userID = req.session.userID.replace(/<[^>]*>/g, '');
     var empty = false
     
     if(qty === "" || projectID === "" || itemID === "")
@@ -129,21 +129,19 @@ router.post("/releaseRequest",(req,res)=>{
 })
 
 router.post("/editRequest",(req,res)=>{
-    let deliveryID = req.body.deliveryID
-    let newdeliveryReceiptNumber = req.body.deliveryReceiptNumber
-    let newitemID = req.body.itemID
-    let newqty = req.body.qty
-    let newsuppID = req.body.suppID
+    let deliveryID = req.body.deliveryID.replace(/<[^>]*>/g, '');
+    let newdeliveryReceiptNumber = req.body.deliveryReceiptNumber.replace(/<[^>]*>/g, '');
+    let newitemID = req.body.itemID.replace(/<[^>]*>/g, '');
+    let newqty = req.body.qty.replace(/<[^>]*>/g, '');
     
-    let currdeliveryReceiptNumber = req.body.currdeliveryReceiptNumber
-    let curritemID = req.body.curritemID
-    let currqty = req.body.currqty
-    let currsuppID = req.body.currsuppID
-    let userID = req.session.userID
+    let currdeliveryReceiptNumber = req.body.currdeliveryReceiptNumber.replace(/<[^>]*>/g, '');
+    let curritemID = req.body.curritemID.replace(/<[^>]*>/g, '');
+    let currqty = req.body.currqty.replace(/<[^>]*>/g, '');
+    let userID = req.session.userID.replace(/<[^>]*>/g, '');
     
     var empty = false
     
-     if(deliveryID === "" || newdeliveryReceiptNumber === "" || newitemID === "" || newqty === "" || newsuppID === "")
+    if(deliveryID === "" || newdeliveryReceiptNumber === "" || newitemID === "" || newqty === "")
         empty = true
     
     if(empty){
@@ -152,7 +150,7 @@ router.post("/editRequest",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(Requests.createEditRequest(deliveryID,newdeliveryReceiptNumber,newitemID,newqty,newsuppID,currdeliveryReceiptNumber,curritemID,currqty,currsuppID,userID,'Pending')).then(function(value){
+        Promise.resolve(Requests.createEditRequest(deliveryID,newdeliveryReceiptNumber,newitemID,newqty,currdeliveryReceiptNumber,curritemID,currqty,userID,'Pending')).then(function(value){
             res.render("stockman_delivery.hbs",{
                 message:3
             })
@@ -161,10 +159,10 @@ router.post("/editRequest",(req,res)=>{
 })
 
 router.post("/releaseStock",(req,res)=>{
-    let quantity = req.body.quantity
-    let itemID = req.body.itemID
-    let requestID = req.body.requestID
-    let action = req.body.action
+    let quantity = req.body.quantity.replace(/<[^>]*>/g, '');
+    let itemID = req.body.itemID.replace(/<[^>]*>/g, '');
+    let requestID = req.body.requestID.replace(/<[^>]*>/g, '');
+    let action = req.body.action.replace(/<[^>]*>/g, '');
     
     var empty = false
     
