@@ -1,9 +1,9 @@
 const Database = require("./database");
 var database = new Database();
 
-exports.createEditRequest = function(deliveryID,newDeliveryReceipt,newItemID,newQuantity,newSupplierID,currDeliveryReceipt,currItemID,currQuantity,currSupplierID,userID,status) {
+exports.createEditRequest = function(deliveryID,newDeliveryReceipt,newItemID,newQuantity,currDeliveryReceipt,currItemID,currQuantity,userID,status) {
     Promise.resolve(database.query("SELECT COUNT(requestID) AS 'count' FROM stockman_edit_requests")).then(function(value) {
-        database.query("INSERT INTO stockman_edit_requests (requestID, deliveryID,newDeliveryReceipt, newItemID, newQuantity, newSupplierID, currDeliveryReceipt, currItemID, currQuantity, currSupplierID,userID,status) VALUES ?", [[[(value[0].count + 1),deliveryID,newDeliveryReceipt,newItemID,newQuantity,newSupplierID,currDeliveryReceipt,currItemID,currQuantity,currSupplierID,userID,status]]])
+        database.query("INSERT INTO stockman_edit_requests (requestID, deliveryID,newDeliveryReceipt, newItemID, newQuantity, currDeliveryReceipt, currItemID, currQuantity, userID,status) VALUES ?", [[[(value[0].count + 1),deliveryID,newDeliveryReceipt,newItemID,newQuantity,currDeliveryReceipt,currItemID,currQuantity,userID,status]]])
     })
 }
 

@@ -144,6 +144,10 @@
                 $('button.stockmanEditButton').css("display","none")
                 $('button.stockmanReleaseButton').css("display","none")
             }
+
+            if(userType == "2" || userType == "1"){
+               $('#deliveryTrackerSpan').css('display','none')
+             }
             
             if(warning == 1){
                 alert("Please Do Not Leave Empty Fields")
@@ -406,7 +410,7 @@
     
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="/delivery_tracker">
+        <a class="nav-link" href="/delivery_tracker" id = 'deliveryTrackerSpan'>
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>

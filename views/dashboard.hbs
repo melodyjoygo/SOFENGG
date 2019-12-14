@@ -37,6 +37,21 @@
             color : red;
             display : none;
         }
+        .modal-content2 {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: fit-content;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+     
+
     </style>
     <script src = '/jQuery.js'></script>
     <script>
@@ -47,7 +62,10 @@
         let warning = {{error}}
         $( document ).ready(function() {
             
-            
+            let userType = "{{userType}}"
+            if(userType == "2" || userType == "1"){
+                $('#deliveryTrackerSpan').css('display','none')
+            }
             
             $('#confirmBtn').click(function(){
                 let pass = $('#confirmPassLabel').val()
@@ -199,7 +217,7 @@
     
       <li class="nav-item active">
         <li class="nav-item">
-        <a class="nav-link" href="/delivery_tracker">
+        <a class="nav-link" href="/delivery_tracker" id = 'deliveryTrackerSpan'>
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Delivery Tracker</span></a>
       </li>
@@ -374,7 +392,7 @@
                           {{#each items}}
                             <tr>
                               <td>{{this.materialName}}</td>
-                              <td>{{this.quantity}}</td>
+                              <td>{{this.totalQty}}</td>
                               <td>{{this.dateModifiedFormat}}</td>
 
                             </tr>
@@ -466,7 +484,9 @@
 <!-- Edit Profile Modal-->
      <div class="modal" id = "editProfileModal"> 
 
-      <div class="modal-content" style="width: fit-content;">
+      <div class="modal-content modal-content2">
+
+        
           <div class="modal-header">
               <h5 class="modal-title">Edit Profile</h5>
 
@@ -475,7 +495,7 @@
                </button>
           </div>
 
-     <div class="card-body" >
+     <div class="card-body" style="width: fit-content;">
                   <div>First Name</div>
                   <input type = 'text' id = 'firstNameLabel' name = 'fname' class = 'alphaonlytext'>
                   <div>Last Name </div>
