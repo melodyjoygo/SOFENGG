@@ -67,11 +67,12 @@ router.get("/inventory",(req,res)=>{
 })
 
 router.post("/restock",(req,res)=>{
-    let receiptNumber = req.body.deliveryReceiptNumber.replace(/<[^>]*>/g, '');
-    let itemID = req.body.itemID.replace(/<[^>]*>/g, '');
-    let qty = req.body.qty.replace(/<[^>]*>/g, '');
-    let userID = req.session.userID.replace(/<[^>]*>/g, '');
+    let receiptNumber = req.body.deliveryReceiptNumber;
+    let itemID = req.body.itemID;
+    let qty = req.body.qty;
+    let userID = req.session.userID;
     var empty = false
+
     
     if(qty === "" || receiptNumber === "")
         empty = true

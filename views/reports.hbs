@@ -146,7 +146,11 @@
         }
 
         $('#generateInventory').click(function(){
-          window.open('http://localhost:3000/reports/generateInventory')
+          $.get("/reports/generateInventory",{
+            command:1
+          },function(data){
+            window.open(data)
+          })
         })
       })
     </script>

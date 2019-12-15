@@ -1,6 +1,5 @@
 const express = require("express")
 const router = express.Router();
-const JSONToCSV = require("json2csv").parse;
 const cryptojs = require("crypto-js")
 const Inventory = require("../model/inventory");
 const Projects = require("../model/projects");

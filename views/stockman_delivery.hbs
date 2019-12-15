@@ -387,7 +387,7 @@
                                 </tr>
                                 <tr>
                                 <td>
-                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="deliveryReceiptNumberLabel">
+                                    <input class="form-control" type = "text" name = "deliveryReceiptNumber" id="deliveryReceiptNumberLabel" pattern="[a-zA-Z0-9 ]+" required>
                                 </td>
                                 <td>
                                     <select name = "itemID" id="material_dropdown">
@@ -399,7 +399,7 @@
                               
                     
                                 <td>
-                                    <input class="form-control" type = "number" name = "qty" id="qtyLabel">
+                                    <input class="form-control" type = "number" name = "qty" id="qtyLabel" min = '0' pattern="[0-9]" required> 
                                 </td>
                                 </tr>
                             </table>
