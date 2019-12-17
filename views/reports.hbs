@@ -313,9 +313,9 @@
             <div>Report Type</div>  
             <div class ="col-md-4">
                <select name = "reportType" class="reportType">
-                  <option>Inventory Report</option>
-                  <option>Released Items Report</option>
-                  <option>Released Items per Project Report</option>
+                  <option>Inventory on Hand</option>
+                  <option>Purchases</option>
+                  <option>Issued Inventory</option>
                 </select>
             </div>
           </div>
@@ -325,12 +325,12 @@
               <!-- Inventory Reports -->
               <div class="card shadow mb-4" id = "inventory_report">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Inventory Report</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Inventory on Hand</h6>
                 </div>
                 <div class="card-body">
-                    {{!-- <div class = "row">
+                    <div class = "row">
                       <div class="col-md-1">
-                        <div>Start</div>
+                        <div>As of</div>
                       </div>
                       <div class ="col-md-3">
                           <input type ="date">
@@ -338,13 +338,14 @@
                     </div>  
                     
                     <div class = "row">
-                      <div class="col-md-1">
-                        <div>End</div>
-                      </div>
-                      <div class ="col-md-3">
-                          <input type ="date">
-                      </div>
-                    </div> --}}
+                      <select>
+                        <option>item name 1</option>
+                        <option>item name 2</option>
+                        <option>all items</option>
+                      </select>
+                    </div>  
+                    
+                    
                     <div class ="table-responsive">
                       <table class="table table-bordered" id="inventoryTable" width="100%" cellspacing="0">
                   <thead>
@@ -380,9 +381,9 @@
         </div>
 
         <!-- Released Items Reports -->
-              <div class="card shadow mb-4" id ="released_items">
+              <div class="card shadow mb-4" id ="purchases">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Released Items Report</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Purchases</h6>
                 </div>
                 <div class="card-body">
                     <div class = "row">
@@ -425,53 +426,79 @@
                 </table>
               </div>
            
-                    <div><span id ="released_items_generate" class = "btn btn-danger"><U>Generate Report</U></span></div>
+                    <div><span id ="purchases_generate" class = "btn btn-danger"><U>Generate Report</U></span></div>
                 </div>
         </div>
 
         <!-- Released Items per Project Reports -->
               <div class="card shadow mb-4" id ="released_project">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Released Items per Project Report</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Issued Inventory</h6>
                 </div>
                 <div class="card-body">
-                    <div class = "row">
+                     <div class = "row">
                       <div class="col-md-1">
                         <div>Start</div>
                       </div>
                       <div class ="col-md-3">
-                          <select>
-                            <option>project1</option>
-                            <option>project1</option>
-                            <option>project1</option>
-                          </select>
+                          <input type ="date">
                       </div>
                     </div>  
                     
+                    <div class = "row">
+                      <div class="col-md-1">
+                        <div>End</div>
+                      </div>
+                      <div class ="col-md-3">
+                          <input type ="date">
+                      </div>
+                    </div>
+                    
+                    <div class = "row">
+                      <div class="col-md-1">
+                        <div>Sort by</div>
+                      </div>
+                      <div class ="col-md-3">
+                          <select>
+                            <option>Per Job Order</option>
+                            <option>Per Inventory Item</option>
+                            <option>Per Supplier</option>
+                          </select>
+                      </div>
+                      {{!-- <div class ="col-md-3"> nagiiba laman based sa pinili --}}
+                          <select>
+                            <option>Job Order 1/ inventory item1/supplier1</option>
+                            <option>Job Order 2/ inventory item2/supplier2</option>
+                            <option>Job Order 3/ inventory item3/supplier3</option>
+                          </select>
+                      </div>
+                    </div>
+                    
                     <div class="table-responsive">
-                <table class="table table-bordered" id="releasedTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="issuedInventoryTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>Item Name</th>
                       <th>Qty</th>
                       <th>Project</th>
                       <th>Date</th>
+                      <th>Supplier</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {{#each released}}
+                    {{!-- {{#each released}}
                       <tr>
                         <td>{{this.type}} - "{{this.materialName}}"</td>
                         <td>{{this.qty}}</td>
                         <td>{{this.projectNumber}}</td>
                         <td>{{this.date}}</td>
                       </tr>
-                    {{/each}}
+                    {{/each}} --}}
                   </tbody>
                 </table>
               </div>
            
-                    <div><span id ="released_items_projects_generate" class = "btn btn-danger"><U>Generate Report</U></span></div>
+                    <div><span id ="issued_inventory_generate" class = "btn btn-danger"><U>Generate Report</U></span></div>
                 </div>
         </div>
 
@@ -609,7 +636,7 @@
   <script>
      var inventoryReport = document.getElementById("inventory_report");
     $(document).ready(function(){
-       $( "#released_items" ).hide( "fast", function() {
+       $( "#purchases" ).hide( "fast", function() {
              //alert( "Animation complete." );
           });
           $( "#released_project" ).hide( "fast", function() {
@@ -620,9 +647,9 @@
           });
     $("select.reportType").change(function(){
         var type = $(this).children("option:selected").val();
-        if(type == "Inventory Report"){
+        if(type == "Inventory on Hand"){
           //alert("You have selected the country - " + type);
-          $( "#released_items" ).hide( "fast", function() {
+          $( "#purchases" ).hide( "fast", function() {
              //alert( "Animation complete." );
           });
           $( "#released_project" ).hide( "fast", function() {
@@ -633,8 +660,8 @@
           });
 
         }
-        else if(type == "Released Items Report"){
-            $( "#released_items" ).show( "fast", function() {
+        else if(type == "Purchases"){
+            $( "#purchases" ).show( "fast", function() {
              //alert( "Animation complete." );
           });
           $( "#released_project" ).hide( "fast", function() {
@@ -644,8 +671,8 @@
              //alert( "Animation complete." );
           });
         }
-        else if(type == "Released Items per Project Report"){
-          $( "#released_items" ).hide( "fast", function() {
+        else if(type == "Issued Inventory"){
+          $( "#purchases" ).hide( "fast", function() {
              //alert( "Animation complete." );
           });
           $( "#released_project" ).show( "fast", function() {
