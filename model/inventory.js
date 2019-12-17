@@ -12,7 +12,7 @@ exports.getAll = function() {
 }
 
 exports.getAllTableView = function() {
-    return database.query("SELECT *,SUM(quantity) AS 'totalQty',cast(AVG(unitPrice) as decimal(10,2)) AS 'averageUnitCost',cast((SUM(quantity) * AVG(unitPrice)) as decimal(10,2)) AS 'totalCost', unit_of_measures.unitOfMeasure AS 'unit' FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID LEFT JOIN unit_of_measures ON materials.unitOfMeasure = unit_of_measures.uomID GROUP BY inventory.materialID");
+    return database.query("SELECT *,SUM(quantity) AS 'totalQty',MAX(unitPrice) AS 'averageUnitCost',cast((SUM(quantity) * MAX(unitPrice)) as decimal(10,2)) AS 'totalCost', unit_of_measures.unitOfMeasure AS 'unit' FROM softengdb.inventory LEFT JOIN materials ON inventory.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON suppliers.supplierID = materials.supplierID LEFT JOIN unit_of_measures ON materials.unitOfMeasure = unit_of_measures.uomID GROUP BY inventory.materialID");
 }
 
 exports.restock = function(invID,qty){
@@ -36,7 +36,7 @@ exports.getTotalQty = function(materialID){
 }
 
 exports.getItemForRelease = function(materialID){
-    return database.query("SELECT * FROM softengdb.inventory WHERE materialID = ? ORDER BY unitPrice",[materialID])
+    return database.query("SELECT * FROM softengdb.inventory WHERE materialID = ? ORDER BY unitPrice desc",[materialID])
 }
 
 exports.setQuantity = function(quantity,inventoryID){

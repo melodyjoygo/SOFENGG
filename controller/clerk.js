@@ -48,7 +48,8 @@ router.get("/deliveryTracker",(req,res)=>{
 router.post("/add",(req,res)=>{
     let itemID = req.body.itemID
     let unitCost = req.body.unitCost
-    
+    unitCost = unitCost.replace(/<[^>]*>/g, '');
+
     var empty = false;
     
     if(unitCost === '')
@@ -77,6 +78,13 @@ router.post("/addPrice",(req,res)=>{
     let quantity = req.body.quantity
     let userID = req.session.userID
     var empty = false
+
+    invoiceNumber = invoiceNumber.replace(/<[^>]*>/g, '');
+    poNumber = poNumber.replace(/<[^>]*>/g, '');
+    unitCost = unitCost.replace(/<[^>]*>/g, '');
+    itemID = itemID.replace(/<[^>]*>/g, '');
+    quantity = quantity.replace(/<[^>]*>/g, '');
+
     
     if(invoiceNumber === '' || poNumber === "" || unitCost === "" || deliveryID === "")
         empty = true;
@@ -113,6 +121,12 @@ router.post("/editPrice",(req,res)=>{
     let unitCost = req.body.unitCost
     let deliveryID = req.body.deliveryID
     let requestID = req.body.requestID
+
+    invoiceNumber = invoiceNumber.replace(/<[^>]*>/g, '');
+    poNumber = poNumber.replace(/<[^>]*>/g, '');
+    unitCost = unitCost.replace(/<[^>]*>/g, '');
+    deliveryID = deliveryID.replace(/<[^>]*>/g, '');
+    requestID = requestID.replace(/<[^>]*>/g, '');
 
     console.log(poNumber)
     var empty = false

@@ -15,7 +15,7 @@ router.get("/",(req,res)=>{
 })
 
 router.get("/generateInventory",(req,res)=>{
-    let command = req.body.command
+    let command = req.query.command
     console.log(command)
     if(command == 1){
         let link = "http://"+ip.address()+":3000/reports/generateInventory"

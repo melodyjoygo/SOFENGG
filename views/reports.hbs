@@ -144,15 +144,6 @@
         if(userType == "2" || userType == "1"){
           $('#deliveryTrackerSpan').css('display','none')
         }
-
-        $('#generateInventory').click(function(){
-          $.get("/reports/generateInventory",{
-            command:1
-          },function(data){
-            window.open(data)
-          })
-        })
-      })
     </script>
 </head>
 
@@ -373,9 +364,11 @@
                    
                   </tbody>
                 </table>
-
+                <form action = '/reports/generateInventory' method="GET">
+                  <div><button type="submit" id ="generateInventory" class = "btn btn-danger"><U>Generate Report</U></span></div>
+                </form>
                     </div> 
-                    <div><span id ="generateInventory" class = "btn btn-danger"><U>Generate Report</U></span></div>
+                    
                 </div>
         </div>
 

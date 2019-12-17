@@ -72,6 +72,10 @@ router.post("/restock",(req,res)=>{
     let qty = req.body.qty
     let userID = req.session.userID
 
+    receiptNumber = receiptNumber.replace(/<[^>]*>/g, '');
+    itemID = itemID.replace(/<[^>]*>/g, '');
+    qty = qty.replace(/<[^>]*>/g, '');
+    
     var empty = false
 
     
@@ -99,6 +103,11 @@ router.post("/releaseRequest",(req,res)=>{
     let userID = req.session.userID
     var empty = false
     
+    projectID = projectID.replace(/<[^>]*>/g, '');
+    itemID = itemID.replace(/<[^>]*>/g, '');
+    qty = qty.replace(/<[^>]*>/g, '');
+
+
     if(qty === "" || projectID === "" || itemID === "")
         empty = true
     
@@ -140,6 +149,14 @@ router.post("/editRequest",(req,res)=>{
     let curritemID = req.body.curritemID
     let currqty = req.body.currqty
     let userID = req.session.userID
+
+    deliveryID = deliveryID.replace(/<[^>]*>/g, '');
+    newdeliveryReceiptNumber = newdeliveryReceiptNumber.replace(/<[^>]*>/g, '');
+    newitemID = newitemID.replace(/<[^>]*>/g, '');
+    newqty = newqty.replace(/<[^>]*>/g, '');
+    currdeliveryReceiptNumber = currdeliveryReceiptNumber.replace(/<[^>]*>/g, '');
+    curritemID = curritemID.replace(/<[^>]*>/g, '');
+    currqty = currqty.replace(/<[^>]*>/g, '');
     
     var empty = false
     
@@ -168,6 +185,10 @@ router.post("/releaseStock",(req,res)=>{
     
     var empty = false
     
+    quantity = quantity.replace(/<[^>]*>/g, '');
+    itemID = itemID.replace(/<[^>]*>/g, '');
+    requestID = requestID.replace(/<[^>]*>/g, '');
+
     if(quantity === "" || itemID === "")
         empty = true
     
