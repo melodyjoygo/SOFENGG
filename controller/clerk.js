@@ -85,8 +85,11 @@ router.post("/addPrice",(req,res)=>{
     itemID = itemID.replace(/<[^>]*>/g, '');
     quantity = quantity.replace(/<[^>]*>/g, '');
 
+    if(poNumber === ''){
+        poNumber = 0;
+    }
     
-    if(invoiceNumber === '' || poNumber === "" || unitCost === "" || deliveryID === "")
+    if(invoiceNumber === '' || unitCost === "" || deliveryID === "")
         empty = true;
     
     if(empty){
@@ -100,11 +103,14 @@ router.post("/addPrice",(req,res)=>{
                 Promise.resolve(ClerkRequest.getCurrRequest()).then(function(data){
                     let count = data[0].count + 1
                     Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,count)).then(function(value){
-                        Promise.resolve(ClerkRequest.addToInvRequest(itemID,quantity,unitCost,userID,'Pending',poNumber)).then(function(value){
-                            res.render("clerk_price_input.hbs",{
-                                message:2
-                            })
-                        }) 
+                        Promise.resolve(Delivery.getDelivery(deliveryID)).then(function(delivery){
+                            Promise.resolve(ClerkRequest.addToInvRequest(itemID,quantity,unitCost,userID,'Pending',poNumber,delivery[0].date_arrived)).then(function(value){
+                                res.render("clerk_price_input.hbs",{
+                                    message:2
+                                })
+                            }) 
+                        })
+                            
                     })
                 })  
             }

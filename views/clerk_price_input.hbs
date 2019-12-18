@@ -447,13 +447,13 @@
                   <input type = 'text'name = 'itemID' id = 'itemIDLabel'>
                   <div>Quantity: </div>
                   <div id = 'qtyLabel'></div>
-                  <input type = 'number'name = 'quantity' id = 'quantityLabel'>
+                  <input type = 'number'name = 'quantity' id = 'quantityLabel' min="0" step = '1' required>
                   <div>Invoice Number: </div> 
-                  <input type="text" id = 'invoiceNumberLabel' name = invoiceNumber>
+                  <input type="text" id = 'invoiceNumberLabel' name = invoiceNumber required>
                   <div>P.O. Number: </div>
                   <input type="text" id = 'poNumberLabel' name = poNumber>
                   <div>Unit Cost: </div>
-                  <input type = "number" name = "unitCost" id="unitCostLabel" min = '0' step = '0.01'>
+                  <input type = "number" name = "unitCost" id="unitCostLabel" min = '0' step = '0.01' required>
                   <div style="margin-top: 10px;"><input type = "submit" class = 'btn btn-success' value = 'Add'></div>
               </form>
           </div>

@@ -135,6 +135,9 @@
   
             color: black;
         }
+        .hiddenDiv {
+          display: none;
+        }
         
     </style>
     <script src = '/jQuery.js'></script>
@@ -144,6 +147,157 @@
         if(userType == "2" || userType == "1"){
           $('#deliveryTrackerSpan').css('display','none')
         }
+        
+        $('#itemSelector').on('change',function(){
+          let itemID = $(this).val();
+          $('#itemIDInput').val(itemID);
+          $('#inventoryTable tbody').empty();
+
+          $.post("/reports/getInventoryView",{
+            itemID:itemID
+          },function(data){
+            if(itemID == "all"){
+              for(let i = 0; i < data.length; i++){
+                let newrow = "<tr><td>"+data[i].type+"</td><td>"+data[i].materialName+"</td><td>"+data[i].unitOfMeasure+"</td><td>"+data[i].supplierName+"</td><td>"+data[i].totalQty+"</td><td>"+data[i].averageUnitCost+"</td><td>"+data[i].totalCost+"</td></tr>"
+                $('#inventoryTable tbody').append(newrow)
+              }
+            }
+            else{
+              for(let i = 0; i < data.length; i++){
+                let newrow = "<tr><td>"+data[i].type+"</td><td>"+data[i].materialName+"</td><td>"+data[i].unitOfMeasure+"</td><td>"+data[i].supplierName+"</td><td>"+data[i].quantity+"</td><td>"+data[i].unitPrice+"</td><td>"+data[i].totalCost+"</td></tr>"
+                $('#inventoryTable tbody').append(newrow)
+              }
+            }
+          })
+        })
+      
+        $('#purchasedItemSelector,#puchasedDate1,#puchasedDate2').on('change',function(){
+          handlePurchased()
+        })
+
+        $('#releasedChoices, #releasedDate1, #releasedDate2').on('change',function(){
+          handleReleased()
+        })
+
+        $('#releasedCategory').on('change',function(){
+          handleChoices()
+        })
+
+        function handlePurchased(){
+          let date1 = $("#puchasedDate1").val()
+          let date2 = $("#puchasedDate2").val()
+          let itemID = $("#purchasedItemSelector").val()
+
+          $("#purchasesDate1").val(date1)
+          $("#purchasesDate2").val(date2)
+          $("#purchasesItemID").val(itemID)
+          
+          $('#purchasedTable tbody').empty()
+          $.post("/reports/getPurchasesView",{
+            date1:date1,
+            date2:date2,
+            itemID:itemID
+          },function(data){
+            for(let i = 0; i < data.length; i++){
+              let newrow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\"" +"</td><td>"+data[i].poNumber+"</td><td>"+data[i].supplierName+"</td><td>"+data[i].quantity+"</td><td>"+data[i].price+"</td><td>"+data[i].dateFormat+"</td><td>"+data[i].status+"</td></tr>"
+              $('#purchasedTable tbody').append(newrow)
+            }
+          })
+        }
+
+        function handleReleased(){
+          $('#issuedInventoryTable tbody').empty()
+          let date1 = $('#releasedDate1').val()
+          let date2 = $('#releasedDate2').val()
+          let choiceID = $('#releasedChoices').val()
+          let category = $('#releasedCategory').val()
+
+          $('#releasedChoiceLabel').val(choiceID)
+          $('#releasedCategoryLabel').val(category)
+          $('#releasedDate1Label').val(date1)
+          $('#releasedDate2Label').val(date2)
+
+          if(category == "1"){
+            $.post("/reports/releasedProjects",{
+              date1:date1,
+              date2:date2,
+              choiceID:choiceID
+            },function(data){
+              for(let i = 0; i < data.length; i++){
+                let newrow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\"" +"</td><td>"+data[i].qty+"</td><td>"+data[i].projectNumber+"</td><td>"+data[i].date+"</td><td>"+data[i].supplierName+"</td></tr>"
+                $('#issuedInventoryTable tbody').append(newrow)
+              }
+            })
+          }
+          else if(category == "2"){
+            $.post("/reports/releasedItems",{
+              date1:date1,
+              date2:date2,
+              choiceID:choiceID
+            },function(data){
+              for(let i = 0; i < data.length; i++){
+                let newrow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\"" +"</td><td>"+data[i].qty+"</td><td>"+data[i].projectNumber+"</td><td>"+data[i].date+"</td><td>"+data[i].supplierName+"</td></tr>"
+                $('#issuedInventoryTable tbody').append(newrow)
+              }
+            })
+          }
+          else if(category == "3"){
+            $.post("/reports/releasedSuppliers",{
+              date1:date1,
+              date2:date2,
+              choiceID:choiceID
+            },function(data){
+              for(let i = 0; i < data.length; i++){
+                let newrow = "<tr><td>"+ data[i].type +" - \""+ data[i].materialName + "\"" +"</td><td>"+data[i].qty+"</td><td>"+data[i].projectNumber+"</td><td>"+data[i].date+"</td><td>"+data[i].supplierName+"</td></tr>"
+                $('#issuedInventoryTable tbody').append(newrow)
+              }
+            })
+          }
+
+        }
+
+        function handleChoices(){
+          let choice = $('#releasedCategory').val()
+          $('#issuedInventoryTable tbody').empty()
+          $('#releasedChoices').empty()
+
+          if(choice == "1"){
+            $.get("/reports/getProjects",{
+
+            },function(data){
+                for(let i = 0; i < data.length; i++){
+                  let newrow = "<option value= '"+ data[i].projectID +"' >"+ data[i].projectNumber +"</option>"
+                  $('#releasedChoices').append(newrow)
+                }
+                $('#releasedChoices').val("")
+            })
+          }
+          else if(choice == "2"){
+            $.get("/reports/getItems",{
+
+            },function(data){
+                for(let i = 0; i < data.length; i++){
+                  let newrow = "<option value = '"+data[i].materialID+"'>"+ data[i].type +" - \"" + data[i].materialName + "\" - "+ data[i].supplierName +"</option>"
+                  $('#releasedChoices').append(newrow)
+                }
+                $('#releasedChoices').append("<option value='all' selected>All Items</option>")
+                $('#releasedChoices').val("")
+            })
+          }
+          else if(choice == "3"){
+            $.get("/reports/getSuppliers",{
+
+            },function(data){
+                for(let i = 0; i < data.length; i++){
+                  let newrow = "<option value= '"+ data[i].supplierID +"' >"+ data[i].supplierName +"</option>"
+                  $('#releasedChoices').append(newrow)
+                }
+                $('#releasedChoices').val("")
+            })
+          }
+          
+        }
+      })
     </script>
 </head>
 
@@ -320,19 +474,11 @@
                 </div>
                 <div class="card-body">
                     <div class = "row">
-                      <div class="col-md-1">
-                        <div>As of</div>
-                      </div>
-                      <div class ="col-md-3">
-                          <input type ="date">
-                      </div>
-                    </div>  
-                    
-                    <div class = "row">
-                      <select>
-                        <option>item name 1</option>
-                        <option>item name 2</option>
-                        <option>all items</option>
+                      <select id = 'itemSelector'>
+                        {{#each items}}
+                          <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
+                        {{/each}}
+                        <option value="all" selected>All Items</option>
                       </select>
                     </div>  
                     
@@ -366,14 +512,15 @@
                   </tbody>
                 </table>
                 <form action = '/reports/generateInventory' method="GET">
-                  <div><button type="submit" id ="generateInventory" class = "btn btn-danger"><U>Generate Report</U></span></div>
+                  <input type = 'text' id = 'itemIDInput' class = 'hiddenDiv' value = 'all' name = 'itemID'>
+                  <div><button type="submit" class = "btn btn-danger"><U>Generate Report</U></span></div>
                 </form>
                     </div> 
                     
                 </div>
         </div>
-
-        <!-- Released Items Reports -->
+</div>
+        <!-- Purchased Items Reports -->
               <div class="card shadow mb-4" id ="purchases">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">Purchases</h6>
@@ -384,7 +531,7 @@
                         <div>Start</div>
                       </div>
                       <div class ="col-md-3">
-                          <input type ="date">
+                          <input type ="date" id = 'puchasedDate1'>
                       </div>
                     </div>  
                     
@@ -393,33 +540,53 @@
                         <div>End</div>
                       </div>
                       <div class ="col-md-3">
-                          <input type ="date">
+                          <input type ="date" id = 'puchasedDate2'>
                       </div>
                     </div>
+
+                    <div class = "row">
+                      <select id = 'purchasedItemSelector'>
+                        {{#each items}}
+                          <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
+                        {{/each}}
+                        <option value="all" selected>All Items</option>
+                      </select>
+                    </div>
                     <div class="table-responsive">
-                <table class="table table-bordered" id="releasedTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="purchasedTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>Item Name</th>
-                      <th>Qty</th>
-                      <th>Project</th>
-                      <th>Date</th>
+                        <th>Item</th>
+                        <th>P.O. Number</th>
+                        <th>Supplier</th>
+                        <th>Qty</th>
+                        <th>Cost</th>
+                        <th>Date Ordered</th>
+                        <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {{#each released}}
+                    {{#each purchases}}
                       <tr>
                         <td>{{this.type}} - "{{this.materialName}}"</td>
-                        <td>{{this.qty}}</td>
-                        <td>{{this.projectNumber}}</td>
-                        <td>{{this.date}}</td>
+                        <td>{{this.poNumber}}</td>
+                        <td>{{this.supplierName}}</td>
+                        <td>{{this.quantity}}</td>
+                        <td>{{this.price}}</td>
+                        <td>{{this.dateFormat}}</td> 
+                        <td>{{this.status}}</td>
                       </tr>
-                    {{/each}}
+                      {{/each}}
                   </tbody>
                 </table>
               </div>
-           
-                    <div><span id ="purchases_generate" class = "btn btn-danger"><U>Generate Report</U></span></div>
+                    <form action = '/reports/generatePurchases' method="GET">
+                      <input type = 'text' id = 'purchasesItemID' class = 'hiddenDiv' value = 'all' name = 'itemID'>
+                      <input type = 'date' id = 'purchasesDate1' class = 'hiddenDiv' name = 'date1'>
+                      <input type = 'date' id = 'purchasesDate2' class = 'hiddenDiv' name = 'date2'>
+                      <div><button type="submit" id ="generateInventory" class = "btn btn-danger"><U>Generate Report</U></span></div>
+                    </form>
+                    
                 </div>
         </div>
 
@@ -434,7 +601,7 @@
                         <div>Start</div>
                       </div>
                       <div class ="col-md-3">
-                          <input type ="date">
+                          <input type ="date" id = 'releasedDate1'>
                       </div>
                     </div>  
                     
@@ -443,7 +610,7 @@
                         <div>End</div>
                       </div>
                       <div class ="col-md-3">
-                          <input type ="date">
+                          <input type ="date"id = 'releasedDate2'>
                       </div>
                     </div>
                     
@@ -452,17 +619,18 @@
                         <div>Sort by</div>
                       </div>
                       <div class ="col-md-3">
-                          <select>
-                            <option>Per Job Order</option>
-                            <option>Per Inventory Item</option>
-                            <option>Per Supplier</option>
+                          <select id = 'releasedCategory'>
+                            <option value = '1'>Per Project</option>
+                            <option value = '2' selected>Per Inventory Item</option>
+                            <option value = '3'>Per Supplier</option>
                           </select>
                       </div>
                       {{!-- <div class ="col-md-3"> nagiiba laman based sa pinili --}}
-                          <select>
-                            <option>Job Order 1/ inventory item1/supplier1</option>
-                            <option>Job Order 2/ inventory item2/supplier2</option>
-                            <option>Job Order 3/ inventory item3/supplier3</option>
+                          <select id = 'releasedChoices'>
+                            {{#each items}}
+                              <option value = "{{this.materialID}}">{{this.type}} - "{{this.materialName}}" - {{this.supplierName}} </option>
+                            {{/each}}
+                            <option value="all" selected>All Items</option>
                           </select>
                       </div>
                     </div>
@@ -479,19 +647,25 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {{!-- {{#each released}}
+                    {{#each released}}
                       <tr>
                         <td>{{this.type}} - "{{this.materialName}}"</td>
                         <td>{{this.qty}}</td>
                         <td>{{this.projectNumber}}</td>
                         <td>{{this.date}}</td>
+                        <td>{{this.supplierName}}</td>
                       </tr>
-                    {{/each}} --}}
+                    {{/each}}
                   </tbody>
                 </table>
               </div>
-           
-                    <div><span id ="issued_inventory_generate" class = "btn btn-danger"><U>Generate Report</U></span></div>
+                    <form action = '/reports/generateReleased' method="GET">
+                      <input type = 'text' id = 'releasedChoice' class = 'hiddenDiv' value = 'all' name = 'choiceID'>
+                      <input type = 'text' id = 'releasedCategory' class = 'hiddenDiv' value = '2' name = 'category'>
+                      <input type = 'date' id = 'releasedDate1' class = 'hiddenDiv' name = 'date1'>
+                      <input type = 'date' id = 'releasedDate2' class = 'hiddenDiv' name = 'date2'>
+                      <div><button type="submit" id ="generateInventory" class = "btn btn-danger"><U>Generate Report</U></span></div>
+                    </form>
                 </div>
         </div>
 
@@ -680,7 +854,6 @@
 });
   </script>
   
-
 </body>
 
 </html>

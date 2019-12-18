@@ -88,7 +88,7 @@ router.post("/restock",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(Tracker.create(receiptNumber,itemID,qty,userID)).then(function(value){
+        Promise.resolve(Tracker.create(receiptNumber,itemID,qty,userID,new Date().toISOString().slice(0, 19).replace('T', ' '))).then(function(value){
             res.render("stockman_delivery.hbs",{
                 message:2
             })

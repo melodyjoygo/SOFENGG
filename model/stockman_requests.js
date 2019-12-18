@@ -46,3 +46,35 @@ exports.getReleased = function(month,year){
 exports.getReleasedAllMonth = function(year){
     return database.query("SELECT *,date_format(dateReleased, '%Y-%m-%d') AS 'date' FROM softengdb.stockman_release_requests LEFT JOIN materials ON materials.materialID = stockman_release_requests.itemID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN projects ON projects.projectID = stockman_release_requests.projectID WHERE YEAR(dateReleased) = ?",[year])
 }
+
+exports.loadReleased = function(){
+    return database.query("SELECT *,date_format(dateReleased, '%Y-%m-%d') AS 'date' FROM softengdb.stockman_release_requests LEFT JOIN materials ON materials.materialID = stockman_release_requests.itemID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN projects ON projects.projectID = stockman_release_requests.projectID LEFT JOIN suppliers ON materials.supplierID = suppliers.supplierID where released = '1'")
+}
+
+exports.getProjectWithDate = function(date1,date2,choiceID){
+    return database.query("SELECT *,date_format(dateReleased, '%Y-%m-%d') AS 'date' FROM softengdb.stockman_release_requests LEFT JOIN materials ON materials.materialID = stockman_release_requests.itemID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN projects ON projects.projectID = stockman_release_requests.projectID LEFT JOIN suppliers ON materials.supplierID = suppliers.supplierID where released = '1' AND projects.projectID = ? AND dateReleased between ? AND ?",[choiceID,date1,date2])
+}
+
+exports.getProjectWithoutDate = function(choiceID){
+    return database.query("SELECT *,date_format(dateReleased, '%Y-%m-%d') AS 'date' FROM softengdb.stockman_release_requests LEFT JOIN materials ON materials.materialID = stockman_release_requests.itemID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN projects ON projects.projectID = stockman_release_requests.projectID LEFT JOIN suppliers ON materials.supplierID = suppliers.supplierID where released = '1' AND projects.projectID = ?",[choiceID])
+}
+
+exports.getSupplierWithDate = function(date1,date2,choiceID){
+    return database.query("SELECT *,date_format(dateReleased, '%Y-%m-%d') AS 'date' FROM softengdb.stockman_release_requests LEFT JOIN materials ON materials.materialID = stockman_release_requests.itemID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN projects ON projects.projectID = stockman_release_requests.projectID LEFT JOIN suppliers ON materials.supplierID = suppliers.supplierID where released = '1' AND suppliers.supplierID = ? AND dateReleased between ? AND ?",[choiceID,date1,date2])
+}
+
+exports.getSupplierWithoutDate = function(choiceID){
+    return database.query("SELECT *,date_format(dateReleased, '%Y-%m-%d') AS 'date' FROM softengdb.stockman_release_requests LEFT JOIN materials ON materials.materialID = stockman_release_requests.itemID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN projects ON projects.projectID = stockman_release_requests.projectID LEFT JOIN suppliers ON materials.supplierID = suppliers.supplierID where released = '1' AND materials.supplierID = ?",[choiceID])
+}
+
+exports.getAllItemWithDate = function(date1,date2){
+    return database.query("SELECT *,date_format(dateReleased, '%Y-%m-%d') AS 'date' FROM softengdb.stockman_release_requests LEFT JOIN materials ON materials.materialID = stockman_release_requests.itemID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN projects ON projects.projectID = stockman_release_requests.projectID LEFT JOIN suppliers ON materials.supplierID = suppliers.supplierID where released = '1' AND dateReleased between ? AND ?",[date1,date2])
+}
+
+exports.getSpecificItemWithoutDate = function(choiceID){
+    return database.query("SELECT *,date_format(dateReleased, '%Y-%m-%d') AS 'date' FROM softengdb.stockman_release_requests LEFT JOIN materials ON materials.materialID = stockman_release_requests.itemID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN projects ON projects.projectID = stockman_release_requests.projectID LEFT JOIN suppliers ON materials.supplierID = suppliers.supplierID where released = '1' AND stockman_release_requests.itemID = ?",[choiceID])
+}
+
+exports.getSpecificItemWithDate = function(date1,date2,choiceID){
+    return database.query("SELECT *,date_format(dateReleased, '%Y-%m-%d') AS 'date' FROM softengdb.stockman_release_requests LEFT JOIN materials ON materials.materialID = stockman_release_requests.itemID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN projects ON projects.projectID = stockman_release_requests.projectID LEFT JOIN suppliers ON materials.supplierID = suppliers.supplierID where released = '1' AND stockman_release_requests.itemID = ? AND dateReleased between ? AND ?",[choiceID,date1,date2])
+}

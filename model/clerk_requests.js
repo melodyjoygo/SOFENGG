@@ -1,9 +1,9 @@
 const Database = require("./database");
 var database = new Database();
 
-exports.addToInvRequest = function(materialID,quantity,unitPrice,userID,status,poNumber){
+exports.addToInvRequest = function(materialID,quantity,unitPrice,userID,status,poNumber,date){
      Promise.resolve(database.query("SELECT COUNT(requestID) AS 'count' FROM clerk_add_request")).then(function(value) {
-        database.query("INSERT INTO clerk_add_request (requestID, materialID,quantity,unitPrice,userID,status,poNumber) VALUES ?", [[[(value[0].count + 1), materialID,quantity,unitPrice,userID,status,poNumber]]])
+        database.query("INSERT INTO clerk_add_request (requestID, materialID,quantity,unitPrice,userID,status,poNumber,date_arrived) VALUES ?", [[[(value[0].count + 1), materialID,quantity,unitPrice,userID,status,poNumber,date]]])
     })
 }
 
@@ -25,4 +25,8 @@ exports.editAddToInv = function(requestID,materialID,quantity){
 
 exports.editAll = function(itemID,quantity,unitCost,requestID){
     database.query("UPDATE clerk_add_request SET materialID = ?,quantity = ?,unitPrice = ? WHERE requestID = ?",[itemID,quantity,unitCost,requestID])
+}
+
+exports.getRequest = function(requestID){
+    return database.query("SELECT * FROM clerk_add_request WHERE requestID = ?",[requestID])
 }
