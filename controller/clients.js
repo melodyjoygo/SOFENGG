@@ -67,8 +67,7 @@ router.post("/edit",async (req,res)=>{
     clientID = req.body.clientID
     clientName = req.body.clientName.trim()
     
-    console.log(clientID)
-    console.log(clientName)
+    clientName = clientName.replace(/<[^>]*>/g, '');
     
     var empty = false;
     var exist = false;

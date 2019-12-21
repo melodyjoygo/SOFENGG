@@ -67,11 +67,17 @@ router.get("/inventory",(req,res)=>{
 })
 
 router.post("/restock",(req,res)=>{
-    let receiptNumber = req.body.deliveryReceiptNumber.replace(/<[^>]*>/g, '');
-    let itemID = req.body.itemID.replace(/<[^>]*>/g, '');
-    let qty = req.body.qty.replace(/<[^>]*>/g, '');
-    let userID = req.session.userID.replace(/<[^>]*>/g, '');
+    let receiptNumber = req.body.deliveryReceiptNumber
+    let itemID = req.body.itemID
+    let qty = req.body.qty
+    let userID = req.session.userID
+
+    receiptNumber = receiptNumber.replace(/<[^>]*>/g, '');
+    itemID = itemID.replace(/<[^>]*>/g, '');
+    qty = qty.replace(/<[^>]*>/g, '');
+    
     var empty = false
+
     
     if(qty === "" || receiptNumber === "")
         empty = true
@@ -82,7 +88,7 @@ router.post("/restock",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(Tracker.create(receiptNumber,itemID,qty,userID)).then(function(value){
+        Promise.resolve(Tracker.create(receiptNumber,itemID,qty,userID,new Date().toISOString().slice(0, 19).replace('T', ' '))).then(function(value){
             res.render("stockman_delivery.hbs",{
                 message:2
             })
@@ -91,12 +97,17 @@ router.post("/restock",(req,res)=>{
 })
 
 router.post("/releaseRequest",(req,res)=>{
-    let projectID = req.body.projectID.replace(/<[^>]*>/g, '');
-    let itemID = req.body.itemID.replace(/<[^>]*>/g, '');
-    let qty = req.body.qty.replace(/<[^>]*>/g, '');
-    let userID = req.session.userID.replace(/<[^>]*>/g, '');
+    let projectID = req.body.projectID
+    let itemID = req.body.itemID
+    let qty = req.body.qty
+    let userID = req.session.userID
     var empty = false
     
+    projectID = projectID.replace(/<[^>]*>/g, '');
+    itemID = itemID.replace(/<[^>]*>/g, '');
+    qty = qty.replace(/<[^>]*>/g, '');
+
+
     if(qty === "" || projectID === "" || itemID === "")
         empty = true
     
@@ -129,15 +140,23 @@ router.post("/releaseRequest",(req,res)=>{
 })
 
 router.post("/editRequest",(req,res)=>{
-    let deliveryID = req.body.deliveryID.replace(/<[^>]*>/g, '');
-    let newdeliveryReceiptNumber = req.body.deliveryReceiptNumber.replace(/<[^>]*>/g, '');
-    let newitemID = req.body.itemID.replace(/<[^>]*>/g, '');
-    let newqty = req.body.qty.replace(/<[^>]*>/g, '');
+    let deliveryID = req.body.deliveryID
+    let newdeliveryReceiptNumber = req.body.deliveryReceiptNumber
+    let newitemID = req.body.itemID
+    let newqty = req.body.qty
     
-    let currdeliveryReceiptNumber = req.body.currdeliveryReceiptNumber.replace(/<[^>]*>/g, '');
-    let curritemID = req.body.curritemID.replace(/<[^>]*>/g, '');
-    let currqty = req.body.currqty.replace(/<[^>]*>/g, '');
-    let userID = req.session.userID.replace(/<[^>]*>/g, '');
+    let currdeliveryReceiptNumber = req.body.currdeliveryReceiptNumber
+    let curritemID = req.body.curritemID
+    let currqty = req.body.currqty
+    let userID = req.session.userID
+
+    deliveryID = deliveryID.replace(/<[^>]*>/g, '');
+    newdeliveryReceiptNumber = newdeliveryReceiptNumber.replace(/<[^>]*>/g, '');
+    newitemID = newitemID.replace(/<[^>]*>/g, '');
+    newqty = newqty.replace(/<[^>]*>/g, '');
+    currdeliveryReceiptNumber = currdeliveryReceiptNumber.replace(/<[^>]*>/g, '');
+    curritemID = curritemID.replace(/<[^>]*>/g, '');
+    currqty = currqty.replace(/<[^>]*>/g, '');
     
     var empty = false
     
@@ -159,13 +178,17 @@ router.post("/editRequest",(req,res)=>{
 })
 
 router.post("/releaseStock",(req,res)=>{
-    let quantity = req.body.quantity.replace(/<[^>]*>/g, '');
-    let itemID = req.body.itemID.replace(/<[^>]*>/g, '');
-    let requestID = req.body.requestID.replace(/<[^>]*>/g, '');
-    let action = req.body.action.replace(/<[^>]*>/g, '');
+    let quantity = req.body.quantity
+    let itemID = req.body.itemID
+    let requestID = req.body.requestID
+    let action = req.body.action
     
     var empty = false
     
+    quantity = quantity.replace(/<[^>]*>/g, '');
+    itemID = itemID.replace(/<[^>]*>/g, '');
+    requestID = requestID.replace(/<[^>]*>/g, '');
+
     if(quantity === "" || itemID === "")
         empty = true
     

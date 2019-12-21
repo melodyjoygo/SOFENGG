@@ -33,7 +33,6 @@ router.get("/priceInput",(req,res)=>{
 
 router.get("/deliveryTracker",(req,res)=>{
     let userID = req.session.userID
-    userID = userID.replace(/<[^>]*>/g, '');
     Promise.resolve(Delivery.getClerkEditable(userID)).then(function(deliveries){
         res.render("clerk_delivery_tracker.hbs",{
             deliveries:deliveries,
@@ -49,8 +48,8 @@ router.get("/deliveryTracker",(req,res)=>{
 router.post("/add",(req,res)=>{
     let itemID = req.body.itemID
     let unitCost = req.body.unitCost
-    itemID = itemID.replace(/<[^>]*>/g, '');
     unitCost = unitCost.replace(/<[^>]*>/g, '');
+
     var empty = false;
     
     if(unitCost === '')
@@ -71,16 +70,26 @@ router.post("/add",(req,res)=>{
 })
 
 router.post("/addPrice",(req,res)=>{
-    let deliveryID = req.body.deliveryID.replace(/<[^>]*>/g, '');
-    let invoiceNumber = req.body.invoiceNumber.replace(/<[^>]*>/g, '');
-    let poNumber = req.body.poNumber.replace(/<[^>]*>/g, '');
-    let unitCost = req.body.unitCost.replace(/<[^>]*>/g, '');
-    let itemID = req.body.itemID.replace(/<[^>]*>/g, '');
-    let quantity = req.body.quantity.replace(/<[^>]*>/g, '');
-    let userID = req.session.userID.replace(/<[^>]*>/g, '');
+    let deliveryID = req.body.deliveryID
+    let invoiceNumber = req.body.invoiceNumber
+    let poNumber = req.body.poNumber
+    let unitCost = req.body.unitCost
+    let itemID = req.body.itemID
+    let quantity = req.body.quantity
+    let userID = req.session.userID
     var empty = false
+
+    invoiceNumber = invoiceNumber.replace(/<[^>]*>/g, '');
+    poNumber = poNumber.replace(/<[^>]*>/g, '');
+    unitCost = unitCost.replace(/<[^>]*>/g, '');
+    itemID = itemID.replace(/<[^>]*>/g, '');
+    quantity = quantity.replace(/<[^>]*>/g, '');
+
+    if(poNumber === ''){
+        poNumber = 0;
+    }
     
-    if(invoiceNumber === '' || poNumber === "" || unitCost === "" || deliveryID === "")
+    if(invoiceNumber === '' || unitCost === "" || deliveryID === "")
         empty = true;
     
     if(empty){
@@ -94,11 +103,14 @@ router.post("/addPrice",(req,res)=>{
                 Promise.resolve(ClerkRequest.getCurrRequest()).then(function(data){
                     let count = data[0].count + 1
                     Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,count)).then(function(value){
-                        Promise.resolve(ClerkRequest.addToInvRequest(itemID,quantity,unitCost,userID,'Pending',poNumber)).then(function(value){
-                            res.render("clerk_price_input.hbs",{
-                                message:2
-                            })
-                        }) 
+                        Promise.resolve(Delivery.getDelivery(deliveryID)).then(function(delivery){
+                            Promise.resolve(ClerkRequest.addToInvRequest(itemID,quantity,unitCost,userID,'Pending',poNumber,delivery[0].date_arrived)).then(function(value){
+                                res.render("clerk_price_input.hbs",{
+                                    message:2
+                                })
+                            }) 
+                        })
+                            
                     })
                 })  
             }
@@ -110,11 +122,17 @@ router.post("/addPrice",(req,res)=>{
 })
 
 router.post("/editPrice",(req,res)=>{
-    let invoiceNumber = req.body.invoiceNumber.replace(/<[^>]*>/g, '');
-    let poNumber = req.body.poNumber.replace(/<[^>]*>/g, '');
-    let unitCost = req.body.unitCost.replace(/<[^>]*>/g, '');
-    let deliveryID = req.body.deliveryID.replace(/<[^>]*>/g, '');
-    let requestID = req.body.requestID.replace(/<[^>]*>/g, '');
+    let invoiceNumber = req.body.invoiceNumber
+    let poNumber = req.body.poNumber
+    let unitCost = req.body.unitCost
+    let deliveryID = req.body.deliveryID
+    let requestID = req.body.requestID
+
+    invoiceNumber = invoiceNumber.replace(/<[^>]*>/g, '');
+    poNumber = poNumber.replace(/<[^>]*>/g, '');
+    unitCost = unitCost.replace(/<[^>]*>/g, '');
+    deliveryID = deliveryID.replace(/<[^>]*>/g, '');
+    requestID = requestID.replace(/<[^>]*>/g, '');
 
     console.log(poNumber)
     var empty = false

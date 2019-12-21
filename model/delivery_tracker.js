@@ -1,9 +1,9 @@
 const Database = require("./database");
 var database = new Database();
 
-exports.create = function(deliveryReceptNum,  materialID, quantity,userID) {
+exports.create = function(deliveryReceptNum,  materialID, quantity,userID,date) {
     Promise.resolve(database.query("SELECT COUNT(deliveryID) AS 'num' FROM delivery_tracker")).then(function(value) {
-        database.query("INSERT INTO delivery_tracker (deliveryID, deliveryReceiptNumber, materialID, quantity,invoiceNumber,poNumber,inInventory,unitPrice,requestID,userID) VALUES ?", [[[(value[0].num + 1), deliveryReceptNum,materialID, quantity, 0,0,0,0,0,userID]]])
+        database.query("INSERT INTO delivery_tracker (deliveryID, deliveryReceiptNumber, materialID, quantity,invoiceNumber,poNumber,inInventory,unitPrice,requestID,userID,date_arrived) VALUES ?", [[[(value[0].num + 1), deliveryReceptNum,materialID, quantity, 0,0,0,0,0,userID,date]]])
     })
 }
 

@@ -11,7 +11,6 @@ exports.getAll = function() {
     return database.query("SELECT * FROM transactions");
 }
 
-
 exports.loadItems = function(){
     return database.query("SELECT *,date_format(date,'%Y-%m-%d') as 'dateFormat' FROM transactions NATURAL JOIN suppliers NATURAL JOIN materials LEFT JOIN material_types ON materials.materialType = material_types.mtID")
 }
@@ -22,4 +21,16 @@ exports.edit = function(materialID,supplierID,price,quantity,transactionID,poNum
 
 exports.arrived = function(materialID,quantity,unitPrice,poNumber){
     database.query("UPDATE transactions SET status = 'Arrived' WHERE price = ? AND materialID = ? AND poNumber = ? AND quantity = ?",[unitPrice,materialID,poNumber,quantity])
+}
+
+exports.getItem = function(materialID){
+    return database.query("SELECT *,date_format(date,'%Y-%m-%d') as 'dateFormat' FROM transactions NATURAL JOIN suppliers NATURAL JOIN materials LEFT JOIN material_types ON materials.materialType = material_types.mtID where materialID = ?",[materialID])
+}
+
+exports.getAllWithDate = function(date1,date2){
+    return database.query("SELECT *,date_format(date,'%Y-%m-%d') as 'dateFormat' FROM transactions NATURAL JOIN suppliers NATURAL JOIN materials LEFT JOIN material_types ON materials.materialType = material_types.mtID where date between ? and ?",[date1,date2])
+}
+
+exports.getSpecificWithDate = function(itemID,date1,date2){
+    return database.query("SELECT *,date_format(date,'%Y-%m-%d') as 'dateFormat' FROM transactions NATURAL JOIN suppliers NATURAL JOIN materials LEFT JOIN material_types ON materials.materialType = material_types.mtID where materialID = ? AND date between ? and ?",[itemID,date1,date2])
 }

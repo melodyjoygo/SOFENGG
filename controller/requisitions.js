@@ -37,8 +37,6 @@ router.post("/clerkAdd",(req,res)=>{
     let action = req.body.action
     let poNumber = req.body.poNumber
     
-    console.log("PO:" + poNumber)
-    
     var empty = false
     
     if(clerkAddRequestID === "" || itemID === "" || unitCost === "" || quantity === "" || action === "")
@@ -51,12 +49,14 @@ router.post("/clerkAdd",(req,res)=>{
     }
     else{
         if(action === 'Accept'){
-            Promise.resolve(Inventory.create(itemID,quantity,new Date().toISOString().slice(0, 19).replace('T', ' '),unitCost)).then(function(){
-                Promise.resolve(deliveryTracker.inInventory(clerkAddRequestID,1)).then(function(){
-                    Promise.resolve(clerkRequests.updateStatus(clerkAddRequestID,'Approved')).then(function(){
-                        Promise.resolve(orders.arrived(itemID,quantity,unitCost,poNumber)).then(function(){
-                            res.render("requisitions.hbs",{
-                                message:2
+            Promise.resolve(clerkRequests.getRequest(clerkAddRequestID)).then(function(request){
+                Promise.resolve(Inventory.create(itemID,quantity,request[0].date_arrived,unitCost)).then(function(){
+                    Promise.resolve(deliveryTracker.inInventory(clerkAddRequestID,1)).then(function(){
+                        Promise.resolve(clerkRequests.updateStatus(clerkAddRequestID,'Approved')).then(function(){
+                            Promise.resolve(orders.arrived(itemID,quantity,unitCost,poNumber)).then(function(){
+                                res.render("requisitions.hbs",{
+                                    message:2
+                                })
                             })
                         })
                     })
