@@ -30,7 +30,8 @@ CREATE TABLE `clerk_add_request` (
   `userID` int(11) NOT NULL,
   `status` varchar(45) NOT NULL,
   `poNumber` varchar(45) NOT NULL,
-  PRIMARY KEY (`requestID`,`poNumber`)
+  `date_arrived` date DEFAULT NULL,
+  PRIMARY KEY (`requestID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -39,7 +40,9 @@ CREATE TABLE `clerk_add_request` (
 --
 
 LOCK TABLES `clerk_add_request` WRITE;
-INSERT INTO `clerk_add_request` VALUES (1,'1','10','100',2,'Approved','P001'),(2,'1','100','3',2,'Pending','PO003');
+/*!40000 ALTER TABLE `clerk_add_request` DISABLE KEYS */;
+INSERT INTO `clerk_add_request` VALUES (1,'1','100','100',2,'Approved','PO001','2019-12-17'),(2,'1','100','100',2,'Approved','PO002','2019-12-18'),(3,'2','100','1000',2,'Approved','PO003','2019-12-18');
+/*!40000 ALTER TABLE `clerk_add_request` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -61,7 +64,9 @@ CREATE TABLE `clients` (
 --
 
 LOCK TABLES `clients` WRITE;
-INSERT INTO `clients` VALUES (1,'Riot Games'),(2,'Samsung'),(3,'Kfc'),(4,'Mcdonals');
+/*!40000 ALTER TABLE `clients` DISABLE KEYS */;
+INSERT INTO `clients` VALUES (1,'Riot Games'),(2,'Samsung'),(3,'Kfc'),(4,'Mcdonals'),(5,'<h1>kek<h1>'),(6,'&lt;h1&gt;kek&lt;h1&gt;'),(7,'H1kekh1'),(8,'Kek');
+/*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -83,6 +88,7 @@ CREATE TABLE `delivery_tracker` (
   `requestID` varchar(45) NOT NULL,
   `userID` varchar(45) NOT NULL,
   `status` varchar(45) DEFAULT NULL,
+  `date_arrived` date DEFAULT NULL,
   PRIMARY KEY (`deliveryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -92,7 +98,9 @@ CREATE TABLE `delivery_tracker` (
 --
 
 LOCK TABLES `delivery_tracker` WRITE;
-INSERT INTO `delivery_tracker` VALUES (1,'VN555',1,10,'IN123','P001',1,100,'1','3',NULL),(2,'VN556',1,100,'IN003','PO003',0,3,'2','3',NULL);
+/*!40000 ALTER TABLE `delivery_tracker` DISABLE KEYS */;
+INSERT INTO `delivery_tracker` VALUES (1,'VN556',1,100,'IN001','PO001',1,100,'1','3',NULL,'2019-12-17'),(2,'VN557',1,100,'IN002','PO002',1,100,'2','3',NULL,'2019-12-18'),(3,'VN558',2,100,'IN003','PO003',1,1000,'3','3',NULL,'2019-12-18');
+/*!40000 ALTER TABLE `delivery_tracker` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -118,7 +126,9 @@ CREATE TABLE `inventory` (
 --
 
 LOCK TABLES `inventory` WRITE;
-INSERT INTO `inventory` VALUES (1,1,0,'2019-12-06',100);
+/*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
+INSERT INTO `inventory` VALUES (1,1,0,'2019-12-17',100),(2,1,100,'2019-12-18',100),(3,2,0,'2019-12-18',1000);
+/*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -140,7 +150,9 @@ CREATE TABLE `material_types` (
 --
 
 LOCK TABLES `material_types` WRITE;
+/*!40000 ALTER TABLE `material_types` DISABLE KEYS */;
 INSERT INTO `material_types` VALUES (1,'Plastic'),(2,'Wood'),(3,'Acrylic'),(4,'Metal'),(5,'Bronze'),(6,'Gold'),(7,'Sterling'),(8,'Cactus');
+/*!40000 ALTER TABLE `material_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -166,7 +178,9 @@ CREATE TABLE `materials` (
 --
 
 LOCK TABLES `materials` WRITE;
+/*!40000 ALTER TABLE `materials` DISABLE KEYS */;
 INSERT INTO `materials` VALUES (1,'2x4',2,1,1),(2,'2x4',1,1,1),(3,'Tent',3,1,1),(4,'5x2',2,1,1);
+/*!40000 ALTER TABLE `materials` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -194,7 +208,9 @@ CREATE TABLE `project_materials` (
 --
 
 LOCK TABLES `project_materials` WRITE;
+/*!40000 ALTER TABLE `project_materials` DISABLE KEYS */;
 INSERT INTO `project_materials` VALUES (1,1,1,22222,0),(2,2,1,10,0),(3,1,1,12,0),(4,1,1,123,0),(5,1,3,10,0),(6,3,2,10,0),(7,1,1,123,0),(8,1,3,1,0);
+/*!40000 ALTER TABLE `project_materials` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -219,7 +235,9 @@ CREATE TABLE `projects` (
 --
 
 LOCK TABLES `projects` WRITE;
+/*!40000 ALTER TABLE `projects` DISABLE KEYS */;
 INSERT INTO `projects` VALUES (1,3,'P1911-00000','2019-11-17','Approved'),(2,1,'P1911-00001','2019-11-17','Pending'),(3,2,'P1911-00002','2019-11-18','Pending'),(4,1,'P1911-00003','2019-11-19','Pending');
+/*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -235,11 +253,9 @@ CREATE TABLE `stockman_edit_requests` (
   `newDeliveryReceipt` varchar(45) NOT NULL,
   `newItemID` varchar(45) NOT NULL,
   `newQuantity` varchar(45) NOT NULL,
-  `newSupplierID` varchar(45) NOT NULL,
   `currDeliveryReceipt` varchar(45) NOT NULL,
   `currItemID` varchar(45) NOT NULL,
   `currQuantity` varchar(45) NOT NULL,
-  `currSupplierID` varchar(45) NOT NULL,
   `userID` int(11) NOT NULL,
   `status` varchar(45) NOT NULL,
   PRIMARY KEY (`requestID`)
@@ -251,6 +267,8 @@ CREATE TABLE `stockman_edit_requests` (
 --
 
 LOCK TABLES `stockman_edit_requests` WRITE;
+/*!40000 ALTER TABLE `stockman_edit_requests` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stockman_edit_requests` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -279,7 +297,9 @@ CREATE TABLE `stockman_release_requests` (
 --
 
 LOCK TABLES `stockman_release_requests` WRITE;
-INSERT INTO `stockman_release_requests` VALUES (1,'1','1','10','Approved','2019-12-08',3,1,'2019-12-08'),(2,'1','1','10','Approved','2019-12-07',3,1,'2019-12-07'),(3,'1','1','10','Approved','2019-12-08',3,1,'2020-01-13');
+/*!40000 ALTER TABLE `stockman_release_requests` DISABLE KEYS */;
+INSERT INTO `stockman_release_requests` VALUES (1,'1','1','100','Approved','2019-12-18',3,1,'2019-12-18'),(2,'2','2','100','Approved','2019-12-18',3,1,'2019-12-18'),(3,'1','1','100','Approved','2019-12-18',3,0,NULL);
+/*!40000 ALTER TABLE `stockman_release_requests` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -302,7 +322,9 @@ CREATE TABLE `suppliers` (
 --
 
 LOCK TABLES `suppliers` WRITE;
+/*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
 INSERT INTO `suppliers` VALUES (1,'Ace Hardware','8878888'),(2,'Mcdonalds','88886236'),(3,'Samsung','2448001');
+/*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -330,7 +352,9 @@ CREATE TABLE `transactions` (
 --
 
 LOCK TABLES `transactions` WRITE;
-INSERT INTO `transactions` VALUES (1,1,1,100.0000,'2019-12-06','Arrived',10,'P001');
+/*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
+INSERT INTO `transactions` VALUES (1,1,1,100.0000,'2019-12-06','Arrived',10,'P001'),(2,2,1,100.0000,'2019-12-19','Arrived',100,'P002');
+/*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -352,7 +376,9 @@ CREATE TABLE `unit_of_measures` (
 --
 
 LOCK TABLES `unit_of_measures` WRITE;
+/*!40000 ALTER TABLE `unit_of_measures` DISABLE KEYS */;
 INSERT INTO `unit_of_measures` VALUES (1,'pc'),(2,'block'),(3,'pint');
+/*!40000 ALTER TABLE `unit_of_measures` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -374,7 +400,9 @@ CREATE TABLE `user_types` (
 --
 
 LOCK TABLES `user_types` WRITE;
+/*!40000 ALTER TABLE `user_types` DISABLE KEYS */;
 INSERT INTO `user_types` VALUES (0,'Super Admin'),(1,'User Admin'),(2,'Admin'),(3,'Clerk'),(4,'Stockman');
+/*!40000 ALTER TABLE `user_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -401,7 +429,9 @@ CREATE TABLE `users` (
 --
 
 LOCK TABLES `users` WRITE;
-INSERT INTO `users` VALUES (1,'Melody','Go','melody_go@dlsu.edu.ph','U2FsdGVkX19LkaTwkDA/Mz53Sen5h53BuM2pmav+JqI=',0),(2,'Rebecalyn','Lao','rebecalyn_lao@dlsu.edu.ph','U2FsdGVkX19Y7gb2XVpkBnheS2NLLZsfhXG4J7DIZUQ=',3),(3,'Darren','Tee','darren_tee@dlsu.edu.ph','U2FsdGVkX19YYa+sOn7aF33GDofFaCQQTuucgvK6S9I=',4),(4,'Cas','Go','casper_go@dlsu.edu.ph','U2FsdGVkX1+2jp6zpWCnLaLFmH5AC2ZMgdqecdcGOTI=',1),(5,'Jits','Jitsugen','jits_jitsugen@gmail.com','U2FsdGVkX1+7v7exz+ZuNefxpBwJtv2vbjOer0Wd0is=',3),(6,'Qwe','Qwe','qwe@dlsu.edu.ph','U2FsdGVkX19O2i4UUMtk5mdrMKhKaTy03vr71W3F1pA=',1),(7,'Viktor','Ty','viktor_ty@dlsu.edu.ph','U2FsdGVkX1/Rz6TEw0DcAPkQRpIPe3Q8KuMQkTNxCME=',2),(8,'Phoebe','Chen','feebee@dlsu.edu.ph','U2FsdGVkX18tAIgksObsUIWsa12M1eHEWRGr+c9Ehdo=',1),(9,'A','A','aaa@dlsu.edu.ph','U2FsdGVkX1+xHGMRUY/ntVjaicn3NPVqOM1jee4jo4g=',1);
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Melody','Goooo','melody_go@dlsu.edu.ph','U2FsdGVkX19CDy6/r0R+PXIyLDuWyxBpmbFcNtSiPdA=',0),(2,'Rebecalyn','Lao','rebecalyn_lao@dlsu.edu.ph','U2FsdGVkX19Y7gb2XVpkBnheS2NLLZsfhXG4J7DIZUQ=',3),(3,'Darren','Tee','darren_tee@dlsu.edu.ph','U2FsdGVkX19YYa+sOn7aF33GDofFaCQQTuucgvK6S9I=',4),(4,'Cas','Go','casper_go@dlsu.edu.ph','U2FsdGVkX1+2jp6zpWCnLaLFmH5AC2ZMgdqecdcGOTI=',1),(5,'Jits','Jitsugen','jits_jitsugen@gmail.com','U2FsdGVkX1+7v7exz+ZuNefxpBwJtv2vbjOer0Wd0is=',3),(6,'Qwe','Qwe','qwe@dlsu.edu.ph','U2FsdGVkX19O2i4UUMtk5mdrMKhKaTy03vr71W3F1pA=',1),(7,'Viktor','Ty','viktor_ty@dlsu.edu.ph','U2FsdGVkX1/Rz6TEw0DcAPkQRpIPe3Q8KuMQkTNxCME=',2),(8,'Phoebe','Chen','feebee@dlsu.edu.ph','U2FsdGVkX18tAIgksObsUIWsa12M1eHEWRGr+c9Ehdo=',1),(9,'A','A','aaa@dlsu.edu.ph','U2FsdGVkX1+xHGMRUY/ntVjaicn3NPVqOM1jee4jo4g=',1);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -423,7 +453,9 @@ CREATE TABLE `year_tracker` (
 --
 
 LOCK TABLES `year_tracker` WRITE;
+/*!40000 ALTER TABLE `year_tracker` DISABLE KEYS */;
 INSERT INTO `year_tracker` VALUES (1,2019);
+/*!40000 ALTER TABLE `year_tracker` ENABLE KEYS */;
 UNLOCK TABLES;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
