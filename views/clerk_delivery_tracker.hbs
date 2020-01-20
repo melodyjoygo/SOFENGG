@@ -191,6 +191,7 @@
                 let poNum = $(this).attr("data-po")
                 let unitPrice = $(this).attr("data-price")
                 let requestID = $(this).attr("data-requestID")
+                let checkNum = $(this).attr("data-check")
                 modal.style.display = "block";
                 
                 $('#deliveryReceiptNumberLabel').html('')
@@ -206,6 +207,7 @@
                 $('#quantityLabel').val(quantity)
                 $('#invoiceNumberLabel').val(invoiceNum)
                 $('#poNumberLabel').val(poNum)
+                $('#checkNumberLabel').val(checkNum)
                 $('#unitCostLabel').val(unitPrice)
                 $('#requestIDLabel').val(requestID)
             })
@@ -330,6 +332,12 @@
               <i class="fas fa-fw fa-tachometer-alt"></i>
               <span>Delivery Tracker</span></a>
             </li>
+        <li class="nav-item active">
+            <li class="nav-item">
+            <a class="nav-link" href="/clerk/orders">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Orders</span></a>
+            </li>
        
         
        
@@ -416,6 +424,7 @@
                   <th>Qty</th>
                   <th>Invoice Number</th>
                   <th>P.O. Number</th>
+                  <th>Check Number</th>
                   <th>Unit Price</th>
                   <th>Edit</th>
               </tr>
@@ -429,8 +438,9 @@
                         <td>{{this.quantity}}</td>
                         <td>{{this.invoiceNumber}}</td>
                         <td>{{this.poNumber}}</td>
+                        <td>{{this.checkNumber}}</td>
                         <td>{{this.unitPrice}}</td>
-                        <td><button class = 'editPrice btn btn-success' data-id = "{{this.deliveryID}}" data-receiptNum = "{{this.deliveryReceiptNumber}}" data-materialID = "{{this.materialID}}" data-quantity = "{{this.quantity}}" data-invoice = "{{this.invoiceNumber}}" data-po = "{{this.poNumber}}" data-price="{{this.unitPrice}}" data-requestID = "{{this.requestID}}"><u>Edit</u></button></td>
+                        <td><button class = 'editPrice btn btn-success' data-id = "{{this.deliveryID}}" data-receiptNum = "{{this.deliveryReceiptNumber}}" data-materialID = "{{this.materialID}}" data-quantity = "{{this.quantity}}" data-invoice = "{{this.invoiceNumber}}" data-po = "{{this.poNumber}}" data-check = "{{this.checkNumber}}" data-price="{{this.unitPrice}}" data-requestID = "{{this.requestID}}"><u>Edit</u></button></td>
                     </tr>
                 {{/each}}
             </tbody>
@@ -471,6 +481,8 @@
                   <input type="text" id = 'invoiceNumberLabel' name = invoiceNumber>
                   <div>P.O. Number: </div>
                   <input type="text" id = 'poNumberLabel' name = poNumber>
+                  <div>Check Number: </div>
+                  <input type="text" id = 'checkNumberLabel' name = checkNumber>
                   <div>Unit Cost: </div>
                   <input type = "number" name = "unitCost" id="unitCostLabel" min = '0' step = '0.01'>
                   <div style="margin-top:15px ;"><input type = "submit" class = 'btn btn-success' value = 'Save'></div>

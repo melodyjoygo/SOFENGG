@@ -301,9 +301,7 @@
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item active">
           <li class="nav-item">
-
           <a class="nav-link" href="/clerk">
-
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Inventory</span></a>
         </li>
@@ -318,6 +316,12 @@
             <a class="nav-link" href="/clerk/deliveryTracker">
               <i class="fas fa-fw fa-tachometer-alt"></i>
               <span>Delivery Tracker</span></a>
+            </li>
+        <li class="nav-item active">
+            <li class="nav-item">
+            <a class="nav-link" href="/clerk/orders">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Orders</span></a>
             </li>
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
@@ -452,6 +456,8 @@
                   <input type="text" id = 'invoiceNumberLabel' name = invoiceNumber required>
                   <div>P.O. Number: </div>
                   <input type="text" id = 'poNumberLabel' name = poNumber>
+                  <div>Check Number: </div>
+                  <input type="text" id = 'checknumberLabel' name = checkNumber>
                   <div>Unit Cost: </div>
                   <input type = "number" name = "unitCost" id="unitCostLabel" min = '0' step = '0.01' required>
                   <div style="margin-top: 10px;"><input type = "submit" class = 'btn btn-success' value = 'Add'></div>

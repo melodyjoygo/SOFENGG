@@ -29,8 +29,8 @@ exports.getAllWithPrice = function(){
     return database.query("SELECT * FROM softengdb.delivery_tracker NATURAL JOIN materials NATURAL JOIN suppliers LEFT JOIN material_types ON materials.materialType = material_types.mtID WHERE invoiceNumber != '0' OR poNumber != '0'")
 }
 
-exports.edit = function(deliveryID,invoiceNumber,poNumber,unitCost,requestID){
-    database.query("UPDATE delivery_tracker SET invoiceNumber = ?, poNumber = ?, unitPrice = ? , requestID = ? WHERE deliveryID = ?",[invoiceNumber,poNumber,unitCost,requestID,deliveryID])
+exports.edit = function(deliveryID,invoiceNumber,poNumber,unitCost,requestID,checkNumber){
+    database.query("UPDATE delivery_tracker SET invoiceNumber = ?, poNumber = ?, unitPrice = ? , requestID = ?, checkNumber WHERE deliveryID = ?",[invoiceNumber,poNumber,unitCost,requestID,checkNumber,deliveryID])
 }
 
 exports.getDelivery = function(deliveryID){

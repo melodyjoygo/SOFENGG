@@ -8,7 +8,7 @@ exports.create = function(clientID,projectNumber,dateAdded) {
 }
 
 exports.getAll = function() {
-    return database.query("SELECT * ,date_format(dateAdded,'%Y-%m-%d') as 'date' FROM projects LEFT JOIN clients ON projects.clientID = clients.clientID");
+    return database.query("SELECT * ,sum(price) as 'totalCost',date_format(dateAdded,'%Y-%m-%d') as 'date' FROM projects LEFT JOIN clients ON projects.clientID = clients.clientID LEFT JOIN(SELECT project_materials.projectID as 'pID', (quantity * A.unitCost)'price' FROM softengdb.project_materials LEFT JOIN materials ON project_materials.materialID = materials.materialID LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON materials.supplierID = suppliers.supplierID LEFT JOIN (SELECT materialID, SUM(quantity) AS 'totalQty', MAX(unitPrice) AS 'unitCost' from softengdb.inventory group by materialID)A on A.materialID = project_materials.materialID )A on A.pID = projects.projectID group by projects.projectID");
 }
 
 exports.getLatest = function(){

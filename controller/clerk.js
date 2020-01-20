@@ -4,6 +4,8 @@ const router = express.Router();
 const Inventory = require("../model/inventory")
 const Delivery = require("../model/delivery_tracker")
 const ClerkRequest = require("../model/clerk_requests")
+const Items = require("../model/transaction")
+const Materials = require("../model/materials")
 
 router.get("/",(req,res)=>{
     Promise.resolve(Inventory.getAllTableView()).then(function(inventory){
@@ -45,11 +47,28 @@ router.get("/deliveryTracker",(req,res)=>{
     })
 })
 
+router.get("/orders",(req,res)=>{
+    Promise.resolve(Materials.getAllWithSupplier()).then(function(items){
+        Promise.resolve(Items.loadItems()).then(function(orders){
+            res.render("clerk_orders.hbs",{
+                items:items,
+                orders:orders,
+                userType:req.session.userType,
+                firstName: req.session.firstName,
+                lastName :req.session.lastName,
+                currEmail: req.session.email,
+                currType: req.session.type,
+                password: req.session.password
+            })
+        })
+    })
+})
+
 router.post("/add",(req,res)=>{
     let itemID = req.body.itemID
     let unitCost = req.body.unitCost
     unitCost = unitCost.replace(/<[^>]*>/g, '');
-
+    
     var empty = false;
     
     if(unitCost === '')
@@ -77,6 +96,7 @@ router.post("/addPrice",(req,res)=>{
     let itemID = req.body.itemID
     let quantity = req.body.quantity
     let userID = req.session.userID
+    let checkNumber = req.body.checkNumber
     var empty = false
 
     invoiceNumber = invoiceNumber.replace(/<[^>]*>/g, '');
@@ -84,12 +104,13 @@ router.post("/addPrice",(req,res)=>{
     unitCost = unitCost.replace(/<[^>]*>/g, '');
     itemID = itemID.replace(/<[^>]*>/g, '');
     quantity = quantity.replace(/<[^>]*>/g, '');
+    checkNumber = checkNumber.replace(/<[^>]*>/g, '');
 
     if(poNumber === ''){
         poNumber = 0;
     }
     
-    if(invoiceNumber === '' || unitCost === "" || deliveryID === "")
+    if(invoiceNumber === '' || unitCost === "" || deliveryID === "" || checkNumber === "") 
         empty = true;
     
     if(empty){
@@ -101,8 +122,8 @@ router.post("/addPrice",(req,res)=>{
         Promise.resolve(Delivery.getDelivery(deliveryID)).then(function(delivery){
             if(delivery[0].invoiceNumber == '0' && delivery[0].poNumber == '0' && delivery[0].unitPrice == '0'){
                 Promise.resolve(ClerkRequest.getCurrRequest()).then(function(data){
-                    let count = data[0].count + 1
-                    Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,count)).then(function(value){
+                    let requestID = data[0].count + 1
+                    Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,requestID,checkNumber)).then(function(value){
                         Promise.resolve(Delivery.getDelivery(deliveryID)).then(function(delivery){
                             Promise.resolve(ClerkRequest.addToInvRequest(itemID,quantity,unitCost,userID,'Pending',poNumber,delivery[0].date_arrived)).then(function(value){
                                 res.render("clerk_price_input.hbs",{
@@ -124,12 +145,14 @@ router.post("/addPrice",(req,res)=>{
 router.post("/editPrice",(req,res)=>{
     let invoiceNumber = req.body.invoiceNumber
     let poNumber = req.body.poNumber
+    let checkNumber = req.body.checkNumber
     let unitCost = req.body.unitCost
     let deliveryID = req.body.deliveryID
     let requestID = req.body.requestID
 
     invoiceNumber = invoiceNumber.replace(/<[^>]*>/g, '');
     poNumber = poNumber.replace(/<[^>]*>/g, '');
+    checkNumber = checkNumber.replace(/<[^>]*>/g, '');
     unitCost = unitCost.replace(/<[^>]*>/g, '');
     deliveryID = deliveryID.replace(/<[^>]*>/g, '');
     requestID = requestID.replace(/<[^>]*>/g, '');
@@ -137,7 +160,7 @@ router.post("/editPrice",(req,res)=>{
     console.log(poNumber)
     var empty = false
     
-    if(invoiceNumber === '' || poNumber === "" || unitCost === "" || deliveryID === "" || requestID === "")
+    if(invoiceNumber === '' || poNumber === "" || unitCost === "" || deliveryID === "" || requestID === "" || checkNumber === "")
         empty = true;
     
     if(empty){
@@ -146,7 +169,7 @@ router.post("/editPrice",(req,res)=>{
         })
     }
     else{
-        Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,requestID)).then(function(value){
+        Promise.resolve(Delivery.edit(deliveryID,invoiceNumber,poNumber,unitCost,requestID,checkNumber)).then(function(value){
             Promise.resolve(ClerkRequest.edit(unitCost,poNumber,requestID)).then(function(value){
                 res.render("clerk_delivery_tracker.hbs",{
                     message:2
