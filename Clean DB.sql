@@ -40,7 +40,6 @@ CREATE TABLE clerk_add_request (
 --
 
 LOCK TABLES clerk_add_request WRITE;
-INSERT INTO clerk_add_request VALUES (1,'1','100','100',2,'Approved','PO001','2019-12-17'),(2,'1','100','100',2,'Approved','PO002','2019-12-18'),(3,'2','100','1000',2,'Approved','PO003','2019-12-18');
 UNLOCK TABLES;
 
 --
@@ -62,7 +61,6 @@ CREATE TABLE clients (
 --
 
 LOCK TABLES clients WRITE;
-INSERT INTO clients VALUES (1,'Riot Games'),(2,'Samsung'),(3,'Kfc'),(4,'Mcdonals'),(5,'<h1>kek<h1>'),(6,'&lt;h1&gt;kek&lt;h1&gt;'),(7,'H1kekh1'),(8,'Kek');
 UNLOCK TABLES;
 
 --
@@ -95,7 +93,6 @@ CREATE TABLE delivery_tracker (
 --
 
 LOCK TABLES delivery_tracker WRITE;
-INSERT INTO delivery_tracker VALUES (1,'VN556',1,100,'IN001','PO001',1,100,'1','3',NULL,'2019-12-17',''),(2,'VN557',1,100,'IN002','PO002',1,100,'2','3',NULL,'2019-12-18',''),(3,'VN558',2,100,'IN003','PO003',1,1000,'3','3',NULL,'2019-12-18','');
 UNLOCK TABLES;
 
 --
@@ -121,7 +118,6 @@ CREATE TABLE inventory (
 --
 
 LOCK TABLES inventory WRITE;
-INSERT INTO inventory VALUES (1,1,100,'2019-12-17',3000),(2,1,100,'2019-12-18',1000),(3,2,100,'2019-12-18',1000);
 UNLOCK TABLES;
 
 --
@@ -143,7 +139,6 @@ CREATE TABLE material_types (
 --
 
 LOCK TABLES material_types WRITE;
-INSERT INTO material_types VALUES (1,'Plastic'),(2,'Wood'),(3,'Acrylic'),(4,'Metal'),(5,'Bronze'),(6,'Gold'),(7,'Sterling'),(8,'Cactus');
 UNLOCK TABLES;
 
 --
@@ -169,7 +164,6 @@ CREATE TABLE materials (
 --
 
 LOCK TABLES materials WRITE;
-INSERT INTO materials VALUES (1,'2x4',2,1,1),(2,'2x4',1,1,1),(3,'Tent',3,1,1),(4,'5x2',2,1,1);
 UNLOCK TABLES;
 
 --
@@ -196,7 +190,6 @@ CREATE TABLE project_materials (
 --
 
 LOCK TABLES project_materials WRITE;
-INSERT INTO project_materials VALUES (1,1,1,100),(2,1,2,100),(3,1,2,100),(4,1,1,1),(5,2,1,100);
 UNLOCK TABLES;
 
 --
@@ -221,7 +214,6 @@ CREATE TABLE projects (
 --
 
 LOCK TABLES projects WRITE;
-INSERT INTO projects VALUES (1,1,'P1','2020-01-20','Pending'),(2,2,'P2','2020-01-20','Pending');
 UNLOCK TABLES;
 
 --
@@ -279,7 +271,6 @@ CREATE TABLE stockman_release_requests (
 --
 
 LOCK TABLES stockman_release_requests WRITE;
-INSERT INTO stockman_release_requests VALUES (1,'1','1','100','Approved','2019-12-18',3,1,'2019-12-18'),(2,'2','2','100','Approved','2019-12-18',3,1,'2019-12-18'),(3,'1','1','100','Approved','2019-12-18',3,0,NULL);
 UNLOCK TABLES;
 
 --
@@ -302,7 +293,6 @@ CREATE TABLE suppliers (
 --
 
 LOCK TABLES suppliers WRITE;
-INSERT INTO suppliers VALUES (1,'Ace Hardware','8878888'),(2,'Mcdonalds','88886236'),(3,'Samsung','2448001');
 UNLOCK TABLES;
 
 --
@@ -330,7 +320,6 @@ CREATE TABLE transactions (
 --
 
 LOCK TABLES transactions WRITE;
-INSERT INTO transactions VALUES (1,1,1,100.0000,'2019-12-06','Arrived',10,'P001'),(2,2,1,100.0000,'2019-12-19','Arrived',100,'P002');
 UNLOCK TABLES;
 
 --
@@ -352,7 +341,6 @@ CREATE TABLE unit_of_measures (
 --
 
 LOCK TABLES unit_of_measures WRITE;
-INSERT INTO unit_of_measures VALUES (1,'pc'),(2,'block'),(3,'pint');
 UNLOCK TABLES;
 
 --
@@ -401,29 +389,7 @@ CREATE TABLE users (
 --
 
 LOCK TABLES users WRITE;
-INSERT INTO users VALUES (1,'Melody','Goooo','melody_go@dlsu.edu.ph','U2FsdGVkX19CDy6/r0R+PXIyLDuWyxBpmbFcNtSiPdA=',0),(2,'Rebecalyn','Lao','rebecalyn_lao@dlsu.edu.ph','U2FsdGVkX19Y7gb2XVpkBnheS2NLLZsfhXG4J7DIZUQ=',3),(3,'Darren','Tee','darren_tee@dlsu.edu.ph','U2FsdGVkX19YYa+sOn7aF33GDofFaCQQTuucgvK6S9I=',4),(4,'Cas','Go','casper_go@dlsu.edu.ph','U2FsdGVkX1+2jp6zpWCnLaLFmH5AC2ZMgdqecdcGOTI=',1),(5,'Jits','Jitsugen','jits_jitsugen@gmail.com','U2FsdGVkX1+7v7exz+ZuNefxpBwJtv2vbjOer0Wd0is=',3),(6,'Qwe','Qwe','qwe@dlsu.edu.ph','U2FsdGVkX19O2i4UUMtk5mdrMKhKaTy03vr71W3F1pA=',1),(7,'Viktor','Ty','viktor_ty@dlsu.edu.ph','U2FsdGVkX1/Rz6TEw0DcAPkQRpIPe3Q8KuMQkTNxCME=',2),(8,'Phoebe','Chen','feebee@dlsu.edu.ph','U2FsdGVkX18tAIgksObsUIWsa12M1eHEWRGr+c9Ehdo=',1),(9,'A','A','aaa@dlsu.edu.ph','U2FsdGVkX1+xHGMRUY/ntVjaicn3NPVqOM1jee4jo4g=',1);
-UNLOCK TABLES;
-
---
--- Table structure for table `year_tracker`
---
-
-DROP TABLE IF EXISTS year_tracker;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE year_tracker (
-  yearID int(11) NOT NULL,
-  currYear int(11) NOT NULL,
-  PRIMARY KEY (yearID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `year_tracker`
---
-
-LOCK TABLES year_tracker WRITE;
-INSERT INTO year_tracker VALUES (1,2019);
+INSERT INTO users VALUES (1,'Melody','Goooo','melody_go@dlsu.edu.ph','U2FsdGVkX19CDy6/r0R+PXIyLDuWyxBpmbFcNtSiPdA=',0);
 UNLOCK TABLES;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
