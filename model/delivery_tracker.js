@@ -30,7 +30,7 @@ exports.getAllWithPrice = function(){
 }
 
 exports.edit = function(deliveryID,invoiceNumber,poNumber,unitCost,requestID,checkNumber){
-    database.query("UPDATE delivery_tracker SET invoiceNumber = ?, poNumber = ?, unitPrice = ? , requestID = ?, checkNumber WHERE deliveryID = ?",[invoiceNumber,poNumber,unitCost,requestID,checkNumber,deliveryID])
+    database.query("UPDATE delivery_tracker SET invoiceNumber = ?, poNumber = ?, unitPrice = ? , requestID = ?, checkNumber = ? WHERE deliveryID = ?",[invoiceNumber,poNumber,unitCost,requestID,checkNumber,deliveryID])
 }
 
 exports.getDelivery = function(deliveryID){
