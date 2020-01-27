@@ -341,6 +341,20 @@ CREATE TABLE unit_of_measures (
 --
 
 LOCK TABLES unit_of_measures WRITE;
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('1', 'pcs');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('2', 'bags');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('3', 'pale');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('4', 'lot');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('5', 'tins');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('6', 'panels');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('7', 'gals');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('8', 'sets');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('9', 'boxes');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('10', 'meters');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('11', 'bottle');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('12', 'can');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('13', 'liter');
+INSERT INTO `softengdb`.`unit_of_measures` (`uomID`, `unitOfMeasure`) VALUES ('14', 'others');
 UNLOCK TABLES;
 
 --
