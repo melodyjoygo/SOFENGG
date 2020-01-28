@@ -32,12 +32,17 @@ router.post("/restock",(req,res)=>{
     let poNumber = req.body.poNumber
     let unitPrice = req.body.unitPrice
     let userID = req.session.userID
+    let checkNumber = req.body.checkNumber
     
     var empty = false
     
-    if(deliveryReceiptNumber === ""  || itemID === "" || qty === "" || invoiceNumber === ""  || unitPrice === "")
+    if(deliveryReceiptNumber === ""  || itemID === "" || qty === "" || invoiceNumber === ""  || unitPrice === "" || checkNumber === "")
         empty = true
     
+    if(poNumber === ''){
+        poNumber = 0;
+    }
+
     if(empty){
         res.render("delivery_tracker.hbs",{
             message:1
@@ -46,7 +51,7 @@ router.post("/restock",(req,res)=>{
     else{
         Promise.resolve(ClerkRequest.getCurrRequest()).then(function(data){
              let count = data[0].count + 1
-             Promise.resolve(Deliveries.createSuperAdmin(deliveryReceiptNumber,itemID,qty,invoiceNumber,poNumber,unitPrice,userID,count)).then(function(){
+             Promise.resolve(Deliveries.createSuperAdmin(deliveryReceiptNumber,itemID,qty,invoiceNumber,poNumber,unitPrice,userID,count,checkNumber)).then(function(){
                 Promise.resolve(ClerkRequest.addToInvRequest(itemID,qty,unitPrice,userID,'Pending',poNumber)).then(function(){
                     res.render("delivery_tracker.hbs",{
                         message:2
@@ -66,19 +71,24 @@ router.post("/edit",(req,res)=>{
     let invoiceNumber = req.body.invoiceNumber
     let unitCost = req.body.unitCost
     let requestID = req.body.requestID
+    let checkNumber = req.body.checkNumber
     
     var empty = false
     
-    if(deliveryID === ""  || deliveryReceiptNumber === "" || itemID === "" || quantity === ""  || poNumber === "" || invoiceNumber === "" || unitCost === "" || requestID === "")
+    if(deliveryID === ""  || deliveryReceiptNumber === "" || itemID === "" || quantity === ""  || invoiceNumber === "" || unitCost === "" || requestID === "" || checkNumber === "")
         empty = true
     
+    if(poNumber === ''){
+        poNumber = 0;
+    }
+
     if(empty){
         res.render("delivery_tracker.hbs",{
             message:1
         })
     }
     else{
-        Promise.resolve(Deliveries.editAll(deliveryReceiptNumber,itemID,quantity,poNumber,invoiceNumber,unitCost,deliveryID)).then(function(data){
+        Promise.resolve(Deliveries.editAll(deliveryReceiptNumber,itemID,quantity,poNumber,invoiceNumber,unitCost,deliveryID,checkNumber)).then(function(data){
             Promise.resolve(ClerkRequest.editAll(itemID,quantity,unitCost,requestID)).then(function(value){
                 res.render("delivery_tracker.hbs",{
                     message:3

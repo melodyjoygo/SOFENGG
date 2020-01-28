@@ -186,8 +186,9 @@
                 let poNumber = $(this).attr("data-poNumber")
                 let unitPrice = $(this).attr("data-unitPrice")
                 let requestID = $(this).attr("data-requestID")
+                let checkNumber = $(this).attr("data-checkNumber")
                 
-                console.log("receiptNumber: " + receiptNumber)
+                
                 $('#deliveryIDLabel').val(deliveryID)
                 $('#deliveryReceiptNumberLabel').val(receiptNumber)
                 $('#material_dropdown').val(itemID)
@@ -196,6 +197,7 @@
                 $('#poNumberLabel').val(poNumber)
                 $('#unitCostLabel').val(unitPrice)
                 $('#requestIDLabel').val(requestID)
+                $('#checkNumberLabel').val(checkNumber)
     
                 $('#editDeliveryModal').css("display","block")
             })
@@ -430,18 +432,28 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Deliveries
-            <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
-            <span class="icon text-white-50">
+         <div>
+             <div>
+              <h1 class="h3 mb-4 text-gray-800">Deliveries</h1>
+            </div>
+            <div>
+              
+                <a href="#" class="btn btn-danger btn-icon-split addemp" id = "myBtn">
+                  <span class="icon text-white-50">
                 <b class = "plusicon">+</b>
-            </span>
-            <span class="text">Restock Item</span>
-         </a>
-            </h1>
+                </span>
+                 <span class="text">Restock Item</span>
+                 </a>
+            </div>
+         </div>
+           
             
+
+         
+        
         
             
-            <div>
+        <div>
   <!-- DataTales Example -->
   <div class="card shadow mb-4" style="flex-grow:inherit">
       <div class="card-header py-3">
@@ -459,6 +471,7 @@
                   <th>Unit Price</th>
                   <th>Invoice Number</th>
                   <th>P.O. Number</th>
+                  <th>CheckNumber</th>
                   <th>Edit</th>
               </tr>
             </thead>
@@ -472,7 +485,8 @@
                             <td>{{this.unitPrice}}</td>
                             <td>{{this.invoiceNumber}}</td>
                             <td>{{this.poNumber}}</td>
-                            <td><button class = 'btn btn-primary edit' data-id = "{{this.deliveryID}}" data-receiptNumber = "{{this.deliveryReceiptNumber}}" data-itemID = "{{this.materialID}}" data-quantity = "{{this.quantity}}" data-invoiceNumber = "{{this.invoiceNumber}}" data-poNumber = "{{this.poNumber}}" data-unitPrice = "{{this.unitPrice}}" data-requestID = "{{this.requestID}}"><u>Edit</u></button></td>
+                            <td>{{this.checkNumber}}</td>
+                            <td><button class = 'btn btn-primary edit' data-id = "{{this.deliveryID}}" data-receiptNumber = "{{this.deliveryReceiptNumber}}" data-itemID = "{{this.materialID}}" data-quantity = "{{this.quantity}}" data-invoiceNumber = "{{this.invoiceNumber}}" data-poNumber = "{{this.poNumber}}" data-unitPrice = "{{this.unitPrice}}" data-requestID = "{{this.requestID}}" data-checkNumber = "{{this.checkNumber}}"><u>Edit</u></button></td>
                         </tr>
                     {{/each}}
             </tbody>
@@ -504,6 +518,7 @@
                                     <th>Qty</th>
                                     <th>Invoice Number</th>
                                     <th>P.O. Number</th>
+                                    <th>Check Number</th>
                                     <th>Unit Price</th>
                                     
                                 </tr>
@@ -528,6 +543,9 @@
                                 </td>
                                 <td>
                                     <input class="form-control" type = "text" name = "poNumber">
+                                </td>
+                                <td>
+                                    <input class="form-control" type = "text" name = "checkNumber">
                                 </td>
                                 <td>
                                     <input class="form-control" type = "number" name = "unitPrice" min = '0' step = '0.01'>
@@ -574,6 +592,8 @@
                   <input type="text" id = 'invoiceNumberLabel' name = invoiceNumber>
                   <div>P.O. Number: </div>
                   <input type="text" id = 'poNumberLabel' name = poNumber>
+                  <div>Check Number: </div>
+                  <input type="text" id = 'checkNumberLabel' name = checkNumber>
                   <div>Unit Cost: </div>
                   <input type = "number" name = "unitCost" id="unitCostLabel">
                   <input type = "submit" class = 'btn btn-primary' value = 'Save'>

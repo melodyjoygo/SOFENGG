@@ -7,9 +7,9 @@ exports.create = function(deliveryReceptNum,  materialID, quantity,userID,date) 
     })
 }
 
-exports.createSuperAdmin = function(deliveryReceiptNumber,itemID,qty,invoiceNumber,poNumber,unitPrice,userID,count){
+exports.createSuperAdmin = function(deliveryReceiptNumber,itemID,qty,invoiceNumber,poNumber,unitPrice,userID,count,checkNumber){
     Promise.resolve(database.query("SELECT COUNT(deliveryID) AS 'num' FROM delivery_tracker")).then(function(value) {
-        database.query("INSERT INTO delivery_tracker (deliveryID, deliveryReceiptNumber, materialID, quantity,invoiceNumber,poNumber,inInventory,unitPrice,requestID,userID) VALUES ?", [[[(value[0].num + 1), deliveryReceiptNumber,itemID, qty, invoiceNumber,poNumber,0,unitPrice,count,userID]]])
+        database.query("INSERT INTO delivery_tracker (deliveryID, deliveryReceiptNumber, materialID, quantity,invoiceNumber,poNumber,inInventory,unitPrice,requestID,checkNumber,userID) VALUES ?", [[[(value[0].num + 1), deliveryReceiptNumber,itemID, qty, invoiceNumber,poNumber,0,unitPrice,count,checkNumber,userID]]])
     })
 }
 
@@ -57,6 +57,6 @@ exports.inInventory = function(requestID,inInventory){
     database.query("UPDATE delivery_tracker SET inInventory = ? WHERE requestID = ?",[inInventory,requestID])
 }
 
-exports.editAll = function(deliveryReceiptNumber,itemID,quantity,poNumber,invoiceNumber,unitCost,deliveryID){
-    database.query("UPDATE delivery_tracker SET deliveryReceiptNumber = ?,materialID = ?,quantity = ?,invoiceNumber = ?,poNumber = ?,unitPrice = ? WHERE deliveryID = ?",[deliveryReceiptNumber,itemID,quantity,invoiceNumber,poNumber,unitCost,deliveryID])
+exports.editAll = function(deliveryReceiptNumber,itemID,quantity,poNumber,invoiceNumber,unitCost,deliveryID,checkNumber){
+    database.query("UPDATE delivery_tracker SET deliveryReceiptNumber = ?,materialID = ?,quantity = ?,invoiceNumber = ?,poNumber = ?,unitPrice = ?, checkNumber = ? WHERE deliveryID = ?",[deliveryReceiptNumber,itemID,quantity,invoiceNumber,poNumber,unitCost,checkNumber,deliveryID])
 }

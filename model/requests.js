@@ -2,7 +2,7 @@ const Database = require("./database");
 var database = new Database();
 
 exports.getClerkAddRequests = function(){
-    return database.query("SELECT *,user_types.type AS 'userTypeString' FROM clerk_add_request LEFT JOIN users ON clerk_add_request.userID = users.userID LEFT JOIN user_Types on users.userType = user_Types.utID NATURAL JOIN materials LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON materials.supplierID = suppliers.supplierID WHERE status = 'Pending'")
+    return database.query("SELECT *,user_types.type AS 'userTypeString' FROM clerk_add_request LEFT JOIN users ON clerk_add_request.userID = users.userID LEFT JOIN user_Types on users.userType = user_Types.utID NATURAL JOIN materials LEFT JOIN material_types ON materials.materialType = material_types.mtID LEFT JOIN suppliers ON materials.supplierID = suppliers.supplierID LEFT JOIN delivery_tracker ON clerk_add_request.requestID = delivery_tracker.requestID WHERE clerk_add_request.status = 'Pending'")
 }
 
 exports.getStockmanEditRequests = function(){

@@ -10,11 +10,11 @@ const deliveryTracker = require("../model/delivery_tracker")
 const orders = require("../model/transaction")
 
 router.get("/",(req,res)=>{
-    Promise.resolve(Requests.getClerkAddRequests()).then(function(clerkEditRequests){
+    Promise.resolve(Requests.getClerkAddRequests()).then(function(clerkAddRequests){
         Promise.resolve(Requests.getStockmanEditRequests()).then(function(stockmanEditRequests){
             Promise.resolve(Requests.getStockmanReleaseRequests()).then(function(stockmanReleaseRequests){
                 res.render("requisitions.hbs",{
-                    clerkEditRequests:clerkEditRequests,
+                    clerkAddRequests:clerkAddRequests,
                     stockmanEditRequests:stockmanEditRequests,
                     stockmanReleaseRequests:stockmanReleaseRequests,
                     userType:req.session.userType,
